@@ -1,2 +1,3 @@
-# iocla-curs-demos
+# demo
+# demo/curs01...
 Demo-urile cursului de Introducere in Organizarea Calculatoarelor si Limbaje de Asamblare - ACS, UPB.
