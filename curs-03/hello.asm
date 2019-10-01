@@ -11,10 +11,9 @@ section .data
 section .text
 	global main
 	
-main:
-    mov ebp, esp; for correct debugging
-    push ebp           ; cadru de stivă adăugat de sasm
-    mov ebp, esp       ; for correct debugging
+main:   
+        push ebp           ; cadru de stivă adăugat de sasm
+        mov ebp, esp       ; for correct debugging
 	mov ax, 0x102      ; o constantă într-un registru de 16 biți
                             ; AX = 258 în zecimal/decimal, 0x102 în hexa, 100000010 în binar
 	mov ah, -1         ; o constantă într-un registru de 8 biți
@@ -35,5 +34,5 @@ adunare:                    ; etichetă
 
 iesire:
 	xor eax, eax       ; vom returna 0 către shell
-         pop ebp            ; refacem stiva
+        pop ebp            ; refacem stiva
 	ret                ; părăsim main 
