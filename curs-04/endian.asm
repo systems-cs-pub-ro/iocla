@@ -1,11 +1,10 @@
-; nasm -f elf32 -g -F dwarf hello.asm 
-; gcc -g -m32 -o hello hello.o
-; se poate compila cu gcc sau rula în sasm
-; 
+; nasm -f elf32 -g -F dwarf endian.asm 
+; gcc -g -m32 -o endian endian.o
+
+ 
 section .data
-	fmts db '%s',0
-	fmtx db '%x', 10, 0		
-	msg db 'Hello, world!', 0xa, 0
+	fmts db '%s', 10, 0
+	msg db 'Încărcați binarul în gdb, și examinati variabilele a,b,c.', 0xa, 0
 	a db 1, 2, 3, 4, 0xa, 0xb, 0xc, 0xd, 'a', 'b','c','d'
 	b dw 0x0102, 0x0304, 0x0a0b, 0x0c0d, 4127, -27714
 	c dd 0x01020304, 0xabcd6789, 100, -100
