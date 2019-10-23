@@ -12,6 +12,7 @@ section .text
 	global main
 	
 main:
+    mov ebp, esp; for correct debugging
 	push ebp           	; cadru de stivă adăugat de sasm
 	mov ebp, esp       	; for correct debugging
 	mov ax, 0x102      	; o constantă într-un registru de 16 biți
