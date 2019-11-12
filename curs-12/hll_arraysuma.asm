@@ -8,6 +8,7 @@ global  array_sum
 
 array_sum:
       enter   0,0
+	push EBX		; UPB correction(VI) 
       mov     EDX,[EBP+8]    ; copy array pointer to EDX
       mov     ECX,[EBP+12]   ; copy array size to ECX
       sub     EBX,EBX        ; array index = 0
@@ -17,5 +18,6 @@ add_loop:
       inc     EBX            ; increment array index
       cmp     EBX,ECX
       jl      add_loop
+	pop EBX			; UPB correction(VI)
       leave	
       ret
