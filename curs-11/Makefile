@@ -3,8 +3,8 @@ FILES = bblsort.asm  procfib1.asm procswap.asm procfib2.asm  varpara.asm fact_pe
 
 OBJS = $(FILES:.asm=.o) 
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf -I ../Linux_IOfiles/
-LD = ld -g  -melf_i386 ../Linux_IOfiles/io.o
+ASM_FLAGS = -f elf32 -g -F dwarf -I ./Linux_IOfiles/
+LD = ld -g  -melf_i386 ./Linux_IOfiles/io.o
 BINARIES = procfib1 procfib2 procswap varpara bblsort fact_pentium qsort_pentium
 
 all : $(BINARIES)
