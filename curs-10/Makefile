@@ -2,8 +2,8 @@
 FILES = module2.asm  procex2.asm  module1.asm  procex1.asm  procex3.asm
 OBJS = $(FILES:.asm=.o) 
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf -I ../Linux_IOfiles/
-LD = ld -g  -melf_i386 ../Linux_IOfiles/io.o
+ASM_FLAGS = -f elf32 -g -F dwarf -I ./Linux_IOfiles/
+LD = ld -g  -melf_i386 ./Linux_IOfiles/io.o
 BINARIES = procex1 procex2 procex3 modules 
 
 all : $(BINARIES)
