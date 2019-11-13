@@ -25,7 +25,6 @@ hll_arraysum_inline: hll_arraysum_inline.o
 
 
 %.o : %.c
-#	$(warning NASM=$(NASM) FLAGS=$(ASM_FLAGS))
 	cc -m32 -g -c -o $@ $<
 
 %.o : %.asm

@@ -21,16 +21,19 @@ int main(void)
 	
     return 0;
 }
-
+ 
 int array_sum(int* value, int size)
 {
          asm("      xorl  %%eax,%%eax;"   /* sum = 0 */
+	     "      pushl %%ebx;       "
              "rep1: jecxz done;       "
              "      decl  %%ecx;      "
              "      addl  (%%ebx,%%ecx,4),%%eax;"
              "      jmp   rep1;       "
              "done:                   "
+	     "      popl  %%ebx;       "
               : /* no outputs */
               :"b"(value),"c"(size)       /* inputs */
-              :"%eax","cc");              /* clobber list */
+	     :"%eax", "cc"
+	     );              /* clobber list */
 }
