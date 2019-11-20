@@ -24,26 +24,33 @@ se compară canary.s cu nocanary.s pentru a vedea implementarea canarului
 se compară canary.lst cu nocanary.lst pentru a vedea implementarea canarului 
 se rulează canary și nocanary cu parole sub și peste 17 caactere 
 
+4. OPȚIUNEA pie 
+se rulează succesiv pentru a observa adresele .data și .stack care au valori mereu altele
 */
 
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h>
 
+char brillig[] = "brillig",
+  outgrabe[] = "outgrabe"; 
+
 int check_authentication(char *password) 
 { 
   int auth_flag = 0;
   char password_buffer[16];
+  printf(".data address = %x; stack_address = %x\n", &brillig, &password_buffer);
+
   strcpy(password_buffer, password);
-  if(strcmp(password_buffer, "brillig") == 0) 
+  if(strcmp(password_buffer, brillig) == 0) 
     auth_flag = 1;
-  if(strcmp(password_buffer, "outgrabe") == 0) 
+  if(strcmp(password_buffer, outgrabe) == 0) 
     auth_flag = 1;
   return auth_flag; 
 }
 
 int main(int argc, char *argv[]) 
-{ 
+{
   if(argc < 2) {
     printf("Usage: %s <password>\n", argv[0]);
     exit(0); 

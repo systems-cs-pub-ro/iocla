@@ -1,15 +1,19 @@
 
 FILES = overflow_example.c auth_overflow.c
-CFLAGS_CANARY = -m32 -fno-pie 	-g -Fdwarf 
-CFLAGS_NOCANARY = -m32  -fno-pie -g -Fdwarf -fno-stack-protector 
+CFLAGS_CANARY = -m32 -fno-pie 	-g -Fdwarf -fstack-protector
+CFLAGS_NOCANARY = -m32  -fno-pie -g -Fdwarf #-fno-stack-protector 
+CFLAGS_PIE = -m32 -g -Fdwarf -fstack-protector
 
-all : overflow_example canary nocanary
+all : overflow_example canary nocanary pie 
 
 canary: auth_overflow.c
 
 	gcc $(CFLAGS_CANARY) -S -masm=intel -o canary.s $<
 	gcc $(CFLAGS_CANARY) -masm=intel -Wa,-adhln $< > canary.lst
 	gcc $(CFLAGS_CANARY) -o canary $<
+
+pie: auth_overflow.c
+	gcc $(CFLAGS_PIE) -o pie $<
 
 nocanary: auth_overflow.c
 	gcc $(CFLAGS_NOCANARY) -S -masm=intel -o nocanary.s $< 
@@ -21,5 +25,5 @@ overflow_example: overflow_example.c
 
 
 clean: 
-	rm -f  *.s *.lst canary nocanary overflow_example 
+	rm -f  *.s *.lst canary nocanary overflow_example a.out  pie 
 	rm -f *~
