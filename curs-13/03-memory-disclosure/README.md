@@ -1,7 +1,8 @@
-
 * memory_disclosure.c 
   - show the stack, identify all elements 
   - run several times, explain the similarities & differences
+  - disable aslr #echo 0 >    /proc/sys/kernel/randomize_va_space 
+  - enable aslr #echo 2 >    /proc/sys/kernel/randomize_va_space 
   - prove that buf[6] is the return address (objdump -d) 
   - prove that buf[5] is old EBP (gdb, b main, r, p/x $ebp) 
 
