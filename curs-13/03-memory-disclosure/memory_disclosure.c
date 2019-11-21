@@ -8,8 +8,8 @@ static void disclosure_target(unsigned int a, unsigned int b)
 	for (i = 0; i < 4; i++)
 		buf[i] = i * i * i;
 
-	for (i = 0; i < 10; i++)
-		printf("buf[%u] (address: %p) = 0x%08x\n", i, &buf[i], buf[i]);
+	for (i = 10; i != 0; i--)
+		printf("buf[%02u] (address: %p) = 0x%08x\n", i, &buf[i], buf[i]);
 }
 
 int main(void)
