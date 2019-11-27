@@ -2,7 +2,10 @@
 * check speecd of the processor and number of cores 
  # cat /proc/cpuinfo | grep MHz
     cpu MHz		: 1600.020
-  expect to be able to sustain 1.6*10^9 instructions / second 
+ # ./test_freq 
+    2712307880
+  expect to be able to sustain 2.7*10^9 instructions / second 
+  Why the difference? Processors work at several speeds to save power. Use the high one
 
 * count instructions in the repeat loop
   read the source 
@@ -10,6 +13,9 @@
 
 * rdtsc counts clock ticks 
 
-* notice the group of 4 instruction whic atre independent and can therefore be run simultaneously on different ALUs 
+* notice the group of 4 instruction which are independent and can therefore be run simultaneously on different ALUs 
+  obtain approx 4 instructions / cycle :) 
 
 * experiment with different instructions to see whether they are parallelized or not
+
+

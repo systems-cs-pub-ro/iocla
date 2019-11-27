@@ -3,16 +3,12 @@ C_FLAGS = -g -m32 -O3
 NASM=nasm
 CC=gcc
 CPP=g++
-BINARIES = superscalar test_freq
+BINARIES = test_sse  
 
 all: $(BINARIES)
 
-test_freq: test_freq.o 
-	gcc -g -m32 -o $@ $^ 
-
-superscalar: superscalar.o 
-	gcc -g -m32 -o $@ $^ 
-
+test_sse: test_sse.o sse.o
+	gcc -g -m32 -o $@ $^
 
 %.o : %.asm
 	$(NASM) $(ASM_FLAGS) -o $@ $<
