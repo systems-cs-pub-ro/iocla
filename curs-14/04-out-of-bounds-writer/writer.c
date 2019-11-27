@@ -15,7 +15,10 @@ static int read_int(int *out)
 	if (buffer[0] == '\0')
 		return -1;
 
-	*out = strtol(buffer, &endptr, 10);
+    if(strncmp(buffer, "0x", 2) == 0)
+	    *out = strtol(buffer, &endptr, 16);
+    else
+	    *out = strtol(buffer, &endptr, 10);
 	if (*endptr != '\0')
 		return -1;
 
