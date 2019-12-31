@@ -1,28 +1,33 @@
-
-AFILES = arrayfsuma.asm quada.asm
-CFILES = arrayfsumc.c arrayfsum_inline.c quadc.c
+AFILES = arrayfsuma.asm quada.asm fpadd.asm
+CFILES = arrayfsumc.c arrayfsum_inline.c quadc.c fpprint.c
 
 OBJS = $(AFILES:.asm=.o) 
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf 
+ASM_FLAGS = -f elf32 -g -F dwarf
 LD = cc -m32 -g
-BINARIES = arrayfsumc quadc fp-m32 fp-m32-O2 
+BINARIES = arrayfsumc quadc fp-m32 fp-m32-O2 fpadd fpprint
 
 all : $(BINARIES)
 
 arrayfsumc: arrayfsumc.o  arrayfsuma.o
-	$(LD) -o $@ $^ 
+	$(LD) -o $@ $^
+
 quadc: quadc.o quada.o
-	$(LD) -o $@ $^ 
+	$(LD) -o $@ $^
 
-fp-m32-O2: 
-	$(CC) -m32 -O2 -o fp-m32-O2 fp_representation.c
-	$(CC) -m32 -O2 -S -masm=intel -o fp-m32-O2.s  fp_representation.c
+fpadd: fpadd.o
+	$(LD) -o $@ $^
 
-fp-m32: 
-	$(CC) -m32 -o fp-m32 fp_representation.c
-	$(CC) -m32 -S -masm=intel -o fp-m32.s  fp_representation.c
+fpprint: fpprint.o
+	$(LD) -o $@ $^
 
+fp-m32-O2: fp_representation.c
+	$(CC) -m32 -O2 -o $@ $^
+	$(CC) -m32 -O2 -S -masm=intel -o fp-m32-O2.s $<
+
+fp-m32: fp_representation.c
+	$(CC) -m32 -o $@ $^
+	$(CC) -m32 -S -masm=intel -o fp-m32.s $<
 
 %.o : %.c
 #	$(warning NASM=$(NASM) FLAGS=$(ASM_FLAGS))
@@ -31,6 +36,7 @@ fp-m32:
 %.o : %.asm
 #	$(warning NASM=$(NASM) FLAGS=$(ASM_FLAGS))
 	$(NASM) $(ASM_FLAGS) -o $@ $<
-clean: 
+
+clean:
 	rm -f *.o $(BINARIES) *.s
-	rm -f *~ 
+	rm -f *~
