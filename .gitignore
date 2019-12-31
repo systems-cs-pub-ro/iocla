@@ -41,6 +41,8 @@
 *.su
 *.idb
 *.pdb
+peda*.txt
+.gdb_history
 
 # Kernel Module Compile Results
 *.mod*
