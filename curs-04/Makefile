@@ -4,7 +4,7 @@ NASM = nasm
 ASM_FLAGS = -f elf32 -g -F dwarf
 LD = ld  -melf_i386
 
-all: endian mem bin-oct-hex
+all: endian mem bin-oct-hex signed-unsigned
 
 endian: endian.o
 	$(CC) $(C_FLAGS) -o $@ $^
@@ -13,6 +13,9 @@ mem: mem.o
 	$(CC) $(C_FLAGS) -o $@ $^
 
 bin-oct-hex: bin-oct-hex.o
+	$(CC) $(C_FLAGS) -o $@ $^
+
+signed-unsigned: signed-unsigned.o
 	$(CC) $(C_FLAGS) -o $@ $^
 
 %.o : %.c
@@ -24,4 +27,4 @@ bin-oct-hex: bin-oct-hex.o
 	$(NASM) $(ASM_FLAGS) -o $@ $<
 
 clean:
-	-rm -f *.o endian mem bin-oct-hex
+	-rm -f *.o endian mem bin-oct-hex signed-unsigned
