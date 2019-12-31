@@ -1,0 +1,8 @@
+/canary
+/nocanary
+/overflow_example
+/canary.s
+/canary.lst
+/nocanary.s
+/nocanary.lst
+/pie
