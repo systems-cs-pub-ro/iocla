@@ -1,0 +1,8 @@
+/fp-m32
+/fp-m32-O2
+/fp-m32.s
+/fp-m32-O2.s
+/arrayfsumc
+/quadc
+/fpadd
+/fpprint
