@@ -11,7 +11,7 @@ all : $(BINARIES)
 %.o : %.asm
 	$(NASM) $(ASM_FLAGS) -o $@ $<
 
-0-recap-mean: max.o
+max: max.o
 	$(LD) $(LDFLAGS) -o $@ $^
 
 clean: 

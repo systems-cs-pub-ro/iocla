@@ -11,7 +11,7 @@ all : $(BINARIES)
 %.o : %.asm
 	$(NASM) $(ASM_FLAGS) -o $@ $<
 
-0-recap-mean: stack-addressing.o
+stack-addressing: stack-addressing.o
 	$(LD) $(LDFLAGS) -o $@ $^
 
 clean: 

@@ -11,7 +11,7 @@ all : $(BINARIES)
 %.o : %.asm
 	$(NASM) $(ASM_FLAGS) -o $@ $<
 
-0-recap-mean: merge-arrays.o
+merge-arrays: merge-arrays.o
 	$(LD) $(LDFLAGS) -o $@ $^
 
 clean: 
