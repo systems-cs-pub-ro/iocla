@@ -8,9 +8,6 @@ BINARIES = gcd
 
 all : $(BINARIES)
 
-
-#%.o : %.c
-#	gcc -m32 -g -c -o $@ $<
 %.o : %.asm
 	$(NASM) $(ASM_FLAGS) -o $@ $<
 

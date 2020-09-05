@@ -23,7 +23,7 @@ main:
 
     ; TODO2 - compute the quotient of the mean
 
-    PRINTF32 `Numbers mean: %d\x0`, eax
+    PRINTF32 `Mean of numbers: %d\x0`, eax
     PRINTF32 `.\x0`
 
     mov ecx, DECIMAL_PLACES
