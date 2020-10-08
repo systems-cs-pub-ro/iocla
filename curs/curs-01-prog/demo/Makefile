@@ -1,5 +1,6 @@
-CFLAGS = -Wall -fno-PIC
-LDFLAGS = -no-pie
+CFLAGS = -Wall -fno-PIC -m32 -g
+LDFLAGS = -no-pie -m32
+
 
 .PHONY: all clean
 

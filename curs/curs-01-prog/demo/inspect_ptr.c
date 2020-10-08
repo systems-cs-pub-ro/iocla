@@ -9,6 +9,7 @@ int main(void)
 	printf("\n   p = 0x100\n\n");
 	printf("p: %p\n", p);
 	printf("&p: %p\n", &p);
+	printf("&a: %p\n", &a);
 
 	p = &a;
 	printf("\n   p = &a\n\n");

@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	int a = 10;
+	long a = 10;
 	char c = 'a';
 	char message[128];
 	int key[256];
