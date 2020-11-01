@@ -22,6 +22,7 @@ main:
 
 good:
     PRINTF32 `%s\n\x0`, right
+    ret
 
 bad:
     PRINTF32 `%s\n\x0`, wrong
