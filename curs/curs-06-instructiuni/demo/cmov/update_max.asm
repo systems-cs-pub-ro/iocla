@@ -25,10 +25,9 @@ update_max_cmov:
  	enter 0,0
 	mov ecx, [max]
 	mov eax, 0
-	mov edx, 1
 	cmp [ebp+8], ecx
 	cmovg ecx, [ebp+8]
 	mov [max], ecx
-	cmovg eax, edx
+	setg al
 	leave
     ret
