@@ -252,8 +252,7 @@ void test_my_strstr()
         outfile = fopen(outfile_name, "w+");
         reffile = fopen(reffile_name, "r");
 
-        fscanf(infile, "%d\n", &len);
-        fscanf(infile, "%d\n", &substr_len);
+        fscanf(infile, "%d %d", &len, &substr_len);
 
         plaintext = calloc(len, sizeof(*plaintext));
         substr = calloc(substr_len, sizeof(*substr));
@@ -283,6 +282,7 @@ void test_my_strstr()
         free(plaintext);
         free(substr_index);
         free(reftext);
+        free(substr);
     }
 }
 
