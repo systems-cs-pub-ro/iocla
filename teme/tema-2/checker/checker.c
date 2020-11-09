@@ -240,8 +240,10 @@ void test_my_strstr()
          infile_name[30], 
          outfile_name[30],
          reffile_name[30],
-         *plaintext, *substr, *ciphertext, *reftext;
+         *plaintext, *substr;
     int len, substr_len;
+    int *substr_index;
+    int *reftext;
 
     for (int i = 0; i < STRSTR_TESTS; i++) {
         prepare_files(file_prefix, infile_name, outfile_name, reffile_name, i);
@@ -255,21 +257,21 @@ void test_my_strstr()
 
         plaintext = calloc(len, sizeof(*plaintext));
         substr = calloc(substr_len, sizeof(*substr));
-        ciphertext = calloc(len, sizeof(*ciphertext));
-        reftext = calloc(len, sizeof(*reftext));
+        substr_index = calloc(1, sizeof(*substr_index));
+        reftext = calloc(1, sizeof(*reftext));
 
         fread(plaintext, sizeof(char), len, infile);
         fgetc(infile);
         fread(substr, sizeof(char), substr_len, infile);
         fgetc(infile);
 
-        my_strstr(ciphertext, plaintext, substr, len, substr_len);
+        my_strstr(substr_index, plaintext, substr, len, substr_len);
 
-        fwrite(ciphertext, sizeof(char), len, outfile);
+        fprintf(outfile, "%d\n", *substr_index);
 
-        fread(reftext, sizeof(char), len, reffile);
+        fscanf(reffile, "%d", reftext);
 
-        if (memcmp(ciphertext, reftext, len) == 0) {
+        if (*substr_index == *reftext) {
             score += STRSTR_SCORE;
             printf("STRSTR test %d\t\t\t\t\t\tPASSED [%d/%d]\n", i, STRSTR_SCORE, STRSTR_SCORE);
         } else {
@@ -279,7 +281,7 @@ void test_my_strstr()
         close_files(infile, outfile, reffile);
 
         free(plaintext);
-        free(ciphertext);
+        free(substr_index);
         free(reftext);
     }
 }

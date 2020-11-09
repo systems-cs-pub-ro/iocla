@@ -7,19 +7,19 @@ build: checker
 run: checker
 	./checker
 
-caesar.o: $(SKEL_FOLDER)caesar.asm
+caesar.o: caesar.asm
 	nasm -f elf $^ -o $@
 
-otp.o: $(SKEL_FOLDER)otp.asm
+otp.o: otp.asm
 	nasm -f elf $^ -o $@
 
-vigenere.o: $(SKEL_FOLDER)vigenere.asm
+vigenere.o: vigenere.asm
 	nasm -f elf $^ -o $@
 
-bin_to_hex.o: $(SKEL_FOLDER)bin_to_hex.asm
+bin_to_hex.o: bin_to_hex.asm
 	nasm -f elf $^ -o $@
 
-my_strstr.o: $(SKEL_FOLDER)my_strstr.asm
+my_strstr.o: my_strstr.asm
 	nasm -f elf $^ -o $@
 
 checker.o: checker.c

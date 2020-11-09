@@ -20,4 +20,4 @@ void vigenere(char *ciphertext, char *plaintext, int plaintext_len, char *key, i
 
 void bin_to_hex(char *ret_value, char *bin_sequence, int len);
 
-void my_strstr(char *ret_value, char *haystack, char *needle, int haystack_len, int needle_len);
+void my_strstr(int *ret_value, char *haystack, char *needle, int haystack_len, int needle_len);
