@@ -7,4 +7,6 @@ void main(void)
 	int i;
 
 	/* TODO: Implement finding the maximum value in the vector */
+	max = v[0];
+	i = 1;
 }
