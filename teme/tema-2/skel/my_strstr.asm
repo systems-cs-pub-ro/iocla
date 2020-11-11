@@ -10,7 +10,7 @@ my_strstr:
     mov     ebp, esp
     pusha
 
-    mov     edx, [ebp + 8]      ; substr_index
+    mov     edi, [ebp + 8]      ; substr_index
     mov     esi, [ebp + 12]     ; haystack
     mov     ebx, [ebp + 16]     ; needle
     mov     ecx, [ebp + 20]     ; haystack_len
