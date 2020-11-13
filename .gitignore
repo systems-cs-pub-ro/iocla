@@ -54,3 +54,5 @@ Mkfile.old
 dkms.conf
 
 *.zip
+*_out
+checker

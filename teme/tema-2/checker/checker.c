@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int score;
 
@@ -316,6 +317,15 @@ int main(int argc, char *argv[])
         test_bin_to_hex();
         printf("--------------------------------------------------------------------\n");
     }
+
+    if (access("README", F_OK) != -1) {
+        score += 10;
+        printf("README\t\t\t\t\t\t      EXISTS [10/10]\n");
+    } else {
+        printf("README\t\t\t\t\t\t    NOT FOUND [0/10]\n");
+    }
+    printf("--------------------------------------------------------------------\n");
+
     printf("SCORE: [%d/%d]\n", score, MAX_SCORE);
 
     return 0;
