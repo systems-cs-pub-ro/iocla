@@ -10,6 +10,9 @@ struc stud_struct
 endstruc
 
 section .data
+    string_format db "%s", 0
+    string_endline_format db "%s", 10, 0
+    dec_format db "%d", 10, 0
 
 sample_student:
     istruc stud_struct
@@ -40,30 +43,77 @@ main:
     ; age is 22
     ; group is '323CA'
 
+    lea ebx, [string_name]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     lea eax, [sample_student + name]
-    PRINTF32 `%s\x0`, string_name
-    PRINTF32 `%s\n\x0`, eax
+    push eax
+    push string_endline_format
+    call printf
+    add esp, 8
+
+    lea ebx, [string_surname]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     lea eax, [sample_student + surname]
-    PRINTF32 `%s\x0`, string_surname
-    PRINTF32 `%s\n\x0`, eax
+    push eax
+    push string_endline_format
+    call printf
+    add esp, 8
+
+    lea ebx, [string_age]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     mov al, byte [sample_student + age]
-    PRINTF32 `%s\x0`, string_age
     xor ebx, ebx
     mov bl, al
-    PRINTF32 `%u\n\x0`, ebx
+    push ebx
+    push dec_format
+    call printf
+    add esp, 8
+
+    lea ebx, [string_group]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     lea eax, [sample_student + group]
-    PRINTF32 `%s\x0`, string_group
-    PRINTF32 `%s\n\x0`, eax
+    push eax
+    push string_endline_format
+    call printf
+    add esp, 8
+
+    lea ebx, [string_gender]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     mov al, byte [sample_student + gender]
-    PRINTF32 `%s\x0`, string_gender
     xor ebx, ebx
     mov bl, al
-    PRINTF32 `%u\n\x0`, ebx
+    push ebx
+    push dec_format
+    call printf
+    add esp, 8
+
+    lea ebx, [string_year]
+    push ebx
+    push string_format
+    call printf
+    add esp, 8
     mov ax, [sample_student + birth_year]
-    PRINTF32 `%s\x0`, string_year
     xor ebx, ebx
     mov bx, ax
-    PRINTF32 `%hu\n\x0`, ebx
+    push ebx
+    push dec_format
+    call printf
+    add esp, 8
 
     leave
     ret

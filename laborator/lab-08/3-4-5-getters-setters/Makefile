@@ -1,10 +1,10 @@
 NASM = nasm
-AFILES = process_structure.asm 
+AFILES = getter_setter_printf.asm 
 OBJS = $(AFILES:.asm=.o) 
 ASM_FLAGS = -f elf32 -g
 LD=gcc
 LDFLAGS = -m32 -g
-BINARIES = process_structure
+BINARIES = getter_setter_printf
 
 all : $(BINARIES)
 
