@@ -4,9 +4,10 @@
 CC=gcc
 ASM=nasm
 ASMFLAGS=-f elf64
+LDFLAGS=-no-pie
 
 mainmax: main.o max.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 main.o: main.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
 
