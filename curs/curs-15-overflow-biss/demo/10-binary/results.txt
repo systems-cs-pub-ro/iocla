@@ -1,0 +1,8 @@
+alpha(0x5397)
+beta(144)
+echo $$ in shell, pass that number to omega(), or use getppid() 
+
+Expected OUTPUT: 
+Eureka!
+ret: 6699
+It has finally happened!

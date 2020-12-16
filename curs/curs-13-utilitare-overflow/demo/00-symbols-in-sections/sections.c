@@ -4,7 +4,7 @@ unsigned short int ana;
 static unsigned int stana;
 static const unsigned long int laptita;
 
-unsigned short int bogdan = 5;
+unsigned short int bogdan = 4;
 static unsigned int dan = 6;
 static const unsigned long int stan = 7;
 

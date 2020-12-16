@@ -3,10 +3,10 @@
 * recognize features of example 03
 * identify values at buffer[0]..buffer[8]
 * program has two stages: read indexes of buffer, overwrite indexes of buffer 
-  - accepts values in decimal 
+  - accepts values in dec/hex 
   - $ printf "%d" 0x08048661
   - watch exit code 
-  - $ if ./writer; then echo "URA"; fi
+  - $ ./writer; echo $? 
   - the only way to exit with success (exit code 0) 
 	is through the hidden/secret functions
 * goal1: exit with success

@@ -8,10 +8,10 @@
 
 * reader.c 
   - practice reading values from the stack
-  - 0..6, the same as in previous example (memory_discclosure.c)
+  - 0..6, the same as in previous example (memory_disclosure.c)
   - what is at buf[-1] ? local variable index
   - what is at buf[-2] ? (freed stack, old param for read_int)
   - what is at buf[-3] ? return location after read_int
-  - what is at buf[-4] ? my current EBP(in disclose_target) - prove it; prove iot without gdb! 
+  - what is at buf[-4] ? my current EBP(in disclose_target) - prove it; prove it without gdb! 
   - what is at buf[-12]? 0, '2', '1', '-'
   - homework: call  disclosure_target from another f(), and find variables of f()
