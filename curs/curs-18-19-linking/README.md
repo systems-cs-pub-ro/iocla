@@ -1,15 +1,15 @@
 # Linking
 
-Linking (sau link editare sau legare sau editarea de legături) este faza finală a procesului de compilare.
+Linking (sau linkare / legare sau link editare / editarea de legături) este faza finală a procesului de compilare.
 Linkingul agregă mai multe fișiere obiect (sau colecții de fișiere obiect: biblioteci) într-un fișier executabil.
-Un fișier executabile conține datele și codul necesare pentru a porni o aplicație / un proces.
+Un fișier executabil conține datele și codul necesare pentru a porni o aplicație / un proces.
 Pornirea unui proces dintr-un fișier executabil este numită **loading** (încărcare).
-Spunem că fișierul executabil este încărcat în memorie pentru a porni un proces.
+Fișierul executabil este încărcat (**loaded**) în memorie; codul și datele din fișierul executabil astfel încărcat în memorie sunt folosite pentru a porni un proces.
 Spunem că fișierul executabil este **imaginea procesului**.
 
-La compilare, sau la linkare sau la încărcare, se realizează diferite acțiuni specifice.
-Numim acele momente *compile-time*, *link-time* și *load-time*.
-Rularea efectivă a codului unui proces este numită *run-time*.
+La compilare, linkare și încărcare se realizează diferite acțiuni specifice.
+Numim aceste momente *compile-time*, *link-time* și *load-time*.
+Rularea efectivă a codului în cadrul unui proces este numită *run-time*.
 
 Programul folosit pentru linking este numit **linker**.
 Linkerul folosește ca intrare fișiere obiect și fișiere de tip bibliotecă; produce fișiere executabile sau biblioteci dinamice.
@@ -28,7 +28,7 @@ Pentru a produce fișierul executabil, linkerul realizează o serie de acțiuni,
 1. rezolvarea simbolurilor (*symbol resolution*): localizarea simbolurilor nedefinite ale unui fișier obiect în alte fișiere obiect
 1. unificarea secțiunilor: unificarea secțiunilor de același tip din diferite fișiere obiect într-o singură secțiune în fișierul executabil
 1. stabilirea adreselor secțiunilor și simbolurilor (*address binding*): după unificare se pot stabili adresele efective ale simbolurilor în cadrul fișierului executabil
-1. relocarea simbolurilor (*relocation*): o dată stabilite adresele simbolurilor, trebuie actualizate, în executabil, instrucțiunilor sau datele care referă adresele acelor simboluri
+1. relocarea simbolurilor (*relocation*): odată stabilite adresele simbolurilor, trebuie actualizate, în executabil, instrucțiunile și datele care referă adresele acelor simboluri
 1. stabilirea unui punct de intrare în program (*entry point*): adică adresa primei instrucțiuni ce va fi executată
 
 În mod obișnuit, secvența de mai sus este secvența de acțiuni realizate de linker, ordonate cronologic.
@@ -39,8 +39,9 @@ Pentru o mai ușoară înțelegere, vom detalia aceste acțiuni într-o altă or
 **Entry pointul** unui program este adresa primei instrucțiuni executate din fișierul executabil.
 Entry pointul are sens doar pentru fișiere executabile, nu și pentru fișiere obiect.
 
-În directorul `01-one-file/` vom compila și lega un fișier cod sursă C: `one.c`.
-Pentru procesul de linkare, vom asambla și lega un fișier în limbaj de asamblare (`start.s`).
+În directorul `01-one-file/` vom compila un fișier cod sursă C `one.c` în fișierul obiect `one.o`.
+Ca suport pentru procesul de linkare, vom asambla fișierul în limbaj de asamblare `start.s` în fișierul obiecti `start.o`.
+Apoi vom lega cele două fișiere obiect `one.o` și `start.o` în fișierul executabil `one`.
 Prezența fișierului în limbaj de asamblare este necesară pentru procesul de linking; nu vom insista pe acesta acum.
 În principiu, pentru simplitate, este vorba de compilarea și legarea unui **singur** fișier `one.c`.
 
@@ -125,8 +126,8 @@ Linkerul atașează fiecărui simbol din fișierul executabil rezultat o adresă
 Aceste adrese vor fi folosite la încărcarea executabilului în memorie, la crearea procesului.
 O astfel de adresă este adresa entry pointului, adresa primei instrucțiuni ce va fi executată.
 
-Simbolurile de fișierele obiect nu conțin adrese.
-Adresele vor asociate fiecărui simbol la linkare.
+Simbolurile din fișierele obiect nu au atribuite adrese.
+Adresele vor atribuite fiecărui simbol la linkare.
 Când investigăm un fișier obiect, "adresele" afișate sunt de fapt offseturile în cadrul secțiunilor.
 Comanda de mai jos afișează simbolurile din fișierul obiect `one.o`:
 ```
@@ -136,7 +137,7 @@ Comanda de mai jos afișează simbolurile din fișierul obiect `one.o`:
 00000000 D num_items
 ```
 În secvența de mai sus ar apărea că simbolul `increment` și simbolul `num_items` au acceași adresă.
-De fapt, simbolul `increment` este un simbol în secțiunea de cod (`.text) în vreme ce simbolul `num_items` este un simbol în secțiunea de date (`.data`).
+De fapt, simbolul `increment` este un simbol în secțiunea de cod (`.text`) în vreme ce simbolul `num_items` este un simbol în secțiunea de date (`.data`).
 "Adresele" afișate sunt offseturile în cadrul secțiunilor.
 Adică simbolul `increment` este la offsetul `0` în cadrul secțiunii de cod (adică este la începutul secțiunii).
 La fel, simbolul `num_items` este la offsetul `0` în cadrul secțiunii de date (adică, la fel, este la începutul secțiunii).
@@ -227,8 +228,8 @@ Disassembly of section .text:
  8048130:       cd 80                   int    0x80
 ```
 
-În fapt, linkerul stabilește care este adresa de start a fiecărui secțiuni.
-Iar apoi, pentru fiecare simbol se calculează adresă ca fiind suma dintre adresa secțiunii și deplasamentul (offsetul) simbolului în cadrul secțiunii:
+În fapt, linkerul stabilește care este adresa de început a fiecărui secțiuni.
+Iar apoi, pentru fiecare simbol se calculează adresa ca fiind suma dintre adresa secțiunii și deplasamentul (offsetul) simbolului în cadrul secțiunii:
 ```
 symbol_address = section_address + offset_of_symbol_in_section
 ```
@@ -262,7 +263,7 @@ Key to Flags:
   p (processor specific)
 ```
 Adresele sunt indicate în coloana `Addr`.
-Observăm că secțiunea `.text` are adresa `0x080480f8`, iar secțiunea `.data` are adresa `0804a000`.
+Observăm că secțiunea `.text` are adresa de început `0x080480f8`, iar secțiunea `.data` are adresa de început `0x0804a000`.
 Simbolul `increment` se găsește la adresa `0x080480f8` adică la începutul secțiunii `.text`.
 Simbolul `num_items` se găsește la adresa `0x0804a000` adică la începutul secțiunii `.data`.
 Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` în secțiunea `.text`.
@@ -289,9 +290,8 @@ Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` î
 ```
 
 În fișierul executabil codul instrucțiunilor conține adresa efectivă a variabilei `num_items` (`0x0804a000`), scrisă în format little endian.
-În fișierul obiect `one.o`, însă, nu apare adresa efectivă a variabilei `num_items`, apare `0x00000000`.
-Explicația este că fișierul executabil, rezultat în urma procesului de linking, a fost obținut știindu-se adresele efective.
-În vreme ce, în cazul fișierului obiect, adresele nu sunt cunoscute.
+În fișierul obiect `one.o`, însă, nu apare adresa efectivă a variabilei `num_items`, ci apare `0x00000000`.
+Explicația este că fișierul executabil, rezultat în urma procesului de linking, a fost obținut știindu-se adresele efective, în vreme ce, în cazul fișierului obiect, adresele nu sunt cunoscute.
 
 Același lucru se întâmplă și în cazul instrucțiunii care referă simbolul `increment` din cadrul funcției `main`:
 ```
@@ -327,7 +327,7 @@ ELF Header:
 Linkerul se ocupă de relocarea referințelor la simboluri.
 Atunci când creează fișierul executabil, urmărește referințele la simboluri și le înlocuiește cu adresele efective ale simbolurilor.
 Pentru a realiza relocarea, adică înlocuirea referințelor, linkerul trebuie să știe unde se găsesc aceste referințe.
-Pentru aceasta fișierele obiect relocabile conțin **tabele de relocare** (*relocation tables*).
+Pentru aceasta, fișierele obiect relocabile conțin **tabele de relocare** (*relocation tables*).
 
 Folosim `readelf` pentru a obține tabelele de relocare ale fișierului obiect relocabil `one.o`:
 ```
@@ -352,7 +352,7 @@ Prin parcurgerea secțiunii de relocare `.rel.text`, linkerul ia următoarele de
 * la offsetul `0x18` față de începutul secțiunii `.text` trebuie să înlocuiască referința cu adresa simbolului `num_items`
 * la offsetul `0x21` față de începutul secțiunii `.text` trebuie să înlocuiască referința cu adresa simbolului `increment`
 
-În dezasamblarea fișierului obiectiv `one.o`, observăm că exact acelea sunt offseturile unde se găsesc referințele la simboluri:
+În dezasamblarea fișierului obiect `one.o`, observăm că exact acelea sunt offseturile unde se găsesc referințele la simboluri:
 ```
 ; one.o
    3:   a1 00 00 00 00          mov    eax,ds:0x0
@@ -369,7 +369,7 @@ La offseturile `0x04`, `0x0c`, `0x18` se găsesc referințe la simbolul `num_ite
 Necunoscându-se adresa simbolului `num_items` referințele sunt acum marcate cu `0x00000000`.
 
 Similar, la offsetul `0x21` se găsește referința la simbolul `increment`.
-La fel, necunoscându-se adresa simbolului `num_items, este marcată cu un placeholder.
+La fel, necunoscându-se adresa simbolului `num_items`, referința este marcată cu un placeholder.
 
 După ce stabilește adresele, linkerul va parcurge secțiunea de relocare `.rel.text` și va face înlocuirea referințelor cu adresele efective ale simbolurilor.
 Acest lucru se observă în fișierul executabil:
@@ -394,13 +394,14 @@ Fișierul executabil `one` are toate referințele relocate așa că nu are o tab
 There are no relocations in this file.
 ```
 
-Noțiunea de relocare include, în general, și stabilirea adreselor simbolurilor (*address binding*).
+Etapa de relocare presupune, în general, și stabilirea adreselor simbolurilor (*address binding*).
 Aici am folosit o definiție mai relaxată, considerând relocarea ca fiind doar înlocuirea referințelor de simboluri folosind tabelele de relocare.
 
 ## Rezolvarea simbolurilor
 
 Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conține simbobluri definite și nedefinite (*undefined*).
-Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial, fără a fi însă definite, adică fără a se aloca memorie pentru ele (și deci, în viitor, adrese).
+Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
+După cum le spune și numele, nu sunt, însă, definite, adică nu se aloca memorie pentru ele (și deci, în viitor, adrese).
 
 În limbajul C, declarăm funcții prin intermediul antetului lor, și le folosim prin apelarea lor:
 ```
@@ -411,7 +412,7 @@ int f(void);
 a = f();
 ```
 
-Declarăm variabile prefixându-le cu `extern`:
+Declarăm variabile, fără a le defini, prefixându-le cu `extern`:
 ```
 /* Declare variable num_items. */
 extern unsigned int num_items;
@@ -424,8 +425,9 @@ printf("num_items: %u\n", num_items);
 Definirea unui simbol poate avea loc în alt modul.
 Adică un alt modul poate defini o funcție (o funcție care să aibă corp) și o variabilă, rezultând în alocarea de memorie pentru aceste simoboluri: cod pentru funcție și date pentru variabilă.
 Este rolul linkerului de a parcurge fișierele obiect și de a extrage simbolurile nedefinite.
-Pentru fiecare simbol nedefinit va căuta fișierul obiect unde aceste este definit și le va putea conecta.
-Adică locul unde era referit acel simbol nedefinit va fi acum completat cu adresa corectă.
+Pentru fiecare referință de simbol nedefinit, linkerul va căuta fișierul obiect unde simbolul este definit.
+Apoi va realiza conexiunea între cele două.
+Adică locul unde era referit simbolul nedefinit va fi acum completat cu adresa corectă.
 
 ## Referințe
 
