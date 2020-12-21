@@ -429,6 +429,30 @@ Pentru fiecare referință de simbol nedefinit, linkerul va căuta fișierul obi
 Apoi va realiza conexiunea între cele două.
 Adică locul unde era referit simbolul nedefinit va fi acum completat cu adresa corectă.
 
+## Unificarea secțiunilor
+
+TODO
+
+## Rezolvarea simbolurilor
+
+TODO
+
+## Linkare statică
+
+TODO
+
+## Linkare dinamică
+
+TODO
+
+## Biblioteci cu linkare dinamică
+
+TODO
+
+## Sumar
+
+TODO
+
 ## Referințe
 
 https://people.cs.pitt.edu/~xianeizhang/notes/Linking.html
