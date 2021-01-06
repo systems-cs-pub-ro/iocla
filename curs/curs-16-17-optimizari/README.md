@@ -14,10 +14,11 @@ sistem fizic etc. -, procesul de optimizare este unul complicat, multinivel
 pentru care nu exista o cale batatorita ce poate fi urmata. In aceste
 conditii, optimizarea unui program necesita profilarea extensiva a acestuia
 pentru a se descoperi nivelurile unde au loc pierderi de performanta si
-cauzele acestora.
+cauzele acestora. In mod uzual, spunem ca acea portiune de cod
+cauzeaza un "bottleneck".
 
-Din punct de vedere al programatorului optimizarea poate avea loc la 3
-niveluri diferite:
+Din punctul de vedere al modului in care programatorul poate actiona
+pentru optimizari, diferentiem 3 niveluri:
 
 1. Optimizari la nivel de algoritm. Acest pas presupune identificarea
 algoritmului optim pentru problema de fata si este independent de
@@ -29,14 +30,14 @@ programatorul sa cunoasca detalii despre arhitectura sistemului pe care
 ruleaza si prin indicii sau rescrieri de cod sa ajute compilatorul sa
 genereze un cod mai eficient.
 
-3. Optimizari la nivel de asamblare. Acest pas presupune intelegerea
-codului assembly rezultat si identificarea situatiilor in care compilatorul
-nu a generat codul optim. In acest caz, programatorul va trebui sa
-substituie sau sa adauge cod (inline) assembly in codul sursa de nivel
-inalt.
+3. Optimizari la nivel de arhitectura de procesor. Acest pas presupune
+intelegerea codului assembly rezultat si identificarea situatiilor in
+care compilatorul nu a generat codul optim. In acest caz, programatorul
+va trebui sa substituie sau sa adauge cod (inline) assembly in codul
+sursa de nivel inalt.
 
 In cadrul acestui curs ne vom axa pe optimizarile de timp la nivel de
-asamblare pentru a vedea cum cunoasterea arhitecturii sistemului de
+asamblare, pentru a vedea cum cunoasterea arhitecturii sistemului de
 calcul si a limbajului de asamblare ne poate ajuta sa optimizam
 programele. Astfel, cursul va aborda urmatoarele subiecte:
  - vom enumera care sunt metodele de masurare/profilare disponibile
@@ -47,13 +48,13 @@ programele. Astfel, cursul va aborda urmatoarele subiecte:
 
 ## Profilare
 
-Programele din ziua de azi sunt din ce in ce mai mari (de ordinul milioanelor
-de linii de cod). In acest context este important sa avem o metoda usoara
-de a identifica care sunt portiunile din program care sunt executate cel
-mai des (hotpaths). Odata identificate aceste portiuni, este necesar
-sa intelegem anatomia acestora pentru a putea gasi metode de optimizare.
-Profilarea unei aplicatii reprezinta procesul prin care putem realiza
-acest lucru.
+Programele din ziua de azi sunt din ce in ce mai mari (de ordinul zecilor
+de mii de linii cod, uneori chiar milioanelor). In acest context este
+important sa avem o metoda usoara de a identifica care sunt portiunile
+din program care sunt executate cel mai des ("hot paths"). Odata identificate
+aceste portiuni, este necesar sa intelegem anatomia acestora pentru a putea
+gasi metode de optimizare. Profilarea unei aplicatii reprezinta procesul
+prin care putem realiza acest lucru.
 
 Astfel, in procesul de profilare vom utiliza una sau mai multe unelte,
 in functie de scop.
@@ -61,7 +62,7 @@ in functie de scop.
 ### perf
 
 `perf` este un utilitar de monitorizare a performantei pentru Linux. Acesta
-are access la unitatea de monitarizare a performantei din procesor asa ca
+are access la unitatea de monitorizare a performantei din procesor asa ca
 poate oferi atat informatii privitoare la evenimente software (numarul de
 schimbari de context, numarul de fault-uri, etc.) cat si informatii despre
 evenimentele hardware (numarul de cicli , branch miss-uri, numarul de
@@ -204,14 +205,104 @@ sa se vada ca va fi un numar mare de L1 cache misses)
 
 $ make papi
 
+(Discutie in functie de rezultatulele obtinute)
 
 ## Optimizari
 
-### Optimizari de compilator (-O2 -O3)
 ### Loop unrolling
+
+Pentru a intelege aceasta optimizare ne vom uita pe un exemplu.
+
+$ cd loop_unroll/
+
+In acest director avem 2 surse. Algoritmic vorbind, cele 2 programe
+sunt echivalente: calculeaza suma unui vector de intregi. Compilati
+si rulati cele 2 exemple:
+
+$ make
+
+Observam ca in mod consistent a 2-a varianta este mai rapida decat
+prima. De ce?
+
+
+Motivul principal pentru care optimizarea de "loop unrolling"
+produce benficii este aceea ca se imputineaza numarul de
+instructiuni de control ale buclei. Desi numarul adunarilor
+din calculul sumei ramane constant, numarul de comparari
+("i < N") si numarul de salt-uri ("jmp") se reduc.
+Dezavantajul acestei tehnici este acela ca va creste dimensiunea
+binarului. Pe langa aceasta, nu avem garantia ca orice
+bucla va beneficia in urma acestei optimizari; in anumite
+cazuri este posibil sa duca chiar la inrautatirea performantei.
+De aceea, compilatoarele nu folosesc in mod implicit aceasta
+optimizare nici macar atunci cand este folosita optiunea
+de optimizare maximala.
+
 ### Functii inline
+
 ### Folosire instructiuni speciale
     - prefetch
     - popcnt
     - bsf
 ###AVX/SSE
+
+### Optimizari de compilator
+
+In marea majoritatea a cazurilor, optimizarile algoritmice sunt suficiente
+pentru a obtine o performanta acceptabila. Restul optimizarilor sunt lasate
+pe mana compilatorului, folosind una dintre optiunile de optimizare.
+
+Astfel, compilatoarele ofera mai multe optiuni de optimizare. In cadrul acestui curs,
+vom studia optiunile de optimizare ale compilatorului `GCC`.
+
+`GCC` ofera 5 optiuni de optimizare:
+
+1. -O0: nicio optimizare, optiunea implicita. Fiecare instructiune este translata
+direct in corespondentul ei in assembly.
+2. -O1: optimizari de baza. Binarul ar trebui sa aiba o dimensiune mai mica si sa fie
+mai rapid decat binarul compilato cu -O0. Optimizarile mai avansate nu vor fi folosite
+cu aceasta optiune.
+3. -O2: optimizari de baza + optimizari avansate care nu necesita cresterea dimensiunii
+binarului. Compilarea, de regula, va dura mai mult, insa binarul rezultat va fi mai
+rapid decat compilarea cu -O1, cu dimensiunea lui cel mult egala.
+4. -O3: optimizari de baza + optimizari avansate + optimizari care favorizeaza
+rapiditatea rularii in detrimentul dimensiunii binarului. In unele situatii
+nefavorabile, este posibil ca performanta binarului sa se inrautateasca.
+5. -Os: optimizari de spatiu. Aceasta optiune va selecta optimizarile care
+favorizeaza dimensiunea binarului in detrimentul vitezei; se va incerca
+obtinerea unui binar cat mai mic cu putinta.
+
+Intrebare: De ce este -O0 optiunea implicita?
+Raspuns: In ciclul de productie un program va fi compilat de foarte
+multe ori, iar -O0 este varianta cea mai rapida din punct de vedere
+al timpului de compilare. In momentul in care programul este corect
+si gata de livrare se poate utiliza -O2 sau -O3 pentru a obtine
+performanta maxima.
+
+Demo:
+
+$ cd opt_demo
+$ make
+
+Aici avem un program simplu care realizeaza suma numerelor dintr-un
+vector. Am compilat 4 variante ale programului. Ruland cele 4 variante
+vom observa urmatoarea relatie intre timpii de rulare ai programului:
+
+O0 > O1 > O2 = O3 (pe masina mea)
+
+Intre O2 si O3 nu este mare diferenta in aceasta situatie.
+Daca analizam dimensiunea binarelor, vom observa ca variantele
+optimizate au aceeasi dimensiune, in timp ce varianta neoptimizata
+are dimensiunea un pic mai mare (72 bytes pe masina mea). Daca ne
+uitam cu `objdump` la codul assembly al binarului, vom remarca
+o scadere de ~6% in codul generat cu optimizari.
+
+In fisierul `test.c`, comentati linia care printeaza suma elementelor.
+Recompilati toate variantele si rulati-le. Ce observam?
+Pentru -O0 si -O1 nu exista nicio modificare a timpului de rulare,
+inspre pentru variantele -O2 si -O3 timpul de rulare tinde la 0.
+Asta se intampla pentru ca variabila `sum` nu mai este folosita
+la nimic si atunci compilatorul decide ca orice operatie care
+va salva un rezultat in ea este inutila, de unde si eliminarea
+acestora (se poate observa si cu `objdump` faptul ca intre cele
+2 apeluri ale functiei `clock` nu se mai afla nicio instructiune).
