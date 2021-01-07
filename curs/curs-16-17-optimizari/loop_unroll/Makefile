@@ -1,4 +1,3 @@
-OPTFLAGS=-O3
 CFLAGS=-m32
 
 run: normal_loop unrolled_loop

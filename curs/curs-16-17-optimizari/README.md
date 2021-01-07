@@ -224,7 +224,6 @@ $ make
 Observam ca in mod consistent a 2-a varianta este mai rapida decat
 prima. De ce?
 
-
 Motivul principal pentru care optimizarea de "loop unrolling"
 produce benficii este aceea ca se imputineaza numarul de
 instructiuni de control ale buclei. Desi numarul adunarilor
@@ -240,11 +239,197 @@ de optimizare maximala.
 
 ### Functii inline
 
+Folosirea functiilor ne ofera posibilitatea incapsularii si a refolosirii
+codului. Asta ne ajuta sa scriem programe mai lizibile, sa facem
+"debugging" mai usor si sa scadem dimensiunea binarelor. Cu toate acestea
+apelurile de functii vin cu un cost de performanta (punerea parametrilor
+pe stiva, salt catre functie, luarea parametrilor de pe stiva, salt la
+adresa de retur, refacerea stivei). Pentru a analiza aceasta penalitate
+de performanta, vom folosi programul anterior si o varianta modificata
+a acestuia.
+
+$ cd inline/
+
+Analizand cele 2 fisiere `no-inline.c` si `inline.c` vom remarca faptul
+ca in primul caz suma elementelor se realizeaza folosind o functie,
+in timp ce in al doilea caz, suma se calculeaza direct. Rulam cele
+2 programe pentru a observa diferentele de performanta:
+
+$ make
+
+Se observa faptul ca varianta care nu foloseste o functie este aproximativ
+de 2-3 ori mai rapida. Acest lucru se datoreaza faptului ca timpul petrecut
+executand instructiunile din cadrul functiei `sum_func` este mai mic decat
+timpul necesar rularii instructiunilor necesare pentru apel. In astfel de
+situatii este mai eficient atat din punct de vedere al timpului, cat si din
+cel al spatiului, ca functia sa fie integrata direct in codul unde se apeleaza.
+Numim acest proces "inlining".
+
+In mod normal, daca se foloseste o optiune de optimizare, compilatorul decide
+ce functii for fi "inlined" si ce functii nu. Pentru aceasta exista metrici
+interne pe care compilatorul se foloseste pentru a lua cea mai buna decizie
+din punct de vedere al raportului spatiu/timp.
+
+In cazul in care dorim sa fortam ca o functie sa fie "inlined", in C, vom
+adauga ` __attribute__((always_inline))` in antetul functiei.
+
 ### Folosire instructiuni speciale
-    - prefetch
-    - popcnt
-    - bsf
-###AVX/SSE
+
+Procesoarele ofera un set de instructiuni ce pot fi utilizate pentru optimizare
+pe care compilatorul nu are capacitatea de a le folosi decat in situatii
+foarte limitate. In restul cazurilor, este sarcina programatorului de a
+folosi aceste instructiuni a obtine o performanta mai buna.
+
+#### Instructiunea de "prefetch"
+
+Pentru a intelege care sunt avantajele folosirii acestei instructiuni este necesar
+sa intelegem cum functioneaza ierarhia memoriei.
+
+Cand vorbim despre spatiu de stocare, calculatoarele beneficiaza de mai multe niveluri
+de memorie:
+
+1. Hard-diskul este un tip de memorie lenta, persistenta si de dimensiuni foarte mari
+(de la sute de GB la zeci de TB). Aceasta este folosita pentru a stoca toate informatiile
+disponibile pe o masina, chiar si atunci cand aceasta nu este pornita.
+
+2. RAM-ul este un tip de memorie volatila, mai rapida decat hard disk-ul cu cateva ordine
+de marime si de dimensiune medie (zeci de GB). Cand un proces este lansat in executie,
+datele sale (sau majoritatea datelor sale) sunt citite de pe disk si aduse in RAM,
+astfel incat atunci cand vor fi utilizate, vor fi accesate la o viteza mult mai rapida
+decat daca ar fi interpelate de pe disk.
+
+3. Cache-ul este un tip de memorie volatila, foarte rapida si de dimensiune mica (de la
+zeci de KB la zeci de MB). Chiar daca RAM-ul este rapid, este mult inferior vitezei de
+procesare. In schimb, timpul de raspuns necesar accesului la memoria cache se apropie
+de viteza procesorului. In cazul ideal, toate datele unei aplicatii, vor fi citite din
+memoria cache. Sistemele moderne folosesc mai multe niveluri de cache (L1, L2 ...),
+fiecare nivel fiind fie mai mic si mai rapid, fie mai mare si mai lent.
+
+4. Registrele procesorului formeaza un tip de memorie volatila, foarte rapida si de
+dimensiune extrem de mica (zeci de bytes). Acestea sunt la fel de rapide ca si procesorul
+si reprezinta "variabilele" cu care lucreaza procesorul.
+
+In momentul in care procesorul executa o instructiune de incarcare a unui element de date
+din memorie, se va incerca citirea acelei date din memoria cache cea mai apropiate de
+procesor (L1). In cazul in care datele nu se afla acolo, se va incerca citirea de la
+nivelul urmator (spunem ca a avut loc un eveniment de tip "L1 cache miss"). Nivelul urmator
+ar putea fi un nivel intermediar de cache (L2) sau in cazul in care sistemul dispune de
+un singur nivel de cache, memoria RAM. Despre aceste politici si modul in care functioneaza
+veti invata mai multe la cursul de "Calculatoare numerice 2".
+
+Ceea ce ne intereseaza pe noi este faptul ca ne dorim ca, in mod ideal, datele
+sa fie mereu accesate din L1. Pentru aceasta, este necesar sa se faca o predictie
+in legatura cu datele care vor fi folosite. In hardware exista mecanisme foarte
+simple de a face aceasta predictie (numite "prefetchers"), insa au o arie foarte
+limitata de programe unde aduc beneficii. In cazul programelor mai complicate,
+unde hardware-ul nu poate prezice accesul, procesoarele x86 pun la dispozitie
+instructiunea `prefetch0`. Aceasta instructiune primeste o adresa si in cazul
+in care valoarea de la acea adresa se afla in L1 cache, actioneaza ca un "nop".
+In cazul in care valoarea nu se afla in cache, se va efectua o cerere de aducere
+in cache a datelor de la nivelul inferior. Avantajul acestei instructiuni este ca
+nu va bloca niciodata procesorul.
+
+$ cd prefetch
+
+In fisierul `prefetch.c` avem implementarea standard a unui algoritm de cautare
+binare. Veti remarca faptul ca exista 2 instructiuni gardate de un `ifdef`.
+Instructiunea `__builtin_prefetch` este o functie intrinseca a compilatorului.
+Aceasta este un "wrapper" peste instructiunea din limbaj de asamblare de "prefetch".
+Avand in vedere ca `gcc` poate fi folosit pe mai multe platforme (ARM, INTEL, AMD)
+care pot avea ISA-uri diferite, dezvoltatorii compilatorului au ales sa implementeze
+acest "wrapper" care intern va introduce in cod instructiunea de prefetch specifica
+(in cazul nostru "prefetch"). `__builtin_prefetch` ca si instructiunea de asamblare
+`prefetch` primeste ca argument adresa pentru care se va aduce valoarea in cache.
+In cazul de fata, incercam sa aducem in cache viitorul pivot; din moment ce instructiunea
+de "prefetch" are loc inainte de comparatii, nu putem sti in acest moment care va fi
+viitorul pivot. Motivul pentru care efectuam operatia din timp este pentru ca
+ne dorim sa avem suficient timp pentru a aduce in cache valoarea necesara.
+
+$ make
+
+Daca analizam binarul rezultat pentru varianta cu "prefetch":
+
+$ objdump -d -M intel prefetch | less
+
+Vom remarca faptul ca au fost introduse 2 variatii ale instructiunii
+`prefetch` (`prefetcht2` pe masina mea) in functia `main` (codul a fost
+compilat cu -O3 asa ca functia `binarySearch` a fost "inlined" in main).
+
+$ ./prefetch
+$ ./no-prefetch
+
+Se obverva faptul ca varianta in care se face prefetch este cu aproximativ 25% mai
+rapida (pe masina mea 10.5s vs 14s).
+
+Pentru a vedea care este impactul cand vine vorba de cache miss-uri, vom incepe
+o instanta a `perf` care masoara numarul de accese catre L1 cache si cate dintre
+acestea au rezultat in cache miss:
+
+$ perf stat -e L1-dcache-load-misses,L1-dcache-loads ./prefetch
+$ perf stat -e L1-dcache-load-misses,L1-dcache-loads ./no-prefetch
+
+Se observa faptul ca numarul de cache miss-uri este mai mic in cazul variantei
+cu "prefetch" (40% vs 54% pe masina mea). Se poate observa de asemenea ca in
+cazul variantei cu "prefetch" se fac mai multe "load"-uri datorate faptului
+ca la fiecare iteratie efectuam 2 "load"-uri in plus.
+
+Un alt aspect notabil este acela ca utilizarea instructiunii "prefetch" nu
+ne garanteaza faptul ca datele se vor afla in cache la momentul accesului
+propriu-zis. Este posibil ca accesul sa aiba loc inainte ca datele sa fi
+ajuns in cache sau se poate intampla ca "cache controller"-ul sa
+decida ca exista cereri prioritare si atunci sa ignore cererea noastra.
+
+In anumite cazuri, utilizarea in exces a instructiunii de "prefetch"
+poate sa duca la evacuarea de date importante din cache. Caz in care
+se poate ca performanta sa se degradeze. Doar profilarea extensiva
+ne poate indica daca instructiunea aduce vreun beneficiu sau nu.
+
+Cu toate acestea, instructiunea de "prefetch" ramane o arma redutabila
+in arsenalul de optimizare al programatorului.
+
+#### Instructiuni pentru manipularea bitilor
+
+Procesoarele au suport pentru operatii uzuale pe biti pentru care implementarea
+in limbajele de nivel inalt ar fi foarte costisitoare. Vom prezenta cateva exemple
+de astfel de instructiuni:
+
+1. `popcnt` - calculeaza numarul de biti de `1` dintr-un registru. Operatia
+echivalenta (naiva) in limbajul s-ar realiza in `O(biti)` pasi prin metoda
+shift-arilor succesive.
+
+2. `lzcnt` - calculeaza numarul de biti de `0` consecutivi incepand de la cel
+mai semnificativ bit.
+
+3. `bsf` - intoarce pozitia celui mai putin semnificativ bit setat (`1`).
+
+In limajul C, aceste instructiuni beneficiaza de extensii de compilator
+similare cu cea pentru instructiunea "prefetch": `__builtin_popcnt`,
+`__builtin_ia32_lzcnt`, `__builting_ctz`.
+
+### SSE/AVX
+
+SSE (Streaming SIMD Extensions) reprezinta o extensie de procesor dedicata
+operatiunilor de tipul "Single Instruction Multiple Data". Astfel, se pot
+face operatii in paralel pe mai multe elemente de date. Concret, se pun
+la dispozitia programatorului registre de 128 biti (echivalentul a 4
+registru normale) asupra carora se pot face operatiile uzuale. Operatia
+asupra unui registru SSE nu are vreo penalitate de performanta in raport
+cu o operatie normala pe un registru de 32 de biti.
+
+Pentru a intelege mai bine, ne vom uita pe un exemplu:
+
+$ cd sse
+
+In cadrul fisierului `sse.asm` sunt implementate 2 functii care realizeaza
+adunarea elementelor unui vector. Una dintre ele foloseste extensia SSE, in
+timp ce cealalta foloseste registre normale de 32 de biti. Compilam si rulam
+programul `test_sse.c`:
+
+$ make
+$ ./test_sse
+
+Se observa faptul ca varianta care foloseste extensiile de SIMD este cea mai
+rapida (de 4 ori mai rapida ca C si de 3 ori mai rapida ca asm, pe masina mea).
 
 ### Optimizari de compilator
 
