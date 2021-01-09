@@ -6,7 +6,7 @@ i_vector_op:
     push rbp
     mov rbp, rsp
 
-    ; I'll use rdx below, so I copy it's value in r9
+    ; I'll use rdx below, so I copy its value in r9
     ; Also, loop changes the value of rcx, so I make a copy in r10
     mov r9, rdx
     mov r10, rcx
