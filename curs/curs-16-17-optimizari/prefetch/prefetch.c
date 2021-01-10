@@ -8,12 +8,13 @@ int binarySearch(int *array, int number_of_elements, int key)
     while(low <= high)
     {
         mid = (low + high)/2;
-        #ifdef DO_PREFETCH
+
+#ifdef DO_PREFETCH
         // low path
         __builtin_prefetch (&array[(mid + 1 + high)/2], 0, 1);
         // high path
         __builtin_prefetch (&array[(low + mid - 1)/2], 0, 1);
-        #endif
+#endif
 
         if(array[mid] < key)
             low = mid + 1; 

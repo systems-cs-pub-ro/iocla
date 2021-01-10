@@ -352,7 +352,7 @@ void full_verify( void )
 static inline uint64_t rdtscp(void)
 {
     uint32_t low, high;
-    asm volatile("rdtsc":"=a"(low),"=d"(high));
+    asm volatile("rdtscp":"=a"(low),"=d"(high)::"ecx");
     return ((uint64_t)high << 32) | low;
 }
 void rank( int iteration )

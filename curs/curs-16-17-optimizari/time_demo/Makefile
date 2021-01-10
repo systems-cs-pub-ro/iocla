@@ -1,22 +1,13 @@
 all: clk rdtscp papi
 
-clock: clk.c
+clk: clk.c
 	gcc -O3 -m32 -Wall clk.c -o clk
 
-clk: clock
-	./clk
-
-readtscp: rdtscp.c
+rdtscp: rdtscp.c
 	gcc -O3 -m32 -Wall rdtscp.c -o rdtscp
 
-rdtscp: readtscp
-	./rdtscp
-
-papi_bin: papi.c
-	gcc -O3 -Wall papi.c -I$(PAPI_DIR) -L$(PAPI_DIR) -o papi_bin -lpapi
-
-papi: papi_bin
-	./papi_bin
+papi: papi.c
+	gcc -O3 -Wall papi.c -I$(PAPI_DIR) -L$(PAPI_DIR) -o papi -lpapi
 
 clean:
-	rm -f clk rdtscp papi_bin
+	rm -f clk rdtscp papi

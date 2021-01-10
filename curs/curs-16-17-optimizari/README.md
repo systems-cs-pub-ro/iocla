@@ -6,16 +6,13 @@ Optimizarea reprezinta procesul prin care randamentul unei aplicatii
 (sau a unui sistem) este maximizat in functie de un anumit criteriu.
 Acest criteriu poate fi timpul, spatiul sau energia consumata.
 
-Avand in vedere complexitatea sistemelor din ziua de azi - o aplicatie
-nu ruleaza niciodata in vid, ci poate rula direct deasupra unui sistem
-fizic (baremetal), ori deasupra unui sistem de operare care la randul
-sau poate rula in cadrul unei masini virtuale sau direct deasupra unui
-sistem fizic etc. -, procesul de optimizare este unul complicat, multinivel
-pentru care nu exista o cale batatorita ce poate fi urmata. In aceste
-conditii, optimizarea unui program necesita profilarea extensiva a acestuia
-pentru a se descoperi nivelurile unde au loc pierderi de performanta si
-cauzele acestora. In mod uzual, spunem ca acea portiune de cod
-cauzeaza un "bottleneck".
+Avand in vedere complexitatea sistemelor din ziua de azi, procesul de
+optimizare este unul complicat, multinivel pentru care nu exista o
+cale batatorita ce poate fi urmata. In aceste conditii, optimizarea
+unui program necesita profilarea extensiva a acestuia pentru a se
+descoperi nivelurile unde au loc pierderi de performanta si cauzele
+acestora. In mod uzual, spunem ca acea portiune de cod cauzeaza un
+"bottleneck".
 
 Din punctul de vedere al modului in care programatorul poate actiona
 pentru optimizari, diferentiem 3 niveluri:
@@ -28,7 +25,9 @@ Algoritmilor").
 2. Optimizari la nivel de implementare. In acest punct este necesar ca
 programatorul sa cunoasca detalii despre arhitectura sistemului pe care
 ruleaza si prin indicii sau rescrieri de cod sa ajute compilatorul sa
-genereze un cod mai eficient.
+genereze un cod mai eficient. Spre exemplu: inlocuirea inmultirilor cu
+shiftari, scoaterea codului invariant in afara buclelor, alinierea
+datelor in memorie etc.
 
 3. Optimizari la nivel de arhitectura de procesor. Acest pas presupune
 intelegerea codului assembly rezultat si identificarea situatiilor in
@@ -41,7 +40,7 @@ asamblare, pentru a vedea cum cunoasterea arhitecturii sistemului de
 calcul si a limbajului de asamblare ne poate ajuta sa optimizam
 programele. Astfel, cursul va aborda urmatoarele subiecte:
  - vom enumera care sunt metodele de masurare/profilare disponibile
- - vom analiza o serie de optimizari pe care le are la dispozitie compilatorul
+ - vom analiza o serie de optimizari pe care compilatorul le poate realiza
  - vom studia o serie de instructiuni speciale ale procesorului pe care
    compilatorul nu le foloseste prea des, dar care au potential mare de a
    creste performanta
@@ -65,7 +64,7 @@ in functie de scop.
 are access la unitatea de monitorizare a performantei din procesor asa ca
 poate oferi atat informatii privitoare la evenimente software (numarul de
 schimbari de context, numarul de fault-uri, etc.) cat si informatii despre
-evenimentele hardware (numarul de cicli , branch miss-uri, numarul de
+evenimentele hardware (numarul de cicli, branch miss-uri, numarul de
 instructiuni executate etc.).
 
 Demo:
@@ -101,7 +100,8 @@ In cazul in care avem nevoie sa identificam care sunt portiunile critice
 ale unui program scris in C, putem sa folosim utilitarul `gprof`. Acesta
 beneficiaza de suport in compilator pentru colectarea de informatii
 referitoare la timpii de executie ai functiilor. Pentru a putea profila
-un program cu utilitarul `gprof` este necesar sa folosim optiunea "-pg".
+un program cu utilitarul `gprof` este necesar sa folosim optiunea "-pg"
+la compilare.
 
 Vom utiliza un program aleator de aproximativ 500 de linii de cod caruia
 vom incerca sa ii descoperim portiunile critice. Acest program face parte
@@ -183,7 +183,8 @@ $ make rdtscp
 
 Observati ca rezultatul este unul mult mai granular atunci cand vine vorba de
 buclele 1 si 5 (in cazul `clock` raportul dintre cele 2 valori este ~1, in timp
-ce in cazul `rdtscp`, raportul este ~5).
+ce in cazul `rdtscp`, raportul este ~5). Acest lucru se datoreaza diferentei de
+precizie dintre cele 2 metode.
 
 Din nou, observam ca in cadrul celei de-a 3-a bucle se consuma cel mai mult timp.
 
@@ -228,7 +229,7 @@ Motivul principal pentru care optimizarea de "loop unrolling"
 produce benficii este aceea ca se imputineaza numarul de
 instructiuni de control ale buclei. Desi numarul adunarilor
 din calculul sumei ramane constant, numarul de comparari
-("i < N") si numarul de salt-uri ("jmp") se reduc.
+("i < N") si numarul de salturi ("jmp") se reduc.
 Dezavantajul acestei tehnici este acela ca va creste dimensiunea
 binarului. Pe langa aceasta, nu avem garantia ca orice
 bucla va beneficia in urma acestei optimizari; in anumite
@@ -244,9 +245,9 @@ codului. Asta ne ajuta sa scriem programe mai lizibile, sa facem
 "debugging" mai usor si sa scadem dimensiunea binarelor. Cu toate acestea
 apelurile de functii vin cu un cost de performanta (punerea parametrilor
 pe stiva, salt catre functie, luarea parametrilor de pe stiva, salt la
-adresa de retur, refacerea stivei). Pentru a analiza aceasta penalitate
-de performanta, vom folosi programul anterior si o varianta modificata
-a acestuia.
+adresa de retur, refacerea stivei). Pentru a analiza aceasta penalizare
+la nivelul performantei, vom folosi programul anterior si o varianta
+modificata a acestuia.
 
 $ cd inline/
 
@@ -288,15 +289,16 @@ sa intelegem cum functioneaza ierarhia memoriei.
 Cand vorbim despre spatiu de stocare, calculatoarele beneficiaza de mai multe niveluri
 de memorie:
 
-1. Hard-diskul este un tip de memorie lenta, persistenta si de dimensiuni foarte mari
-(de la sute de GB la zeci de TB). Aceasta este folosita pentru a stoca toate informatiile
-disponibile pe o masina, chiar si atunci cand aceasta nu este pornita.
+1. Stocare permanenta conventionala (band, hard-disk, solit state drive)este un tip
+de memorie lenta, persistenta si de dimensiuni foarte mari (de la sute de GB la zeci
+de TB). Aceasta este folosita pentru a stoca toate informatiile disponibile pe o masina,
+chiar si atunci cand aceasta nu este pornita.
 
-2. RAM-ul este un tip de memorie volatila, mai rapida decat hard disk-ul cu cateva ordine
-de marime si de dimensiune medie (zeci de GB). Cand un proces este lansat in executie,
-datele sale (sau majoritatea datelor sale) sunt citite de pe disk si aduse in RAM,
-astfel incat atunci cand vor fi utilizate, vor fi accesate la o viteza mult mai rapida
-decat daca ar fi interpelate de pe disk.
+2. RAM-ul este un tip de memorie volatila, cu cateva ordine de marime mai rapida decat
+hard disk-ul cu cateva ordine de marime si de dimensiune medie (zeci de GB). Cand un
+proces este lansat in executie, datele sale (sau majoritatea datelor sale) sunt citite
+de pe disk si aduse in RAM, astfel incat atunci cand vor fi utilizate, vor fi accesate
+la o viteza mult mai rapida decat daca ar fi preluate de pe disk.
 
 3. Cache-ul este un tip de memorie volatila, foarte rapida si de dimensiune mica (de la
 zeci de KB la zeci de MB). Chiar daca RAM-ul este rapid, este mult inferior vitezei de
@@ -327,7 +329,7 @@ instructiunea `prefetch0`. Aceasta instructiune primeste o adresa si in cazul
 in care valoarea de la acea adresa se afla in L1 cache, actioneaza ca un "nop".
 In cazul in care valoarea nu se afla in cache, se va efectua o cerere de aducere
 in cache a datelor de la nivelul inferior. Avantajul acestei instructiuni este ca
-nu va bloca niciodata procesorul.
+nu va bloca niciodata procesorul pentru a astepta datele.
 
 $ cd prefetch
 
@@ -403,8 +405,8 @@ mai semnificativ bit.
 3. `bsf` - intoarce pozitia celui mai putin semnificativ bit setat (`1`).
 
 In limajul C, aceste instructiuni beneficiaza de extensii de compilator
-similare cu cea pentru instructiunea "prefetch": `__builtin_popcnt`,
-`__builtin_ia32_lzcnt`, `__builting_ctz`.
+similare cu cea pentru instructiunea "prefetch": `__builtin_popcount`,
+`__builtin_clz`, `__builtin_ffs`.
 
 ### SSE/AVX
 
@@ -412,8 +414,8 @@ SSE (Streaming SIMD Extensions) reprezinta o extensie de procesor dedicata
 operatiunilor de tipul "Single Instruction Multiple Data". Astfel, se pot
 face operatii in paralel pe mai multe elemente de date. Concret, se pun
 la dispozitia programatorului registre de 128 biti (echivalentul a 4
-registru normale) asupra carora se pot face operatiile uzuale. Operatia
-asupra unui registru SSE nu are vreo penalitate de performanta in raport
+registre normale) asupra carora se pot face operatiile uzuale. Operatia
+asupra unui registru SSE nu are vreo penalizare de performanta in raport
 cu o operatie normala pe un registru de 32 de biti.
 
 Pentru a intelege mai bine, ne vom uita pe un exemplu:
@@ -482,10 +484,10 @@ are dimensiunea un pic mai mare (72 bytes pe masina mea). Daca ne
 uitam cu `objdump` la codul assembly al binarului, vom remarca
 o scadere de ~6% in codul generat cu optimizari.
 
-In fisierul `test.c`, comentati linia care printeaza suma elementelor.
+In fisierul `test.c`, comentati linia care afiseaza suma elementelor.
 Recompilati toate variantele si rulati-le. Ce observam?
 Pentru -O0 si -O1 nu exista nicio modificare a timpului de rulare,
-inspre pentru variantele -O2 si -O3 timpul de rulare tinde la 0.
+iar pentru variantele -O2 si -O3 timpul de rulare tinde la 0.
 Asta se intampla pentru ca variabila `sum` nu mai este folosita
 la nimic si atunci compilatorul decide ca orice operatie care
 va salva un rezultat in ea este inutila, de unde si eliminarea
