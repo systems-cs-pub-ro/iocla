@@ -14,7 +14,7 @@ void i_vector_op_avx(int *A, int *B, int *C, int n);
 
 int main(void)
 {
-    float *A_f, *B_f, *C_f, *D_f, *D_f_avx;
+    float *A_f, *B_f, *C_f, *D_f, *D_f_avx, t_neopt, t_opt;
     int *A_i, *B_i, *C_i, *C_i_avx;
     struct timeval t1, t2;
 
@@ -37,12 +37,16 @@ int main(void)
     gettimeofday(&t1, NULL);
     f_vector_op(A_f, B_f, C_f, D_f, N);
     gettimeofday(&t2, NULL);
-    printf("Runtime for non-AVX code: %fs\n", MSTIME(t1, t2));
+    t_neopt = MSTIME(t1, t2);
+    printf("Runtime for non-AVX code: %fs\n", t_neopt);
 
     gettimeofday(&t1, NULL);
     f_vector_op_avx(A_f, B_f, C_f, D_f_avx, N);
     gettimeofday(&t2, NULL);
-    printf("Runtime for AVX code: %fs\n", MSTIME(t1, t2));
+    t_opt = MSTIME(t1, t2);
+    printf("Runtime for AVX code: %fs\n", t_opt);
+
+    printf("Speed-up (t_neopt/ t_opt): %f\n", t_neopt / t_opt);
 
     for (int i = 0; i < N; i++)
         if (D_f[i] + eps > D_f_avx[i] > D_f[i] - eps)
@@ -51,7 +55,7 @@ int main(void)
             break;
         }
 
-    printf("Freeing float vectors\n");
+    printf("Freeing float vectors\n\n");
     free(A_f);
     free(B_f);
     free(C_f);
@@ -74,12 +78,16 @@ int main(void)
     gettimeofday(&t1, NULL);
     i_vector_op(A_i, B_i, C_i, N);
     gettimeofday(&t2, NULL);
-    printf("Runtime for non-AVX code: %fs\n", MSTIME(t1, t2));
+    t_neopt = MSTIME(t1, t2);
+    printf("Runtime for non-AVX code: %fs\n", t_neopt);
 
     gettimeofday(&t1, NULL);
     i_vector_op_avx(A_i, B_i, C_i_avx, N);
     gettimeofday(&t2, NULL);
-    printf("Runtime for AVX code: %fs\n", MSTIME(t1, t2));
+    t_opt = MSTIME(t1, t2);
+    printf("Runtime for AVX code: %fs\n", t_opt);
+
+    printf("Speed-up (t_neopt/ t_opt): %f\n", t_neopt / t_opt);
 
     for (int i = 0; i < N; i++)
         if (C_i_avx[i] != C_i[i])
