@@ -49,7 +49,7 @@ int main(void)
     printf("Speed-up (t_neopt/ t_opt): %f\n", t_neopt / t_opt);
 
     for (int i = 0; i < N; i++)
-        if (D_f[i] + eps > D_f_avx[i] && D_f_avx[i] > D_f[i] - eps)
+        if (D_f[i] + eps < D_f_avx[i] && D_f_avx[i] < D_f[i] - eps)
         {
             printf("AVX function incorrect or not implemented\n");
             break;
