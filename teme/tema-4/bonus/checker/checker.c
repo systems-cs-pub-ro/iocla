@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-#define N_f 8000
+#define N_f 400000
 #define N_i 10000000
 #define MSTIME(t1, t2) ((double)((t2).tv_usec - (t1).tv_usec) / 1000000 + (double)((t2).tv_sec - (t1).tv_sec))
-#define eps 0.00001
+#define scale 10000
 
 void f_vector_op(float *A, float *B, float *C, float *D, int n);
 void i_vector_op(int *A, int *B, int *C, int n);
@@ -15,7 +15,7 @@ void i_vector_op_avx(int *A, int *B, int *C, int n);
 
 int main(void)
 {
-    float *A_f, *B_f, *C_f, *D_f, *D_f_avx, t_neopt, t_opt;
+    float *A_f, *B_f, *C_f, *D_f, *D_f_avx, t_neopt, t_opt, eps, diff;
     int *A_i, *B_i, *C_i, *C_i_avx;
     struct timeval t1, t2;
     int ok = 1;
@@ -51,8 +51,12 @@ int main(void)
     printf("Runtime for AVX code: %fs\n", t_opt);
 
     for (int i = 0; i < N_f; i++) {
-        if (D_f[i] - eps > D_f_avx[i] || D_f_avx[i] > D_f[i] + eps)
+        eps = D_f[i] / scale;
+        diff = D_f[i] - D_f_avx[i];
+
+        if (labs(diff) > eps)
         {
+            printf("error: %f, diff: %ld, %f\n", eps, labs(diff), abs(diff) - eps);
             printf("AVX function incorrect or not implemented\n");
             ok = 0;
             break;
