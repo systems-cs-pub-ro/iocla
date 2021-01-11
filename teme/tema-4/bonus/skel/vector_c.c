@@ -12,7 +12,7 @@ void f_vector_op(float *A, float *B, float *C, float *D, int n)
 
     /* Computing D */
     for (int i = 0; i < n; i++)
-        D[i] += sqrt(C[i]) + sum;
+        D[i] = sqrt(C[i]) + sum;
 }
 
 void f_vector_op_avx(float *A, float *B, float *C, float *D, int n)
