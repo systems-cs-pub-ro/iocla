@@ -69,6 +69,8 @@ int main(void)
     free(D_f);
     free(D_f_avx);
 
+    ok = 1;
+
     printf("Initializing the int vectors\n");
     A_i = malloc(N_f * sizeof(*A_i));
     B_i = malloc(N_f * sizeof(*B_i));
@@ -94,14 +96,17 @@ int main(void)
     t_opt = MSTIME(t1, t2);
     printf("Runtime for AVX code: %fs\n", t_opt);
 
-    printf("Speed-up for ASM (t_neopt/ t_opt): %f\n", t_neopt / t_opt);
-
     for (int i = 0; i < N_f; i++)
         if (C_i_avx[i] != C_i[i])
         {
             printf("AVX function incorrect or not implemented\n");
+            ok = 0;
             break;
         }
+
+    if (ok)
+        printf("Speed-up for ASM (t_neopt/ t_opt): %f\n", t_neopt / t_opt);
+
     printf("Freeing int vectors\n");
     free(A_i);
     free(B_i);
