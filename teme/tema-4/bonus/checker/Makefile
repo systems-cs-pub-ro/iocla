@@ -1,3 +1,8 @@
+CFLAGS=-mavx2 -O0 -g
+CC=gcc
+ASM=nasm
+ASMFLAGS=-f elf64
+
 .PHONY: all clean run build
 
 all: checker
@@ -8,18 +13,17 @@ run: checker
 	./checker
 
 vector_c.o: $(SKEL_FOLDER)vector_c.c
-	gcc -mavx2 -c $^ -lm
+	$(CC) $(CFLAGS) -c $^ -lm
 
 vector_asm.o: $(SKEL_FOLDER)vector_asm.asm
-	nasm -f elf64 $^ -o $@
+	$(ASM) $(ASMFLAGS) $^ -o $@
 
 checker.o: checker.c
-	gcc -mavx2 -c -g $^ -o $@ -lm
+	$(CC) $(CFLAGS) -c $^ -o $@ -lm
 
 checker: checker.o vector_c.o vector_asm.o
-	gcc -mavx2 -g $^ -o $@ -lm -no-pie
+	$(CC) $(CFLAGS) $^ -o $@ -lm -no-pie
 	rm *.o
 
 clean:
 	rm checker
-	
