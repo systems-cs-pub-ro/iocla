@@ -127,7 +127,7 @@ Aceste adrese vor fi folosite la încărcarea executabilului în memorie, la cre
 O astfel de adresă este adresa entry pointului, adresa primei instrucțiuni ce va fi executată.
 
 Simbolurile din fișierele obiect nu au atribuite adrese.
-Adresele vor atribuite fiecărui simbol la linkare.
+Adresele vor fi atribuite fiecărui simbol la linkare.
 Când investigăm un fișier obiect, "adresele" afișate sunt de fapt offseturile în cadrul secțiunilor.
 Comanda de mai jos afișează simbolurile din fișierul obiect `one.o`:
 ```
@@ -152,7 +152,7 @@ one.o:     file format elf32-i386
 
 Disassembly of section .text:
 
-00000000 <increment>:
+0000000 <increment>:
    0:	55                   	push   ebp
    1:	89 e5                	mov    ebp,esp
    3:	a1 00 00 00 00       	mov    eax,ds:0x0
@@ -265,10 +265,10 @@ Key to Flags:
   p (processor specific)
 ```
 Adresele sunt indicate în coloana `Addr`.
-Observăm că secțiunea `.text` are adresa de început `0x080480f8`, iar secțiunea `.data` are adresa de început `0x0804a000`.
-Simbolul `increment` se găsește la adresa `0x080480f8` adică la începutul secțiunii `.text`.
+Observăm că secțiunea `.text` are adresa de început `0x08048100`, iar secțiunea `.data` are adresa de început `0x0804a000`.
+Simbolul `increment` se găsește la adresa `0x08048100` adică la începutul secțiunii `.text`.
 Simbolul `num_items` se găsește la adresa `0x0804a000` adică la începutul secțiunii `.data`.
-Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` în secțiunea `.text`.
+Simbolul `main` se găsește la adresa `0x08048113` adică la offsetul `0x13` în secțiunea `.text`.
 
 ## Relocarea simbolurilor
 
@@ -291,8 +291,8 @@ Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` î
  8048116:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
 ```
 
-În fișierul executabil codul instrucțiunilor conține adresa efectivă a variabilei `num_items` (`0x0804a000`), scrisă în format little endian.
-În fișierul obiect `one.o`, însă, nu apare adresa efectivă a variabilei `num_items`, ci apare `0x00000000`.
+În fișierul executabil, codul instrucțiunilor conține adresa efectivă a variabilei `num_items` (`0x0804a000`), scrisă în format little endian.
+În fișierul obiect `one.o`, însă, nu apare adresa efectivă a variabilei `num_items`, ci apare `0x0`.
 Explicația este că fișierul executabil, rezultat în urma procesului de linking, a fost obținut știindu-se adresele efective, în vreme ce, în cazul fișierului obiect, adresele nu sunt cunoscute.
 
 Același lucru se întâmplă și în cazul instrucțiunii care referă simbolul `increment` din cadrul funcției `main`:
@@ -401,7 +401,7 @@ Aici am folosit o definiție mai relaxată, considerând relocarea ca fiind doar
 
 ## Rezolvarea simbolurilor
 
-Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conține simbobluri definite și nedefinite (*undefined*).
+Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conține simboluri definite și nedefinite (*undefined*).
 Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
 După cum le spune și numele, nu sunt, însă, definite, adică nu se aloca memorie pentru ele (și deci, în viitor, adrese).
 
@@ -433,11 +433,240 @@ Adică locul unde era referit simbolul nedefinit va fi acum completat cu adresa 
 
 ## Unificarea secțiunilor
 
-TODO
+Fișierul executabil rezultat în urma linkării conține o secțiune `.text`, o secțiune `.data` (date inițializate), o secțiune `.bss` (date neinițializate) etc.
+Toate secțiunile de același tip din cadrul fișierelor obiect linkate sunt unificate într-o singură secțiune în cadrul fișierului executabil rezultat.
+Ordinea în care secțiunile sunt agregate din diferitele fișiere obiect linkate este la latitudinea linkerului; uzual este chiar ordinea folosită în comanda de linkare.
 
-## Rezolvarea simbolurilor
+Urmărim secțiunea `.text` în fișierele obiect `one.o` și `start.o` și în fișierul executabil `one`:
+```
+[..]/01-one-file$ objdump -j .text -h one.o
 
-TODO
+one.o:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000002c  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+[..]/01-one-file$ objdump -j .text -h start.o
+
+start.o:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000000e  00000000  00000000  00000130  2**4
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+[..]/01-one-file$ objdump -j .text -h one
+
+one:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  1 .text         0000003e  08048100  08048100  00000100  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+```
+Observăm că dimensiunea secțiunii `.text` este `0x2c` pentru `one.o`, `0x0e` pentru `start.o` și `0x3e` pentru `one`.
+În mod normal, dimensiunea secțiunii pentru executabil este suma dimensiunilor secțiunilor pentru fișierele obiect linkate.
+În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere.
+
+Urmărim codul dezasamblat pentru secțiunea `.text` a fiecăruia dintre cele trei fișiere:
+```
+[..]/01-one-file$ objdump -d -M intel one.o
+
+one.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <increment>:
+   0:	55                   	push   ebp
+   1:	89 e5                	mov    ebp,esp
+   3:	a1 00 00 00 00       	mov    eax,ds:0x0
+   8:	83 c0 01             	add    eax,0x1
+   b:	a3 00 00 00 00       	mov    ds:0x0,eax
+  10:	90                   	nop
+  11:	5d                   	pop    ebp
+  12:	c3                   	ret
+
+00000013 <main>:
+  13:	55                   	push   ebp
+  14:	89 e5                	mov    ebp,esp
+  16:	c7 05 00 00 00 00 05 	mov    DWORD PTR ds:0x0,0x5
+  1d:	00 00 00
+  20:	e8 fc ff ff ff       	call   21 <main+0xe>
+  25:	b8 00 00 00 00       	mov    eax,0x0
+  2a:	5d                   	pop    ebp
+  2b:	c3                   	ret
+
+[..]/01-one-file$ objdump -d -M intel start.o
+
+start.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	e8 fc ff ff ff       	call   1 <_start+0x1>
+   5:	89 c3                	mov    ebx,eax
+   7:	b8 01 00 00 00       	mov    eax,0x1
+   c:	cd 80                	int    0x80
+
+[..]/01-one-file$ objdump -d -M intel one
+
+one:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+08048100 <increment>:
+ 8048100:	55                   	push   ebp
+ 8048101:	89 e5                	mov    ebp,esp
+ 8048103:	a1 00 a0 04 08       	mov    eax,ds:0x804a000
+ 8048108:	83 c0 01             	add    eax,0x1
+ 804810b:	a3 00 a0 04 08       	mov    ds:0x804a000,eax
+ 8048110:	90                   	nop
+ 8048111:	5d                   	pop    ebp
+ 8048112:	c3                   	ret
+
+08048113 <main>:
+ 8048113:	55                   	push   ebp
+ 8048114:	89 e5                	mov    ebp,esp
+ 8048116:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
+ 804811d:	00 00 00
+ 8048120:	e8 db ff ff ff       	call   8048100 <increment>
+ 8048125:	b8 00 00 00 00       	mov    eax,0x0
+ 804812a:	5d                   	pop    ebp
+ 804812b:	c3                   	ret
+ 804812c:	66 90                	xchg   ax,ax
+ 804812e:	66 90                	xchg   ax,ax
+
+08048130 <_start>:
+ 8048130:	e8 de ff ff ff       	call   8048113 <main>
+ 8048135:	89 c3                	mov    ebx,eax
+ 8048137:	b8 01 00 00 00       	mov    eax,0x1
+ 804813c:	cd 80                	int    0x80
+```
+
+Observăm ca linkerul adaugă, în secțiunea `.text` a fișierului executabil, niște instrucțiuni suplimentare (`xchg ax, ax`, la adresele `0x804812c` și `0x804812e`) care nu au nici un efect în cadrul programului (sunt după instrucțiunea `ret`).
+Aceste instrucțiuni au rolul de aliniere, observăm că adresa funcției `_start` din fișierul executabil (`0x8048130`) este aliniată la `16`.
+
+Aceeași unificare are loc și pe celelalte secțiuni de același tip din cadrul fișierelor obiect.
+La fel ca în cazul secțiunii `.text`, linkerul poate decide plasarea unor spații libere nefolosite, pentru aliniere.
+
+## Stabilirea adreselor
+
+După unificare în fișierul executabil, fiecărei secțiuni i se atribuie o adresă.
+De exemplu, secțiunea `.text` a fișierului executabil `out` are adresa `0x8048100`, în vreme ce secțiunea `.data` are adresa `0x804a000`:
+```
+[..]/01-one-file$ readelf -S one
+There are 15 section headers, starting at offset 0x14a4:
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [...]
+  [ 2] .text             PROGBITS        08048100 000100 00003e 00  AX  0   0 16
+  [...]
+  [ 5] .data             PROGBITS        0804a000 001000 000004 00  WA  0   0  4
+```
+Pornind de la adresele de start ale acestor secțiuni (unificate) se stabilesc adresele simbolurilor în cadrul executabilului (*address binding*).
+Acum se stabilește că adresa funcției `main` este `0x8048113`, adresa funcției `_start` este `0x8048130`, adresa variabilei `num_items` este `0x804a000` etc.
+Aceste adrese sunt apoi folosite în faza de relocare și la completarea entry pointului în headerul fișierului executabil.
+
+### Stripping
+
+Asocierea dintre simboluri și adrese se găsește în secțiuni / tabele dedicate în fișierelor obiect sau executabile.
+După relocare și completarea entry pointului într-un fișier executabil, asocierea dintre un nume de simbol și o adresă nu mai este necesară.
+Fișierul executabil are toate informațiile necesare pentru a putea fi încărcat (*loaded*) într-un proces.
+
+Renunțarea la simbolurile unui executabil se numește *stripping*.
+Poate fi realizată ca parte a procesului de linking, sau poate fi realizată ulterior.
+Realizăm o variantă stripped a executabilului `one`, numită `one_stripped`:
+```
+[..]/01-one-file$ cp one one_stripped
+
+[..]/01-one-file$ strip one_stripped
+razvan@yggdrasil:~/.../curs/curs-18-19-linking/01-one-file$ nm one
+0804a004 D __bss_start
+0804a004 D _edata
+0804a004 D _end
+08048140 r __GNU_EH_FRAME_HDR
+08048100 T increment
+08048113 T main
+00000001 a __NR_exit
+0804a000 D num_items
+08048130 T _start
+
+[..]/01-one-file$ nm one_stripped
+nm: one_stripped: no symbols
+
+[..]/01-one-file$ ls -l one one_stripped
+-rwxr-xr-x 1 razvan razvan 5884 Jan 17 10:36 one
+-rwxr-xr-x 1 razvan razvan 4536 Jan 17 12:49 one_stripped
+```
+Observăm că fișierul `one_stripped` nu mai are simboluri.
+De asemenea, observăm că dimensiunea sa este mai redusă (de la `5884` de octeți, dimensiunea fișierului a scăzut la `4536` de octeți).
+
+Scăderea dimensiunii este cauzată de eliminarea unor secțiuni din executabil.
+Dacă investigăm secțiunile celor două executabile, observăm că secțiunile de debug și secțiunile `.strtab` și `.symtab` (care rețin informații despre simboluri), au fost eliminate din executabilul `one_stripped`.
+```
+[..]/01-one-file$ readelf -S one
+There are 15 section headers, starting at offset 0x14a4:
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .note.gnu.build-i NOTE            080480d4 0000d4 000024 00   A  0   0  4
+  [ 2] .text             PROGBITS        08048100 000100 00003e 00  AX  0   0 16
+  [ 3] .eh_frame_hdr     PROGBITS        08048140 000140 00001c 00   A  0   0  4
+  [ 4] .eh_frame         PROGBITS        0804815c 00015c 000058 00   A  0   0  4
+  [ 5] .data             PROGBITS        0804a000 001000 000004 00  WA  0   0  4
+  [ 6] .comment          PROGBITS        00000000 001004 000029 01  MS  0   0  1
+  [ 7] .debug_aranges    PROGBITS        00000000 00102d 000020 00      0   0  1
+  [ 8] .debug_info       PROGBITS        00000000 00104d 00006b 00      0   0  1
+  [ 9] .debug_abbrev     PROGBITS        00000000 0010b8 00006d 00      0   0  1
+  [10] .debug_line       PROGBITS        00000000 001125 00003a 00      0   0  1
+  [11] .debug_str        PROGBITS        00000000 00115f 0000c7 01  MS  0   0  1
+  [12] .symtab           SYMTAB          00000000 001228 000180 10     13  17  4
+  [13] .strtab           STRTAB          00000000 0013a8 00005f 00      0   0  1
+  [14] .shstrtab         STRTAB          00000000 001407 00009b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+
+[..]/01-one-file$ readelf -S one_stripped
+There are 8 section headers, starting at offset 0x1078:
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .note.gnu.build-i NOTE            080480d4 0000d4 000024 00   A  0   0  4
+  [ 2] .text             PROGBITS        08048100 000100 00003e 00  AX  0   0 16
+  [ 3] .eh_frame_hdr     PROGBITS        08048140 000140 00001c 00   A  0   0  4
+  [ 4] .eh_frame         PROGBITS        0804815c 00015c 000058 00   A  0   0  4
+  [ 5] .data             PROGBITS        0804a000 001000 000004 00  WA  0   0  4
+  [ 6] .comment          PROGBITS        00000000 001004 000029 01  MS  0   0  1
+  [ 7] .shstrtab         STRTAB          00000000 00102d 00004b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+```
+
+În general, executabilele care sunt instalate pe un sistem sunt stripped, cum este cazul executabilului `/bin/ls`:
+```
+[..]/01-one-file$ nm /bin/ls
+nm: /bin/ls: no symbols
+```
+Aceasta se întâmplă pentru că nu este nevoie de simboluri pentru rularea executabilului.
+În plus, absența simbolurilor aduce și un beneficiu de securitate, fiind mai dificil pentru un potențial atacator să folosească tehnici de inginerie inversă (*reverse engineering*) pentru a analiza fișierul executabil.
+
+În mod implicit, în faza de dezvoltare, simbolurile sunt prezente în executabil, pentru a fi mai ușor procesul de depanare și investigare.
+Pe lângă simboluri folosite în procesul de linking, faza de dezvoltare adaugă, de obicei și simboluri de debug, care aduc un plus de suport în faza de depanare.
+
+Procesul de stripping nu are sens să fie aplicat fișierelor obiect.
+Dacă un fișier obiect este stripped, atunci va eșua etapa de rezolvare a simbolurilor din procesul de linking, pentru că simbolurile sunt căutate după numele lor.
 
 ## Linkare statică
 
