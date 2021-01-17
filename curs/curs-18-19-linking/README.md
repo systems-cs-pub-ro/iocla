@@ -38,13 +38,14 @@ Pentru o mai ușoară înțelegere, vom detalia aceste acțiuni într-o altă or
 **Entry pointul** unui program este adresa primei instrucțiuni executate din fișierul executabil.
 Entry pointul are sens doar pentru fișiere executabile, nu și pentru fișiere obiect.
 
-În directorul `01-one-file/` vom compila un fișier cod sursă C `one.c` în fișierul obiect `one.o`.
-Ca suport pentru procesul de linkare, vom asambla fișierul în limbaj de asamblare `start.s` în fișierul obiecti `start.o`.
-Apoi vom lega cele două fișiere obiect `one.o` și `start.o` în fișierul executabil `one`.
+În directorul `01-one-file/` fișierul cod sursă C `one.c` a fost compilat în fișierul obiect `one.o`.
+Ca suport pentru procesul de linkare, fișierul în limbaj de asamblare `start.s` a fost asamblat în fișierul obiecti `start.o`.
+Cele două fișiere obiect, `one.o` și `start.o`, au fost legate în fișierul executabil `one`.
 Prezența fișierului în limbaj de asamblare este necesară pentru procesul de linking; nu vom insista pe acesta acum.
-În principiu, pentru simplitate, este vorba de compilarea și legarea unui **singur** fișier `one.c`.
+În principiu, pentru simplitate, este vorba de compilarea și legarea unui **singur** fișier `one.c` în executabilul `one`.
 
-După rularea comenzii `make` vom obține fișierele obiect `one.o`, `start.o` și fișierul executabil `one`.
+**Important**: **Nu** folosiți comanda `make` pentru a obține fișierele obiect și fișierele executabile.
+Fișierele sunt deja generate; dacă le regenerați, probabil vor avea un format diferit și va face mai dificilă urmărirea comenzilor de mai jos.
 
 Observăm că fișierul obiect `one.o` nu are entry point, pe când fișierul executabil `one` are:
 
