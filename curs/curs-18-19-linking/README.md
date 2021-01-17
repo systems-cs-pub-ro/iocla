@@ -992,6 +992,89 @@ Numele unui fișier bibliotecă începe cu prefixul `lib` urmat de numele biblio
 Comanda de linkare va conține opțiunea `-l` urmată de numele bibliotecii.
 În cazul nostru, biblioteca se cheamă `inc`, de numele fișierului bibliotecă este `libinc.a`, iar argumentul folosit este `-linc`.
 
+## Linkare statică
+
+În exemplele de până acum, am creat executabile care au fost compuse strict din codul scris în fișierele cod sursă (și în fișierul de suport `start.asm`).
+Acest mod de dezvoltare poate fi numit un mod de dezvoltare *freestanding*, pentru că nu include componente considerate standard, precum biblioteca standard C.
+În mod obișnuit, când dezoltăm aplicații, acestea vor include biblioteca standard C.
+
+Biblioteca standard C este o colecție de funcționalități de bază pentru dezvoltarea aplicațiilor: lucrul cu fișiere și intrare / ieșire, lucrul cu șiruri, gestiunea memoriei, comunicare inter-proces, gestiunea timpului.
+În exemplele de până acum, pentru a ține lucrurile simple, am folosit la linkare argumentele `-nostdlib -nostdinc` ca să nu ne legăm la biblioteca standard și nu includem headerele standard.
+În absența argumentelor `-nostdlib -nostdinc`, linkerul va lega implicit biblioteca standard C;
+nu este nevoie să precizăm noi acest lucru.
+
+În directorul `05-static/` avem un conținut similar directorului `04-lib/`.
+Diferența este că acum, în fișierul cod sursă `inc.c` există funcția `print()` care apelează funcția `printf()` din biblioteca standard C.
+Iar linkarea se face cu biblioteca standard C, în absența argumentelor `-nostdlib -nostdinc` din comanda de linkare.
+Linkarea cu biblioteca standard C duce la includerea suportului necesare pentru inițializarea programului, de aceea nu mai este nevoie de fișierul de suport `start.asm`.
+
+Similar exemplului din directorul `04-lib/`, folosim comanda `make` pentru a obține două executabile (`main` și `main_lib`):
+```
+[..]/05-static$ ls
+inc.c  inc.h  main.c  Makefile
+
+[..]/05-static$ make
+cc -fno-PIC -m32   -c -o main.o main.c
+cc -fno-PIC -m32   -c -o inc.o inc.c
+cc -static -no-pie -m32  main.o inc.o   -o main
+ar rc libinc.a inc.o
+cc -static -no-pie -m32 -L. -o main_lib main.o -linc
+
+[..]/05-static$ ls
+inc.c  inc.h  inc.o  libinc.a  main  main.c  main_lib  main.o  Makefile
+
+[..]/05-static$ ls -l main main_lib
+-rwxr-xr-x 1 razvan razvan 661856 Jan 17 16:54 main
+-rwxr-xr-x 1 razvan razvan 661856 Jan 17 16:54 main_lib
+
+[..]/05-static$ cmp main main_lib
+
+[..]/05-static$ ./main
+num_items: 1
+
+[..]/05-static$ ./main_lib
+num_items: 1
+```
+Fișierele `main` și `main_lib` sunt identice și, deci, au același comportament.
+
+Observăm că cele două fișiere au o dimensiune foarte mare, în jur de 600 KB.
+Pănâ acum fișierele avea o dimensiune de circa 5KB.
+Aceasta se datorează legării cu biblioteca standard C.
+Biblioteca standard C oferă mult conținut de suport care este inclus în executabil în urma legării.
+Numărul de simboluri prezente acum în executabil este mare:
+```
+[..]/05-static$ nm main | wc -l
+2001
+```
+Sunt prezente peste `2000` de simboluri, unde până acum numărul era în jur de `10`.
+
+Fișierul bibliotecii standard C este destul de mare (aproape `4 MB`), de unde și dimensiunea mare a fișierului executabil rezultat:
+```
+[..]/05-static$ ls -lh /usr/libx32/libc.a
+-rw-r--r-- 1 root root 3.9M Dec  7 18:38 /usr/libx32/libc.a
+```
+Chiar dacă în cazul nostru am folosit doar funcția `printf()`, dimensiunea informațiilor incluse în executabilul final, provenind din biblioteca standard C, este sesizabilă.
+
+Astfel, atunci când folosim biblioteca standard C, avem avantajul suportului oferit pentru mai multe operații și asigurarea portabilității pe mai multe platforme (sisteme de operare, arhitecturi de procesor).
+Dar avem dezavantajul că biblioteca duce la includerea unui conținut ridicat de suport, mărind dimensiunea executabilului final.
+
+În exemplul de aici, legarea cu biblioteca standard C este legare statică (*static linking*).
+Am folosit argumentul `-static` la linkare pentru aceasta.
+În linkarea statică, componentele bibliotecii folosite de fișierele obiect linkate (sau de alte fișiere bibliotecă) sunt copiate în fișierul executabil final.
+Nu este vorba doar de componentele direct apelate ci de cele care sunt apelate indirect din cadrul bibliotecii.
+Întregul lanț de componente dependente (date și cod) sunt adăugate în executabilul final.
+
+În exemplul nostru, atât biblioteca standard C cât și biblioteca `libinc.a` sunt linkate static în executabilul final `main_lib`.
+Biblioteca standard C este linkată static (fără biblioteca `libinc.a`) în executabilul final `main`.
+
+În general, în Linux, fișierele bibliotecă ce vor fi linkate static au extensia `.a`.
+
+Avantajul linkării statice este că fișierul executabil rezultat poate rula pe orice configurație de sistem (dar pe aceeași platformă), indiferent ce versiuni de biblioteci sunt sau nu sunt pe acel sistem.
+Dezavantajul este desigur, dimensiunea mare a executabilelor.
+De asemenea, dacă pe un sistem rulează 10 procese încărcate din executabile statice, foarte probabil acele procese vor avea individual componente comune din biblioteca standard C (sau alte biblioteci), componente care ar fi putut fi partajate.
+
+De aceea, în zilele noastre, majoritatea executabilelor sunt generate folosind linkare dinamică.
+
 ## Linkare dinamică
 
 TODO
