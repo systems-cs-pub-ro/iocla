@@ -33,7 +33,7 @@ Pentru a produce fișierul executabil, linkerul realizează o serie de acțiuni,
 În mod obișnuit, secvența de mai sus este secvența de acțiuni realizate de linker, ordonate cronologic.
 Pentru o mai ușoară înțelegere, vom detalia aceste acțiuni într-o altă ordine.
 
-## Stabilirea unui punct de intrare în program
+### Stabilirea unui punct de intrare în program
 
 **Entry pointul** unui program este adresa primei instrucțiuni executate din fișierul executabil.
 Entry pointul are sens doar pentru fișiere executabile, nu și pentru fișiere obiect.
@@ -120,7 +120,7 @@ O altă secvență de cod, numită tipic, la fel ca în acest caz, `_start`, est
 Așadar, dându-se unul sau mai multe fișiere obiect, linkerul creează executabilul și stabilește entry pointul acestuia.
 Entry pointul are sens doar pentru fișiere executabile, **NU** pentru fișiere obiect.
 
-## Address binding
+### Address binding
 
 Linkerul atașează fiecărui simbol din fișierul executabil rezultat o adresă.
 Aceste adrese vor fi folosite la încărcarea executabilului în memorie, la crearea procesului.
@@ -270,7 +270,7 @@ Simbolul `increment` se găsește la adresa `0x08048100` adică la începutul se
 Simbolul `num_items` se găsește la adresa `0x0804a000` adică la începutul secțiunii `.data`.
 Simbolul `main` se găsește la adresa `0x08048113` adică la offsetul `0x13` în secțiunea `.text`.
 
-## Relocarea simbolurilor
+### Relocarea simbolurilor
 
 În dezasamblarea fișierului obiect `one.o`, respectiv a executabilului `one`, observăm că instrucțiunile care folosesc variabila `num_items` sunt:
 ```
@@ -399,7 +399,7 @@ There are no relocations in this file.
 Etapa de relocare presupune, în general, și stabilirea adreselor simbolurilor (*address binding*).
 Aici am folosit o definiție mai relaxată, considerând relocarea ca fiind doar înlocuirea referințelor de simboluri folosind tabelele de relocare.
 
-## Rezolvarea simbolurilor
+### Rezolvarea simbolurilor
 
 Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conține simboluri definite și nedefinite (*undefined*).
 Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
@@ -431,7 +431,7 @@ Pentru fiecare referință de simbol nedefinit, linkerul va căuta fișierul obi
 Apoi va realiza conexiunea între cele două.
 Adică locul unde era referit simbolul nedefinit va fi acum completat cu adresa corectă.
 
-## Unificarea secțiunilor
+### Unificarea secțiunilor
 
 Fișierul executabil rezultat în urma linkării conține o secțiune `.text`, o secțiune `.data` (date inițializate), o secțiune `.bss` (date neinițializate) etc.
 Toate secțiunile de același tip din cadrul fișierelor obiect linkate sunt unificate într-o singură secțiune în cadrul fișierului executabil rezultat.
@@ -552,7 +552,7 @@ Aceste instrucțiuni au rolul de aliniere, observăm că adresa funcției `_star
 Aceeași unificare are loc și pe celelalte secțiuni de același tip din cadrul fișierelor obiect.
 La fel ca în cazul secțiunii `.text`, linkerul poate decide plasarea unor spații libere nefolosite, pentru aliniere.
 
-## Stabilirea adreselor
+### Stabilirea adreselor
 
 După unificare în fișierul executabil, fiecărei secțiuni i se atribuie o adresă.
 De exemplu, secțiunea `.text` a fișierului executabil `out` are adresa `0x8048100`, în vreme ce secțiunea `.data` are adresa `0x804a000`:
@@ -571,7 +571,7 @@ Pornind de la adresele de start ale acestor secțiuni (unificate) se stabilesc a
 Acum se stabilește că adresa funcției `main` este `0x8048113`, adresa funcției `_start` este `0x8048130`, adresa variabilei `num_items` este `0x804a000` etc.
 Aceste adrese sunt apoi folosite în faza de relocare și la completarea entry pointului în headerul fișierului executabil.
 
-### Stripping
+#### Stripping
 
 Asocierea dintre simboluri și adrese se găsește în secțiuni / tabele dedicate în fișierelor obiect sau executabile.
 După relocare și completarea entry pointului într-un fișier executabil, asocierea dintre un nume de simbol și o adresă nu mai este necesară.
@@ -667,6 +667,203 @@ Pe lângă simboluri folosite în procesul de linking, faza de dezvoltare adaug�
 
 Procesul de stripping nu are sens să fie aplicat fișierelor obiect.
 Dacă un fișier obiect este stripped, atunci va eșua etapa de rezolvare a simbolurilor din procesul de linking, pentru că simbolurile sunt căutate după numele lor.
+
+## Linkare de fișiere multiple
+
+În exemplul din directorul `01-one-file/` am linkat de fapt, un singur fișier: `one.c`.
+Fișierul `start.asm` este folosit ca fișier de suport.
+
+Observăm cum se întâmplă acțiunile linkerului în directorul `02-two-files/`.
+Acesta conține două fișiere cod sursă C (`two.c` și `inc.c`) care sunt, de fapt, o împărțire a fișierului `one.c` din directorul `01-one-file/`:
+* `two.c` conține funcția `main()` și variabila `num_items`
+* `inc.c` conține funcția `increment()`
+* `two.c` conține referință la funcția `increment()` prin declararea antetului funcției
+* `inc.c` conține referință la variabila `num_items` prin declararea folosind cuvântul cheie `extern`
+Fișierul `start.asm` este fișierul de suport.
+
+Toate fișierele sunt compilate, respectiv, în fișierele obiect `two.o`, `inc.o` și `start.o`, care sunt linkate în fișierul executabil `two`.
+
+Pentru început urmărim simbolurile din fiecare fișier de interes:
+```
+[..]/02-two-files$ nm two.o
+         U increment
+00000000 T main
+00000000 D num_items
+
+[..]/02-two-files$ nm inc.o
+00000000 T increment
+         U num_items
+
+[..]/02-two-files$ nm two
+0804a004 D __bss_start
+0804a004 D _edata
+0804a004 D _end
+08048160 r __GNU_EH_FRAME_HDR
+0804812e T increment
+08048100 T main
+00000001 a __NR_exit
+0804a000 D num_items
+08048150 T _start
+```
+Observăm că simbolul `increment` este nedefinit în fișierul obiect `two.o`, iar simbolul `num_items` este nedefinit în fișierul `inc.o`.
+Simbolurile definite în fiecare modul obiect (`main` și `num_items` în `two.o`, respectiv `increment` în `inc.o`) au adresa `0` pentru că sunt la începutul secțiunii corespunzătoare (`,text` sau `.data`).
+Fișierul executabil `two` are toate simbolurile definite și adresele stabilite, în urma etapelor procesului de linking: rezolvarea simbolurilor, unificarea secțiunilor, stabilirea adreselor, relocarea simbolurilor.
+
+Urmărim tabelele de relocare pentru cele două fișiere obiect:
+```
+[..]/02-two-files$ readelf -r two.o
+
+Relocation section '.rel.text' at offset 0x1a8 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000013  00000801 R_386_32          00000000   num_items
+0000001c  00000a02 R_386_PC32        00000000   increment
+
+Relocation section '.rel.eh_frame' at offset 0x1b8 contains 1 entry:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000020  00000202 R_386_PC32        00000000   .text
+
+[..]/02-two-files$ readelf -r inc.o
+
+Relocation section '.rel.text' at offset 0x168 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000004  00000901 R_386_32          00000000   num_items
+0000000c  00000901 R_386_32          00000000   num_items
+
+Relocation section '.rel.eh_frame' at offset 0x178 contains 1 entry:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000020  00000202 R_386_PC32        00000000   .text
+```
+Observăm că `two.o` are o relocare pentru simbolul `num_items` și una pentru simbolul `increment`.
+În vreme ce `inc.o` are două relocări pentru simbolul `num_items`.
+
+Investigăm relocările în codul în limbaj de asamblare:
+```
+[..]/02-two-files$ objdump -d -M intel two.o
+
+two.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <main>:
+   0:	8d 4c 24 04          	lea    ecx,[esp+0x4]
+   4:	83 e4 f0             	and    esp,0xfffffff0
+   7:	ff 71 fc             	push   DWORD PTR [ecx-0x4]
+   a:	55                   	push   ebp
+   b:	89 e5                	mov    ebp,esp
+   d:	51                   	push   ecx
+   e:	83 ec 04             	sub    esp,0x4
+  11:	c7 05 00 00 00 00 05 	mov    DWORD PTR ds:0x0,0x5
+  18:	00 00 00
+  1b:	e8 fc ff ff ff       	call   1c <main+0x1c>
+  20:	b8 00 00 00 00       	mov    eax,0x0
+  25:	83 c4 04             	add    esp,0x4
+  28:	59                   	pop    ecx
+  29:	5d                   	pop    ebp
+  2a:	8d 61 fc             	lea    esp,[ecx-0x4]
+  2d:	c3                   	ret
+
+[..]/02-two-files$ objdump -d -M intel inc.o
+
+inc.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <increment>:
+   0:	55                   	push   ebp
+   1:	89 e5                	mov    ebp,esp
+   3:	a1 00 00 00 00       	mov    eax,ds:0x0
+   8:	83 c0 01             	add    eax,0x1
+   b:	a3 00 00 00 00       	mov    ds:0x0,eax
+  10:	90                   	nop
+  11:	5d                   	pop    ebp
+  12:	c3                   	ret
+```
+Vedem că, într-adevăr, conform tabelelor de relocare avem următoarele relocări:
+* în fișierul `two.o`, la offsetul `0x13` în secțiunea `.text` este valoarea `0x00000000` unde se va reloca simbolul `num_items`
+* în fișierul `two.o`, la offsetul `0x1c` în secțiunea `.text` este un placeholder unde se va reloca simbolul `increment`
+* în fișierul `inc.o`, la offsetul `0x04` și la offsetul `0xc` în secțiunea `.text` se găsește valoarea `0x00000000` unde se va reloca simbolul `num_items`
+
+Pentru verificarea relocării, urmărim codul în limbaj de asamblare al executabilului `two`:
+```
+[..]/02-two-files$ objdump -d -M intel two
+
+two:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+08048100 <main>:
+ 8048100:	8d 4c 24 04          	lea    ecx,[esp+0x4]
+ 8048104:	83 e4 f0             	and    esp,0xfffffff0
+ 8048107:	ff 71 fc             	push   DWORD PTR [ecx-0x4]
+ 804810a:	55                   	push   ebp
+ 804810b:	89 e5                	mov    ebp,esp
+ 804810d:	51                   	push   ecx
+ 804810e:	83 ec 04             	sub    esp,0x4
+ 8048111:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
+ 8048118:	00 00 00
+ 804811b:	e8 0e 00 00 00       	call   804812e <increment>
+ 8048120:	b8 00 00 00 00       	mov    eax,0x0
+ 8048125:	83 c4 04             	add    esp,0x4
+ 8048128:	59                   	pop    ecx
+ 8048129:	5d                   	pop    ebp
+ 804812a:	8d 61 fc             	lea    esp,[ecx-0x4]
+ 804812d:	c3                   	ret
+
+0804812e <increment>:
+ 804812e:	55                   	push   ebp
+ 804812f:	89 e5                	mov    ebp,esp
+ 8048131:	a1 00 a0 04 08       	mov    eax,ds:0x804a000
+ 8048136:	83 c0 01             	add    eax,0x1
+ 8048139:	a3 00 a0 04 08       	mov    ds:0x804a000,eax
+ 804813e:	90                   	nop
+ 804813f:	5d                   	pop    ebp
+ 8048140:	c3                   	ret
+ 8048141:	66 90                	xchg   ax,ax
+ 8048143:	66 90                	xchg   ax,ax
+ 8048145:	66 90                	xchg   ax,ax
+ 8048147:	66 90                	xchg   ax,ax
+ 8048149:	66 90                	xchg   ax,ax
+ 804814b:	66 90                	xchg   ax,ax
+ 804814d:	66 90                	xchg   ax,ax
+ 804814f:	90                   	nop
+
+08048150 <_start>:
+ 8048150:	e8 ab ff ff ff       	call   8048100 <main>
+ 8048155:	89 c3                	mov    ebx,eax
+ 8048157:	b8 01 00 00 00       	mov    eax,0x1
+ 804815c:	cd 80                	int    0x80
+```
+Observăm că acum, în locurile de tip placeholder în fișierele obiect, apar adresele efective ale simbolurilor `increment` și `num_items`: `0x804812e`, respectiv `0x804a000`.
+Mai observăm și că, de la adresa `0x8048141` până la adresa `0x8048150` au fost puse intrucțiuni care nu au efect (`xchg ax, ax`, `nop`) din rațiuni de aliniere;
+adresa simbolului `_start` este `0x8048150`, aliniată la 16 octeți.
+
+Totodată, adresa simbolului `_start` (`0x8048150`) este adresa entrypointului programului:
+```
+[..]/02-two-files$ readelf -h two
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x8048150
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          4656 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         5
+  Size of section headers:           40 (bytes)
+  Number of section headers:         10
+  Section header string table index: 9
+```
 
 ## Linkare statică
 
