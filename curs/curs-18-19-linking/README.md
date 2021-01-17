@@ -18,7 +18,15 @@ Acest fișier executabil este rezultatul agregării datelor și codului (mașin�
 
 ## Formate de fișiere executabile
 
-TODO
+Fișierele executabile, fișierele obiect și fișierele de tip bibliotecă dinamică (de care vom discuta mai jos) au un anumit format specific platformei.
+Acest format stabilește structura internă folosită de linker și de loader la linkare și încărcare.
+De exemplu, formatul stabilește cum sunt descrise secțiunile (de cod, de date sau altele), de unde va începe execuția codului, care sunt simbolurile și adresele lor etc.
+
+Compilatorul, linkerul și loaderul folosite pe o platformă dată cunosc formatul de executabil al platformei.
+În Linux și în FreeBSD / NetBSD / OpenBSD, formatul folosit este ELF (*Executable and Linkable Format*), în Windows este PE (*Portable Executable*), în macOS / iOS este Mach-O (*Mach Object*).
+
+Formatul de executabil este folosit și de utilitarele de analiză dinamică (precum un debugger) și de cele de analiză statică specifică platformei.
+În acest capitol, vom folosi utilitare de analiză statică în Linux, care folosesc formatul ELF: `objdump`, `nm`, `readelf`.
 
 ## Acțiunile linkerului
 
