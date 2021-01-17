@@ -1170,6 +1170,88 @@ De aici este, în Linux, extensia `.so` a fișierelor de tip bibliotecă partaja
 
 ## Biblioteci cu linkare dinamică
 
+Numele corect al unei biblioteci dinamice este bibliotecă cu linkare dinamică (*dynamically linked library*) sau bibliotecă partajată.
+În Windows, bibliotecile dinamice sunt numite *dynamic-link libraries* de unde și extensia `.dll`.
+
+Din punctul de vedere al comenzii folosite, nu diferă linkarea unei biblioteci dinamice sau a unei biblioci statice.
+Diferă executabilul obținut, care va avea nedefinite simbolurile folosite din bibliotecile dinamice.
+De asemenea, loaderul / linkerul dinamic trebuie să fie informat de locul bibliotecii dinamice.
+
+În directorul `07-dynlib/` avem un conținut similar directorului `06-dynamic/`.
+Diferența este că acum, folosim linkare dinamică în loc de linkare statică și pentru a include funcționalitatea `inc.c, nu doar pentru biblioteca standard C.
+Pentru aceasta, construim fișierul bibliotecă partajată `libinc.so`, în locul fișierului bibliotecă statică `libibc.a`.
+
+Similar exemplului din directorul `06-dynamic/`, folosim comanda `make` pentru a obține executabilul `main`:
+```
+[..]/07-dynlib$ ls
+inc.c  inc.h  main.c  Makefile
+
+[..]/07-dynlib$ make
+cc -fno-PIC -m32   -c -o main.o main.c
+cc -fno-PIC -m32   -c -o inc.o inc.c
+cc -m32 -shared -o libinc.so inc.o
+cc -no-pie -m32 -L. -o main main.o -linc
+
+[..]/07-dynlib$ ls
+inc.c  inc.h  inc.o  libinc.so  main  main.c  main.o  Makefile
+
+[..]/07-dynlib$ ls -l main
+-rwxr-xr-x 1 razvan razvan 7200 Jan 17 18:11 main
+
+[..]/07-dynlib$ nm main
+[...]
+         U increment
+         U init
+080483ac T _init
+[...]
+         U __libc_start_main@@GLIBC_2.0
+08048556 T main
+         U print
+         U read
+[...]
+08048440 T _start
+```
+Executabilul obținut are dimensiunea în jur de `7 KB` puțin mai mică decât a executabilului din exemplul anterior.
+Diferența cea mai mare este că, acum, simbolurile din biblioteca `libinc.so` (`increment`, `init`, `print`, `read`) sunt nerezolvate.
+
+Dacă încercăm lansarea în execuție a executabilului, observăm că primim o eroare:
+```
+[..]/07-dynlib$ ./main 
+./main: error while loading shared libraries: libinc.so: cannot open shared object file: No such file or directory
+```
+Eroarea spune că nu poate localiza biblioteca `libinc.so` la încărcare (*loading*).
+Este deci, o eroare de loader.
+
+O eroare similară obținem dacă folosim utilitarul `ldd`:
+```
+[..]/07-dynlib$ ldd ./main
+	linux-gate.so.1 (0xf7f9f000)
+	libinc.so => not found
+	libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0xf7d92000)
+	/lib/ld-linux.so.2 (0xf7fa0000)
+```
+La fel, biblioteca `libinc.so` nu este găsită.
+
+Motivul este că nu am precizat loaderului unde să caute biblioteca partajată.
+Loaderul are definită calea unde să caute biblioteca standard C (`/lib/i386-linux-gnu/libc.so.6`), dar nu deține informații despre `libinc.so`.
+
+Ca să precizăm loaderului calea către bibliotecă, o cale simplă, de test, este folosirea variabilei de mediu `LD_LIBRARY_PATH`, pe care o inițializăm la directorul curent (`.` - *dot*).
+Odată folosită variabila de mediu `LD_LIBRARY_PATH`, lansarea în execuție a executabilului va funcționa, la fel și folosirea `ldd`:
+```
+[..]/07-dynlib$ LD_LIBRARY_PATH=. ldd ./main
+	linux-gate.so.1 (0xf7eda000)
+	libinc.so => ./libinc.so (0xf7ed2000)
+	libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0xf7cca000)
+	/lib/ld-linux.so.2 (0xf7edb000)
+
+[..]/07-dynlib$ LD_LIBRARY_PATH=. ./main
+num_items: 1
+```
+
+Variabila de mediu `LD_LIBRARY_PATH` pentru loader este echivalentul opțiunii `-L` în comanda de linkare: precizează directorul în care să fie căutate biblioteci pentru a fi încărcate, respectiv linkate.
+Folosirea variabilei de mediu `LD_LIBRARY_PATH` este recomandată pentru teste.
+Pentru o folosire robustă, există alte mijloace de precizare a căilor de căutare a bibliotecilor partajate, documentate în [pagina de manual a loaderului / linkerului dinamic](https://man7.org/linux/man-pages/man8/ld.so.8.html#DESCRIPTION).
+
 ## Sumar
 
 TODO
