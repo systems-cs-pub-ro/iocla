@@ -83,9 +83,9 @@ ELF Header:
   Type:                              EXEC (Executable file)
   Machine:                           Intel 80386
   Version:                           0x1
-  Entry point address:               0x8048124
+  Entry point address:               0x8048130
   Start of program headers:          52 (bytes into file)
-  Start of section headers:          5280 (bytes into file)
+  Start of section headers:          5284 (bytes into file)
   Flags:                             0x0
   Size of this header:               52 (bytes)
   Size of program headers:           32 (bytes)
@@ -103,12 +103,12 @@ Adresa entry pointului este adresa simbolului `_start`:
 0804a004 D __bss_start
 0804a004 D _edata
 0804a004 D _end
-08048134 r __GNU_EH_FRAME_HDR
-080480f8 T increment
-0804810b T main
+08048140 r __GNU_EH_FRAME_HDR
+08048100 T increment
+08048113 T main
 00000001 a __NR_exit
 0804a000 D num_items
-08048124 T _start
+08048130 T _start
 ```
 
 Simbolul `_start` este definit în fișierul în limbaj de asamblare `start.s`.
@@ -145,7 +145,7 @@ Un alt simbol, `main` este la offsetul `0x13` în cadrul secțiuni de cod.
 
 În dezasamblarea codului fișierului obiect `one.o` observăm adresele (adică, de fapt, offseturile) pentru simbolurile `increment` și `main`:
 ```
-01-one-file$ objdump -d -M intel one.o
+[..]/01-one-file$ objdump -d -M intel one.o
 
 one.o:     file format elf32-i386
 
@@ -153,24 +153,24 @@ one.o:     file format elf32-i386
 Disassembly of section .text:
 
 00000000 <increment>:
-   0:   55                      push   ebp
-   1:   89 e5                   mov    ebp,esp
-   3:   a1 00 00 00 00          mov    eax,ds:0x0
-   8:   83 c0 01                add    eax,0x1
-   b:   a3 00 00 00 00          mov    ds:0x0,eax
-  10:   90                      nop
-  11:   5d                      pop    ebp
-  12:   c3                      ret
+   0:	55                   	push   ebp
+   1:	89 e5                	mov    ebp,esp
+   3:	a1 00 00 00 00       	mov    eax,ds:0x0
+   8:	83 c0 01             	add    eax,0x1
+   b:	a3 00 00 00 00       	mov    ds:0x0,eax
+  10:	90                   	nop
+  11:	5d                   	pop    ebp
+  12:	c3                   	ret
 
 00000013 <main>:
-  13:   55                      push   ebp
-  14:   89 e5                   mov    ebp,esp
-  16:   c7 05 00 00 00 00 05    mov    DWORD PTR ds:0x0,0x5
-  1d:   00 00 00
-  20:   e8 fc ff ff ff          call   21 <main+0xe>
-  25:   b8 00 00 00 00          mov    eax,0x0
-  2a:   5d                      pop    ebp
-  2b:   c3                      ret
+  13:	55                   	push   ebp
+  14:	89 e5                	mov    ebp,esp
+  16:	c7 05 00 00 00 00 05 	mov    DWORD PTR ds:0x0,0x5
+  1d:	00 00 00
+  20:	e8 fc ff ff ff       	call   21 <main+0xe>
+  25:	b8 00 00 00 00       	mov    eax,0x0
+  2a:	5d                   	pop    ebp
+  2b:	c3                   	ret
 ```
 Adresele / offseturile sunt cele așteptate: `0` pentru `increment` și `0x13` pentru `main`.
 
@@ -182,50 +182,52 @@ Comanda de mai jos afișează simbolurile din executabilul `one`, împreună cu 
 0804a004 D __bss_start
 0804a004 D _edata
 0804a004 D _end
-08048134 r __GNU_EH_FRAME_HDR
-080480f8 T increment
-0804810b T main
+08048140 r __GNU_EH_FRAME_HDR
+08048100 T increment
+08048113 T main
 00000001 a __NR_exit
 0804a000 D num_items
-08048124 T _start
+08048130 T _start
 ```
 Observăm că acum simbolurile `increment`, `num_items`, `main` au adrese efective, unice între ele.
 În executabil apar și alte simboluri, introduse de linker pentru buna funcționare a programului.
 
 Similar, la dezasamblarea codului executabilului `one`, observăm că simbolurile `increment` și `main` au adrese efective:
 ```
-01-one-file$ objdump -d -M intel one
+[..]/01-one-file$ objdump -d -M intel one
 
 one:     file format elf32-i386
 
 
 Disassembly of section .text:
 
-080480f8 <increment>:
- 80480f8:       55                      push   ebp
- 80480f9:       89 e5                   mov    ebp,esp
- 80480fb:       a1 00 a0 04 08          mov    eax,ds:0x804a000
- 8048100:       83 c0 01                add    eax,0x1
- 8048103:       a3 00 a0 04 08          mov    ds:0x804a000,eax
- 8048108:       90                      nop
- 8048109:       5d                      pop    ebp
- 804810a:       c3                      ret
+08048100 <increment>:
+ 8048100:	55                   	push   ebp
+ 8048101:	89 e5                	mov    ebp,esp
+ 8048103:	a1 00 a0 04 08       	mov    eax,ds:0x804a000
+ 8048108:	83 c0 01             	add    eax,0x1
+ 804810b:	a3 00 a0 04 08       	mov    ds:0x804a000,eax
+ 8048110:	90                   	nop
+ 8048111:	5d                   	pop    ebp
+ 8048112:	c3                   	ret
 
-0804810b <main>:
- 804810b:       55                      push   ebp
- 804810c:       89 e5                   mov    ebp,esp
- 804810e:       c7 05 00 a0 04 08 05    mov    DWORD PTR ds:0x804a000,0x5
- 8048115:       00 00 00
- 8048118:       e8 db ff ff ff          call   80480f8 <increment>
- 804811d:       b8 00 00 00 00          mov    eax,0x0
- 8048122:       5d                      pop    ebp
- 8048123:       c3                      ret
+08048113 <main>:
+ 8048113:	55                   	push   ebp
+ 8048114:	89 e5                	mov    ebp,esp
+ 8048116:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
+ 804811d:	00 00 00
+ 8048120:	e8 db ff ff ff       	call   8048100 <increment>
+ 8048125:	b8 00 00 00 00       	mov    eax,0x0
+ 804812a:	5d                   	pop    ebp
+ 804812b:	c3                   	ret
+ 804812c:	66 90                	xchg   ax,ax
+ 804812e:	66 90                	xchg   ax,ax
 
-08048124 <_start>:
- 8048124:       e8 e2 ff ff ff          call   804810b <main>
- 8048129:       89 c3                   mov    ebx,eax
- 804812b:       b8 01 00 00 00          mov    eax,0x1
- 8048130:       cd 80                   int    0x80
+08048130 <_start>:
+ 8048130:	e8 de ff ff ff       	call   8048113 <main>
+ 8048135:	89 c3                	mov    ebx,eax
+ 8048137:	b8 01 00 00 00       	mov    eax,0x1
+ 804813c:	cd 80                	int    0x80
 ```
 
 În fapt, linkerul stabilește care este adresa de început a fiecărui secțiuni.
@@ -237,15 +239,15 @@ symbol_address = section_address + offset_of_symbol_in_section
 Folosim comanda de mai jos pentru a afla adresele secțiunilor din cadrul executabilului `one`:
 ```
 [..]/01-one-file$ readelf -S one
-There are 15 section headers, starting at offset 0x14a0:
+There are 15 section headers, starting at offset 0x14a4:
 
 Section Headers:
   [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
   [ 0]                   NULL            00000000 000000 000000 00      0   0  0
   [ 1] .note.gnu.build-i NOTE            080480d4 0000d4 000024 00   A  0   0  4
-  [ 2] .text             PROGBITS        080480f8 0000f8 00003a 00  AX  0   0  1
-  [ 3] .eh_frame_hdr     PROGBITS        08048134 000134 00001c 00   A  0   0  4
-  [ 4] .eh_frame         PROGBITS        08048150 000150 000058 00   A  0   0  4
+  [ 2] .text             PROGBITS        08048100 000100 00003e 00  AX  0   0 16
+  [ 3] .eh_frame_hdr     PROGBITS        08048140 000140 00001c 00   A  0   0  4
+  [ 4] .eh_frame         PROGBITS        0804815c 00015c 000058 00   A  0   0  4
   [ 5] .data             PROGBITS        0804a000 001000 000004 00  WA  0   0  4
   [ 6] .comment          PROGBITS        00000000 001004 000029 01  MS  0   0  1
   [ 7] .debug_aranges    PROGBITS        00000000 00102d 000020 00      0   0  1
@@ -254,8 +256,8 @@ Section Headers:
   [10] .debug_line       PROGBITS        00000000 001125 00003a 00      0   0  1
   [11] .debug_str        PROGBITS        00000000 00115f 0000c7 01  MS  0   0  1
   [12] .symtab           SYMTAB          00000000 001228 000180 10     13  17  4
-  [13] .strtab           STRTAB          00000000 0013a8 00005d 00      0   0  1
-  [14] .shstrtab         STRTAB          00000000 001405 00009b 00      0   0  1
+  [13] .strtab           STRTAB          00000000 0013a8 00005f 00      0   0  1
+  [14] .shstrtab         STRTAB          00000000 001407 00009b 00      0   0  1
 Key to Flags:
   W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
   L (link order), O (extra OS processing required), G (group), T (TLS),
@@ -273,20 +275,20 @@ Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` î
 În dezasamblarea fișierului obiect `one.o`, respectiv a executabilului `one`, observăm că instrucțiunile care referă variabila `num_items` sunt:
 ```
 ; one.o
-   3:   a1 00 00 00 00          mov    eax,ds:0x0
    [...]
-   b:   a3 00 00 00 00          mov    ds:0x0,eax
+   3:	a1 00 00 00 00       	mov    eax,ds:0x0
    [...]
-  16:   c7 05 00 00 00 00 05    mov    DWORD PTR ds:0x0,0x5
-  1d:   00 00 00
+   b:	a3 00 00 00 00       	mov    ds:0x0,eax
+   [...]
+  16:	c7 05 00 00 00 00 05 	mov    DWORD PTR ds:0x0,0x5
 
 ; one
- 80480fb:       a1 00 a0 04 08          mov    eax,ds:0x804a000
  [...]
- 8048103:       a3 00 a0 04 08          mov    ds:0x804a000,eax
+ 8048103:	a1 00 a0 04 08       	mov    eax,ds:0x804a000
  [...]
- 804810e:       c7 05 00 a0 04 08 05    mov    DWORD PTR ds:0x804a000,0x5
- 8048115:       00 00 00
+ 804810b:	a3 00 a0 04 08       	mov    ds:0x804a000,eax
+ [...]
+ 8048116:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
 ```
 
 În fișierul executabil codul instrucțiunilor conține adresa efectivă a variabilei `num_items` (`0x0804a000`), scrisă în format little endian.
@@ -297,12 +299,12 @@ Același lucru se întâmplă și în cazul instrucțiunii care referă simbolul
 ```
 ; one.o
   [...]
-  20:   e8 fc ff ff ff          call   21 <main+0xe>
+  20:	e8 fc ff ff ff       	call   21 <main+0xe>
   [...]
 
 ; one
  [...]
- 8048118:       e8 db ff ff ff          call   80480f8 <increment>
+ 8048120:	e8 db ff ff ff       	call   8048100 <increment>
  [...]
 ```
 
@@ -355,15 +357,15 @@ Prin parcurgerea secțiunii de relocare `.rel.text`, linkerul ia următoarele de
 În dezasamblarea fișierului obiect `one.o`, observăm că exact acelea sunt offseturile unde se găsesc referințele la simboluri:
 ```
 ; one.o
-   3:   a1 00 00 00 00          mov    eax,ds:0x0
    [...]
-   b:   a3 00 00 00 00          mov    ds:0x0,eax
+   3:	a1 00 00 00 00       	mov    eax,ds:0x0
    [...]
-  16:   c7 05 00 00 00 00 05    mov    DWORD PTR ds:0x0,0x5
-  1d:   00 00 00
-  [...]
-  20:   e8 fc ff ff ff          call   21 <main+0xe>
-  [...]
+   b:	a3 00 00 00 00       	mov    ds:0x0,eax
+   [...]
+  16:	c7 05 00 00 00 00 05 	mov    DWORD PTR ds:0x0,0x5
+   [...]
+  20:	e8 fc ff ff ff       	call   21 <main+0xe>
+   [...]
 ```
 La offseturile `0x04`, `0x0c`, `0x18` se găsesc referințe la simbolul `num_items`.
 Necunoscându-se adresa simbolului `num_items` referințele sunt acum marcate cu `0x00000000`.
@@ -375,14 +377,14 @@ După ce stabilește adresele, linkerul va parcurge secțiunea de relocare `.rel
 Acest lucru se observă în fișierul executabil:
 ```
 ; one
- 80480fb:       a1 00 a0 04 08          mov    eax,ds:0x804a000
  [...]
- 8048103:       a3 00 a0 04 08          mov    ds:0x804a000,eax
+ 8048103:	a1 00 a0 04 08       	mov    eax,ds:0x804a000
  [...]
- 804810e:       c7 05 00 a0 04 08 05    mov    DWORD PTR ds:0x804a000,0x5
- 8048115:       00 00 00
+ 804810b:	a3 00 a0 04 08       	mov    ds:0x804a000,eax
  [...]
- 8048118:       e8 db ff ff ff          call   80480f8 <increment>
+ 8048116:	c7 05 00 a0 04 08 05 	mov    DWORD PTR ds:0x804a000,0x5
+ [...]
+ 8048120:	e8 db ff ff ff       	call   8048100 <increment>
  [...]
 ```
 În locurile în care în fișierul obiect existau referințe de tip placeholder, fișierul executabil conține adresele efective ale simbolurilor.
