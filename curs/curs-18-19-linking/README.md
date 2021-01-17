@@ -1254,7 +1254,20 @@ Pentru o folosire robustă, există alte mijloace de precizare a căilor de cău
 
 ## Sumar
 
-TODO
+Linking (sau linkare / legare sau link editare / editarea de legături) este faza finală a procesului de compilare.
+Programul folosit pentru linking este numit **linker**.
+Linkerul folosește ca date de intrare fișiere obiect și fișiere de tip bibliotecă; produce fișiere executabile sau biblioteci dinamice.
+
+Pentru a produce fișierul executabil, linkerul realizează o serie de acțiuni: rezolvarea simbolurilor, unificarea secțiunilor, stabilirea adreselor, relocarea simbolurilor, stabilirea entry pointului.
+După aceste faze, fișierul executabil are toate informațiile pentru a fi încărcat în memorie și folosit în cadrul unui proces.
+
+În sistemele de operare moderne, se folosește linkare dinamică.
+În cazul linkării dinamice, modulele obiect rezultate în urma compilării aplicației sunt linkate la biblioteci partajate.
+Părțile din aceste biblioteci partajate nu sunt incluse în executabil, vor fi incluse la încărcare.
+Bibliotecile partajate, după cum le spune numele, pot fi partajate în memorie între procese diferite.
+
+O altă variantă este folosirea bibliotecilor statice, în care toate părțile folosite sunt incluse în executabile.
+Acest lucru rezultă în executabile care nu depind de configurația sistemului, dar care ocupă mai mult spațiu și care nu vor putea partaja informații în memorie după încărcare.
 
 ## Referințe
 
