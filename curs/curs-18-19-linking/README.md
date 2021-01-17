@@ -5,14 +5,13 @@ Linkingul agregă mai multe fișiere obiect (sau colecții de fișiere obiect: b
 Un fișier executabil conține datele și codul necesare pentru a porni o aplicație / un proces.
 Pornirea unui proces dintr-un fișier executabil este numită **loading** (încărcare).
 Fișierul executabil este încărcat (**loaded**) în memorie; codul și datele din fișierul executabil astfel încărcat în memorie sunt folosite pentru a porni un proces.
-Spunem că fișierul executabil este **imaginea procesului**.
 
 La compilare, linkare și încărcare se realizează diferite acțiuni specifice.
 Numim aceste momente *compile-time*, *link-time* și *load-time*.
 Rularea efectivă a codului în cadrul unui proces este numită *run-time*.
 
 Programul folosit pentru linking este numit **linker**.
-Linkerul folosește ca intrare fișiere obiect și fișiere de tip bibliotecă; produce fișiere executabile sau biblioteci dinamice.
+Linkerul folosește ca date de intrare fișiere obiect și fișiere de tip bibliotecă; produce fișiere executabile sau biblioteci dinamice.
 Nu vom insista pe cazul în care linkerul produce biblioteci dinamice, doar pe cazul în care produce fișiere executabile.
 Pe scurt, linkerul folosește fișiere care conțin date și cod (mașină) și generează un alt fișier (executabil) care conține date și cod (mașină).
 Acest fișier executabil este rezultatul agregării datelor și codului (mașină) din fișierele folosite.
@@ -136,7 +135,7 @@ Comanda de mai jos afișează simbolurile din fișierul obiect `one.o`:
 00000013 T main
 00000000 D num_items
 ```
-În secvența de mai sus ar apărea că simbolul `increment` și simbolul `num_items` au acceași adresă.
+În secvența de mai sus ar părea că simbolul `increment` și simbolul `num_items` au acceași adresă.
 De fapt, simbolul `increment` este un simbol în secțiunea de cod (`.text`) în vreme ce simbolul `num_items` este un simbol în secțiunea de date (`.data`).
 "Adresele" afișate sunt offseturile în cadrul secțiunilor.
 Adică simbolul `increment` este la offsetul `0` în cadrul secțiunii de cod (adică este la începutul secțiunii).
@@ -172,7 +171,7 @@ Disassembly of section .text:
   2a:	5d                   	pop    ebp
   2b:	c3                   	ret
 ```
-Adresele / offseturile sunt cele așteptate: `0` pentru `increment` și `0x13` pentru `main`.
+Adresele / offseturile sunt cele așteptate: `0` pentru `increment` și `0x13` pentru `main`<a href="#ds" id="refds"><sup>1</sup></a>.
 
 De cealaltă parte, în cadrul fișierului executabil, fiecare simbol are asociată o adresă.
 Adresa este unică în cadrul fișierului executabil, nu mai este offset în cadrul unei secțiuni, și va fi folosită la load-time pentru crearea procesului.
@@ -272,7 +271,7 @@ Simbolul `main` se găsește la adresa `0x0804810b` adică la offsetul `0x13` î
 
 ## Relocarea simbolurilor
 
-În dezasamblarea fișierului obiect `one.o`, respectiv a executabilului `one`, observăm că instrucțiunile care referă variabila `num_items` sunt:
+În dezasamblarea fișierului obiect `one.o`, respectiv a executabilului `one`, observăm că instrucțiunile care folosesc variabila `num_items` sunt:
 ```
 ; one.o
    [...]
@@ -462,3 +461,8 @@ https://people.cs.pitt.edu/~xianeizhang/notes/Linking.html
 https://docs.oracle.com/cd/E19683-01/817-3677/chapter2-88783/index.html
 
 https://stac47.github.io/c/relocation/elf/tutorial/2018/03/01/understanding-relocation-elf.html
+
+<a name="ds" href="#refds"><sup>1</sup></a>Construcții de forma `ds:0x0` înseamnă offsetul `0x0` în cadrul segmentului de date (indicat de registrul `ds` - *data segment*).
+Sistemele de operare moderne folosesc un spațiu de adresă unic liniar pentru fiecare proces (*flat address space*), în care segmentul de date (`ds`), segmentul de cod (`cs`) și cel de stivă (`ss`) au aceeași valoare și referă aceeași zonă de memorie.
+De aceea, vom interpreta construcții de forma `ds:0x0` ca însemnând adresa `0x0`.
+Construcția `ds:0x804a000`, de exemplu, înseamnă `0x804a000`.
