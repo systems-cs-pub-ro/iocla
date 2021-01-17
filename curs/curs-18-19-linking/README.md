@@ -865,9 +865,132 @@ ELF Header:
   Section header string table index: 9
 ```
 
-## Linkare statică
+## Relocări
 
-TODO
+Până acum relocările pe care le-am observat au fost prezente *în* secțiunea `.text` a unui fișier obiect.
+Într-un loc din secțiunea `.text` a unui fișier obiect putem reloca un simbol din altă secțiune a aceluiași fișier obiect (de exemplu secțiunea `.data`) sau putem reloca un simbol din orice secțiune a altui fișier obiect (`.text`, `.data` etc.)
+
+Relocările se pot face și în alte secțiuni.
+În directorul `03-reloc/` avem un exemplu de relocare în secțiunea `.data`.
+Directorul are un conținut similar directorului `02-two-files/`, doar că acum nu mai se apelează funcția `increment()` ci se folosește pointerului de funcție `operator`, definit astfel în fișierul `inc.`:
+```
+static void increment(void);
+void (*operator)(void) = increment;
+```
+Pointerul de funcție `operator` este o variabilă globală ce se va găsi în secțiunea `.data` și va fi inițializată la adresa funcției `increment()`.
+Întrucât nu știm adresa efectivă a funcției `increment()`, ne așteptăm să existe o relocare.
+
+Investigăm tabela de relocare a fișierul obiect `inc.o`:
+
+```
+[..]/03-reloc$ readelf -r inc.o
+
+Relocation section '.rel.text' at offset 0x184 contains 2 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000004  00000a01 R_386_32          00000000   num_items
+0000000c  00000a01 R_386_32          00000000   num_items
+
+Relocation section '.rel.data' at offset 0x194 contains 1 entry:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000000  00000201 R_386_32          00000000   .text
+
+[...]
+```
+Observăm că avem o relocare în zona de date (`.rel.data`).
+Relocarea se găsește la offsetul `0` în secțiunea `.data` și referă adresa `0` din secțiunea `.text`.
+Ambele valori (offset și adresă) sunt `0` pentru că acestea sunt offseturile curente (din fișierul obiect `inc.o`) ale simbolurilor, respectiv, `operator` și `increment` în secțiunea `.data` și `.text`:
+```
+[..]/03-reloc$ nm inc.o
+00000000 t increment
+         U num_items
+00000000 D operator
+```
+Adică se precizează că valoarea variabilei `operator` va fi completată, la relocare, cu adresa simbolului `increment`.
+Dacă offseturile simbolurilor `operator` și `increment` ar fi fost altele (diferite de `0`) ar fi apărut corespunzător și în tabela de relocare.
+Observăm acest lucru și inspectând conținutul zonei `.data` din fișierului obiect `inc.o`:
+```
+[..]/03-reloc$ readelf -x .data inc.o
+
+Hex dump of section '.data':
+ NOTE: This section has relocations against it, but these have NOT been applied to this dump.
+  0x00000000 00000000                            ....
+```
+La adresa `0x00000000` din secțiunea `.data`, corespunzătoarea simbolului `operator`, se află valoarea `0x00000000`, adică adresa / offsetul simbolului `increment`.
+Observăm și precizarea că secțiunea dispune de relocări care nu au fost înca aplicate.
+
+În urma relocării de la linkare, conținutul variabilei `operator` va fi completat cu adresa stabilită pentru funcția `increment`.
+Dacă analizăm simbolurile fișierului executabil `two` observăm că adresele simbolurilor `operator`, respectiv `increment`, sunt `0x0804a004` și `0x08048130`:
+```
+[..]/03-reloc$ nm two
+0804a008 D __bss_start
+0804a008 D _edata
+0804a008 D _end
+08048160 r __GNU_EH_FRAME_HDR
+08048130 t increment
+08048100 T main
+00000001 a __NR_exit
+0804a000 D num_items
+0804a004 D operator
+08048150 T _start
+```
+
+Analizând conținutul secțiunii `.data`, observăm că la adresa `0x0804a004`, corespunzătoare simbolului `operator`, se găsește valoarea `0x08048130` (format little-endian), corespunzătoare simbolului `increment`:
+```
+[..]/03-reloc$ readelf -x .data two
+
+Hex dump of section '.data':
+  0x0804a000 0a000000 30810408                   ....0...
+```
+Ca o confirmare, vedem că la adresa `0x0804a000`, corespunzătoare simbolului `num_items`, se găsește valoarea `0xa` (`10` în zecimal), adică valoarea cu care a fost inițializată variabila, așa cum reiese din fișierul cod sursă `two.c`.
+
+## Biblioteci
+
+În general linkăm fișiere obiect într-un fișier executabil.
+Dacă folosim frecvent fișiere obiect, mai ales în cazul în care acestea expun un API, are sens să creăm colecții cu aceste fișiere obiect pentru a fi refolosite.
+Aceste colecții sunt numite **biblioteci**.
+
+O bibliotecă agregă mai multe fișiere obiect.
+Legarea unui biblioteci este echivalentă cu legarea fișierelor obiect conținute.
+Avantajele folosirii bibliotecilor sunt:
+* Nu mai recompilăm de fiecare dată fișierele cod sursă în fișiere obiect.
+* Există un singur fișier care poate fi distribuit ușor.
+
+În directorul `04-lib/`, avem fișierele cod sursă și fișierul `Makefile`, pe care le folosim ca să obținem două fișiere executabile: `main` și `main_lib`.
+La rularea comenzii `make` vom obține cele două fișiere executabile:
+```
+[..]/04-lib$ ls
+inc.c  inc.h  main.c  Makefile  start.asm
+
+[..]/04-lib$ make
+cc -fno-PIC -m32   -c -o main.o main.c
+nasm -f elf32 -o start.o start.asm
+cc -fno-PIC -m32   -c -o inc.o inc.c
+cc -nostdinc -nostdlib -no-pie -m32  main.o start.o inc.o   -o main
+ar rc libinc.a inc.o
+cc -nostdinc -nostdlib -no-pie -m32 -L. -o main_lib main.o start.o -linc
+
+[..]/04-lib$ ls
+inc.c  inc.h  inc.o  libinc.a  main  main.c  main_lib  main.o  Makefile  start.asm  start.o
+```
+Executabilul `main` este obținut din legarea fișierelor obiect `main.o`, `inc.o` și `start.o`, în vreme ce executabilul `main_lib` este obținut din legarea fișierelor obiect `main.o`, `start.o` și a fișierului bibliotecă `libinc.a`.
+Fișierul bibliotecă `libinc.a` este obținută la rândul său din fișierul obiect `inc.o`.
+În general, o bibliotecă conține mai multe fișiere obiect; aici conține un singur fișier obiect (`inc.o`), ca exemplu didactic.
+
+Fișierele `main` și `main_lib` sunt identice, acest lucru datorându-se și faptului că ordine fișierelor obiect este aceeași în comenzile de linkare:
+```
+razvan@yggdrasil:~/.../curs/curs-18-19-linking/04-lib$ ls -l main main_lib
+-rwxr-xr-x 1 razvan razvan 1588 Jan 17 16:34 main
+-rwxr-xr-x 1 razvan razvan 1588 Jan 17 16:34 main_lib
+
+razvan@yggdrasil:~/.../curs/curs-18-19-linking/04-lib$ cmp main main_lib
+```
+
+Atunci când legăm biblioteci, trebuie să precizăm directorul în care linkerul localizează bibliotecile (*library location*).
+Realizăm acest lucru prin intermediul opțiunii `-L.`, opțiune cu care am indicat linkerului să localizeze fișierul bibliotecă `libinc.a` în directorul curent (`.` - *dot*).
+
+Numele unui fișier bibliotecă începe cu prefixul `lib` urmat de numele bibliotecii.
+Comanda de linkare va conține opțiunea `-l` urmată de numele bibliotecii.
+În cazul nostru, biblioteca se cheamă `inc`, de numele fișierului bibliotecă este `libinc.a`, iar argumentul folosit este `-linc`.
 
 ## Linkare dinamică
 
