@@ -474,7 +474,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
 ```
 Observăm că dimensiunea secțiunii `.text` este `0x2c` pentru `one.o`, `0x0e` pentru `start.o` și `0x3e` pentru `one`.
 În mod normal, dimensiunea secțiunii pentru executabil este suma dimensiunilor secțiunilor pentru fișierele obiect linkate.
-În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere.
+În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere<a href="#align" id="refalign"><sup>2</sup></a>.
 
 Urmărim codul dezasamblat pentru secțiunea `.text` a fiecăruia dintre cele trei fișiere:
 ```
@@ -1148,7 +1148,7 @@ Investigăm simbolurile executabilului:
 ```
 Simbolurile obținute din modulul obiect `main.o` și din biblioteca statică `libinc.o` sunt rezolvate și au adrese stabilite.
 Observăm că folosirea bibliotecii standard C a dus la existența simboblului `_start`, care este entry pointul programului.
-Dar, simbolurile din biblioteca standard C, (`print`, `__libc_start_main`) sunt marcate ca nedefinite (`U`).
+Dar, simbolurile din biblioteca standard C, (`printf`, `__libc_start_main`) sunt marcate ca nedefinite (`U`).
 Aceste simboluri nu sunt prezente în executabil: rezolvarea, stabilirea adreselor și relocarea lor se va realiza mai târziu, la încărcare (load-time).
 
 La încărcare, o altă componentă software a sistemului, loaderul / linkerul dinamic, se va ocupa de:
@@ -1186,7 +1186,7 @@ Diferă executabilul obținut, care va avea nedefinite simbolurile folosite din 
 De asemenea, loaderul / linkerul dinamic trebuie să fie informat de locul bibliotecii dinamice.
 
 În directorul `07-dynlib/` avem un conținut similar directorului `06-dynamic/`.
-Diferența este că acum, folosim linkare dinamică în loc de linkare statică și pentru a include funcționalitatea `inc.c, nu doar pentru biblioteca standard C.
+Diferența este că acum, folosim linkare dinamică în loc de linkare statică și pentru a include funcționalitatea `inc.c`, nu doar pentru biblioteca standard C.
 Pentru aceasta, construim fișierul bibliotecă partajată `libinc.so`, în locul fișierului bibliotecă statică `libibc.a`.
 
 Similar exemplului din directorul `06-dynamic/`, folosim comanda `make` pentru a obține executabilul `main`:
@@ -1285,7 +1285,13 @@ https://docs.oracle.com/cd/E19683-01/817-3677/chapter2-88783/index.html
 
 https://stac47.github.io/c/relocation/elf/tutorial/2018/03/01/understanding-relocation-elf.html
 
-<a name="ds" href="#refds"><sup>1</sup></a>Construcții de forma `ds:0x0` înseamnă offsetul `0x0` în cadrul segmentului de date (indicat de registrul `ds` - *data segment*).
+<a id="ds" href="#refds"><sup>1</sup></a>Construcții de forma `ds:0x0` înseamnă offsetul `0x0` în cadrul segmentului de date (indicat de registrul `ds` - *data segment*).
 Sistemele de operare moderne folosesc un spațiu de adresă unic liniar pentru fiecare proces (*flat address space*), în care segmentul de date (`ds`), segmentul de cod (`cs`) și cel de stivă (`ss`) au aceeași valoare și referă aceeași zonă de memorie.
 De aceea, vom interpreta construcții de forma `ds:0x0` ca însemnând adresa `0x0`.
 Construcția `ds:0x804a000`, de exemplu, înseamnă `0x804a000`.
+
+<a id="align" href="#refalign"><sup>2</sup></a>Alinierea codului (și a datelor în general) este utilă pentru creșterea vitezei accesului la date.
+Procesorul citește datele/codul în cuvinte de procesor.
+Dacă acestea nu sunt aliniate la cuvântul procesorului, vor rezulta în întârzieri de citire.
+Tipic, în cod, țintele unor instrucțiuni de salt (`jmp`, `call`) sunt aliniate, cum este cazul adresleor de funcții.
+Detalii [aici](https://stackoverflow.com/a/4909633/4804196).
