@@ -204,6 +204,28 @@ Hex dump of section '.rodata':
   0x080484e8 6f726c64 2100                       orld!.
 ```
 
+## Feedback
+
+Pentru a îmbunătăți cursul de IOCLA, componentele sale și modul de desfășurare, ne sunt foarte utile opiniile voastre.
+Pentru aceasta, vă rugăm să accesați și completați formularul de feedback de pe site-ul [curs.upb.ro](https://curs.upb.ro/).
+Trebuie să fiți autentificați și înrolați în cadrul cursului.
+
+Formularul este anonim și este activ în perioada 18 ianuarie 2021 - 29 ianuarie 2021.
+Rezultatele vor fi vizibile în cadrul echipei cursului doar după încheierea sesiunii.
+Puteți accesa formularul de feedback începând cu 18 ianuarie 2021.
+Este accesibil la link-ul "Formular feedback" a paginii principale a cursului de IOCLA al seriei voastre.
+Nu este în meta-cursul disponibil tuturor seriilor.
+
+Vă invităm să evaluați activitatea echipei de IOCLA și să precizați punctele tari și punctele slabe și sugestiile voastre de îmbunătățire a disciplinei.
+Feedbackul vostru ne ajută să creștem calitatea materiei în anii următori și să îmbunătățim disciplinele pe care le veți face în continuare.
+
+Vom publica la începutul semestrului viitor analiza feedbackului vostru.
+
+Ne interesează în special:
+1. Ce nu v-a plăcut și ce credeți că nu a mers bine?
+1. De ce nu v-a plăcut și de ce credeți că nu a mers bine?
+1. Ce ar trebui să facem ca lucrurile să fie plăcute și să meargă bine?
+
 ## Exerciții
 
 Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.
@@ -211,6 +233,12 @@ Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciți
 Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.
 Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).
 Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.
+
+
+### 00. Hey! Hey, listen!
+
+Dacă ne oferiți feedback, ne ajutați să ~~îl facem pe Lunk mai puternic~~ îmbunătățim materia.
+Mergeți la secțiunea [feedback](#feedback) pentru detalii.
 
 ### 01. Linkarea unui singur fișier
 
