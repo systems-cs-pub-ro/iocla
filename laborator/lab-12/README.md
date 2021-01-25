@@ -239,6 +239,13 @@ git clone https://github.com/systems-cs-pub-ro/iocla ${target}
 ```
 Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
+Cele mai multe dintre exerciții se desfășoară pe o arhitectură x86 (32 de biți, i386).
+Pentru a putea compila / linka pe 32 de biți atunci când sistemul vostru este pe 64 de biți, aveți nevoie de pachete specifice.
+Pe o distribuție Debian / Ubuntu, instalați pachetele folosind comanda:
+```
+sudo apt install gcc-multilib libc6-dev-i386
+```
+
 Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.
 În cea mai mare parte, aceste exerciții sunt exerciții în care observăm ce se întâmplă în procesul de linking, cele marcate cu sufixul `-tut` sau `-obs`.
 Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.
@@ -268,14 +275,14 @@ Folosim comanda `file hello` pentru a urmări daca fișierul este compilat dinam
 Este comentată o comandă echivalentă care folosește direct `ld`.
 Pentru a urmări folosirea directă a `ld`, putem comenta comanda `gcc` și decomenta comanda `ld`.
 
-În cazul `c-standalone`, pentru că nu folosim biblioteca standard C sau bibliotecă runtime C, trebuie să înlocuim funcționalitățile acestora.
+În cazul `c-standalone/`, pentru că nu folosim biblioteca standard C sau bibliotecă runtime C, trebuie să înlocuim funcționalitățile acestora.
 Funcționalitățile sunt înlocuite în fișierul `start.asm` și `puts.asm`.
 Aceste fișiere implementează, respectiv, funcția / simbolul `_start` și funcția `puts`.
 Funcția / simbolul `_start` este, în mod implicit, entry pointul unui program executabil.
 Funcția `_start` este responsabilă pentru apelul funcției `main` și încheierea programului.
 Pentru că nu există bibliotecă standard, aceste două fișiere sunt scrise în limbaj de asamblare și folosesc apeluri de sistem.
 
-**Bonus**: Adăugați în fișierul `c-standalone/` o comandă care folosește explicit `ld` pentru linkare.
+**Bonus**: Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.
 
 ### 02. Linkarea unui singur fișier
 
@@ -380,11 +387,13 @@ $ nm sub.o
 ```
 Numele simbolurilor nu sunt `add`, respectiv `sub`, ci sunt `_Z3addii` și `_Z3subii`.
 Numele simbolurilor C++ sunt *mangled* și definesc signatura funcției.
-Acest lucru se întâmplă pentru a permite funcții cu același nume cu signaturi diferite.
-Detalii despre *name mangling* sunt [aici](https://en.wikipedia.org/wiki/Name_mangling).
+Acest lucru se întâmplă pentru a permite funcții cu același nume, dar cu signaturi diferite.
+Detalii despre *name mangling* găsiți [aici](https://en.wikipedia.org/wiki/Name_mangling).
 
-Pentru a rezolva acest lucru, trebuie ca acele simboluri definite C și importate în C++, sau invers, să fie prefixate cu declarația `extern "C"`.
+Pentru a rezolva acest lucru, trebuie ca simbolurile definite C și importate în C++, sau invers, să fie prefixate cu directiva `extern "C"`.
+În felul acesta, compilatorul C++ va folosi numele simple pentru simbolurile importate / exportate, pentru a fi folosite împreună cu module C.
 Acest lucru este realizat în subdirectorul `good/`.
+Detalii despre directiva `extern "C"` găsiți [aici](https://stackoverflow.com/a/1041880/4804196).
 
 ### 13. Linkare fișier obiect (fără fișier cod sursă)
 
