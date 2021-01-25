@@ -228,6 +228,16 @@ Ne interesează în special:
 
 ## Exerciții
 
+În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
+Repository-ul este clonat pe desktopul mașinii virtuale.
+Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`).
+Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.
+Dacă doriți să descărcați repository-ul în alt loc (`{target}`), folosiți comanda
+```
+git clone https://github.com/systems-cs-pub-ro/iocla ${target}
+```
+Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+
 Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.
 În cea mai mare parte, aceste exerciții sunt exerciții în care observăm ce se întâmplă în procesul de linking, cele marcate cu sufixul `-tut` sau `-obs`.
 Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.
