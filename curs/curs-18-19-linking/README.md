@@ -337,7 +337,7 @@ ELF Header:
 Linkerul se ocupă de relocarea referințelor la simboluri.
 Atunci când creează fișierul executabil, urmărește referințele la simboluri și le înlocuiește cu adresele efective ale simbolurilor.
 Pentru a realiza relocarea, adică înlocuirea referințelor, linkerul trebuie să știe unde se găsesc aceste referințe.
-Pentru aceasta, fișierele obiect relocabile conțin **tabele de relocare** (*relocation tables*).
+Pentru aceasta, fișierele obiect relocabile conțin **tabele de relocare** (*relocation tables*)<a href="#ds" id="refds"><sup>2</sup></a>.
 
 Folosim `readelf` pentru a obține tabelele de relocare ale fișierului obiect relocabil `one.o`:
 ```
@@ -474,7 +474,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
 ```
 Observăm că dimensiunea secțiunii `.text` este `0x2c` pentru `one.o`, `0x0e` pentru `start.o` și `0x3e` pentru `one`.
 În mod normal, dimensiunea secțiunii pentru executabil este suma dimensiunilor secțiunilor pentru fișierele obiect linkate.
-În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere<a href="#align" id="refalign"><sup>2</sup></a>.
+În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere<a href="#align" id="refalign"><sup>3</sup></a>.
 
 Urmărim codul dezasamblat pentru secțiunea `.text` a fiecăruia dintre cele trei fișiere:
 ```
@@ -1290,7 +1290,10 @@ Sistemele de operare moderne folosesc un spațiu de adresă unic liniar pentru f
 De aceea, vom interpreta construcții de forma `ds:0x0` ca însemnând adresa `0x0`.
 Construcția `ds:0x804a000`, de exemplu, înseamnă `0x804a000`.
 
-<a id="align" href="#refalign"><sup>2</sup></a>Alinierea codului (și a datelor în general) este utilă pentru creșterea vitezei accesului la date.
+<a id="align" href="#refalign"><sup>2</sup></a>Și executabilele (dinamice) pot conține tabele de relocare (folosite de secțiunile GOT - *Global Offset Table* și PLT - *Procedure Linkage Table*).
+Aceste tabele de relocare sunt folosite la încărcare (*loading*) pentru rezolvarea unor simboluri disponibile doar la load time.
+
+<a id="align" href="#refalign"><sup>3</sup></a>Alinierea codului (și a datelor în general) este utilă pentru creșterea vitezei accesului la date.
 Procesorul citește datele/codul în cuvinte de procesor.
 Dacă acestea nu sunt aliniate la cuvântul procesorului, vor rezulta în întârzieri de citire.
 Tipic, în cod, țintele unor instrucțiuni de salt (`jmp`, `call`) sunt aliniate, cum este cazul adresleor de funcții.
