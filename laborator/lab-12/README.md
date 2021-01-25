@@ -300,7 +300,7 @@ Vrem să urmărim comenzile de linkare din fișiere multiple cod sursă C: `main
 
 La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru trei scenarii diferite:
 * `a-no-header/`: declararea funcțiilor externe se face direct în fișierul sursă C (`main.c`)
-* `b-header/`: declararea funcțiilor externe se face într-un fișier header separat (`ops.h)
+* `b-header/`: declararea funcțiilor externe se face într-un fișier header separat (`ops.h`)
 * `c-lib/`: declararea funcțiilor externe se face într-un fișier header separat, iar linkarea se face folosind o bibliotecă statică
 
 În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `main`.
