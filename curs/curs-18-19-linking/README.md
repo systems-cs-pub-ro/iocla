@@ -7,8 +7,8 @@ Pornirea unui proces dintr-un fișier executabil este numită **loading** (înc�
 Fișierul executabil este încărcat (**loaded**) în memorie; codul și datele din fișierul executabil astfel încărcat în memorie sunt folosite pentru a porni un proces.
 
 La compilare, linkare și încărcare se realizează diferite acțiuni specifice.
-Numim aceste momente *compile-time*, *link-time* și *load-time*.
-Rularea efectivă a codului în cadrul unui proces este numită *run-time*.
+Numim aceste momente *compile time*, *link time* și *load time*.
+Rularea efectivă a codului în cadrul unui proces este numită *runtime*.
 
 Programul folosit pentru linking este numit **linker**.
 Linkerul folosește ca date de intrare fișiere obiect și fișiere de tip bibliotecă; produce fișiere executabile sau biblioteci dinamice.
@@ -183,7 +183,7 @@ Disassembly of section .text:
 Adresele / offseturile sunt cele așteptate: `0` pentru `increment` și `0x13` pentru `main`<a href="#ds" id="refds"><sup>1</sup></a>.
 
 De cealaltă parte, în cadrul fișierului executabil, fiecare simbol are asociată o adresă.
-Adresa este unică în cadrul fișierului executabil, nu mai este offset în cadrul unei secțiuni, și va fi folosită la load-time pentru crearea procesului.
+Adresa este unică în cadrul fișierului executabil, nu mai este offset în cadrul unei secțiuni, și va fi folosită la load time pentru crearea procesului.
 Comanda de mai jos afișează simbolurile din executabilul `one`, împreună cu adresele lor:
 ```
 [..]/01-one-file$ nm one
@@ -413,7 +413,7 @@ Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conți
 Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
 După cum le spune și numele, nu sunt, însă, definite, adică nu se aloca memorie pentru ele (și deci, în viitor, adrese).
 
-În limbajul C, declarăm funcții prin intermediul antetului lor, și le folosim prin apelarea lor:
+În limbajul C, declarăm funcții prin precizarea antetului lor, fără definirea unui definirea unui corp de funcție:
 ```
 /* Declare function f. */
 int f(void);
@@ -475,6 +475,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
 Observăm că dimensiunea secțiunii `.text` este `0x2c` pentru `one.o`, `0x0e` pentru `start.o` și `0x3e` pentru `one`.
 În mod normal, dimensiunea secțiunii pentru executabil este suma dimensiunilor secțiunilor pentru fișierele obiect linkate.
 În cazul de fața, dimensiunea este mai mare (`0x3e` > `0x2c` + `0x0e`), cel mai probabil din rațiuni de aliniere<a href="#align" id="refalign"><sup>3</sup></a>.
+Alinierea se realizează la `16` octeți, lucru indicat de valoarea `2**4` din coloana `Algn`.
 
 Urmărim codul dezasamblat pentru secțiunea `.text` a fiecăruia dintre cele trei fișiere:
 ```
@@ -555,10 +556,10 @@ Disassembly of section .text:
 ```
 
 Observăm ca linkerul adaugă, în secțiunea `.text` a fișierului executabil, niște instrucțiuni suplimentare (`xchg ax, ax`, la adresele `0x804812c` și `0x804812e`) care nu au nici un efect în cadrul programului (sunt după instrucțiunea `ret`).
-Aceste instrucțiuni au rolul de aliniere, observăm că adresa funcției `_start` din fișierul executabil (`0x8048130`) este aliniată la `16`.
+Aceste instrucțiuni au rolul de aliniere, observăm că adresa funcției `_start` din fișierul executabil (`0x8048130`) este aliniată la `16` octeți.
 
 Aceeași unificare are loc și pe celelalte secțiuni de același tip din cadrul fișierelor obiect.
-La fel ca în cazul secțiunii `.text`, linkerul poate decide plasarea unor spații libere nefolosite, pentru aliniere.
+Linkerul poate decide plasarea unor spații libere nefolosite, pentru aliniere, similar secțiunilor inițiale din cadrul fișierelor obiect.
 
 ### Stabilirea adreselor
 
@@ -583,7 +584,7 @@ Aceste adrese sunt apoi folosite în faza de relocare și la completarea entry p
 
 Asocierea dintre simboluri și adrese se găsește în secțiuni / tabele dedicate în fișierelor obiect sau executabile.
 După relocare și completarea entry pointului într-un fișier executabil, asocierea dintre un nume de simbol și o adresă nu mai este necesară.
-Fișierul executabil are toate informațiile necesare pentru a putea fi încărcat (*loaded*) într-un proces.
+Fișierul executabil are toate informațiile necesare pentru a putea fi încărcat (*loaded*) într-un proces, chiar și în lipsa numelor de simboluri.
 
 Renunțarea la simbolurile unui executabil se numește *stripping*.
 Poate fi realizată ca parte a procesului de linking, sau poate fi realizată ulterior.
@@ -592,7 +593,8 @@ Realizăm o variantă stripped a executabilului `one`, numită `one_stripped`:
 [..]/01-one-file$ cp one one_stripped
 
 [..]/01-one-file$ strip one_stripped
-razvan@yggdrasil:~/.../curs/curs-18-19-linking/01-one-file$ nm one
+
+[..]/01-one-file$ nm one
 0804a004 D __bss_start
 0804a004 D _edata
 0804a004 D _end
@@ -685,8 +687,8 @@ Observăm cum se întâmplă acțiunile linkerului în directorul `02-two-files/
 Acesta conține două fișiere cod sursă C (`two.c` și `inc.c`) care sunt, de fapt, o împărțire a fișierului `one.c` din directorul `01-one-file/`:
 * `two.c` conține funcția `main()` și variabila `num_items`
 * `inc.c` conține funcția `increment()`
-* `two.c` conține referință la funcția `increment()` prin declararea antetului funcției
-* `inc.c` conține referință la variabila `num_items` prin declararea folosind cuvântul cheie `extern`
+* `two.c` conține referință la funcția `increment()`: funcția este folosită și declarată (prin antet), dar nu este definită
+* `inc.c` conține referință la variabila `num_items`: variabila este folosită și declarată (prin folosirea cuvântului cheie `extern`), dar nu este definită
 Fișierul `start.asm` este fișierul de suport.
 
 Toate fișierele sunt compilate, respectiv, în fișierele obiect `two.o`, `inc.o` și `start.o`, care sunt linkate în fișierul executabil `two`.
@@ -714,7 +716,7 @@ Pentru început urmărim simbolurile din fiecare fișier de interes:
 08048150 T _start
 ```
 Observăm că simbolul `increment` este nedefinit în fișierul obiect `two.o`, iar simbolul `num_items` este nedefinit în fișierul `inc.o`.
-Simbolurile definite în fiecare modul obiect (`main` și `num_items` în `two.o`, respectiv `increment` în `inc.o`) au adresa `0` pentru că sunt la începutul secțiunii corespunzătoare (`,text` sau `.data`).
+Simbolurile definite în fiecare modul obiect (`main` și `num_items` în `two.o`, respectiv `increment` în `inc.o`) au adresa `0` pentru că sunt la începutul secțiunii corespunzătoare (`.text` sau `.data`).
 Fișierul executabil `two` are toate simbolurile definite și adresele stabilite, în urma etapelor procesului de linking: rezolvarea simbolurilor, unificarea secțiunilor, stabilirea adreselor, relocarea simbolurilor.
 
 Urmărim tabelele de relocare pentru cele două fișiere obiect:
@@ -848,7 +850,7 @@ Observăm că acum, în locurile de tip placeholder în fișierele obiect, apar 
 Mai observăm și că, de la adresa `0x8048141` până la adresa `0x8048150` au fost puse intrucțiuni care nu au efect (`xchg ax, ax`, `nop`) din rațiuni de aliniere;
 adresa simbolului `_start` este `0x8048150`, aliniată la 16 octeți.
 
-Totodată, adresa simbolului `_start` (`0x8048150`) este adresa entrypointului programului:
+Totodată, adresa simbolului `_start` (`0x8048150`) este adresa entry pointului programului:
 ```
 [..]/02-two-files$ readelf -h two
 ELF Header:
@@ -880,7 +882,7 @@ Până acum relocările pe care le-am observat au fost prezente *în* secțiunea
 
 Relocările se pot face și în alte secțiuni.
 În directorul `03-reloc/` avem un exemplu de relocare în secțiunea `.data`.
-Directorul are un conținut similar directorului `02-two-files/`, doar că acum nu mai se apelează funcția `increment()` ci se folosește pointerului de funcție `operator`, definit astfel în fișierul `inc.`:
+Directorul are un conținut similar directorului `02-two-files/`, doar că acum nu se mai apelează funcția `increment()`, ci se folosește pointerul de funcție `operator`, definit astfel în fișierul `inc.`:
 ```
 static void increment(void);
 void (*operator)(void) = increment;
@@ -905,8 +907,8 @@ Relocation section '.rel.data' at offset 0x194 contains 1 entry:
 [...]
 ```
 Observăm că avem o relocare în zona de date (`.rel.data`).
-Relocarea se găsește la offsetul `0` în secțiunea `.data` și referă adresa `0` din secțiunea `.text`.
-Ambele valori (offset și adresă) sunt `0` pentru că acestea sunt offseturile curente (din fișierul obiect `inc.o`) ale simbolurilor, respectiv, `operator` și `increment` în secțiunea `.data` și `.text`:
+Relocarea se găsește la offsetul `0` în secțiunea `.data` (coloana `Offset`) și referă adresa `0` din secțiunea `.text`.
+Ambele valori (offset și adresă - coloanele `Offset` și `Sym.Value`) sunt `0` pentru că acestea sunt offseturile curente (din fișierul obiect `inc.o`) ale simbolurilor, respectiv, `operator` și `increment` în secțiunea `.data` și `.text`:
 ```
 [..]/03-reloc$ nm inc.o
 00000000 t increment
@@ -923,8 +925,8 @@ Hex dump of section '.data':
  NOTE: This section has relocations against it, but these have NOT been applied to this dump.
   0x00000000 00000000                            ....
 ```
-La adresa `0x00000000` din secțiunea `.data`, corespunzătoarea simbolului `operator`, se află valoarea `0x00000000`, adică adresa / offsetul simbolului `increment`.
-Observăm și precizarea că secțiunea dispune de relocări care nu au fost înca aplicate.
+La adresa `0x00000000` din secțiunea `.data` (prima coloană), corespunzătoarea simbolului `operator`, se află valoarea `00000000` (a doua coloană), adică adresa / offsetul simbolului `increment`.
+Observăm și precizarea că secțiunea dispune de relocări care nu au fost încă aplicate.
 
 În urma relocării de la linkare, conținutul variabilei `operator` va fi completat cu adresa stabilită pentru funcția `increment`.
 Dacă analizăm simbolurile fișierului executabil `two` observăm că adresele simbolurilor `operator`, respectiv `increment`, sunt `0x0804a004` și `0x08048130`:
@@ -986,11 +988,12 @@ Fișierul bibliotecă `libinc.a` este obținută la rândul său din fișierul o
 
 Fișierele `main` și `main_lib` sunt identice, acest lucru datorându-se și faptului că ordine fișierelor obiect este aceeași în comenzile de linkare:
 ```
-razvan@yggdrasil:~/.../curs/curs-18-19-linking/04-lib$ ls -l main main_lib
+[...]/04-lib$ ls -l main main_lib
 -rwxr-xr-x 1 razvan razvan 1588 Jan 17 16:34 main
 -rwxr-xr-x 1 razvan razvan 1588 Jan 17 16:34 main_lib
 
-razvan@yggdrasil:~/.../curs/curs-18-19-linking/04-lib$ cmp main main_lib
+[..]/04-lib$ diff -s main main_lib
+Files main and main_lib are identical
 ```
 
 Atunci când legăm biblioteci, trebuie să precizăm directorul în care linkerul localizează bibliotecile (*library location*).
@@ -998,15 +1001,15 @@ Realizăm acest lucru prin intermediul opțiunii `-L.`, opțiune cu care am indi
 
 Numele unui fișier bibliotecă începe cu prefixul `lib` urmat de numele bibliotecii.
 Comanda de linkare va conține opțiunea `-l` urmată de numele bibliotecii.
-În cazul nostru, biblioteca se cheamă `inc`, de numele fișierului bibliotecă este `libinc.a`, iar argumentul folosit este `-linc`.
+În cazul nostru, biblioteca se cheamă `inc`, deci numele fișierului bibliotecă este `libinc.a`, iar argumentul folosit este `-linc`.
 
 ## Linkare statică
 
 În exemplele de până acum, am creat executabile care au fost compuse strict din codul scris în fișierele cod sursă (și în fișierul de suport `start.asm`).
 Acest mod de dezvoltare poate fi numit un mod de dezvoltare *freestanding*, pentru că nu include componente considerate standard, precum biblioteca standard C.
-În mod obișnuit, când dezoltăm aplicații, acestea vor include biblioteca standard C.
+În mod obișnuit, când dezvoltăm aplicații, acestea vor include biblioteca standard C.
 
-Biblioteca standard C este o colecție de funcționalități de bază pentru dezvoltarea aplicațiilor: lucrul cu fișiere și intrare / ieșire, lucrul cu șiruri, gestiunea memoriei, comunicare inter-proces, gestiunea timpului.
+Biblioteca standard C este o colecție de funcționalități de bază pentru dezvoltarea aplicațiilor: lucrul cu fișiere, lucrul cu șiruri, gestiunea memoriei, comunicare inter-proces, gestiunea timpului.
 În exemplele de până acum, pentru a ține lucrurile simple, am folosit la linkare argumentele `-nostdlib -nostdinc` ca să nu ne legăm la biblioteca standard și nu includem headerele standard.
 În absența argumentelor `-nostdlib -nostdinc`, linkerul va lega implicit biblioteca standard C;
 nu este nevoie să precizăm noi acest lucru.
@@ -1035,7 +1038,8 @@ inc.c  inc.h  inc.o  libinc.a  main  main.c  main_lib  main.o  Makefile
 -rwxr-xr-x 1 razvan razvan 661856 Jan 17 16:54 main
 -rwxr-xr-x 1 razvan razvan 661856 Jan 17 16:54 main_lib
 
-[..]/05-static$ cmp main main_lib
+[..]/05-static$ diff -s main main_lib
+Files main and main_lib are identical
 
 [..]/05-static$ ./main
 num_items: 1
@@ -1087,7 +1091,7 @@ De aceea, în zilele noastre, majoritatea executabilelor sunt generate folosind 
 ## Linkare dinamică
 
 Linkarea dinamică înseamnă că în executabil nu sunt incluse componentele folosite din bibliotecă.
-Acestea vor fi incluse mai târziu, la încărcare (*load-time*) sau chiar la rulare (*run-time*).
+Acestea vor fi incluse mai târziu, la încărcare (*load time*) sau chiar la rulare (*runtime*).
 În urma linkării dinamice, executabilul reține referințe la bibliotecile folosite și la simbolurile folosite din cadrul acestora.
 Aceste referințe sunt similare unor simboluri nedefinite.
 Rezolvarea acestor simboluri are loc mai târziu, prin folosirea unui loader / linker dinamic.
@@ -1149,12 +1153,12 @@ Investigăm simbolurile executabilului:
 Simbolurile obținute din modulul obiect `main.o` și din biblioteca statică `libinc.o` sunt rezolvate și au adrese stabilite.
 Observăm că folosirea bibliotecii standard C a dus la existența simboblului `_start`, care este entry pointul programului.
 Dar, simbolurile din biblioteca standard C, (`printf`, `__libc_start_main`) sunt marcate ca nedefinite (`U`).
-Aceste simboluri nu sunt prezente în executabil: rezolvarea, stabilirea adreselor și relocarea lor se va realiza mai târziu, la încărcare (load-time).
+Aceste simboluri nu sunt prezente în executabil: rezolvarea, stabilirea adreselor și relocarea lor se va realiza mai târziu, la încărcare (load time).
 
 La încărcare, o altă componentă software a sistemului, loaderul / linkerul dinamic, se va ocupa de:
 * localizarea în sistemul de fișiere a fișierelor bibliotecă dinamice care sunt folosite de fișierul executabil încărcat
 * încărcarea în memorie a acelor biblioteci dinamice, lucru care duce și la stabilirea adreselor simbolurilor din bibliotecă
-* parcurgerea simbolurilor nedefinite din cadrul fișierului executabil, localizarea lor în biblioteca înacarcată dinamic și relocarea lor în executabil încărcat în memorie
+* parcurgerea simbolurilor nedefinite din cadrul fișierului executabil, localizarea lor în biblioteca înacarcată dinamic și relocarea lor în executabilul încărcat în memorie
 
 Putem investiga bibliotecile dinamice folosite de un executabil prin intermediul utilitarului `ldd`:
 ```
@@ -1164,16 +1168,16 @@ Putem investiga bibliotecile dinamice folosite de un executabil prin intermediul
 	/lib/ld-linux.so.2 (0xf7f98000)
 ```
 În rezultatul de mai sus, observăm că executabilul folosește biblioteca standard C, localizată la calea `/lib/i386-linux-gnu/libc.so.6`.
-`/lib/lc-linux.so.2` este loaderul / linkerul dinamic.
+`/lib/ld-linux.so.2` este loaderul / linkerul dinamic.
 `linux-gate.so.1` e o componentă specifică Linux pe care nu vom insista.
 
 Pe lângă dimensiunea redusă a executabilelor, marele avantaj al folosirii linkării dinamice, este că se pot partaja secțiunile de cod (nu de date) ale bibliotecilor dinamice.
 Când un executabil dinamic este încărcat, se identifică bibliotecile dinamice de care acesta depinde.
-Dacă o bibliotecă dinamice deja există în memorie, se face referire direct la zona existentă, partajând astfel biblioteca dinamică.
+Dacă o bibliotecă dinamică deja există în memorie, se face referire direct la zona existentă, partajând astfel biblioteca dinamică.
 Acest lucru conduce la o reducere semnificativă a memoriei ocupate de aplicațiile sistemului.
 10 aplicații care folosesc, probabil toate, biblioteca standard C, vor partaja codul bibliotecii.
 
-Din acest motiv, bibliotecile dinamice mai sunt numite și biblioteci partajate (*shared objects*).
+Din acest motiv, bibliotecile dinamice mai sunt numite și obiecte partajate (*shared objects*).
 De aici este, în Linux, extensia `.so` a fișierelor de tip bibliotecă partajată.
 
 ## Biblioteci cu linkare dinamică
@@ -1256,7 +1260,7 @@ Odată folosită variabila de mediu `LD_LIBRARY_PATH`, lansarea în execuție a 
 num_items: 1
 ```
 
-Variabila de mediu `LD_LIBRARY_PATH` pentru loader este echivalentul opțiunii `-L` în comanda de linkare: precizează directorul în care să fie căutate biblioteci pentru a fi încărcate, respectiv linkate.
+Variabila de mediu `LD_LIBRARY_PATH` pentru loader este echivalentul opțiunii `-L` în comanda de linkare: precizează directoarele în care să fie căutate biblioteci pentru a fi încărcate, respectiv linkate.
 Folosirea variabilei de mediu `LD_LIBRARY_PATH` este recomandată pentru teste.
 Pentru o folosire robustă, există alte mijloace de precizare a căilor de căutare a bibliotecilor partajate, documentate în [pagina de manual a loaderului / linkerului dinamic](https://man7.org/linux/man-pages/man8/ld.so.8.html#DESCRIPTION).
 
