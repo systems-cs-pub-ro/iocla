@@ -1,4 +1,4 @@
-# Linking
+# Laborator 12: Linking
 
 Linking / Legare este faza finală a procesului de build.
 Linking unifică mai multe fișiere obiect în fișier executabil.
@@ -149,7 +149,8 @@ Astfel:
 * `R`: simbolul este în zona de date read-only (`.rodata`), exportat
 * `b`: simbolul este în zona de date neinițializate (`.bss`), neexportat
 * `B`: simbolul este în zona de date neinițializate (`.bss`), exportat
-* `U`: simbolul este nedefinit (este folosit în modulul curent, dar e folosit în alte module)
+* `U`: simbolul este nedefinit (este folosit în modulul curent, dar este definit în alt modul)
+
 Alte informații se găsesc în pagina de manual a utilitarul `nm`.
 
 Cu ajutorul comenzii `objdump` dezasamblăm codul fișierelor obiect și a fișierelor executabile.
@@ -244,7 +245,6 @@ Unele exerciții necesită modificări pentru a repara probleme legate de linkin
 Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).
 Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.
 
-
 ### 00. Hey! Hey, listen!
 
 Dacă ne oferiți feedback, ne ajutați să ~~îl facem pe Lunk mai puternic~~ îmbunătățim materia.
@@ -286,10 +286,14 @@ Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentr
 
 ### 03. Linkarea mai multor fișiere
 
-Accesăm directorulA `03-multiple-tut/`.
+Accesăm directorul `03-multiple-tut/`.
 Vrem să urmărim comenzile de linkare din fișiere multiple cod sursă C: `main.c`, `add.c`, `sub.c`.
 
-La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru aceleași scenarii.
+La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru trei scenarii diferite:
+* `a-no-header/`: declararea funcțiilor externe se face direct în fișierul sursă C (`main.c`)
+* `b-header/`: declararea funcțiilor externe se face într-un fișier header separat (`ops.h)
+* `c-lib/`: declararea funcțiilor externe se face într-un fișier header separat, iar linkarea se face folosind o bibliotecă statică
+
 În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `main`.
 
 ### 04. Linkarea mai multor fișiere
@@ -325,8 +329,8 @@ Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin
 Accesați subdirectorul `b-asm/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.asm`.
 
-**Bonus**: În subdirectoarele `c-extra-nolibc/` și `c-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
-Modifică sistemul de build pentru a folosi altă functie, în loc de `main()`, ca prima funcție a programului.
+**Bonus**: În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
+Aceste soluții modifică, în schimb, sistemul de build pentru a folosi altă funcție, diferită de `main()`, ca prima funcție a programului.
 
 ### 07. Repararea entry pointului
 
