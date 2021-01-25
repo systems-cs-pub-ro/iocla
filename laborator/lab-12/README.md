@@ -1,5 +1,7 @@
 # Laborator 12: Linking
 
+<!-- Convert to DokuWiki format using Pandoc: pandoc -f markdown_github-hard_line_breaks -t dokuwiki README.md -->
+
 Linking / Legare este faza finală a procesului de build.
 Linking unifică mai multe fișiere obiect în fișier executabil.
 
