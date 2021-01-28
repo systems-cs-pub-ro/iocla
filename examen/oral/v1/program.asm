@@ -5,8 +5,8 @@ extern strlen
 extern malloc
 
 section .data
-	fmt_string: db "%s", 0xd, 0xa, 0
-	fmt_decimal: db "%d", 0xd, 0xa, 0
+    fmt_string: db "%s", 0xd, 0xa, 0
+    fmt_decimal: db "%d", 0xd, 0xa, 0
     len dd 128
 
 section .bss
