@@ -36,7 +36,6 @@ repeat:
 main:
     enter 28, 0
     mov dword[ebp-0x4], 0x1234abcd
-    
     push dword [stdin]
     push len
     lea eax, [ebp - 28]
