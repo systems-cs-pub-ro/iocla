@@ -8,7 +8,8 @@ def p32(num):
 offset = None
 
 
-secret_func_address = 0x08048939
+secret_func_address = None
+
 payload = offset * "A" + p32(secret_func_address)
 
 print(payload)
