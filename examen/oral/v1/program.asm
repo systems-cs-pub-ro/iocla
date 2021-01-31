@@ -68,7 +68,6 @@ main:
     push fmt_string
     call printf
     add esp, 0x8
-	
     xor eax, eax
     leave
     ret
