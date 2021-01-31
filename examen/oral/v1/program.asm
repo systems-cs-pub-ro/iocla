@@ -46,7 +46,7 @@ main:
     push len
     call malloc
     add esp, 4
-    mov dword[arr], eax 
+    mov dword[arr], eax
 
     lea eax, [ebp - 28]
     push eax
