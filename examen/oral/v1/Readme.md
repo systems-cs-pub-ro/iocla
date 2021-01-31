@@ -1,6 +1,6 @@
 ## Exemple Intrebari - Nu sunt exhaustive, doar orientative structurate pe categorii.
 
-### Declaratii variabile si Memorie
+### Declarații de variabile și memorie
 
 1. Ce valori se gasesc initial in memorie incepand de la adresa arr in baza instructiunii urmatoare?
  ```arr resd 1```
