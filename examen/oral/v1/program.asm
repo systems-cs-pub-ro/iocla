@@ -62,7 +62,7 @@ main:
     call do_something
     pop eax
     pop eax
-    add esp,4 
+    add esp,4
 
     push dword[arr]
     push fmt_string
