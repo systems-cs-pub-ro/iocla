@@ -9,20 +9,20 @@ Studenții vor primi această arhivă și o vor folosi pe parcursul examenului p
 Nu sunt singurele întrebări care vor fi prezente în discuție.
 De la aceste întrebări discuția va atinge și alte noțiuni prezentate la cursul de IOCLA.
 
-### Declaratii variabile si Memorie
-1. Ce octeti ocupa `fmt_decimal` in urma in instructiunii `fmt_decimal: db "%d", 0xd, 0xa, 0`?
+### Declarații variabile si Memorie
+1. Ce octeți ocupa `fmt_decimal` în urma în instrucțiunii `fmt_decimal: db "%d", 0xd, 0xa, 0`?
 
-2. Ce efect are instructiunea `arr resd 1`?
+2. Ce efect are instrucțiunea `arr resd 1`?
 
-3. Care este efectul instructiunii `enter 32, 0`?
+3. Care este efectul instrucțiunii `enter 32, 0`?
 
-4. Cum apar in memorie octetii numarului `0xdeadbeef` in urma instructiunii `mov dword[ebp-0x8], 0xdeadbeef`?
+4. Cum apar în memorie octeții numărului `0xdeadbeef` în urma instrucțiunii `mov dword[ebp-0x8], 0xdeadbeef`?
 
 ### Sintaxa ASM
 
-1. Ce efect are instructiunea `mov byte[len], al`?
+1. Ce efect are instrucțiunea `mov byte[len], al`?
 
-2. Ce rol are directiva `extern` in urmatoarea secventa?
+2. Ce rol are directiva `extern` în următoarea secventa?
 `
 extern fgets
 extern printf
@@ -32,7 +32,7 @@ extern malloc
 extern strncpy
 `
 
-3. Cum arata continutul registrului `eax` dupa executia urmatoarei secvente?
+3. Cum arata continutul registrului `eax` dupa execuția următoarei secvente?
 `
 xor eax, eax
 mov al, byte[len]
@@ -41,15 +41,15 @@ mov al, byte[len]
 
 
 ### Adresare
-1. Ce efect are instructiunea `mov al, byte[len]`?
+1. Ce efect are instrucțiunea `mov al, byte[len]`?
 
-2. Ce se aduna la registrul `al` in baza instructiunii `add al, byte [ebx + ecx - 1]`?
+2. Ce se aduna la registrul `al` in baza instrucțiunii `add al, byte [ebx + ecx - 1]`?
 
-3. Ce efect are instructiunea `mov ecx, [ebp+12]`?
+3. Ce efect are instrucțiunea `mov ecx, [ebp+12]`?
 
 
-### Stiva si Functii:
-1. Ce efect are urmatoarea secventa de cod?
+### Stiva și Funcții:
+1. Ce efect are următoarea secventa de cod?
 `
     xor eax, eax
     mov al, byte[len]
@@ -60,7 +60,7 @@ mov al, byte[len]
     call strncpy
     add esp, 8
 `
-2. Cati parametrii sunt transmisi functiei `do_something` in urma secventei de cod?
+2. Cați parametrii sunt transmiși funcției `do_something` în urma secventei de cod?
 `
     xor eax, eax
     mov al, byte[len]
@@ -75,7 +75,7 @@ mov al, byte[len]
     add esp, 8
 `
 
-3. Cati parametrii are functia `do_something` din program.asm?
+3. Câți parametrii are funcția `do_something` din `program.asm`?
 `
 do_something:
     push ebp
@@ -91,7 +91,7 @@ looping:
     ret
 `
 
-4. Ce calucleaza functia `do_something` din program.asm?
+4. Ce calculează funcția `do_something` din `program.asm`?
 `
 do_something:
     push ebp
@@ -107,7 +107,7 @@ looping:
     ret
 `
 
-5. Ce lungime are bufferul local functiei `main` din `program.asm` considerand urmatoarea secventa de cod?
+5. Ce lungime are buffer-ul local funcției `main` din `program.asm` considerând următoarea secventa de cod?
 `
 enter 32, 0
 mov dword[ebp-0x8], 0xdeadbeef
@@ -115,9 +115,9 @@ mov dword[ebp-0x8], 0xdeadbeef
 
 ### Buffers Overflows
 
-1. La ce offset se afla adresa de retur a functiei `main` fata de inceput bufferului local?
+1. La ce offset se afla adresa de retur a funcției `main` fata de început buffer-ului local?
 
-2. Este corecta urmatoarea secventa de cod din functia `main` sigura din punct de vedere al securitatii? De ce?
+2. Este corecta următoarea secventa de cod din funcția `main` sigura din punct de vedere al securității? De ce?
 `
 push dword [stdin]
 push 128
@@ -126,16 +126,16 @@ push eax
 call fgets
 add esp, 0xc
 `
-3. Prezinta functia `do_something` din `program.asm` vulnerabilitati de tipul buffer overflow? De ce?
+3. Prezintă funcția `do_something` din `program.asm` vulnerabilități de tipul buffer overflow? De ce?
 
-4. Cum putem afla care este adresa functiei `invisible_func` avand doar executabilul `program`?
+4. Cum putem afla care este adresa funcției `invisible_func` având doar executabilul `program`?
 
-5. Ce forma ar trebui sa aibe payload-ul pentru suprascrie adresa de retur a functiei `main`?
+5. Ce forma are payload-ul pentru suprascrie adresa de retur a funcției `main`?
 
 ### Altele
 
-1. Cum putem optimiza functia `do_something` din punct de vedere al timpului de executie?
+1. Cum putem optimiza funcția `do_something` din punct de vedere al timpului de execuție?
 
-2. Ce ii putem face binar-ului `program` pentru a scapa de sibolurile de relocare?
+2. Ce ii putem face binar-ului `program` pentru a scapă de simbolurile de relocare?
 
-3. Cum am putea modifica flag-urile de compilare astfel incat vulnerabilitatile din executabilul `program` sa fie mai greu de exploatat?
+3. Cum am putea modifica flag-urile de compilare astfel încât vulnerabilitatea din executabilul `program` sa fie mai greu de exploatat?
