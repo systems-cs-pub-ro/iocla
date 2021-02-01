@@ -1,4 +1,13 @@
-## Exemple Intrebari - Nu sunt exhaustive, doar orientative structurate pe categorii.
+# Examen oral IOCLA
+
+Examenul oral de IOCLA constă din furnizarea unei arhive cu fișiere sursă C și limbaj de asamblare.
+Studenții vor primi această arhivă și o vor folosi pe parcursul examenului pentru a răspunde la întrebări și pentru a rezolva sarcini indicate de evaluatori.
+
+## Întrebări
+
+Întrebările de mai jos sunt orientative, structurate pe categorii.
+Nu sunt singurele întrebări care vor fi prezente în discuție.
+De la aceste întrebări discuția va atinge și alte noțiuni prezentate la cursul de IOCLA.
 
 ### Declarații de variabile și memorie
 
