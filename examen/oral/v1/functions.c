@@ -2,5 +2,5 @@
 
 void invisible_func(void)
 {
-    printf("Someone call the police!\n");
+	printf("Someone call the police!\n");
 }
