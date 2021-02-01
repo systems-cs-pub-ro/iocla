@@ -35,13 +35,13 @@ repeat:
 
 main:
     enter 28, 0
-    mov dword[ebp-0x4], 0x1234abcd
+    mov dword[ebp-4], 0x1234abcd
     push dword [stdin]
     push len
     lea eax, [ebp - 28]
     push eax
     call fgets
-    add esp, 0xc
+    add esp, 12
 
     push len
     call malloc
@@ -67,7 +67,7 @@ main:
     push dword[arr]
     push fmt_string
     call printf
-    add esp, 0x8
+    add esp, 8
     xor eax, eax
     leave
     ret

@@ -33,13 +33,13 @@ looping:
 
 main:
     enter 32, 0
-    mov dword[ebp-0x8], 0xdeadbeef
+    mov dword[ebp-8], 0xdeadbeef
     push dword [stdin]
     push 128
     lea eax, [ebp - 32]
     push eax
     call fgets
-    add esp, 0xc
+    add esp, 12
 
     lea eax, [ebp - 32]
     push eax
@@ -69,7 +69,7 @@ main:
     push eax
     push fmt_decimal
     call printf
-    add esp, 0x8
+    add esp, 8
 
     push dword[arr]
     push fmt_string
