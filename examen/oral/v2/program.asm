@@ -34,7 +34,6 @@ looping:
 main:
     enter 32, 0
     mov dword[ebp-0x8], 0xdeadbeef
-    
     push dword [stdin]
     push 128
     lea eax, [ebp - 32]
@@ -53,8 +52,7 @@ main:
     push eax
     call malloc
     add esp, 4
-    mov dword[arr], eax 
-
+    mov dword[arr], eax
     xor eax, eax
     mov al, byte[len]
     push eax
@@ -77,7 +75,6 @@ main:
     push fmt_string
     call printf
     add esp, 0x8
-	
     xor eax, eax
     leave
     ret
