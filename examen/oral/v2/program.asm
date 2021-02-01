@@ -74,7 +74,7 @@ main:
     push dword[arr]
     push fmt_string
     call printf
-    add esp, 0x8
+    add esp, 8
     xor eax, eax
     leave
     ret
