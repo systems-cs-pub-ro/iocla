@@ -29,7 +29,8 @@ int a1, a2, x;
    ...
 x = Sum(a1, a2);
 ```
-Când C-ul execută apelul către Sum, mai întâi face push la argumente pe stivă, în ordine inversă, apoi face efectiv call către procedură. Astfel, la intrarea în corpul procedurii, stiva va fi intactă. 
+Când C-ul execută apelul către Sum, mai întâi face push la argumente pe stivă, în ordine inversă, apoi face efectiv call către procedură. Astfel, la intrarea în corpul procedurii, stiva va fi intactă.
+
 Cum variabilele `a1` și `a2` sunt declarate ca fiind valori `int`, vor folosi fiecare câte un cuvânt pe stivă. Metoda aceasta de pasare a parametrilor se numește pasare prin valoare. Codul procedurii Sum ar putea arăta în felul următor: 
 ```bash
 Sum:
@@ -71,6 +72,7 @@ Când se face linkarea codului assembly trebuie inclusă și biblioteca standard
 
 Termenul `inline` este un cuvânt cheie în limbajul C și este folosit în declararea funcțiilor. În momentul în care compilatorul găsește o funcție declarată ca fiind inline, acesta va înlocui toate apelurile către funcția respectivă cu corpul funcției. Avantajul principal al funcțiilor inline este acela că se pierde overheadul rezultat din apelul unei funcții. Pe de altă parte, dimensiunea binarului va fi mai mare.
 > **NOTE:** Nu are sens să declarăm ca fiind inline funcțiile recursive. De ce? 
+
 Acum este ușor să ghicim la ce se referă expresia “inline assembly”: un set de instrucțiuni assembly scrise ca funcții inline. Inline assembly este folosit ca o metoda de optimizare și este foarte des întâlnit în system programming.
 
 În programele C/C++ se pot insera instrucțiuni în limbaje de asamblare folosing cuvântul cheie “asm”.
