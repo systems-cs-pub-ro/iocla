@@ -78,8 +78,7 @@ dar și despre atacuri de tip buffer overflow puteți găsi [aici](https://en.wi
 
 ## Pregătire infrastructură
 
-> **IMPORTANT:** 
-> În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla.
+> **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla.
 > Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda git pull origin master din
 > interiorul directorului în care se află repository-ul (~/Desktop/iocla). Recomandarea este să îl actualizați cât mai frecvent,
 > înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.
@@ -91,10 +90,10 @@ dar și despre atacuri de tip buffer overflow puteți găsi [aici](https://en.wi
 Pentru desfășurarea acestui laborator vom folosi interfața în linia de comandă.
 
 Pe parcursul laboratorului, în linia de comandă, vom folosi: 
-  - asamblorul ```nasm```
-  - comanda ```gcc``` pe post de linker
-  - ```objdump``` și ```ghidra``` pentru dezasamblarea fișierelor obiect și executabile
-  - ```gdb``` pentru analiza dinamică, investigație și debugging
+  - asamblorul `nasm`
+  - comanda `gcc` pe post de linker
+  - `objdump` și `ghidra` pentru dezasamblarea fișierelor obiect și executabile
+  - `gdb` pentru analiza dinamică, investigație și debugging
 
 În general nu va fi nevoie să dați comenzi de compilare. Fiecare director cuprinde un Makefile pe care îl puteți rula
 pentru a compila în mod automat fișierele cod sursă limbaj de asamblare sau C.
@@ -106,42 +105,52 @@ pentru a compila în mod automat fișierele cod sursă limbaj de asamblare sau C
 
 ## 1. Tutorial: Folosirea unui buffer în zona de date
 
-Accesați, în linia de comandă, directorul ```1-data-buffer/``` din arhiva de resurse a laboratorului și consultați fișierul ```data_buffer.asm```.
+Accesați, în linia de comandă, directorul `1-data-buffer/` din arhiva de resurse a laboratorului și consultați fișierul `data_buffer.asm`.
 În acest fișier se găsește un program care populează un buffer cu informații și apoi le afișează.
 
 Consultați cu atenție programul, apoi compilați-l folosind comanda:
 
-```make```
+```Bash
+make
+```
 
 Observați că în urma comenzii de compilare de mai sus au rezultat un fișier obiect și un fișier executabil, prin rularea comenzii:
 
-```ls```
+```Bash
+ls
+```
 
 Rulați programul prin intermediul fișierului executabil, adică folosind comanda:
 
-```./data_buffer```
+```Bash
+./data_buffer
+```
 
 Observați comportamentul programului în funcție de codul său.
 
 
 ## 2. Tutorial: Folosirea unui buffer pe stivă
 
-Accesați directorul ```2-3-4-stack-buffer/``` din arhiva de resurse a laboratorului și consultați fișierul ```stack_buffer.asm```.
+Accesați directorul `2-3-4-stack-buffer/` din arhiva de resurse a laboratorului și consultați fișierul `stack_buffer.asm`.
 În acest fișier se găsește un program care populează un buffer cu informații și apoi le afișează.
 Este similar celui de mai sus doar că acum buffer-ul este alocat pe stivă.
 
 Consultați cu atenție programul, apoi compilați-l folosind comanda:
 
-```make```
+```Bash
+make
+```
 
 apoi rulați-l folosind comanda:
 
-```./stack_buffer```
+```Bash
+./stack_buffer
+```
 
 Observați comportamentul programului în funcție de codul său.
 
-Pe lângă buffer am mai alocat o variabilă locală pe 4 octeți, accesibilă la adresa ```ebp-4```.
-Este inițializată la valoarea ```0xCAFEBABE```. Această variabilă va fi importantă mai târziu.
+Pe lângă buffer am mai alocat o variabilă locală pe 4 octeți, accesibilă la adresa `ebp-4`.
+Este inițializată la valoarea `0xCAFEBABE`. Această variabilă va fi importantă mai târziu.
 Ce este relevant acum este să știm că această variabilă este în memorie **imediat după buffer**: când se trece de limita buffer-ului se ajunge la această variabilă.
 
 Care este diferenta intre cele 2 programe inspectate pana acum?
@@ -150,13 +159,12 @@ Care este diferenta intre cele 2 programe inspectate pana acum?
 ## 3. Citirea de date dincolo de dimensiunea buffer-ului
 
 Acum că am văzut cum arată buffer-ul în memorie și unde este plasată variabila,
-actualizați programul ```stack_buffer.asm``` pentru ca secvența de afișare a buffer-ului
-(cea din jurul etichetei ```print_byte```) să ducă și la afișarea octeților variabilei.
+actualizați programul `stack_buffer.asm` pentru ca secvența de afișare a buffer-ului
+(cea din jurul etichetei `print_byte`) să ducă și la afișarea octeților variabilei.
 Adică trebuie să citiți date dincolo de dimensiunea buffer-ului (și să le afișați).
 Este un caz de buffer overflow de citire, cu obiectiv de **information leak**: aflarea de informații din memorie.
 
-> **TIP**
-> Nu e ceva complicat, trebuie doar să "instruiți" secvența de afișare să folosească altă limită pentru afișare,
+> **TIP** Nu e ceva complicat, trebuie doar să "instruiți" secvența de afișare să folosească altă limită pentru afișare,
 > nu limita curentă de 64 de octeți.
 
 Afișați și alte informații dincolo chiar de variabila locală.
@@ -165,34 +173,37 @@ Ce informație vine pe stivă după variabila locală (următorii 4 octeți)? Da
 
 ## 4. Scrierea de date dincolo de dimensiunea buffer-ului
 
-Pe baza experienței de mai sus, realizați modificări pentru ca valoarea variabilei să fie ```0xDEADBEEF```
-(în loc de ```0xCAFEBABE``` cum este la început) fără a modifica însă explicit valoarea variabilei.
-Folosiți-vă de modificarea buffer-ului și de registrul ```ebx``` în care am stocat adresa de început a buffer-ului.
+Pe baza experienței de mai sus, realizați modificări pentru ca valoarea variabilei să fie `0xDEADBEEF`
+(în loc de `0xCAFEBABE` cum este la început) fără a modifica însă explicit valoarea variabilei.
+Folosiți-vă de modificarea buffer-ului și de registrul `ebx` în care am stocat adresa de început a buffer-ului.
 
-> **TIP**
->  Din nou, nu este ceva complicat. Trebuie să vă folosiți de valoarea ```ebx``` și un offset ca să scrieți valoarea ```0xDEADBEEF``` la acea adresă.
+> **TIP** Din nou, nu este ceva complicat. Trebuie să vă folosiți de valoarea `ebx` și un offset ca să scrieți valoarea `0xDEADBEEF` la acea adresă.
 > Adică folosiți o construcție de forma:
 > ```Assembly
 > mov byte [ebx+TODO], TODO
 > ```
-> Realizați acest lucru după secvența de inițializare a buffer-ului (după instrucțiunea ```jl fill_byte```).
+> Realizați acest lucru după secvența de inițializare a buffer-ului (după instrucțiunea `jl fill_byte`).
 
-La o rezolvare corectă a acestui exercițiu, programul va afișa valoarea ```0xDEADBEEF``` pentru variabila locală.
+La o rezolvare corectă a acestui exercițiu, programul va afișa valoarea `0xDEADBEEF` pentru variabila locală.
 
 
 ## 5. Tutorial: Citirea de date de la intrarea standard
 
-Accesați directorul ```5-6-read-stdin/``` din arhiva de resurse a laboratorului și consultați fișierul ```read_stdin.asm```.
-În acest fișier se găsește un program care folosește apelul ```gets``` ca să citească informații de la intrarea standard
+Accesați directorul `5-6-read-stdin/` din arhiva de resurse a laboratorului și consultați fișierul `read_stdin.asm`.
+În acest fișier se găsește un program care folosește apelul `gets` ca să citească informații de la intrarea standard
 într-un buffer de pe stivă. La fel ca în cazul precedent am alocat o variabilă locală pe 4 octeți imediat după buffer-ul de pe stivă.
 
 Consultați cu atenție programul, apoi compilați-l folosind comanda:
 
-```make```
+```Bash
+make
+```
 
 apoi rulați-l folosind comanda:
 
-```./read_stdin```
+```Bash
+./read_stdin
+```
 
 Observați comportamentul programului funcție de input-ul primit.
 
@@ -203,66 +214,60 @@ din cauza vulnerabilității mari a acesteia: nu verifică limitele buffer-ului 
 putând fi ușor folosită pentru buffer overflow.
 
 Pentru aceasta transmiteți șirul de intrare corespunzător pentru ca valoarea afișată pentru variabila locală să nu mai fie
-```0xCAFEBABE```, ci să fie ```0x574F4C46``` (valorile ASCII în hexazecimal pentru ```FLOW```). 
+`0xCAFEBABE`, ci să fie `0x574F4C46` (valorile ASCII în hexazecimal pentru `FLOW`). 
 
-> **IMPORTANT**
-> Nu modificați codul în limbaj de asamblare.
+> **IMPORTANT** Nu modificați codul în limbaj de asamblare.
 > Transmiteți șirul de intrare în format corespunzător la intrarea standard pentru a genera un buffer overflow și pentru a obține rezultatul cerut. 
 
-> **WARNING**
-> Nu scrieți șirul ```"574F4C46"```. Acesta e un șir care ocupă ```8``` octeți.
-> Trebuie să scrieți reprezentarea ASCII a numărului ```0x574F4C46``` adică ```FLOW```: 
-> ```0x57``` este ```W```, ```0x4F``` este ```O```, ```0x4C``` este ```L``` iar ```0x46 ``` este ```F```.
+> **WARNING** Nu scrieți șirul `"574F4C46"`. Acesta e un șir care ocupă `8` octeți.
+> Trebuie să scrieți reprezentarea ASCII a numărului `0x574F4C46` adică `FLOW`: 
+> `0x57` este `W`, `0x4F` este `O`, `0x4C` este `L` iar `0x46` este `F`.
 
-> **TIP**
-> x86 este o arhitectură little endian. Adică șirul ```"FLOW"```, având corespondența caracter-cod ASCII
-> ```F```: ```0x46```, ```L```: ```0x4C```, ```O```: ```0x4F```, ```W```: ```0x57``` va fi stocat în memorie pe ```4``` octeți ca ```0x574F4C46```.
-> **Ce trebuie să faceți**: Va trebui ca, în cadrul buffer overflow-ului, să obțineți valoarea în memorie ```0x574F4C46```.
-> Obțineți șirul ASCII corespondent valorii în memorie ```0x574F4C46``` pe care trebuie să îl furnizați la intrarea standard a programului vulnerabil.
+> **TIP** x86 este o arhitectură little endian. Adică șirul `"FLOW"`, având corespondența caracter-cod ASCII
+> `F`: `0x46`, `L`: `0x4C`, `O`: `0x4F`, `W`: `0x57` va fi stocat în memorie pe `4` octeți ca `0x574F4C46`.
+> **Ce trebuie să faceți**: Va trebui ca, în cadrul buffer overflow-ului, să obțineți valoarea în memorie `0x574F4C46`.
+> Obțineți șirul ASCII corespondent valorii în memorie `0x574F4C46` pe care trebuie să îl furnizați la intrarea standard a programului vulnerabil.
 
-> **TIP**
-> Ca să transmiteți șirul de intrare, e recomandat să-l scrieți într-un fișier și apoi să redirectați acel fișier către comanda aferentă programului.
-> Puteți folosi un editor precum ```gedit``` sau ```vim``` pentru editarea fișierului.
+> **TIP** Ca să transmiteți șirul de intrare, e recomandat să-l scrieți într-un fișier și apoi să redirectați acel fișier către comanda aferentă programului.
+> Puteți folosi un editor precum `gedit` sau `vim` pentru editarea fișierului.
 > Avantajul acestora este că vă afișează și coloana pe care vă aflați și puteți să știți câte caractere ați scris în fișier.
 > Alternativ, puteți folosi python pentru a vă genera mai ușor payload-ul.
-> De exemplu, pentru a genera un payload care să suprascrie o valoare în cod cu valoarea ```0xDEADBEEF```, puteți executa următoarea comandă:
+> De exemplu, pentru a genera un payload care să suprascrie o valoare în cod cu valoarea `0xDEADBEEF`, puteți executa următoarea comandă:
 > ```python
 > python -c 'print "A"*32 + "\xEF\xBE\xAD\xDE"' > payload
 > ```
-> E recomandat să numiți fișierul ```payload```. Redirectarea fișierului ```payload``` către program se face folosind o comandă precum:
-> ```bash
+> E recomandat să numiți fișierul `payload`. Redirectarea fișierului `payload` către program se face folosind o comandă precum:
+> ```Bash
 > ./read_stdin < payload
 > ```
 
 
 ## 7. Buffer overflow cu date de la intrarea standard și fgets()
 
-Așa cum am precizat mai sus, funcția ```gets``` este interzisă în programele curente.
+Așa cum am precizat mai sus, funcția `gets` este interzisă în programele curente.
 În locul acesteia se poate folosi funcția [fgets](https://man7.org/linux/man-pages/man3/fgets.3.html).
-Creați o copie a fișierului cod sursă ```read_stdin.asm``` din subdirectorul ```5-6-read-stdin/``` într-un fișier
-cod sursă ```read_stdin_fgets.asm``` în subdirectorul ```7-read-stdin-fgets/```.
-În fișierul cod sursă ```read_stdin_fgets.asm``` schimbați apelul funcției ```gets()``` cu apelul funcției ```fgets```.
+Creați o copie a fișierului cod sursă `read_stdin.asm` din subdirectorul `5-6-read-stdin/` într-un fișier
+cod sursă `read_stdin_fgets.asm` în subdirectorul `7-read-stdin-fgets/`.
+În fișierul cod sursă `read_stdin_fgets.asm` schimbați apelul funcției `gets()` cu apelul funcției `fgets`.
 
-Pentru apelul ```fgets()``` citiți de la intrarea standard. Ca argument pentru al treilea parametru al ```fgets()```
-(de tipul ```FILE *```) veți folosi intrarea standard. Pentru a specifica intrarea standard folosiți stream-ul [stdin](https://linux.die.net/man/3/stdin).
+Pentru apelul `fgets()` citiți de la intrarea standard. Ca argument pentru al treilea parametru al `fgets()`
+(de tipul `FILE *`) veți folosi intrarea standard. Pentru a specifica intrarea standard folosiți stream-ul [stdin](https://linux.die.net/man/3/stdin).
 Va trebui să îl marcați ca extern folosind, la începutul fișierului în limbaj de asamblare, construcția:
 
 > ```Assembly
 > extern stdin
 > ```
 
-```stdin``` este o adresă; pentru a apela ```fgets()``` cu intrarea standard,
-este suficient să transmitem pe stivă valoarea de la adresa ```stdin``, adică folosind construcția:
+`stdin` este o adresă; pentru a apela `fgets()` cu intrarea standard,
+este suficient să transmitem pe stivă valoarea de la adresa `stdin`, adică folosind construcția:
 
 > ```Assembly
 > push dword [stdin]
 > ```
 
-> **TIP**
-> Urmăriți pagina de manual a funcției [fgets](https://man7.org/linux/man-pages/man3/fgets.3.html) pentru a afla ce parametri primește.
+> **TIP** Urmăriți pagina de manual a funcției [fgets](https://man7.org/linux/man-pages/man3/fgets.3.html) pentru a afla ce parametri primește.
 
-> **TIP**
-> Pentru apelul funcției ```fgets()``` folosiți construcția:
+> **TIP** Pentru apelul funcției `fgets()` folosiți construcția:
 > ```Assembly
 > call fgets
 > ```
@@ -271,25 +276,22 @@ este suficient să transmitem pe stivă valoarea de la adresa ```stdin``, adică
 > extern fgets
 > ```
 
-> **TIP**
-> Întrucât funcția ```fgets()``` are 3 parametri (care ocupă ```3×4=12``` octeți) va trebui ca după apelul funcției,
-> în restaurarea stivei, să folosiți ```add esp, 12 ``` (în loc de ```add esp, 4``` ca în cazul programul de mai sus care folosea ```gets()```).
+> **TIP** Întrucât funcția `fgets()` are 3 parametri (care ocupă `3×4=12` octeți) va trebui ca după apelul funcției,
+> în restaurarea stivei, să folosiți `add esp, 12` (în loc de `add esp, 4` ca în cazul programul de mai sus care folosea `gets()`).
 
 
-Să păstrați posibilitatea unui buffer overflow și să demonstrați acest lucru prin afișarea valorii ```0x574F4C46```
-pentru variabila locală. Adică să folosiți ca al doilea argument pentru ```fgets()``` (dimensiunea)
+Să păstrați posibilitatea unui buffer overflow și să demonstrați acest lucru prin afișarea valorii `0x574F4C46`
+pentru variabila locală. Adică să folosiți ca al doilea argument pentru `fgets()` (dimensiunea)
 o valoare suficient de mare cât să permită realizarea unui buffer overflow.
 
-> **TIP**
-> La fel ca mai sus, ca să transmiteți șirul de intrare pentru program, e recomandat să-l scrieți într-un fișier
+> **TIP** La fel ca mai sus, ca să transmiteți șirul de intrare pentru program, e recomandat să-l scrieți într-un fișier
 > și apoi să redirectați acel fișier către comanda aferentă programului.
-> Redirectarea fișierului ```payload``` către program se face folosind o comandă precum:
-> ```bash
+> Redirectarea fișierului `payload` către program se face folosind o comandă precum:
+> ```Bash
 > ./read_stdin_fgets < payload
 > ```
 
-> **IMPORTANT**
->  Nu modificați codul în limbaj de asamblare. Transmiteți șirul de intrare în format corespunzător la intrarea standard
+> **IMPORTANT** Nu modificați codul în limbaj de asamblare. Transmiteți șirul de intrare în format corespunzător la intrarea standard
 > pentru a genera un buffer overflow și pentru a obține rezultatul cerut.
 
 
@@ -298,44 +300,40 @@ o valoare suficient de mare cât să permită realizarea unui buffer overflow.
 De cele mai multe ori vom identifica vulnerabilități de tip buffer overflow în programe scrise în C.
 Acolo trebuie să vedem ce buffere sunt și care este distanța de la buffer la variabila dorită pentru a putea face suprascrierea. 
 
-> **IMPORTANT**
-> Este important de avut în vedere că distanța între un buffer și o altă variabilă în C poate nu corespunde cu cea "din teren";
+> **IMPORTANT** Este important de avut în vedere că distanța între un buffer și o altă variabilă în C poate nu corespunde cu cea "din teren";
 > compilatorul poate face actualizări, reordonări, poate lăsa spații libere între variabile etc.
 
-Pentru exercițiul curent, accesați directorul ```8-c-buffer-overflow/``` din arhiva de resurse a laboratorului
+Pentru exercițiul curent, accesați directorul `8-c-buffer-overflow/` din arhiva de resurse a laboratorului
 și observați codul sursă aferent în C. Pentru cazul în care doriți să nu mai compilați voi codul aveți în arhivă
 și fișierul limbaj de asamblare echivalent și fișierul în cod obiect și fișierul executabil.
 
-Descoperiți diferența între adresa buffer-ului și adresa variabilei, creați un fișier de intrare (numit și ```payload```)
+Descoperiți diferența între adresa buffer-ului și adresa variabilei, creați un fișier de intrare (numit și `payload`)
 cu care să declanșați overflow-ul și faceți în așa fel încât să fie afișat mesajul *Full of win!*.
 
-> **TIP** 
-> Ca să vedeți realitatea "din teren", adică să aflați care este diferența dintre buffer și variabila pe care dorim să o suprascriem,
-> consultați fișierul în limbaj de asamblare echivalent (```do_overflow.asm```), obținut prin asamblarea codului C.
-> În acest fișier puteți afla adresa relativă a buffer-ului față de ```ebp``` și a variabilei față de ```ebp```;
-> urmăriți secvența cuprinsă între liniile ```32``` și ```41```; aveți o mapare între numele variabilei și offset-ul relativ față de ```ebp```.
+> **TIP** Ca să vedeți realitatea "din teren", adică să aflați care este diferența dintre buffer și variabila pe care dorim să o suprascriem,
+> consultați fișierul în limbaj de asamblare echivalent (`do_overflow.asm`), obținut prin asamblarea codului C.
+> În acest fișier puteți afla adresa relativă a buffer-ului față de `ebp` și a variabilei față de `ebp`;
+> urmăriți secvența cuprinsă între liniile `32` și `41`; aveți o mapare între numele variabilei și offset-ul relativ față de `ebp`.
 > Cu aceste informații puteți crea șirul pe care să îl transmiteți ca payload către intrarea standard a programului.
 
-> **NOTE**
-> Dacă doriți să recompilați fișierele rulați:
-> ```bash
+> **NOTE** Dacă doriți să recompilați fișierele rulați:
+> ```Bash
 > make clean && make
 > ```
 
-> **TIP**
-> La fel ca mai sus, ca să transmiteți șirul de intrare pentru program, e recomandat să-l scrieți într-un fișier
+> **TIP** La fel ca mai sus, ca să transmiteți șirul de intrare pentru program, e recomandat să-l scrieți într-un fișier
 > și apoi să redirectați acel fișier către comanda aferentă > programului.
 > Redirectarea fișierului payload către program se face folosind o comandă precum:
-> ```bash
+> ```Bash
 > ./do_overflow < payload
 > ```
 
 
 ## 9. Bonus: Stack canary
 
-Pornind de la resursele exercițiului anterior din directorul ```8-9-c-buffer-overflow``` inspectați fișierul ```Makefile```.
+Pornind de la resursele exercițiului anterior din directorul `8-9-c-buffer-overflow` inspectați fișierul `Makefile`.
 
-> ```bash
+> ```Bash
 > cat Makefile
 > ```
 
@@ -344,26 +342,23 @@ Analizați atent opțiunile de compilare. Ce observați?
 Așa cum ați observat în cadrul exercițiului anterior, deși am depășit dimensiunea buffer-ului
 și am suprascris o altă variabilă din program, acesta și-a încheiat execuția în mod normal.
 Acest lucru este nedorit atunci când lucrăm cu buffere, deoarece sunt o sursă de la care poate porni foarte ușor un atac.
-Folosind ```objdump``` inspectați funcția ```main``` a executabilului.
+Folosind `objdump` inspectați funcția `main` a executabilului.
 
-> **TIP**
-> Pentru a inspecta sursa, folosiți următoarea comandă:
+> **TIP** Pentru a inspecta sursa, folosiți următoarea comandă:
 > ```Assembly
 > objdump -M intel -d do_overflow
 > ```
 
-Acum intrați în fișierul ```Makefile``` și modificați parametrii ```CFLAGS``` înlocuind ```-fno-stack-protector``` cu ```-fstack-protector```.
+Acum intrați în fișierul `Makefile` și modificați parametrii `CFLAGS` înlocuind `-fno-stack-protector` cu `-fstack-protector`.
 Recompilați programul și rulați-l. Ce observați?
 
-> **NOTE**
-> Prin opțiunea sau flag-ul ```-fstack-protector``` i-am cerut compilatorului să activeze opțiunea de
+> **NOTE** Prin opțiunea sau flag-ul `-fstack-protector` i-am cerut compilatorului să activeze opțiunea de
 > *Stack Smashing Protection* pentru executabilul nostru. Astfel, orice atac de tip buffer overflow
 > va fi detectat în cod și execuția programului se va încheia cu eroare.
 
-Inspectați din nou executabilul recompilat cu noul flag folosind ```objdump```. Ce s-a schimbat?
+Inspectați din nou executabilul recompilat cu noul flag folosind `objdump`. Ce s-a schimbat?
 
-> **NOTE**
-> Compilatorul a introdus pe stivă o valoare generată aleator, numită **canary**,
+> **NOTE** Compilatorul a introdus pe stivă o valoare generată aleator, numită **canary**,
 > pe care o verifică înainte de a părăsi execuția funcției curente. Prin buffer overflow,
 > aceasta a fost suprascrisă odată cu depășirea dimensiunii buffer-ului,
 > ceea ce a determinat o neconcordanță între valoarea inițială a canary-ului și cea de la finalul execuției funcției. 
@@ -372,16 +367,14 @@ Inspectați din nou executabilul recompilat cu noul flag folosind ```objdump```.
 ## 10. Bonus: Buffer overflow pentru binar
 
  De multe ori nu avem șansa accesului la codul sursă și vrem să descoperim vulnerabilități în fișiere executabile.
- În directorul ```10-overflow-in-binary``` din arhiva de resurse a laboratorului, găsiți un fișier executabil.
- Folosind ```ghidra``` sau ```gdb``` pentru investigație descoperiți cum puteți exploata vulnerabilitatea de tip buffer overflow,
+ În directorul `10-overflow-in-binary` din arhiva de resurse a laboratorului, găsiți un fișier executabil.
+ Folosind `ghidra` sau `gdb` pentru investigație descoperiți cum puteți exploata vulnerabilitatea de tip buffer overflow,
  pentru ca programul să afișeze mesajul *Great success!*.
 
- > **IMPORTANT**
- > Pentru a rula ```ghidra``` pe fișierul executabil ```overflow_in_binary``` trebuie să vă creați un proiect nou în care să importați fișierul executabil.
+ > **IMPORTANT** Pentru a rula `ghidra` pe fișierul executabil `overflow_in_binary` trebuie să vă creați un proiect nou în care să importați fișierul executabil.
  > Ghidra va detecta automat formatul fișierului. Rulați analiza executabilului după care căutați în Symbol Tree după funcția main.
 
- > **TIP**
- > Identificați în codul dezasamblat cum se transmite intrarea către program.
+ > **TIP** Identificați în codul dezasamblat cum se transmite intrarea către program.
  > Identificați unde este buffer overflow-ul. Identificați condiția de comparație pe care doriți să o declanșați.
  > Apoi construiți payload-ul corespunzător și transmiteți-l în forma adecvată programului.
 
