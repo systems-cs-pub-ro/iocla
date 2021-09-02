@@ -42,7 +42,6 @@ Cand vine vorba de a chema o functie cu parametri exista doua mari optiuni de pl
 
 > **_NOTE:_**  Pentru arhitecturiile **32-bit** se foloseste metoda plasarii pe stiva, iar pentru cele **64-bit** se foloseste metoda plasarii in registre. Noi vom folosi conventia de la 32-bit architecture.
 
-<br></br>
 
 ## Apelul unei funcții
 
@@ -50,7 +49,7 @@ Atunci când apelăm o funcție, pașii sunt următorii:
   - Punem argumentele pe stivă, apelul de tip push fiind în ordinea inversă în care sunt trimiși ca argumente funcției.
   - Apelăm `call`.
   - Restaurăm stiva la sfârșitul apelului.
-<br></br>
+
 
 ### Funcționarea stivei
 
@@ -82,7 +81,6 @@ call foo         ; apelam functia
 add esp, 12      ; restauram stiva
 ```
 
-<br></br>
 
 ## Apelatul în cadrul apelului unei funcții
 Atunci când apelăm o funcție spunem că funcția care apelează (contextul care apelează) se cheamă **apelant** (sau **caller**) iar funcția apelată se cheamă **apelat** (sau **callee**). Până acum am discutat despre cum arată lucrurile la nivelul apelantului (cum construim stiva). Haideți să urmărim ce se întâmplă la nivelul apelatului.
@@ -95,7 +93,6 @@ jmp function_name
 
 Adică și apelul `call` folosește în continuare stiva și salvează adresa următoarei instrucțiuni, cea de după `call` numită și instrucțiunea de retur sau adresa de retur (return address). Aceasta este necesară pentru a ști, în apelat, unde să revenim în apelant.
 
-<br></br>
 
 În apelat, la începutul său (numit preambul, preamble) se salvează frame pointer-ul (în arhitectura i386 este vorba de registrul `ebp`) urmând ca frame pointer-ul să refere adresa curentă de pe stivă (adică tocmai fostul frame pointer). Deși nu este obligatorie, salvarea frame pointer-ului ajută la debugging și este în cele mai multe cazuri folosită. Din aceste motive, orice apel de funcție va avea în general, preambulul:
 ```Assembly
@@ -118,7 +115,6 @@ pop eip
 ```
 Adică ia valoarea din vârful stivei și o plasează în eip urmând continuarea execuției programului de la acea adresă.
 
-<br></br>
 
 Spre exemplu, definitia si corpul functiei foo, care realizeaza suma a 3 numere, vor arata astfel:
 
@@ -174,7 +170,6 @@ foo:
 
 > **_IMPORTANT:_**  În cadrul laboratoarelor vom folosi repository-ul de git al materiei [IOCLA](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului git, urmați ghidul de la [Git Immersion](https://gitimmersion.com/)
 
-<br></br>
 
 ### 0. Recapitulare: Șirul lui Fibonacci
 
@@ -182,7 +177,6 @@ Completați fișierul `fibo.asm` din arhivă pentru a realiza un program care af
 
 Aveți voie să folosiți doar memorie alocată pe stivă.
 
-<br></br>
 
 ### 1. Hello, world!
 
@@ -195,7 +189,6 @@ Remarcați că:
 
 Încheierea cu `\n` este, în general, utilă pentru afișarea șirurilor. Funcția `puts` pune automat o linie nouă după șirul afișat, însă aceasta trebuie adăugată explicit în cazul folosirii funcției `printf`.
 
-<br></br>
 
 ### 2. Dezasamblarea unui program scris în C
 
