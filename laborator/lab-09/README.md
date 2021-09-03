@@ -13,7 +13,7 @@ Pentru a ne asigura că procedura assembly și modulul C se vor combina cum treb
 
 ### Setarea stivei
 Atunci când se intră intr-o procedură, este necesar să se seteze un stack frame către care să se trimită parametrii. Desigur, dacă procedura nu primește parametri, acest pas nu este necesar. Așadar, pentru a seta stiva, trebuie inclus următorul cod: 
-```bash
+```Assembly
 push ebp
 mov ebp, esp
 ```
@@ -22,7 +22,7 @@ EBP-ul ne oferă posibilitatea să îl folosim ca un index în cadrul stivei și
 Este necesar ca procedura să conserve valoarea registrelor ESI, EDI, EBP și a registrelor segment. În cazul în care aceste registre sunt corupte, este posibil ca programul să producă erori la întoarcerea din procedura assembly. 
 ### Transmiterea parametrilor din C către procedura assembly
 Programele C trimit parametrii către procedurile assembly folosind stiva. Să considerăm următoarea secvență de program C: 
-```bash
+```C
 extern int Sum();
    ...
 int a1, a2, x;
@@ -32,7 +32,7 @@ x = Sum(a1, a2);
 Când C-ul execută apelul către Sum, mai întâi face push la argumente pe stivă, în ordine inversă, apoi face efectiv call către procedură. Astfel, la intrarea în corpul procedurii, stiva va fi intactă.
 
 Cum variabilele `a1` și `a2` sunt declarate ca fiind valori `int`, vor folosi fiecare câte un cuvânt pe stivă. Metoda aceasta de pasare a parametrilor se numește pasare prin valoare. Codul procedurii Sum ar putea arăta în felul următor: 
-```bash
+```Assembly
 Sum:
         push    ebp             ; creează stack frame pointer
         mov     ebp, esp
@@ -45,7 +45,7 @@ Sum:
 Este interesant de remarcat o serie de lucruri. În primul rând, codul assembly pune în mod implicit valoarea de retur a procedurii în registrul `eax`. În al doilea rând, comanda `ret` este suficientă pentru a ieși din procedură, datorită faptului că compilatorul de C se ocupă de restul lucrurilor, cum ar fi îndepărtarea parametrilor de pe stivă.
 ## Apelarea de funcții C din proceduri assembly
 În majoritatea cazurilor, apelarea de rutine sau funcții din biblioteca standard C dintr-un program în limbaj de asamblare este o operație mult mai complexă decât viceversa. Să luăm exemplul apelării funcției `printf` dintr-un program în limbaj de asamblare: 
-```bash
+```Assembly
 global  main
 
 extern  printf
@@ -97,7 +97,7 @@ make
 Urmăriți în cod partea de inline assembly din blockul ce începe cu `asm`. Înțelegeți modul în care funcționează inline assembly înainte de a trece la exercițiul următor. 
 > **TIP:**
 > Structura generală a unei directive de inline assembly este următoarea:
-> ```bash
+> ```C
 > __asm__ ( AssemblerTemplate 
 >           : OutputOperands 
 >           [ : InputOperands
@@ -167,12 +167,12 @@ Extindeți programul de la exercițiul anterior (în limbaj de asamblare și C) 
 La afișare se va afișa și poziția din vector pe care se găsește maximul. 
 > **TIP:**
 > Pentru reținerea poziției, cel mai bine este definiți o variabilă locală `pos` în funcția `main` din fișierul C (`main.c`) în forma 
-> ```bash
->     unsigned int pos;
+> ```C
+> unsigned int pos;
 >  ```
 >  iar apelul funcției `get_max` îl veți face în forma: 
->  ```bash
->     max = get_max(arr, 10, &pos);
+>  ```C
+> max = get_max(arr, 10, &pos);
 >  ```
 
 ### 6. Tutorial: Calcul maxim în C cu apel din assembly
@@ -190,8 +190,8 @@ Extindeți programul de la exercițiul anterior (în limbaj de asamblare și C) 
 La afișare se va afișa și poziția din vector pe care se găsește maximul.
 > **TIP:**
 > Pentru a reține poziția, cel mai bine este să definiți o variabilă globală în fișierul assembly (`main.asm`) în secțiunea `.data`, în forma
-> ```bash
->     pos: dd 0
+> ```Assembly
+> pos: dd 0
 > ```
 >  Această variabilă o veți transmite (prin adresă) către apelul `get_max` și prin valoare pentru apelul `printf` pentru afișare.
 >  
