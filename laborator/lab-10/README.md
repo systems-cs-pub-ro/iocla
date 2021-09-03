@@ -345,7 +345,7 @@ Acest lucru este nedorit atunci când lucrăm cu buffere, deoarece sunt o sursă
 Folosind `objdump` inspectați funcția `main` a executabilului.
 
 > **TIP** Pentru a inspecta sursa, folosiți următoarea comandă:
-> ```Assembly
+> ```Bash
 > objdump -M intel -d do_overflow
 > ```
 
