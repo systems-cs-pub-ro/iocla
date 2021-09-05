@@ -166,7 +166,7 @@ call |	<adresă> |	Face apel la subrutina care se găsește la adresa indicată
 
 ## Exerciții
 
->**NOTE**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - (https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone (https://github.com/systems-cs-pub-ro/iocla) ${target}`. Pentru mai multe informații despre folosirea utilitarului `git, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+>**NOTE**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - (https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
 >**NOTE**: Pentru a afișa valorile din registre vom folosi macro-ul `PRINTF32` dezvoltat de Dragoș Niculescu până veți învăța cum se efectuează apelurile de funcții. Acesta permite afișarea de valori în diverse formate și de șiruri de caractere. Pentru mai multe detalii urmăriți descrierea din fișierul unde este definit macro-ul.
 
@@ -242,7 +242,7 @@ Pornind de la scheletul de cod din directorul `4-sets` va trebui să implementa�
 
 >**NOTE**: Pentru a vă ajuta în afișare puteți folosi macro-ul `PRINTF32`. De exemplu:
 >
->```
+>```assembly
 >PRINTF32 `Reuniunea este: \x0`
 >PRINTF32 `%u\n\x0`, eax
 >```
