@@ -525,7 +525,7 @@ Compilați codul sursă și porniți executabilul cu GDB. Setați un breakpoint 
 
 Veți rezolva exercițiul plecând de la fișierul **ex7.c** aflat în directorul **ex7**.
 
-Să se implementeze funcțiile [memcpy](http://www.cplusplus.com/reference/cstring/memcpy/), [strcpy](http://www.cplusplus.com/reference/cstring/strcpy/]) și [strcmp](http://www.cplusplus.com/reference/cstring/strcmp/) folosind operații pe pointeri.
+Să se implementeze funcțiile [memcpy](http://www.cplusplus.com/reference/cstring/memcpy/), [strcpy](http://www.cplusplus.com/reference/cstring/strcpy/) și [strcmp](http://www.cplusplus.com/reference/cstring/strcmp/) folosind operații pe pointeri.
 
 ### **8. Comenzi utile pwndbg (nu gdb)**
 
