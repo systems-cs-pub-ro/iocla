@@ -1,21 +1,20 @@
 # Laborator 08: Apeluri de functii
 
-În acest laborator vom prezenta modul în care se realizează apeluri de funcții. Vom vedea cum putem folosi instrucțiunile **call** și **ret** pentru a realiza apeluri de funcții și cum folosim stiva pentru a transmite parametrii unei funcții.
+În acest laborator vom prezenta modul în care se realizează apeluri de funcții. Vom vedea cum putem folosi instrucțiunile `call` și `ret` pentru a realiza apeluri de funcții și cum folosim stiva pentru a transmite parametrii unei funcții.
 
-Laboratorul este de forma *learn by doing*, partea practică alternând între secțiuni de tip tutorial, cu parcurgere pas cu pas și prezentarea soluției, și exerciții care trebuie să fie rezolvate.
+Laboratorul este de forma "learn by doing", partea practică alternând între secțiuni de tip tutorial, cu parcurgere pas cu pas și prezentarea soluției, și exerciții care trebuie să fie rezolvate.
 
 ## Cunoștințe și abilități ce vor fi dobândite
 
-
 - Traducerea apelului și implementării unei funcții din limbajul C în limbaj de asamblare
 - Transmiterea parametrilor in diferite arhitecturi.
-- Folosirea instrucțiunilor **call** și **ret** pentru a realiza un apel de funcție
+- Folosirea instrucțiunilor `call` și `ret` pentru a realiza un apel de funcție
 - Implementarea unei funcții în limbaj de asamblare
 - Folosirea stivei pentru a transmite parametrii unei funcții
 - Apelarea unei funcții externe (aflată în biblioteca standard C) din limbaj de asamblare
 
 ## Transmiterea parametrilor
- Cand vine vorba de a chema o functie cu parametri exista doua mari optiuni de plasare a acestora:
+Cand vine vorba de a chema o functie cu parametri exista doua mari optiuni de plasare a acestora:
 
 1. Plasarea in registre - aceasta metoda, in mod intuitiv, presupune transmiterea parametrilor cu ajutorul registrelor.
 
@@ -40,13 +39,13 @@ Laboratorul este de forma *learn by doing*, partea practică alternând între s
 - Este lenta intrucat se face acces la memorie.
 - Mai complicata din punct de vedere al accesului la parametri.
 
->**NOTE**:Pentru arhitecturiile **32-bit** se foloseste metoda plasarii pe stiva, iar pentru cele **64-bit** se foloseste metoda plasarii in registre. Noi vom folosi conventia de la **32-bit** architecture. 
+> **NOTE**:Pentru arhitecturiile **32-bit** se foloseste metoda plasarii pe stiva, iar pentru cele **64-bit** se foloseste metoda plasarii in registre. Noi vom folosi conventia de la arhitecturile **32-bit**. 
 
 ## Apelul unei funcții
 
 Atunci când apelăm o funcție, pașii sunt următorii:
 
-- Punem argumentele pe stivă, apelul de tip push fiind în ordinea   inversă în care sunt trimiși ca argumente funcției.
+- Punem argumentele pe stivă, apelul de tip push fiind în ordinea inversă în care sunt trimiși ca argumente funcției.
 - Apelăm call.
 - Restaurăm stiva la sfârșitul apelului.
 
@@ -54,12 +53,12 @@ Atunci când apelăm o funcție, pașii sunt următorii:
 
 După cum știm, operațiile pe stivă sunt de două tipuri:
 
-- **push val** în care valoarea **val** este plasată pe stivă
-- **pop reg/mem** în care ce se găsește în vârful stivei se plasează în registru sau într-o zonă de memorie
+- `push val` în care valoarea `val` este plasată pe stivă
+- `pop reg`/`pop [mem]` în care ce se găsește în vârful stivei se plasează în registru sau într-o zonă de memorie
 
-În momentul în care se face **push** spunem că stiva **crește** (se adaugă elemente). În mod oarecum paradoxal însă, pointerul de stivă (indicat de registrul **esp** pe 32 de biți) scade. Acest lucru se întâmplă întrucât stiva crește în jos, de la adrese mari către adrese mici.
+În momentul în care se face `push` spunem că stiva **crește** (se adaugă elemente). În mod oarecum paradoxal însă, pointerul de stivă (indicat de registrul `esp` pe 32 de biți) scade. Acest lucru se întâmplă întrucât stiva crește în jos, de la adrese mari către adrese mici.
 
-La fel, în momentul în care facem **pop** spunem că stiva scade (se scot elemente). Acum pointer-ul de stivă (indicat de registrul **esp** pe 32 de biți) crește.
+La fel, în momentul în care facem `pop` spunem că stiva scade (se scot elemente). Acum pointer-ul de stivă (indicat de registrul `esp` pe 32 de biți) crește.
 
 Un sumar al acestui lucru este explicat foarte bine la acest link: [sumar](https://en.wikibooks.org/wiki/X86_Disassembly/The_Stack)
 
@@ -71,11 +70,11 @@ int foo(int a, int b, int c);
 
 Apelul acestei functii va arata astfel:
 
-```armasm
+```Assembly
 mov ecx, [c]     ; luam valoarea parametrului c dintr-o zona de memorie
 mov ebx, [b]
 mov eax, [a]
- 
+
 push ecx         ; punem parametrii in ordine inversa, incepand cu c
 push ebx         ; apoi b
 push eax         ; apoi a
@@ -87,40 +86,40 @@ add esp, 12
 
 Atunci când apelăm o funcție spunem că funcția care apelează (contextul care apelează) se cheamă **apelant** (sau **caller**) iar funcția apelată se cheamă **apelat** (sau **callee**). Până acum am discutat despre cum arată lucrurile la nivelul apelantului (cum construim stiva acolo). Haideți să urmărim ce se întâmplă la nivelul apelatului.
 
-Până în momentul instrucțiunii **call** stiva conține parametrii funcției. Apelul **call** poate fi echivalat grosier următoarei secvențe:
+Până în momentul instrucțiunii `call` stiva conține parametrii funcției. Apelul `call` poate fi echivalat grosier următoarei secvențe:
 
-```armasm
+```Assembly
 push eip
 jmp function_name
 ```
-Adică și apelul **call** folosește în continuare stiva și salvează adresa următoarei instrucțiuni, cea de după **call** numită și instrucțiunea de retur sau adresa de retur (return address). Aceasta este necesară pentru a ști, în apelat, unde să revenim. 
+Adică și apelul `call` folosește în continuare stiva și salvează adresa următoarei instrucțiuni, cea de după `call` numită și instrucțiunea de retur sau adresa de retur (return address). Aceasta este necesară pentru a ști, în apelat, unde să revenim.
 
-Suplimentar, în apelat, la începutul său (numit preambul, preamble) se salvează frame pointer-ul (în arhitectura i386 este vorba de registrul **ebp**) urmând ca frame pointer-ul să refere adresa curentă de pe stivă (adică tocmai fostul frame pointer). Deși nu este obligatorie, salvarea frame pointer-ului ajută la debugging și este în cele mai multe cazuri folosită. Din aceste motive, orice apel de funcție va avea în general, preambulul:
-
-```armasm
+Suplimentar, în apelat, la începutul său (numit preambul, preamble) se salvează frame pointer-ul (în arhitectura i386 este vorba de registrul `ebp`) urmând ca frame pointer-ul să refere adresa curentă de pe stivă (adică tocmai fostul frame pointer). Deși nu este obligatorie, salvarea frame pointer-ului ajută la debugging și este în cele mai multe cazuri folosită. Din aceste motive, orice apel de funcție va avea în general, preambulul:
+```Assembly
 push ebp
 mov ebp, esp
 ```
 
 Aceste modificări au loc în apelat. De aceea este responsabilitatea apelatului să restaureze stiva la vechea sa valoare. De aceea este uzuală existența unui epilog care să readucă stiva la starea sa inițială; acest epilog este:
-
-```armasm
+```Assembly
 leave
 ```
+
 În acest moment stiva este ca la începutul funcției, adică imediat după call, referind adresa de retur. Urmează apelul 
 
-```armasm
+```Assembly
 ret
 ```
 care este grosier echivalentul instrucțiunii:
-```armasm
+```Assembly
 pop eip
 ```
-Adică ia valoarea din vârful stivei și o plasează în eip urmând continuarea execuției programului de la acea adresă.
 
-Spre exemplu, definitia si corpul functiei foo, care realizeaza suma a 3 numere, vor arata astfel:
+Adică ia valoarea din vârful stivei și o plasează în `eip` urmând continuarea execuției programului de la acea adresă.
 
-```armasm
+Spre exemplu, definitia si corpul functiei `foo`, care realizează suma a 3 numere, vor arata astfel:
+
+```Assembly
 foo:
     push ebp
     mov ebp, esp
@@ -136,115 +135,98 @@ foo:
     ret
 ```
 
-**Remarcati**
-1. O functie se defineste printr-un label. 
-2. Dupa preambulul functiei, stiva arata in felul urmator: 
+**Remarcați**
+1. O funcție se defineste printr-un label. 
+2. Dupa preambulul funcției, stiva arată în felul următor: 
 ![stiva](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/function_stack1.jpg?cache=)
 3. De observat că pe parcursul execuției funcției, ceea ce nu se schimbă este poziția frame pointer-ul. Acesta este și motivul denumirii sale: pointează la frame-ul curent al funcției. De aceea este comun ca accesarea parametrilor unei funcții să se realizeze prin intermediul frame pointer-ului. Presupunând un sistem pe 32 de biți și parametri de dimensiunea cuvântului procesorului (32 de biți, 4 octeți) vom avea:
-    - primul argument se găsește la adresa ebp+8
-    - al doilea argument se găsește la adresa ebp+12
-    - al treilea argument se găsește la adresa ebp+16
+    - primul argument se găsește la adresa `ebp+8`
+    - al doilea argument se găsește la adresa `ebp+12`
+    - al treilea argument se găsește la adresa `ebp+16`
     - etc.
 
-    Acesta este motivul pentru care, pentru a obține parametrii funcției foo în registrele eax, ebx, ecx, folosim construcțiile:
-```armasm
+    Acesta este motivul pentru care, pentru a obține parametrii funcției foo în registrele `eax`, `ebx`, `ecx`, folosim construcțiile:
+```Assembly
     mov eax, dword [ebp+8]   ; primul argument in eax
     mov ebx, dword [ebp+12]  ; al doilea argument in ebx
     mov ecx, dword [ebp+16]  ; al treilea argument in ecx
 ```
-4.  Valoare de retur a unei functii se plaseaza in registre (in general in **eax**).
+4.  Valoarea de retur a unei functii se plasează în registre (in general in `eax`).
+    - Dacă valoarea de retur este pe 8 biti rezultatul functiei se plasează in `al`.
+    - Dacă valoarea de retur este pe 16 biti rezultatul functiei se plasează in `ax`.
+    - Dacă valoarea de retur este pe 32 biti rezultatul functiei se plasează in `eax`.
+    - Dacă valoarea de retur este pe 64 biti rezultatul funcției se plasează în `edx` și `eax`. Cei mai semnificativi 32 de biti se plasează în `edx`, iar restul în registrul `eax`.
 
-    - Daca valoarea de retur este pe 8 biti rezultatul functiei se plaseaza in al.
-    - Daca valoarea de retur este pe 16 biti rezultatul functiei se plaseaza in ax.
-    - Daca valoarea de retur este pe 32 biti rezultatul functiei se plaseaza in eax.
-    - Daca valoarea de retur este pe 64 biti rezultatul se plaseaza in registrele edx si eax. Cei mai semnificativi 32 de biti se plaseaza in edx, iar restul in registrul eax.
+    *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stivă/heap, sau alte zone de memorie, care refera obiectul dorit în urma apelului funcției.*
 
-    *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stiva/heap, sau alte zone de memorie, care refera obiectul dorit in urma apelului functiei.*
-    
-
-## Exercitii
->**WARNING**:
-În cadrul laboratoarelor vom folosi repository-ul de git al materiei
-IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla).
-Repository-ul este clonat pe desktop-ul
-mașinii virtuale. Pentru a îl actualiza, folosiți comanda **git pull origin master** din interiorul
-directorului în care se află repository-ul (**~/Desktop/iocla**). Recomandarea este să îl actualizați
-cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.
-Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda
-**git clone [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla) ${target}**.
-Pentru mai multe informații despre folosirea utilitarului **git**, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
-
+## Exerciții
+>**NOTE**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`.
+Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
 ### 0. Recapitulare: Șirul lui Fibonacci
 
-Completați fișierul **fibo.asm** din arhivă pentru a realiza un program care afișează primele N numere din șirul lui Fibonacci.
+Completați fișierul `fibo.asm` din arhivă pentru a realiza un program care afișează primele N numere din șirul lui Fibonacci.
 
 Aveți voie să folosiți doar memorie alocată pe stivă.
 
 ### 2. Hello, world!
 
-Deschideți fișierul **hello-world.asm**, asamblați-l și rulați-l. Observați afișarea mesajului *Hello, world*!
+Deschideți fișierul `hello-world.asm`, asamblați-l și rulați-l. Observați afișarea mesajului *Hello, world*!
 
 Remarcați că:
-- Programul **hello-world.asm** folosește apelul funcției **    puts** (funcție externă modulului curent) pentru a efectua afișarea. Pentru aceasta pune argumentul pe stivă și apelează funcția.
-- Variabila **msg** din programul **hello-world.asm** conține octetul **10**. Acesta simbolizează caracterul *line-feed*, mai cunoscut și sub forma **\n**, folosit pentru a adăuga o linie nouă pe Linux.
+- Programul `hello-world.asm` folosește apelul funcției `puts` (funcție externă modulului curent) pentru a efectua afișarea. Pentru aceasta pune argumentul pe stivă și apelează funcția.
+- Variabila `msg` din programul `hello-world.asm` conține octetul `10`. Acesta simbolizează caracterul *line-feed*, mai cunoscut și sub forma `\n`, folosit pentru a adăuga o linie nouă pe Linux.
 
-Încheierea cu **\n** este, în general, utilă pentru afișarea șirurilor. Funcția **puts** pune automat o linie nouă după șirul afișat, însă aceasta trebuie adăugată explicit în cazul folosirii funcției **printf**. 
+Încheierea cu `\n` este, în general, utilă pentru afișarea șirurilor. Funcția `puts` pune automat o linie nouă după șirul afișat, însă aceasta trebuie adăugată explicit în cazul folosirii funcției `printf`. 
 
 ### 3. Dezasamblarea unui program scris în C
 
 După cum spuneam, în final, totul ajunge în limbaj de asamblare (ca să fim 100% corecți, totul ajunge cod mașină care are o corespondență destul de bună cu codul asamblare). Adesea ajungem să avem acces doar la codul obiect al unor programe și vrem să inspectăm modul în care arată.
 
-Pentru a observa acest lucru, haideți să compilăm până la codul obiect un program scris în C și apoi să-l dezasamblăm. Este vorba de programul test.c din arhiva de laborator. 
+Pentru a observa acest lucru, haideți să compilăm până la codul obiect un program scris în C și apoi să-l dezasamblăm. Este vorba de programul `test.c` din arhiva de laborator.
 
->**NOTE**:<br>
-Pentru a compila un fișier cod sursă C/C++ în linia de comandă, urmați pașii:<br>
-    1. Deschideți un terminal. (shortcut Ctrl+Alt+T)<br>
-    2. Accesați directorul în care aveți codul sursă.<br>
-    3. Folosiți comanda:<br>
-    ```
-    gcc -m32 -o <executabil> <nume-fisier>
-    ```<br>
-    unde <nume-fisier> este numele fișierului iar <executabil> este executabilul rezultat.<br>
-    4. Dacă doriți doar să compilați fișierul (fără să-l link-ați), atunci folosiți comanda <br>
-    ```
-    gcc -m32 -c -o <fisier-obiect> <nume-fisier>
-    ```<br>
-    unde <nume-fisier> este numele fișierului iar <fisier-obiect> este fișierul obiect rezultat.
+> **NOTE**: Pentru a compila un fișier cod sursă C/C++ în linia de comandă, urmați pașii:
+> 1. Deschideți un terminal (shortcut Ctrl+Alt+T).
+> 2. Accesați directorul în care aveți codul sursă.
+> 3. Folosiți comanda:
+> ```bash
+> gcc -m32 -o <executabil> <nume-fisier>
+> ```
+> unde `<nume-fisier>` este numele fișierului iar `<executabil>` este executabilul rezultat.
+>
+> 4. Dacă doriți doar să compilați fișierul (fără să-l link-ați), atunci folosiți comanda:
+> ```bash
+> gcc -m32 -c -o <fisier-obiect> <nume-fisier>
+> ```
+> unde `<nume-fisier>` este numele fișierului iar `<fisier-obiect>` este fișierul obiect rezultat.
 
-<br>
-În cazul nostru, întrucât dorim doar să compilăm fișierul test.c la modulul obiect, vom accesa din terminal directorul în care se găsește fișierul și apoi vom rula comanda:
-
-```shell
+În cazul nostru, întrucât dorim doar să compilăm fișierul `test.c` la modulul obiect, vom accesa din terminal directorul în care se găsește fișierul și apoi vom rula comanda:
+```bash
 gcc -m32 -c -o test.o test.c
 ```
 
-În urma rulării comenzii de mai sus în directorul curent vom avea fișierul obiect **test.o**.
+În urma rulării comenzii de mai sus în directorul curent vom avea fișierul obiect `test.o`.
 
-Putem obține și forma în limbaj de asamblare a acestuia folosind comanda 
-
-```shell
+Putem obține și forma în limbaj de asamblare a acestuia folosind comanda:
+```bash
 gcc -m32 -masm=intel -S -o test.asm test.c
 ```
 
-În urma rulării comenzii de mai sus obținem fișierul test.asm pe care îl putem vizualiza folosind comanda
-
-```shell
+În urma rulării comenzii de mai sus obținem fișierul `test.asm` pe care îl putem vizualiza folosind comanda:
+```bash
 cat test.asm
 ```
 
-Pentru a dezasambla codul unui modul obiect vom folosi un utilitar frecvent întâlnit în lumea Unix: **objdump**. Pentru dezasamblare, vom rula comanda 
-
-```shell
+Pentru a dezasambla codul unui modul obiect vom folosi un utilitar frecvent întâlnit în lumea Unix: `objdump`. Pentru dezasamblare, vom rula comanda:
+```bash
 objdump -M intel -d <path-to-obj-file>
 ```
-unde **path-to-obj-file** este calea către fișierul obiect **test.o**. 
+unde `path-to-obj-file` este calea către fișierul obiect `test.o`.
 
 Veți obține un output similar celui de mai jos:
-
-```armasm
-2-test] $ objdump -M intel -d test.o                                                                                                                                      
-
+```Assembly
+[2-test] $ objdump -M intel -d test.o
+ 
 test.o:     file format elf32-i386
 
 Disassembly of section .text:
@@ -318,44 +300,43 @@ Disassembly of section .text:
  5fa:   c3                      ret    
 ```
 
-Există multe alte utilitare care permit dezasamblare de module obiect, majoritatea cu interfața grafică și oferind și suport pentru debugging. **objdump** este un utilitar simplu care poate fi rapid folosit în linia de comandă.
+Există multe alte utilitare care permit dezasamblare de module obiect, majoritatea cu interfața grafică și oferind și suport pentru debugging. `objdump` este un utilitar simplu care poate fi rapid folosit în linia de comandă.
 
-Este interesant de urmărit, atât în fișierul **test.asm** cât și în dezasamblarea sa, modul în care se face un apel de funcție, lucru despre care vom discuta în continuare. 
-
+Este interesant de urmărit, atât în fișierul `test.asm` cât și în dezasamblarea sa, modul în care se face un apel de funcție, lucru despre care vom discuta în continuare. 
 
 ### 3. Afișarea unui șir
 
-Pentru afișarea unui string putem folosi macro-ul intern **PRINTF32**. Sau putem folosi o funcție precum **puts**. În fișierul **print-string.asm** este implementată afișarea unui string folosind macro-ul **PRINTF32**.
+Pentru afișarea unui string putem folosi macro-ul intern `PRINTF32`. Sau putem folosi o funcție precum `puts`. În fișierul `print-string.asm` este implementată afișarea unui string folosind macro-ul `PRINTF32`.
 
-Urmărind fișierul **hello-world.asm** ca exemplu, implementați afișarea șirului folosind și **puts**.
+Urmărind fișierul `hello-world.asm` ca exemplu, implementați afișarea șirului folosind și `puts`.
 
 >**NOTE**: Urmăriți și indicațiile din secțiunea [Apelul unei functii](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-07?&#apelul_unei_functii)
 
 ### 4. Afișarea lungimii unui șir
 
-Programul **print-string-len.asm** afișează lungimea unui șir folosind macro-ul **PRINTF32**. Calculul lungimii șirului **mystring** are loc în cadrul programului (este deja implementat).
+Programul `print-string-len.asm` afișează lungimea unui șir folosind macro-ul `PRINTF32`. Calculul lungimii șirului `mystring` are loc în cadrul programului (este deja implementat).
 
-Implementați programul pentru a face afișarea lungimii șirului folosind funcția **printf**.
+Implementați programul pentru a face afișarea lungimii șirului folosind funcția `printf`.
 
-La sfârșit veți avea afișată de două ori lungimea șirului: inițial cu apelul macro-ului **PRINTF32** și apoi cu apelul funcției externe **printf**.
+La sfârșit veți avea afișată de două ori lungimea șirului: inițial cu apelul macro-ului `PRINTF32` și apoi cu apelul funcției externe `printf`.
 
->**NOTE:<br>
-Gândiți-vă că apelul **printf** este de forma **printf("String length is %u\n", len);**. Trebuie să construiți stiva pentru acest apel.<br>
-Pasii de urmat sunt:<br>
->- Marcarea simbolului printf ca simbol extern.
->- Definirea șirului de formatare "String length is %u", 10, 0.
->- Realizarea apelului funcției printf, adică:
+> **NOTE**: Gândiți-vă că apelul `printf` este de forma `printf("String length is %u\n", len);`. Trebuie să construiți stiva pentru acest apel.
+>
+> Pasii de urmat sunt:
+> - Marcarea simbolului `printf` ca simbol extern.
+> - Definirea șirului de formatare `"String length is %u", 10, 0`.
+> - Realizarea apelului funcției `printf`, adică:
 >    - Punerea celor două argumente pe stivă: șirul de formatarea și lungimea.
->    - Apelul printf folosind call.
+>    - Apelul `printf` folosind `call`.
 >    - Restaurarea stivei.
 
-Lungimea șirului se găsește în registrul **ecx**. 
+Lungimea șirului se găsește în registrul `ecx`.
 
 ### 5. Afișarea șirului inversat
 
 În soluția de mai sus adăugați funcția reverse_string astfel încât să aveți un listing similar celui de mai jos:
 
-```armasm
+```Assembly
 [...]
 section .text
 global main
@@ -389,47 +370,42 @@ main:
 [...]
 ```
 
->**WARNING**:<br>
-Când copiați funcția **reverse_string** în programul vostru, rețineți că fucția începe la eticheta **reverse_string** și se oprește la eticheta **main**. Eticheta **copy_one_byte** este parte a funcției **reverse_string**. 
+>**WARNING**: Când copiați funcția `reverse_string` în programul vostru, rețineți că fucția începe la eticheta `reverse_string` și se oprește la eticheta `main`. Eticheta `copy_one_byte` este parte a funcției `reverse_string`. 
 
-Funcția **reverse_string** inversează un șir și are următoarea signatură:
+Funcția `reverse_string` inversează un șir și are următoarea signatură:
 ```C
 void reverse_string(const char *src, size_t len, char *dst);
 ```
-Astfel ca primele **len** caractere și șirul **src** sunt inversate în șirul **dst**.
+Astfel ca primele `len` caractere și șirul `src` sunt inversate în șirul `dst`.
 
-Realizați inversarea șirului **mystring** într-un nou șir și afișați acel nou șir.
+Realizați inversarea șirului `mystring` într-un nou șir și afișați acel nou șir.
 
->**NOTE**:<br>
-Pentru a defini un nou șir, recomandăm ca, în secțiunea de date să folosiți construcția<br>
->```armasm
+>**NOTE**: Pentru a defini un nou șir, recomandăm ca, în secțiunea de date să folosiți construcția:
+>```Assembly
 >store_string times 64 db 0
 >```
 >Construcția creează un șir de 64 de octeți de zero, suficient pentru a stoca inversul șirului. 
->Apelul echivalent în C al funcției este 
+>Apelul echivalent în C al funcției este:
 >```C
 >void reverse_string(mystring, ecx, store_string);
 >```
 >În registrul ecx am presupus că este calculată lungimea șirului.
->Nu puteți folosi direct valoarea **ecx** în forma ei curentă. După apelul funcției printf pentru afișare numărului valoarea **ecx** se **pierde**. Ca să o păstrați, aveți două opțiuni:
->- Stocați valoarea registrului **ecx** în prealabil pe stivă (folosind **push ecx** înaintea apelului **printf**) și apoi să o restaurați după apelul **printf** (folosind **pop ecx**).
->- Stocați valoarea registrului **ecx** într-o variabilă globală, pe care o definiți în secțiunea **.data**.
->Nu puteți folosi un alt registru pentru că sunt șanse foarte mari ca și acel registru să fie modificat de apelul **printf** pentru afișarea lungimii șirului. 
-
+>Nu puteți folosi direct valoarea `ecx` în forma ei curentă. După apelul funcției `printf` pentru afișare numărului valoarea `ecx` se **pierde**. Ca să o păstrați, aveți două opțiuni:
+>- Stocați valoarea registrului `ecx` în prealabil pe stivă (folosind `push ecx` înaintea apelului `printf`) și apoi să o restaurați după apelul `printf` (folosind `pop ecx`).
+>- Stocați valoarea registrului `ecx` într-o variabilă globală, pe care o definiți în secțiunea `.data`.
+>Nu puteți folosi un alt registru pentru că sunt șanse foarte mari ca și acel registru să fie modificat de apelul `printf` pentru afișarea lungimii șirului. 
 
 ## 6. Implementarea functiei toupper
 
-Ne propunem implementarea funcției **toupper** care traduce literele **mici** în litere **mari**. Pentru aceasta, porniți de la fișierul **toupper.asm** din arhiva de exerciții a laboratorului și completați corpul funcției **toupper**.
+Ne propunem implementarea funcției `toupper` care traduce literele **mici** în litere **mari**. Pentru aceasta, porniți de la fișierul `toupper.asm` din arhiva de exerciții a laboratorului și completați corpul funcției `toupper`.
 
-Șirul folosit este **mystring** și presupunem că este un șir **valid**. Acest șir este transmis ca argument funcției **toupper** în momentul apelului.
+Șirul folosit este `mystring` și presupunem că este un șir **valid**. Acest șir este transmis ca argument funcției `toupper` în momentul apelului.
 
 Faceți înlocuirea *in place*, nu este nevoie de un alt șir.
 
->**NOTE:<br>
-Ca să traduceți o litera mică în literă mare, trebuie să **scădeți 0x20** din valoare. Aceasta este diferența între litere mici și mari; de exemplu a este **0x61** iar A este **0x41**. Puteți vedea în [pagina de manual ascii](http://man7.org/linux/man-pages/man7/ascii.7.html)<br><br>
->Ca să citiți sau să scrieți octet cu octet folosiți construcția **byte [reg]** așa cum apare și în implementarea determinării lungimii unui șir în fișierul **print-string-len.asm**, unde **[reg]** este registrul de tip pointer în care este stocată adresa șirului în acel punct.<br><br>
->Vă opriți atunci când ați ajuns la **valoarea 0 (NULL byte)**. Pentru verificare puteți folosi test așa cum se întâmplă și în implementarea determinării lungimii unui șir în fișierul **print-string-len.asm**. 
-
+>**NOTE**: Ca să traduceți o litera mică în literă mare, trebuie să **scădeți** `0x20` din valoare. Aceasta este diferența între litere mici și mari; de exemplu `a` este `0x61` iar `A` este `0x41`. Puteți vedea în [pagina de manual ascii](http://man7.org/linux/man-pages/man7/ascii.7.html).
+>Ca să citiți sau să scrieți octet cu octet folosiți construcția `byte [reg]` așa cum apare și în implementarea determinării lungimii unui șir în fișierul `print-string-len.asm`, unde `[reg]` este registrul de tip pointer în care este stocată adresa șirului în acel punct.
+>Vă opriți atunci când ați ajuns la **valoarea 0 (NULL byte)**. Pentru verificare puteți folosi test așa cum se întâmplă și în implementarea determinării lungimii unui șir în fișierul `print-string-len.asm`.
 
 ## Bonus: toupper doar pentru litere mici
 
@@ -437,28 +413,25 @@ Realizați și folosiți o funcție care face translatarea [rot13](http://www.de
 
 ## Bonus: rot13++
 
-Implementați **rot13** pe un array de șiruri: șirurile sunt continue în memorie separate prin terminatorul de șir **(NULL-byte, 0)**. De exemplu: **ana\0are\0mere\0** este un **array** de trei șiruri.
+Implementați `rot13` pe un array de șiruri: șirurile sunt continue în memorie separate prin terminatorul de șir **(NULL-byte, 0)**. De exemplu: `ana\0are\0mere\0` este un **array** de trei șiruri.
 
-Aplicați **rot13** pe caracterele alfabetice și înlocuiți terminatorul de șir cu **spațiu (' ', blank, caracterul 32 sau 0x20)**. Astfel, șirul inițial **ana\0are\0mere\0** se va traduce în **nan ner zrer**.
+Aplicați `rot13` pe caracterele alfabetice și înlocuiți terminatorul de șir cu **spațiu (' ', blank, caracterul 32 sau 0x20)**. Astfel, șirul inițial `ana\0are\0mere\0` se va traduce în `nan ner zrer`.
 
->**NOTE:<br>
-Pentru a defini array-ul de șiruri care să conțină terminatorul de șir, folosiți o construcție de forma:<br>
->```armasm
+>**NOTE**: Pentru a defini array-ul de șiruri care să conțină terminatorul de șir, folosiți o construcție de forma:
+>```Assembly
 >    mystring db "ana", 0, "are", 0, "mere", 0
 >```
 
->**NOTE:<br>
-Va trebui să știți când sa vă opriți din parcurgerea array-ului de șiruri. Cel mai simplu este să definiți o variabilă de lungime în secțiunea .data, de forma
->```armasm
+>**NOTE**: Va trebui să știți când sa vă opriți din parcurgerea array-ului de șiruri. Cel mai simplu este să definiți o variabilă de lungime în secțiunea `.data`, de forma:
+>```Assembly
 >    len dd 10
 >```
 >în care să rețineți fie lungimea totală a șirului (de la începutul până la ultimul NULL-byte), fie numărul de șiruri din array.
 
-
 ## Alte resurse
 
-[nasm](nasm)
+[nasm](https://www.nasm.us/)
 
 ## Soluții
 
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-03-sol.zip). 
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-03-sol.zip).
