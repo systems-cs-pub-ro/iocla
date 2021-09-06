@@ -290,7 +290,7 @@ int main() {
 }
 ```
 
-Funcția ![qsort()](http://www.cplusplus.com/reference/cstdlib/qsort/) din `stdlib.h` folosește drept comparator un pointer la funcție.
+Funcția [qsort()](http://www.cplusplus.com/reference/cstdlib/qsort/) din `stdlib.h` folosește drept comparator un pointer la funcție.
 
 ```c
 int compare(const void *a, const void *b) {
@@ -351,7 +351,7 @@ unde:
 
 ## **Pregătire infrastructură**
 
-> **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - ![https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la ![Git Immersion](https://gitimmersion.com/).
+> **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
  Pentru desfășurarea acestui laborator vom folosi interfața în linia de comandă.
 
@@ -525,11 +525,11 @@ Compilați codul sursă și porniți executabilul cu GDB. Setați un breakpoint 
 
 Veți rezolva exercițiul plecând de la fișierul **ex7.c** aflat în directorul **ex7**.
 
-Să se implementeze funcțiile ![memcpy](http://www.cplusplus.com/reference/cstring/memcpy/), ![strcpy](http://www.cplusplus.com/reference/cstring/strcpy/]) și ![strcmp](http://www.cplusplus.com/reference/cstring/strcmp/) folosind operații pe pointeri.
+Să se implementeze funcțiile [memcpy](http://www.cplusplus.com/reference/cstring/memcpy/), [strcpy](http://www.cplusplus.com/reference/cstring/strcpy/]) și [strcmp](http://www.cplusplus.com/reference/cstring/strcmp/) folosind operații pe pointeri.
 
 ### **8. Comenzi utile pwndbg (nu gdb)**
 
-Cheatsheet ![gdb + pwndbg](https://cheatography.com/superkojiman/cheat-sheets/gdb-pwndbg/) ; pwndbg ![features](https://github.com/pwndbg/pwndbg/blob/dev/FEATURES.md)
+Cheatsheet [gdb + pwndbg](https://cheatography.com/superkojiman/cheat-sheets/gdb-pwndbg/) ; pwndbg [features](https://github.com/pwndbg/pwndbg/blob/dev/FEATURES.md)
 
 ```py
 pwndbg> show context-sections
@@ -551,4 +551,4 @@ set dereference-limit 1
 
 ### Soluții
 
-Soluțiile pentru exerciții sunt disponibile ![aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-02-sol.zip).
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-02-sol.zip).
