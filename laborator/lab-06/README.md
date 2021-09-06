@@ -66,9 +66,9 @@ CMAIN:
     PRINTF32 `%d \n\x0`, eax
 ```
 
-> ***QUESTION:*** Comentati instructiunile `sub esp, 4` si `add esp, 4`. Ce se intampla? De ce?
+> **QUESTION:** Comentati instructiunile `sub esp, 4` si `add esp, 4`. Ce se intampla? De ce?
 
-> ***NOTE:*** Stiva este folosita pentru a memora adresa de retur in momentul in care o functie este apelata
+> **NOTE:** Stiva este folosita pentru a memora adresa de retur in momentul in care o functie este apelata
 
 **Remarcati faptul ca stiva creste de la adrese mari la adrese mici.** Acesta este motivul pentru care alocarea memoriei pe stiva se face folosind instructiunea sub, iar eliberarea se face folosind instructiunea add.
 
@@ -91,9 +91,9 @@ mov eax, [esp]
 add esp, 4
 ```
 
-> ***IMPORTANT:*** Trebuie sa avem grija cu cantitatea de date alocate pe stiva intrucat dimensiunea acesteia este limitata. Umplerea stivei va duce la cunoscuta eroare de **stack overflow** (mai multe la laboratorul de securitate).
+> **IMPORTANT:** Trebuie sa avem grija cu cantitatea de date alocate pe stiva intrucat dimensiunea acesteia este limitata. Umplerea stivei va duce la cunoscuta eroare de **stack overflow** (mai multe la laboratorul de securitate).
 
-> ***NOTE:*** Stack size-ul default pe Linux pe o arhitectura pe 64 biti este de 8MiB.
+> **NOTE:** Stack size-ul default pe Linux pe o arhitectura pe 64 biti este de 8MiB.
 
 
 ## Stiva in contextul spatiului de adresa a unui proces
@@ -149,32 +149,32 @@ CMAIN:
     ret
 ```
 
-> ***QUESTION:*** Care este intrebuintarea principala a registrului `ebp`?
+> **QUESTION:** Care este intrebuintarea principala a registrului `ebp`?
 
 Dupa cum putem observa, registrul ebp defineste stack frame-ul fiecarei functii. De altfel, la fel cum putem adresa variabilele locale cu ajutorul registrului esp, acelasi lucru este este posibil si cu ebp. Mai mult de atat, vom vedea ca parametrii functiei apelate sunt adresati cu ajutorul lui ebp.
 
 ## Exercitii
-> **_NOTE:_** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+> **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 >
 ### 0. Recapitulare: Media aritmetică a elementelor dintr-un vector
 
 Pornind de la exercițiul `0-recap-mean.asm` din arhiva de laborator, implementați codul lipsă, marcat de comentarii de tip `TODO`, pentru a realiza un program care calculează media aritmetică a elementelor dintr-un vector. Afișați doar partea întreagă a mediei (câtul împărțirii).
 
-> ***NOTE:*** Dacă ați făcut calculul corect, suma elementelor vectorului va fi `3735` iar media aritmetică a elementelor din vector va fi `287`.
+> **NOTE:** Dacă ați făcut calculul corect, suma elementelor vectorului va fi `3735` iar media aritmetică a elementelor din vector va fi `287`.
 
 
 ### 1. Max
 
 Calculați maximul dintre numerele din 2 registre (`eax` și `ebx`) folosind o instrucțiune de comparație, o instrucțiune de salt și instrucțiuni `push`/`pop`.
 
-> **_TIP:_** Gandiți-vă cum puteți să interschimbați două registre folosind stiva.
+> **TIP:** Gandiți-vă cum puteți să interschimbați două registre folosind stiva.
 
 
 ### 2. Construirea array-ului inversat
 
 Pornind de la exercițiul `reverse-array.asm`, implementați `TODO`-urile **fără a folosi instrucțiunea `mov` în lucrul cu array-urile** astfel încât în array-ul `output` la finalul programului să se afle array-ul `input` inversat.
 
-> **_NOTE:_** Dupa o rezolvare corecta programul ar trebui sa printeze:
+> **NOTE:** Dupa o rezolvare corecta programul ar trebui sa printeze:
 >```
 >    Reversed array:
 >    911
@@ -197,7 +197,7 @@ Programul `stack-addressing.asm` din arhiva laboratorului alocă și inițialize
 1. Printați string-ul alocat pe stivă octet cu octet și explicați cum arată acesta în memorie. Gândiți-vă de la ce adresă ar trebui să afișați și când ar trebui să vă opriți.
 1. Printați vectorul alocat pe stivă element cu element. Gândiți-vă de la ce adresă ar trebui să începeți afișarea și ce dimensiune are un element.
 
-> **_NOTE:_** După o implementare cu succes, programul ar trebui să afișeze ceva asemănător cu următorul output (nu fix același lucru, adresele de pe stivă pot să difere):
+> **NOTE:** După o implementare cu succes, programul ar trebui să afișeze ceva asemănător cu următorul output (nu fix același lucru, adresele de pe stivă pot să difere):
 >```
 >0xffcf071b: 65
 >0xffcf071c: 110
@@ -218,7 +218,7 @@ Programul `stack-addressing.asm` din arhiva laboratorului alocă și inițialize
 >```
 >Explicați semnificația fiecărui octet. De ce sunt puși în ordinea respectivă? De ce unii octeți sunt 0?
 
-> ***NOTE:*** Amintiți-vă ce valoare au caracterele în reprezentarea zecimală(codul ASCII).
+> **NOTE:** Amintiți-vă ce valoare au caracterele în reprezentarea zecimală(codul ASCII).
 Amintiți-vă în ce ordine sunt ținuți octeții unui număr: revedeți secțiunea **Ordinea de reprezentare a numerelor mai mari de un octet** din Laboratorul 01.
 
 ### 4. Variabile locale
