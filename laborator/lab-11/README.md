@@ -31,14 +31,10 @@ Prin însăși vocația lui, orice inginer tinde către o folosire cât mai efic
 ![https://impossiblehq.com/wp-content/uploads/2013/04/Final-Form.jpg](https://impossiblehq.com/wp-content/uploads/2013/04/Final-Form.jpg)
 
 
-> **_NOTE:_**
-> Abia în această etapă ne punem problema să implementăm în asamblare porțiuni din programul nostru. În astfel de situații extreme trebuie analizat codul generat de compilator și identificate bucățile în care acesta eșuează în a aplica diferite optimizări cum ar fi:
->
+> **NOTE:** Abia în această etapă ne punem problema să implementăm în asamblare porțiuni din programul nostru. În astfel de situații extreme trebuie analizat codul generat de compilator și identificate bucățile în care acesta eșuează în a aplica diferite optimizări cum ar fi:
 >    * există instrucțiuni precum [popcnt](https://www.felixcloutier.com/x86/POPCNT.html) sau [bsf](https://www.felixcloutier.com/x86/BSF.html) a căror exprimare în limbajele de nivel înalt este mult mai ineficientă (O(1) vs O(nbytes)), iar majoritatea compilatoarelor nu au capacitatea de a identifica aceste cazuri.
 >    * în funcție de tipul de procesor, fiecare instrucțiune are un anumit timp de execuție; este posibil ca, în anumite cazuri, compilatorul să nu folosească instrucțiunea cea mai eficientă.
 >    * sunt situații în care codul generat de compilator nu optimizează la maxim evitarea ["stall"-urilor de pipeline](https://en.wikipedia.org/wiki/Pipeline_stall). Mai multe despre asta la CN2.
->
-
 
 ## Concluzii
 
@@ -60,9 +56,7 @@ Ne interesează în special:
   * Ce ar trebui să facem ca lucrurile să fie plăcute și să meargă bine?
 
 ## Exercitii
-> **_NOTE:_**
-> 
-> În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda ''git pull origin master'' din interiorul directorului în care se află repository-ul (''~/Desktop/iocla''). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda ''git clone https://github.com/systems-cs-pub-ro/iocla ${target}''.Pentru mai multe informații despre folosirea utilitarului ''git'', urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+> **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`.Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 >
 
 ### 0. Stay a while and listen
@@ -71,86 +65,76 @@ Ați sărit direct la exerciții? Știm cum este. Totuși, vă rugăm să ne ofe
 
 ### 1. Loop unrolling
 
-Intrați în directorul ''1-2-loop-unrolling''. Inspectați codul din fișierele ''normal_loop.c'' și ''unrolled_loop.c''. Compilați cele 2 surse și rulați-le:
+Intrați în directorul `1-2-loop-unrolling`. Inspectați codul din fișierele `normal_loop.c` și `unrolled_loop.c`. Compilați cele 2 surse și rulați-le:
 
-```
+```bash
 make run
 ```
 
 **1.** Cum explicați diferența de timp de rulare dintre cele două implementări?
 
-> **_TIP:_**
-> Urmăriți codul generat pentru cele 2 binare folosind **objdump**
->
+> **TIP:** Urmăriți codul generat pentru cele 2 binare folosind **objdump**
 
 **2.** Rulați de mai multe ori cele 2 binare. Timpurile de execuție variază. De ce?
 
-Pentru mai multe informații despre "loop unrolling", accesati acest [link](https://en.wikipedia.org/wiki/Loop_unrolling).
+Pentru mai multe informații despre **loop unrolling**, accesati acest [link](https://en.wikipedia.org/wiki/Loop_unrolling).
 
 ### 2. "Flag"-uri de optimizare
 
-Tot în directorul `1-2-loop-unrolling` inspectați fișierul `Makefile`. Observați că pe langă "target"-urile prin care am obținut binarele de la punctul 1, mai există două cu extensia "_op". Acestea folosesc "flag"-ul de optimizare definit de variabila `OPTFLAGS`. În acest caz, este folosit nivelul cel mai agresiv de optimizare `-O3`.
+Tot în directorul `1-2-loop-unrolling` inspectați fișierul `Makefile`. Observați că pe langă target-urile prin care am obținut binarele de la punctul 1, mai există două cu extensia `_op`. Acestea folosesc flag-ul de optimizare definit de variabila `OPTFLAGS`. În acest caz, este folosit nivelul cel mai agresiv de optimizare `-O3`.
 
 **1.** Compilați binarul optimizat pentru fișierul `normal_loop.c` și rulați-l. Ce observați? Cum explicați comportamentul?
 
 Pentru compilare și rulare, executați comenzile:
-```
+```bash
 make normal_loop_op
 ./normal_loop_op
 ```
 
-> **_TIP:_**
-> Urmăriți cu **objdump** codul generat pentru binarul `normal_loop_op`. Identificați zona în care se face suma elementelor vectorului.
->
+> **TIP:** Urmăriți cu **objdump** codul generat pentru binarul `normal_loop_op`. Identificați zona în care se face suma elementelor vectorului.
 
-**2.** În fișierul `normal_loop.c` decomentați linia în care se face un "printf". Ce observați? Cum explicați?
+**2.** În fișierul `normal_loop.c` decomentați linia în care se face un `printf`. Ce observați? Cum explicați?
 
 **3.** Analizați binarul obținut la punctul 1 pentru `normal_loop` cu binarul obtinut la punctul anterior. Care sunt diferențele? Care sunt motivele pentru care binarul optimizat este mai rapid?
 
 **4.** In `normal_loop.c` comentați prima linie `define N` și decomentați a doua definiție. Compilați cu optimizări și analizați codul generat. Ce s-a intamplat?
 
-> **_TIP:_**
-> Consultați linkul [acesta](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) și în manualul gcc căutați după **fpeel-loops**
->
+> **TIP:** Consultați linkul [acesta](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) și în manualul gcc căutați după `fpeel-loops`.
 
 **5.** Compilați cu optimizări fișierul `unrolled-loop.c`. Rulați-l. Există vreo diferență sesizabilă de performanță între varianta de la de punctul 1 și aceasta? Cum se explică?
 
 ### 3. Optimizare cod C
 
-Intrați în directorul `3-optimize`. Inspectați sursa `optimize.c`. Acest program poate fi îmbunătățit din punct de vedere al timpului de rulare. Ce optimizări se pot aplica codului? Implementați varianta optimizată și rulați apoi pentru a vedea diferența de performanță. Completați câmpul marcat cu **TODO**.
+Intrați în directorul `3-optimize`. Inspectați sursa `optimize.c`. Acest program poate fi îmbunătățit din punct de vedere al timpului de rulare. Ce optimizări se pot aplica codului? Implementați varianta optimizată și rulați apoi pentru a vedea diferența de performanță. Completați câmpul marcat cu `TODO`.
 
 ### 4. Numărarea biților setați
 
-Uneori este nevoie să ținem evidența prezenței sau absenței unor resurse (ex. nuclee de procesor active). Deoarece această caracteristică poate fi reprezentată în mod optim folosind un singur bit (valoare ''1'' pentru prezență și ''0'' pentru absență), codificarea unui set se face folosind [[https://en.wikipedia.org/wiki/Bit_array|vectori de biți]]. Deoarece acest tip de reprezentare a datelor este util în multe situații, procesoarele oferă suport hardware pentru execuția unor operații comune. Dintre acestea amintim numărarea de biți setați (cantitatea de resurse disponibile), care se realizează folosind instrucțiunea [[https://www.felixcloutier.com/x86/popcnt|popcnt]] și descoperirea primului bit setat (descoperirea primului element disponibil), care se realizează folosind instrucțiunea [[https://www.felixcloutier.com/x86/bsf|bsf]].
+Uneori este nevoie să ținem evidența prezenței sau absenței unor resurse (ex. nuclee de procesor active). Deoarece această caracteristică poate fi reprezentată în mod optim folosind un singur bit (valoare `1` pentru prezență și `0` pentru absență), codificarea unui set se face folosind [vectori de biți](https://en.wikipedia.org/wiki/Bit_array). Deoarece acest tip de reprezentare a datelor este util în multe situații, procesoarele oferă suport hardware pentru execuția unor operații comune. Dintre acestea amintim numărarea de biți setați (cantitatea de resurse disponibile), care se realizează folosind instrucțiunea [popcnt](https://www.felixcloutier.com/x86/popcnt) și descoperirea primului bit setat (descoperirea primului element disponibil), care se realizează folosind instrucțiunea [bsf](https://www.felixcloutier.com/x86/bsf).
 
-Intrați în directorul `4-bitops` și inspectați fișierul `binops.c`. Implementați funcția `count_bits_op` astfel încât să fie o variantă eficientă din punctul de vedere al timpului de execuție a funcției ''count_bits'' folosind suportul hardware oferit de procesor.
+Intrați în directorul `4-bitops` și inspectați fișierul `binops.c`. Implementați funcția `count_bits_op` astfel încât să fie o variantă eficientă din punctul de vedere al timpului de execuție a funcției `count_bits` folosind suportul hardware oferit de procesor.
+
 ### 5. Loop vs. Jump
 
-Intrați în directorul `5-profile`. Pornind de la fișierul `profile.asm` ne dorim să măsurăm diferența dintre folosirea instrucțiunii `loop` și instrucțiunile din clasa jump  (j*). Pentru aceasta va trebui să folosiți instrucțiunea [rdtscp](https://www.felixcloutier.com/x86/rdtscp). Urmăriți comentariile marcate cu **TODO**.
+Intrați în directorul `5-profile`. Pornind de la fișierul `profile.asm` ne dorim să măsurăm diferența dintre folosirea instrucțiunii `loop` și instrucțiunile din clasa jump  (`j*`). Pentru aceasta va trebui să folosiți instrucțiunea [rdtscp](https://www.felixcloutier.com/x86/rdtscp). Urmăriți comentariile marcate cu `TODO`.
 
-> **_TIP:_**
-> O explicație referitoare la de ce rezultatele rulării celor 2 variante ar putea părea neintuitive găsiți [aici](https://stackoverflow.com/a/21565600).
->
+> **TIP:** O explicație referitoare la de ce rezultatele rulării celor 2 variante ar putea părea neintuitive găsiți [aici](https://stackoverflow.com/a/21565600).
 
 ### 6. Optimizare cod  assembly
 
 Intrați în directorul `6-optimize-assembly`. Citiți sursele prezente în acest director.
 
-  * [**1p**] Ce face codul scris în assembly?
-  * [**2p**] Îmbunătățiți performanța codului scris în assembly. În cazul în care varianta este optimă din puncte de vedere temporal cât și spațial, veți primi 2 puncte bonus, însă va trebui să demonstrați optimalitatea.
+  * Ce face codul scris în assembly?
+  * Îmbunătățiți performanța codului scris în assembly. În cazul în care varianta este optimă din puncte de vedere temporal cât și spațial, veți primi 2 puncte bonus, însă va trebui să demonstrați optimalitatea.
 
-> **_TIP:_**
-> Când dorim să aflăm timpul de execuție al unei bucăți de cod nu există minim accidental, ci doar maxim accidental.
+> **TIP:** Când dorim să aflăm timpul de execuție al unei bucăți de cod nu există minim accidental, ci doar maxim accidental.
 > Asta se datorează faptului că nu avem control asupra modului în care sistemul de operare planifică accesul procesului nostru la resurse, așa că pot interveni diferite întârzieri (de aici apariția maximului accidental); pe de altă parte minimul reprezintă valoarea cea mai apropiată de realitate.
->
 
-> **_TIP:_**
-> Pentru bonus puteți să consultați acest [link](https://www.agner.org/optimize/instruction_tables.pdf). Extrageți din fișierul PDF cât durează fiecare operație și încercați să reduceți timpul cât mai mult posibil folosind această informație.
+> **TIP:** Pentru bonus puteți să consultați acest [link](https://www.agner.org/optimize/instruction_tables.pdf). Extrageți din fișierul PDF cât durează fiecare operație și încercați să reduceți timpul cât mai mult posibil folosind această informație.
 > Folosiți comanda
-> ```
+> ```bash
 > cat /proc/cpuinfo | grep "model name" | head -1
 > ```
-> în terminal pentru a vedea tipul procesorul și căutați apoi în PDF instrucțiunile pentru acesta pentru a vedea cât durează fiecare. Coloana care ne interesează este cea de „latency”.
+> în terminal pentru a vedea tipul procesorul și căutați apoi în PDF instrucțiunile pentru acesta pentru a vedea cât durează fiecare. Coloana care ne interesează este cea de `latency`.
 > 
 
 ## Bibliografie
