@@ -40,28 +40,9 @@ Prin însăși vocația lui, orice inginer tinde către o folosire cât mai efic
 
 In optimizarea programelor, înțelegerea aprofundată a noțiunilor de asamblare este esențială atât pentru a înțelege cum poate fi îmbunătățit un cod cât și pentru a interpreta rezultatele eficientizării acestuia. Deși, cel mai probabil, nu va fi nevoie să scrieți cod assembly, înțelegerea acestuia vă va facilita o înțelegere superioară a modului de funcționare a programului și vă va îmbunătăți șansele de a găsi implementarea optimă a acestuia.
 
-## Feedback
-
-Pentru a îmbunătăți cursul de IOCLA, componentele sale și modul de desfășurare, ne sunt foarte utile opiniile voastre. Pentru aceasta, vă rugăm să accesați și completați formularul de feedback de pe site-ul [curs.upb.ro](https://curs.upb.ro). Trebuie să fiți autentificați și înrolați în cadrul cursului.
-
-Formularul este anonim și este activ în perioada 18 ianuarie 2021 - 29 ianuarie 2021. Rezultatele vor fi vizibile în cadrul echipei cursului doar după încheierea sesiunii. Puteți accesa formularul de feedback începând cu 18 ianuarie 2021. Este accesibil la link-ul “Formular feedback” a paginii principale a cursului de IOCLA al seriei voastre. Nu este în meta-cursul disponibil tuturor seriilor.
-
-Vă invităm să evaluați activitatea echipei de IOCLA și să precizați punctele tari și punctele slabe și sugestiile voastre de îmbunătățire a disciplinei. Feedback-ul vostru ne ajută să creștem calitatea materiei în anii următori și să îmbunătățim disciplinele pe care le veți face în continuare.
-
-Vom publica la începutul semestrului viitor analiza feedback-ului vostru.
-
-Ne interesează în special:
-  * Ce nu v-a plăcut și ce credeți că nu a mers bine?
-  * De ce nu v-a plăcut și de ce credeți că nu a mers bine?
-  * Ce ar trebui să facem ca lucrurile să fie plăcute și să meargă bine?
 
 ## Exercitii
 > **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`.Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
->
-
-### 0. Stay a while and listen
-
-Ați sărit direct la exerciții? Știm cum este. Totuși, vă rugăm să ne oferiți feedback și să ne ajutați să îmbunătățim materia. Mergeți la secțiunea [feedback](#feedback) pentru detalii.
 
 ### 1. Loop unrolling
 
