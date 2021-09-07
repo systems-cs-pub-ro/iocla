@@ -4,9 +4,9 @@
 
 ## **Pointeri**
 
-În limbajul C interacțiunea cu memoria se realizează prin intermediul pointerilor. Reamintim că un pointer este o variabilă ce reține o adresă de memorie. Forma generală de declarare este urmatoarea: **tip** *nume_variabilă, unde **nume_variabilă** reprezintă orice tip de date valid din C.
+În limbajul C interacțiunea cu memoria se realizează prin intermediul pointerilor. Reamintim că un pointer este o variabilă ce reține o adresă de memorie. Forma generală de declarare este urmatoarea: `tip *nume_variabilă`, unde `nume_variabilă` reprezintă orice tip de date valid din C.
 
-> **WARNING:** **Asteriscul(\*)** folosit la declararea unui pointer denotă faptul ca acesta este un pointer și nu trebuie confundat cu operatorul de dereferențiere, fiind două concepte total diferite reprezentate cu același simbol.
+> **WARNING:** **Asteriscul(`*`)** folosit la declararea unui pointer denotă faptul ca acesta este un pointer și nu trebuie confundat cu operatorul de dereferențiere, fiind două concepte total diferite reprezentate cu același simbol.
 > Declararea unui pointer nu înseamnă alocarea unei zone de memorie în care pot fi stocate date. Un pointer este tot un tip de date, a cărui valoare este un număr ce reprezintă o adresă de memorie.
 > ```c
 >   int *p = 0xCAFEBABE; /* Declararea unui pointer */
@@ -19,13 +19,13 @@
  -  Adresa unei funcții
  -  Adresa unei zone cu conținut necunoscut (pointer la void)
 
- > **TIP:** Dimensiunea unui pointer depinde de arhitectura și sistemul de operare pe care a fost compilat programul. Dimensiunea unui pointer se determină cu **sizeof(void\*)** și nu este în mod necesar egală cu dimensiunea unui **int**.
+ > **TIP:** Dimensiunea unui pointer depinde de arhitectura și sistemul de operare pe care a fost compilat programul. Dimensiunea unui pointer se determină cu `sizeof(void*)` și nu este în mod necesar egală cu dimensiunea unui `int`.
 
 ### **Pointeri la void**
 
 Un pointer la void este un pointer care nu are un tip asociat. Pointerii la void au o flexibilitate mare deoarece pot pointa la orice tip de date, dar au și o limitare la fel de mare, și anume că nu pot fi dereferențiați, iar pentru a putea fi folosiți în operații cu pointeri trebuie convertiți la un tip de date cunoscut.
 
-Cel mai adesea sunt folosiți în implementarea de funcții generice. De exemplu, funcțiile **malloc()** și **calloc()** returnează un pointer la void ceea ce permite ca aceste funcții să fie folosite pentru alocarea de memorie pentru orice tip de date.
+Cel mai adesea sunt folosiți în implementarea de funcții generice. De exemplu, funcțiile `malloc()` și `calloc()` returnează un pointer la void ceea ce permite ca aceste funcții să fie folosite pentru alocarea de memorie pentru orice tip de date.
 
 Un exemplu de folosire a pointerilor la void este următorul: 
 
@@ -64,7 +64,7 @@ int main() {
 
 Operațiile aritmetice pe pointeri sunt puțin diferite de cele pe tipurile de date întregi. Singurele operații valide sunt **incrementarea** sau **decrementarea** unui pointer, **adunarea** sau **scăderea** unui întreg la un pointer, respectiv scăderea a doi pointeri de **același tip**, iar comportamentul acestor operații este influențat de tipul de date la care pointerii se referă.
 
-Prin incrementarea unui pointer legat la un tip de date **T**, adresa nu este crescută cu 1, ci cu valoarea **sizeof(T)** care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg n la un pointer p (p + n) reprezintă de fapt **p + n * sizeof(*p)**. De exemplu:
+Prin incrementarea unui pointer legat la un tip de date `T`, adresa nu este crescută cu 1, ci cu valoarea `sizeof(T)` care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg n la un pointer p (p + n) reprezintă de fapt `p + n * sizeof(*p)`. De exemplu:
 
 ```c
 char_ptr = 1000
@@ -98,12 +98,12 @@ printf("0x%x, 0x%x\n", first_byte, second_byte); /* Se va afișa 0xBE, 0xBA */
 
 > **NOTE:** În cazul pointerilor castați, operațiile aritmetice se realizează pe tipul la care aceștia au fost castați.
 
-> **WARNING:** Nu faceți confuzie intre **\*p++** și **(\*p)++**. În primul caz se incrementează adresa la care pointează p, iar în cel de al doilea, valoarea de la acea adresă.
+> **WARNING:** Nu faceți confuzie intre `*p++` și `(*p)++`. În primul caz se incrementează adresa la care pointează p, iar în cel de al doilea, valoarea de la acea adresă.
 > Aritmetica pe pointeri de tip void nu este posibilă din lipsa unui tip de date concret la care pointează.
 
 ### **Pointeri la tablouri**
 
-Între pointeri și tablouri există o legatură foarte stransă. În C numele unui tablou este un *pointer constant* (adresa sa este alocată de către compilator și nu mai poate fi modificată în timpul execuției) la primul element din tablou: **v = &v[0]**. De exemplu:
+Între pointeri și tablouri există o legatură foarte stransă. În C numele unui tablou este un *pointer constant* (adresa sa este alocată de către compilator și nu mai poate fi modificată în timpul execuției) la primul element din tablou: `v = &v[0]`. De exemplu:
 
 ```c
 int v[10], *p;
@@ -122,7 +122,7 @@ v[n] <==> *(v + n)
 &v[n] <==> v + n
 ```
 
-De asemenea, un vector conţine şi informaţii legate de lungimea vectorului şi dimensiunea totală ocupată în memorie, astfel că operatorul **sizeof(v)** va returna spațiul ocupat în memorie (numărul de octeți), iar **sizeof(v) / sizeof(\*v)** va returna numărul de elemente ale lui **v**.
+De asemenea, un vector conţine şi informaţii legate de lungimea vectorului şi dimensiunea totală ocupată în memorie, astfel că operatorul `sizeof(v)` va returna spațiul ocupat în memorie (numărul de octeți), iar `sizeof(v) / sizeof(*v)` va returna numărul de elemente ale lui `v`.
 
 Folosind pointeri putem să alocăm dinamic memorie. În acest sens, alocarea dinamică a unui tablou bidimensional (o matrice) se poate realiza astfel:
 
@@ -148,9 +148,9 @@ Mai jos este prezentată diferența dintre cele doua abordări:
 ![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/array1.gif)
 ![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/array2.gif)
 
-În ambele cazuri, elementele matricei pot fi accesate folosind operatorul de indexare `[]`: **arrayX[i][j]**. De asemenea, și în cazul matricelor, ca și la vectori, putem înlocui indexarea cu operații cu pointeri. Astfel, **arr[i][j] = \*(arr + i)[j] = \*(\*(arr + i) + j)**.
+În ambele cazuri, elementele matricei pot fi accesate folosind operatorul de indexare `[]`: `arrayX[i][j]`. De asemenea, și în cazul matricelor, ca și la vectori, putem înlocui indexarea cu operații cu pointeri. Astfel, `arr[i][j] = *(arr + i)[j] = *(*(arr + i) + j)`.
 
-> **WARNING:** De fiecare dată cand alocați memorie cu ajutorul unui pointer, folosiți **p = malloc(n \* sizeof(\*p))** în loc de **p = malloc(n \* sizeof(int))**. Folosirea lui **sizeof(\*p)** face codul mai robust și *self-documenting*, astfel că cine citește codul va vedea că se alocă un număr corect de octeți, fără a fi nevoie să verifice tipul de date la care pointează p.
+> **WARNING:** De fiecare dată cand alocați memorie cu ajutorul unui pointer, folosiți `p = malloc(n * sizeof(*p))` în loc de `p = malloc(n * sizeof(int))`. Folosirea lui `sizeof(*p)` face codul mai robust și *self-documenting*, astfel că cine citește codul va vedea că se alocă un număr corect de octeți, fără a fi nevoie să verifice tipul de date la care pointează `p`.
 
 ### **Structuri. Pointeri la structuri**
 
@@ -162,7 +162,7 @@ struct nume_structura {
 };
 ```
 
-Pentru simplificarea declaraţiilor, putem asocia unei structuri un nume de tip de date: **typedef struct {declarații_câmpuri} nume_structură;**
+Pentru simplificarea declaraţiilor, putem asocia unei structuri un nume de tip de date: `typedef struct {declarații_câmpuri} nume_structură;`
 
 ```c
 typedef struct student {
@@ -213,7 +213,7 @@ printf("Size of struct: %zu", sizeof(struct A)) /* Se va afișa 24 */
 
 Porțiunea roșie reprezintă padding-ul adăugat de compilator, iar cea verde membrii structurii.
 
-Totuși, putem sa împiedicăm compilatorul să facă padding folosind **\_\_attribute\_\_((packed))** la declararea structurii. (Mai multe detalii despre acest aspect la cursul de Protocoale de Comunicație). Astfel, pentru exemplul anterior rezultatul va fi 14.
+Totuși, putem sa împiedicăm compilatorul să facă padding folosind `__attribute__((packed))` la declararea structurii. (Mai multe detalii despre acest aspect la cursul de Protocoale de Comunicație). Astfel, pentru exemplul anterior rezultatul va fi 14.
 
 > **NOTE:** Dacă declarați pointeri la structuri, nu uitați să alocați memorie pentru aceștia înainte de a accesa câmpurile structurii. Nu uitați să alocaţi și câmpurile structurii, care sunt pointeri, înainte de utilizare, dacă este cazul. De asemenea, fiți atenți și la modul de accesare al câmpurilor.
 
@@ -265,7 +265,7 @@ Dacă o funcție returnează adresa unei variabile locale este obligatoriu ca ac
 
 Numele unei funcții reprezintă adresa de memorie la care începe funcția. Un pointer la o funcție este o variabilă ce stochează adresa unei funcții ce poate fi apelată ulterior prin intermediul acelui pointer. Uzual, pointerii la funcții sunt folosiți pentru a trimite o funcție ca parametru unei alte funcții.
 
-Declararea unui pointer la o funcție se face în felul următor: **tip (\*pf) (lista_parametri_formali)**
+Declararea unui pointer la o funcție se face în felul următor: `tip (*pf) (lista_parametri_formali)`
 
 De ce este necesară folosirea parantezelor suplimentare? Dacă acestea ar lipsi atunci am discuta despre o funcție ce are ca rezultat un pointer. În continuare, sunt prezentate doua exemple de folosire a pointerilor la funcții:
 
@@ -316,8 +316,8 @@ int main() {
 
 Pentru a lansa programul urmărit în execuție există două comenzi disponibile:
 
-- **run** - această comandă va lansa în execuție programul
-- **start** - spre deosebire de run, această comandă va începe execuția programului, însă se va opri imediat după intrarea în main
+- `run` - această comandă va lansa în execuție programul
+- `start` - spre deosebire de run, această comandă va începe execuția programului, însă se va opri imediat după intrarea în main
 
 **Breakpoints**
 
@@ -331,13 +331,13 @@ unde *location* poate reprezenta numele unei funciții, numărul liniei de cod s
 
 **Parcurgerea instrucțiunilor**
 
-- **stepi** - trimite o instrucțiune spre execuție
-- **nexti** - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
+- `stepi` - trimite o instrucțiune spre execuție
+- `nexti` - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
 
 **Inspectarea memoriei**
 
-- **p** sau **print** var - Afișează valoarea lui var. Print este o comandă foarte flexibilă, permițând dereferențierea pointerilor, afișarea adreselor variabilelor și indexarea prin vectori folosind *, & și []. Comanda print poate fi urmată de parametrul /f care specifică formatul de afișare(x pentru hexa, d pentru zecimal, s pentru șir de caractere).
-- **x** sau **examine** - Inspectează conținutul de la adresa dată. Modul de folosire al acestei comenzi este următorul:
+- `p` sau `print` var - Afișează valoarea lui var. Print este o comandă foarte flexibilă, permițând dereferențierea pointerilor, afișarea adreselor variabilelor și indexarea prin vectori folosind *, & și []. Comanda print poate fi urmată de parametrul /f care specifică formatul de afișare(x pentru hexa, d pentru zecimal, s pentru șir de caractere).
+- `x` sau `examine` - Inspectează conținutul de la adresa dată. Modul de folosire al acestei comenzi este următorul:
 
 ```py
 x/nfu address
@@ -378,9 +378,9 @@ int main() {
 }
 ```
 
-Afișați adresele elementelor din vectorul **v** împreună cu valorile de la acestea. Parcurgeți, pe rând, adresele din **v** octet cu octet, din doi în doi, respectiv din patru în patru octeți.
+Afișați adresele elementelor din vectorul `v` împreună cu valorile de la acestea. Parcurgeți, pe rând, adresele din `v` octet cu octet, din doi în doi, respectiv din patru în patru octeți.
 
-> **TIP:** Puteți parcurge memoria octet cu octet începând de la o anumită adresă folosind un pointer de tipul **unsigned char \*** (pentru că tipul char este reprezentat pe un octet).
+> **TIP:** Puteți parcurge memoria octet cu octet începând de la o anumită adresă folosind un pointer de tipul `unsigned char*` (pentru că tipul `char` este reprezentat pe un octet).
 >```c
 >unsigned char *char_ptr = &v;
 >```
@@ -393,9 +393,9 @@ Afișați adresele elementelor din vectorul **v** împreună cu valorile de la a
 
 Veți rezolva exercițiul plecând de la fișierul **ex2.c** aflat în directorul **ex2**.
 
-Dându-se un șir de caractere și un pattern să se implementeze funcția **delete_first(char \*s, char \*pattern)** care întoarce șirul obținut prin ștergerea primei apariții a pattern-ului în s.
+Dându-se un șir de caractere și un pattern să se implementeze funcția `delete_first(char *s, char *pattern)` care întoarce șirul obținut prin ștergerea primei apariții a pattern-ului în s.
 
-> **NOTE:** Pentru s = "Ana are mere" si pattern = "re" se va returna șirul "Ana a mere".
+> **NOTE:** Pentru `s = "Ana are mere"` și `pattern = "re"` se va returna șirul "Ana a mere".
 
 > **IMPORTANT:**
 > Atenție
@@ -409,7 +409,7 @@ Dându-se un șir de caractere și un pattern să se implementeze funcția **del
 
 Veți rezolva exercițiul plecând de la fișierul **ex3.c** aflat în directorul **ex3.**
 
-Se consideră structura unui pixel și a unei imagini descrise în fișierul pixel.h:
+Se consideră structura unui pixel și a unei imagini descrise în fișierul `pixel.h`:
 
 ```c
 typedef struct Pixel {
@@ -427,13 +427,13 @@ typedef struct Picture {
 
 Să se implementeze:
 
-1. Funcția **reversePic(Picture \*pic)** care primește ca parametru un Picture și întoarce imaginea răsturnată. Prin imagine răsturnată se înțelege inversarea liniilor matricei pix_array din structura lui Picture.
-2. Functia **colorToGray(Picture \*pic)** care primește ca parametru un Picture și întoarce noua imagine prin convertirea fiecarui pixel la valoarea sa grayscale. Valoarea grayscale a unui pixel se calculează după urmatoarea formulă:
+1. Funcția `reversePic(Picture *pic)` care primește ca parametru un Picture și întoarce imaginea răsturnată. Prin imagine răsturnată se înțelege inversarea liniilor matricei pix_array din structura lui Picture.
+2. Functia `colorToGray(Picture *pic)` care primește ca parametru un Picture și întoarce noua imagine prin convertirea fiecarui pixel la valoarea sa grayscale. Valoarea grayscale a unui pixel se calculează după urmatoarea formulă:
 
 ```c
-	p.r = 0.3 * p.r;
-    p.g = 0.59 * p.g;
-    p.b = 0.11 * p.b;
+p.r = 0.3 * p.r;
+p.g = 0.59 * p.g;
+p.b = 0.11 * p.b;
 ```
 
 > **IMPORTANT:**
@@ -448,13 +448,13 @@ Să se implementeze:
 Veți rezolva exercițiul plecând de la fișierul **ex4.c** aflat în directorul **ex4**.
 
 Deschideți scheletul de cod și implementați funcțiile:
-- 	```c
-	find_max(void *arr, int n, int element_size, int (*compare)(const void *, const void *))
-	```
-	care calculează elementul maxim dintr-un array pe baza unui criteriu de comparare stabilit.
--	```c
-	compare(const void *a, const void *b)
-	```
+```c
+find_max(void *arr, int n, int element_size, int (*compare)(const void *, const void *))
+```
+care calculează elementul maxim dintr-un array pe baza unui criteriu de comparare stabilit.
+```c
+compare(const void *a, const void *b)
+```
 
 ### **5. Tutorial GDB: Depanarea unui SEG Fault**
 
@@ -470,19 +470,19 @@ gdb ./seg
 
 După ce ați pornit programul GDB, toată interacțiunea cu acesta se face prin prompt-ul de GDB. Lansați programul în execuție folosind comanda run. Ce observați? GDB se blochează la citirile de la input.
 
-Setați un breakpoint la main folosind comanda **break main**. Vi se va afișa în prompt mesajul:
+Setați un breakpoint la main folosind comanda `break main`. Vi se va afișa în prompt mesajul:
 
 ```c
 Breakpoint 1 at 0x7d3: file seg.c, line 21 /* Adresa de memorie nu trebuie sa fie aceeași */
 ```
 
-În continuare, vom parcurge pas cu pas instrucțiunile. Pentru acest lucru introduceți comanda **next** sau **n** (urmăriți cursorul din GDB pentru a vedea instrucțiunea la care ne aflăm și repetați procedeul). Observăm că GDB se blochează la scanf, introduceți o valoare pentru n și continuați parcurgerea. În cazul în care ați introdus o valoare mare pentru n, pentru a evita iterarea, introduceți comanda continue. Se ajunge la linia v[423433] = 3; iar in GDB se afișează mesajul:
+În continuare, vom parcurge pas cu pas instrucțiunile. Pentru acest lucru introduceți comanda `next` sau `n` (urmăriți cursorul din GDB pentru a vedea instrucțiunea la care ne aflăm și repetați procedeul). Observăm că GDB se blochează la scanf, introduceți o valoare pentru n și continuați parcurgerea. În cazul în care ați introdus o valoare mare pentru n, pentru a evita iterarea, introduceți comanda continue. Se ajunge la linia `v[423433] = 3`; iar in GDB se afișează mesajul:
 
 ```
 Program received signal SIGSEGV, Segmentation fault
 ```
 
-Inspectăm memoria de la v[423433] folosind **x &v[423433]** și primim mesajul:
+Inspectăm memoria de la `v[423433]` folosind `x &v[423433]` și primim mesajul:
 
 ```c
 Cannot access memory at address 0x5555558f3e94 /* Adresa de memorie nu trebuie sa fie aceeași */
@@ -515,11 +515,11 @@ int main() {
 }
 ```
 
-Compilați codul sursă și porniți executabilul cu GDB. Setați un breakpoint la main și observați cum sunt reprezentate datele în memorie. Pentru acest task vă veți folosi de comenzile **print** și **examine**.
+Compilați codul sursă și porniți executabilul cu GDB. Setați un breakpoint la main și observați cum sunt reprezentate datele în memorie. Pentru acest task vă veți folosi de comenzile `print` și `examine`.
 
 > **NOTE:**
-> - Pentru a afișa valoarea unei variabile in hexazecimal folosiți **p/x nume_variabilă**
-> - Pentru a afișa valoarea de la un pointer foloșiti p *nume_pointer, iar pentru a inspecta datele de la o adresă de memorie folosiți **x adresă**.
+> - Pentru a afișa valoarea unei variabile in hexazecimal folosiți `p/x nume_variabilă`
+> - Pentru a afișa valoarea de la un pointer foloșiti `p *nume_pointer`, iar pentru a inspecta datele de la o adresă de memorie folosiți `x adresă`.
 
 ### **7. Bonus**
 
