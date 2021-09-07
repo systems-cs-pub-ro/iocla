@@ -396,8 +396,7 @@ Dându-se un șir de caractere și un pattern să se implementeze funcția `dele
 
 > **NOTE:** Pentru `s = "Ana are mere"` și `pattern = "re"` se va returna șirul "Ana a mere".
 
-> **IMPORTANT:**
-> Atenție
+> **IMPORTANT:** Atenție
 > ```c
 > char* s = "Ana are mere" se alocă în .rodata;
 > char s[] = "Ana are mere" se alocă în .text dacă declarația e într-o funcție;
