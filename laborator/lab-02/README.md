@@ -76,7 +76,7 @@ int_ptr = 3000
 ++int_ptr; /* int_ptr pointează la adresa 3004 */
 ```
 
-![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/arit.png)
+![](./images/arit.png)
 
 Scăderea a doi pointeri este posibilă doar dacă ambii au același tip. Rezultatul scăderii este obținut prin calcularea diferenței adreselor de memorie către care pointează. Spre exemplu, calcularea lungimii unui șir de caractere:
 
@@ -145,8 +145,7 @@ for (i = 1; i < nrows; ++i)
 
 Mai jos este prezentată diferența dintre cele doua abordări:
 
-![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/array1.gif)
-![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/array2.gif)
+![](./images/arrays.png)
 
 În ambele cazuri, elementele matricei pot fi accesate folosind operatorul de indexare `[]`: `arrayX[i][j]`. De asemenea, și în cazul matricelor, ca și la vectori, putem înlocui indexarea cu operații cu pointeri. Astfel, `arr[i][j] = *(arr + i)[j] = *(*(arr + i) + j)`.
 
@@ -209,7 +208,7 @@ struct A {
 printf("Size of struct: %zu", sizeof(struct A)) /* Se va afișa 24 */
 ```
 
-![](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/padding.png)
+![](./images/padding.png)
 
 Porțiunea roșie reprezintă padding-ul adăugat de compilator, iar cea verde membrii structurii.
 
