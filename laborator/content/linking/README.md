@@ -423,7 +423,7 @@ Dacă funcția creată este denumită <b>subsir</b> atunci <b>subsir('123456789'
 Rezultatul va fi preluat în codul C și se va afișa un mesaj corespunzător.
 
 > **NOTE:**
-> Puteți să urmăriți și exemplele de [aici](https://www.codeproject.com/Articles/820116/Embedding-Python-program-in-a-C-Cplusplus-code) și/sau [aici](https://www.xmodulo.com/embed-python-code-in-c.html) pentru a vedea cum să preluați rezultatul funcției scrisă în python.
+> Puteți să urmăriți și exemplele de [aici](https://www.codeproject.com/Articles/820116/Embedding-Python-program-in-a-C-Cplusplus-code) și/sau [aici](https://www.xmodulo.com/embed-python-code-in-c.html) pentru a vedea cum să preluați rezultatul funcției scrisă în python. De asemenea puteți consulta documentația de [aici](https://docs.python.org/3/c-api/long.html) pentru a vedea cum să faceți conversia rezultatului la un tip de date din C.
 
 > **NOTE:**
 > Atenție la versiunea de python pe care o folosiți; nu este recomandată o anumită versiune însă trebuie să aveți în vedere că în funcție de soluția voastră este posibil să fie nevoie să folosiți versiune specifică. Makefile-ul folosește versiunea **3.9**.
