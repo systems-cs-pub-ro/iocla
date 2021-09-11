@@ -1,21 +1,37 @@
-# Laborator 12: Linking
+# Laborator 4: Crearea și analiza unui executabil (2)
 
 <!-- Convert to DokuWiki format using Pandoc: pandoc -f markdown_github-hard_line_breaks -t dokuwiki README.md -->
 
-Linking / Legare este faza finală a procesului de build.
-Linking unifică mai multe fișiere obiect în fișier executabil.
+## Assembly / Asamblare
 
-Pentru a obține un fișier executabil din fișiere obiect, linkerul realizează următoarele acțiuni:
+Assembly / Asamblare este penultima etapă a procesului de compilare în sens larg.
+În urma finalizării acestei etape rezultatul va fi crearea a unul sau mai multe fișiere obiect. Fișierele obiect pot conține mai multe lucruri,
+printre care:
+1. nume de simboluri
+1. constante folosite în cadrul programului
+1. cod compilat
+1. valori de tip import/export care vor fi „rezolvate” în etapa de linking
+
+Pentru a crea un fișier obiect în cazul în care se utilizează compilatorul `gcc` se folosește opțiunea `-c` așa cum puteți vedea și în secțiunea [Invocarea linker-ului](#invocarea-linker-ului) de mai jos.
+
+## Linking / Legare
+
+Linking / Legare este ultima etapă a procesului de compilare în sens larg.
+La finalul acestei etape va rezulta un fișier executabil prin unificarea(„legarea”) mai multor fișiere obiect care pot avea la bază limbaje de 
+programare de nivel înalt diferite; tot ceea ce contează este ca fișierele obiect să fie create în mod corespunzător pentru ca linker-ul să le 
+poată „interpreta”.
+
+Pentru a obține un fișier executabil din fișiere obiect, linker-ul realizează următoarele acțiuni:
 1. rezolvarea simbolurilor (*symbol resolution*): localizarea simbolurilor nedefinite ale unui fișier obiect în alte fișiere obiect
 1. unificarea secțiunilor: unificarea secțiunilor de același tip din diferite fișiere obiect într-o singură secțiune în fișierul executabil
 1. stabilirea adreselor secțiunilor și simbolurilor (*address binding*): după unificare se pot stabili adresele efective ale simbolurilor în cadrul fișierului executabil
 1. relocarea simbolurilor (*relocation*): odată stabilite adresele simbolurilor, trebuie actualizate, în executabil, instrucțiunile și datele care referă adresele acelor simboluri
 1. stabilirea unui punct de intrare în program (*entry point*): adică adresa primei instrucțiuni ce va fi executată
 
-## Invocarea linkerului
+## Invocarea linker-ului
 
-Linkerul este, în general, invocat de utilitarul de compilare (`gcc`, `clang`, `cl`).
-Astfel, invocarea linkerului este transparentă utilizatorului.
+Linker-ul este, în general, invocat de utilitarul de compilare (`gcc`, `clang`, `cl`).
+Astfel, invocarea linker-ului este transparentă utilizatorului.
 În cazuri specifice, precum crearea unei imagini de kernel sau imagini pentru sisteme încorporate, utilizatorul va invoca direct linkerul.
 
 Dacă avem un fișier `app.c` cod sursă C, vom folosi compilatorul pentru a obține fișierul obiect `app.o`:
@@ -26,13 +42,13 @@ Apoi pentru a obține fișierul executabil `app` din fișierul obiect `app.o`, f
 ```
 gcc -o app app.o
 ```
-În spate, `gcc` va invoca linkerul și va construi executabilul `app`.
-Linkerul va face legătura și cu biblioteca standard C (libc).
+În spate, `gcc` va invoca linker-ul și va construi executabilul `app`.
+Linker-ul va face legătura și cu biblioteca standard C (libc).
 
 Procesul de linking va funcționa doar dacă fișierul `app.c` are definită funcția `main()`, funcția principală a programului.
 Fișierele linkate trebuie să aibă o singură funcție `main()` pentru a putea obține un executabil.
 
-Dacă avem mai multe fișiere sursă C, invocăm compilatorul pentru fiecare fișier și apoi linkerul:
+Dacă avem mai multe fișiere sursă C, invocăm compilatorul pentru fiecare fișier și apoi linker-ul:
 ```
 gcc -c -o helpers.o helpers.c
 gcc -c -o app.o app.c
@@ -52,7 +68,7 @@ gcc -o app app.o helpers.o -lstdc++
 ```
 
 Utilitarul de linkare este, în Linux, `ld` și este invocat în mod transparent de `gcc` sau `g++`.
-Pentru a vedea cum este invocat linkerul, folosim opțiunea `-v` a utilitarului `gcc`, cu un output precum:
+Pentru a vedea cum este invocat linker-ul, folosim opțiunea `-v` a utilitarului `gcc`, cu un output precum:
 ```
 /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so
 -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwnf5NM.res
@@ -252,11 +268,6 @@ Unele exerciții necesită modificări pentru a repara probleme legate de linkin
 Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).
 Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.
 
-### 00. Hey! Hey, listen!
-
-Dacă ne oferiți feedback, ne ajutați să ~~îl facem pe Lunk mai puternic~~ îmbunătățim materia.
-Mergeți la secțiunea [feedback](#feedback) pentru detalii.
-
 ### 01. Linkarea unui singur fișier
 
 Accesăm directorul `01-one-tut/`.
@@ -282,18 +293,14 @@ Funcția / simbolul `_start` este, în mod implicit, entry pointul unui program 
 Funcția `_start` este responsabilă pentru apelul funcției `main` și încheierea programului.
 Pentru că nu există bibliotecă standard, aceste două fișiere sunt scrise în limbaj de asamblare și folosesc apeluri de sistem.
 
-**Bonus**: Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.
+Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.
 
-### 02. Linkarea unui singur fișier
+**Extra**: Accesați directorul `01-one-diy/`.
+Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, asemănător cu ceea ce am făcut anterior. Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
 
-Accesați directorul `02-one-diy/`.
-Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, pe modelul exercițiului anterior.
+### 02. Linkarea mai multor fișiere
 
-Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
-
-### 03. Linkarea mai multor fișiere
-
-Accesăm directorul `03-multiple-tut/`.
+Accesăm directorul `02-multiple-tut/`.
 Vrem să urmărim comenzile de linkare din fișiere multiple cod sursă C: `main.c`, `add.c`, `sub.c`.
 
 La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru trei scenarii diferite:
@@ -303,16 +310,12 @@ La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru trei scena
 
 În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `main`.
 
-### 04. Linkarea mai multor fișiere
+**Extra**: Accesați directorul `02-multiple-diy/`.
+Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, asemănător cu ceea ce am făcut anterior. Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
 
-Accesați directorul `04-multiple-diy/`.
-Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, pe modelul exercițiului anterior.
+### 03. Folosirea variabilelor
 
-Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
-
-### 05. Folosirea variabilelor
-
-Accesăm directorul `05-vars-obs/`.
+Accesăm directorul `03-vars-obs/`.
 Vrem să urmărim folosirea variabilelor globale, exportate și neexportate.
 
 În fișierul `hidden.c` avem variabila statică (neexportată) `hidden_value`.
@@ -325,9 +328,9 @@ Aceste variabile sunt folosite direct (`age`) sau indirect (`hidden_value`) în 
 Pentru folosirea lor, se declară funcțiile și variabilele în fișierul `ops.h`.
 Declararea unei funcții se face prin precizarea antetului; declararea unei variabile se face prin prefixarea cu `extern`.
 
-### 06. Repararea entry pointului
+### 04. Repararea entry pointului
 
-Accesați directorul `06-entry-fix/`.
+Accesați directorul `04-entry-fix/`.
 Vrem să urmărim probleme de definire a funcției `main()`.
 
 Accesați subdirectorul `a-c/`.
@@ -336,42 +339,40 @@ Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin
 Accesați subdirectorul `b-asm/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.asm`.
 
-**Bonus**: În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
+În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
 Aceste soluții modifică, în schimb, sistemul de build pentru a folosi altă funcție, diferită de `main()`, ca prima funcție a programului.
 
-### 07. Repararea entry pointului
-
-Accesați directorul `07-entry-2-fix/`.
+**Extra**: Accesați directorul `04-entry-2-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.c`.
 
-### 08. Warning (nu eroare)
+### 05. Warning (nu eroare)
 
-Accesați directorul `08-include-fix/`.
+Accesați directorul `05-include-fix/`.
 Rulați comanda `make`, apare un warning, dar este de la procesul de preprocesare / compilare.
 Rezolvați acest warning prin editarea fișierului `hello.c`.
 
-**Bonus**: Rezolvați warningul fără folosirea directivei `#include`.
+**Extra**: Rezolvați warningul fără folosirea directivei `#include`.
 
-### 09. Reparare probleme de export
+### 06. Reparare probleme de export
 
-Accesați directorul `09-export-fix/`.
+Accesați directorul `06-export-fix/`.
 Fiecare subdirector (`a-func/`, `b-var/`, `c-var-2/`) conține o problemă legată de exportarea unor simboluri (funcții sau variabile).
 În fiecare subdirectorul, rulați comanda `make`, identificați problema și editați fișierele necesare pentru rezolvarea problemei.
 
-### 10. Folosire simboluri (variabile și funcții)
+### 07. Folosire simboluri (variabile și funcții)
 
-Accesați directorul `10-var-func-fix/`.
+Accesați directorul `07-var-func-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierelor sursă.
 
-### 11. Reparare problemă cu bibliotecă
+### 08. Reparare problemă cu bibliotecă
 
-Accesați directorul `11-lib-fix/`.
+Accesați directorul `08-lib-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `Makefile`.
-Urmăriți fișierul `Makefile` din directorul `03-multiple-tut/c-lib/`.
+Urmăriți fișierul `Makefile` din directorul `02-multiple-tut/c-lib/`.
 
-### 12. Linkare C și C++
+### 09. Linkare C și C++
 
-Accesăm directorul `12-cpp-obs/`.
+Accesăm directorul `09-cpp-obs/`.
 Vrem să urmărim cum se realizează linkarea din surse mixte: C și C++.
 
 În subdirectorul `bad/` avem două directoare `c-calls-cpp/` și `cpp-calls-c/` în care se combinăm surse mixte C și C++.
@@ -395,9 +396,9 @@ Pentru a rezolva acest lucru, trebuie ca simbolurile definite C și importate î
 Acest lucru este realizat în subdirectorul `good/`.
 Detalii despre directiva `extern "C"` găsiți [aici](https://stackoverflow.com/a/1041880/4804196).
 
-### 13. Linkare fișier obiect (fără fișier cod sursă)
+### 10. Linkare fișier obiect (fără fișier cod sursă)
 
-Accesați directorul `13-obj-link-dev/`.
+Accesați directorul `10-obj-link-dev/`.
 Fișierul `shop.o` expune o interfață (funcții și variabile) care permite afișarea unor mesaje.
 Editați fișierul `main.c` pentru a apela corespunzător interfața expusă și pentru a afișa mesajele:
 ```
@@ -406,3 +407,23 @@ quantity is 42
 ```
 
 Explorați interfața și conținutul funcțiilor din fisierul `shop.o` folosind `nm` și `objdump`.
+
+### Bonus. Utilizare cod python în C
+
+> **INFO:**
+> În cadrul acestui exercițiu veți vedea un exemplu de ceea ce se poate face în urma legării unui anumit tip de fișiere obiect, și anume biblioteci; pentru acest exercițiu este vorba de biblioteca 
+python$(PYTHON_VERSION), unde **PYTHON_VERSION** poate să fie diferit în funcție de soluția propusă de fiecare.
+
+Accesați directorul `bonus-c-python`.
+Fișierul main.c are un exemplu de cum se execută o funcție simplă de afișare a unui mesaj scrisă într-un modul python separat. Plecând de la exemplul prezentat, creați o funcție în modulul numit `my_module.py` aflat în directorul `python-modules`, care primește doi parametri reprezentând două șiruri de caractere și întoarce **poziția primei apariții a celui de-al doilea șir în cadrul primului**, dacă al doilea șir este un subșir al primului șir și **-1** în caz contrar.
+<pre>
+Dacă funcția creată este denumită <b>subsir</b> atunci <b>subsir('123456789', '89')</b> va întoarce 7 iar <b>subsir('123', '4')</b> va întoarce -1. Practic semnătura este de forma <b>subsir(haystack, needle)</b>.
+</pre>
+
+Rezultatul va fi preluat în codul C și se va afișa un mesaj corespunzător.
+
+> **NOTE:**
+> Puteți să urmăriți și exemplele de [aici](https://www.codeproject.com/Articles/820116/Embedding-Python-program-in-a-C-Cplusplus-code) și/sau [aici](https://www.xmodulo.com/embed-python-code-in-c.html) pentru a vedea cum să preluați rezultatul funcției scrisă în python.
+
+> **NOTE:**
+> Atenție la versiunea de python pe care o folosiți; nu este recomandată o anumită versiune însă trebuie să aveți în vedere că în funcție de soluția voastră este posibil să fie nevoie să folosiți versiune specifică. Makefile-ul folosește versiunea **3.9**.
