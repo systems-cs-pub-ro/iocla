@@ -250,7 +250,7 @@ Pornind de la scheletul de cod din directorul `4-sets` va trebui să implementa�
 
 ### 5. BONUS: Min
 
- Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`. 
+Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`. 
 
 ### 6. BONUS: Fibonacci
 
