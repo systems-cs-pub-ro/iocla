@@ -223,28 +223,6 @@ Hex dump of section '.rodata':
   0x080484e8 6f726c64 2100                       orld!.
 ```
 
-## Feedback
-
-Pentru a îmbunătăți cursul de IOCLA, componentele sale și modul de desfășurare, ne sunt foarte utile opiniile voastre.
-Pentru aceasta, vă rugăm să accesați și completați formularul de feedback de pe site-ul [curs.upb.ro](https://curs.upb.ro/).
-Trebuie să fiți autentificați și înrolați în cadrul cursului.
-
-Formularul este anonim și este activ în perioada 18 ianuarie 2021 - 29 ianuarie 2021.
-Rezultatele vor fi vizibile în cadrul echipei cursului doar după încheierea sesiunii.
-Puteți accesa formularul de feedback începând cu 18 ianuarie 2021.
-Este accesibil la link-ul "Formular feedback" a paginii principale a cursului de IOCLA al seriei voastre.
-Nu este în meta-cursul disponibil tuturor seriilor.
-
-Vă invităm să evaluați activitatea echipei de IOCLA și să precizați punctele tari și punctele slabe și sugestiile voastre de îmbunătățire a disciplinei.
-Feedbackul vostru ne ajută să creștem calitatea materiei în anii următori și să îmbunătățim disciplinele pe care le veți face în continuare.
-
-Vom publica la începutul semestrului viitor analiza feedbackului vostru.
-
-Ne interesează în special:
-1. Ce nu v-a plăcut și ce credeți că nu a mers bine?
-1. De ce nu v-a plăcut și de ce credeți că nu a mers bine?
-1. Ce ar trebui să facem ca lucrurile să fie plăcute și să meargă bine?
-
 ## Exerciții
 
 > **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
@@ -420,7 +398,7 @@ Fișierul main.c are un exemplu de cum se execută o funcție simplă de afișar
 Dacă funcția creată este denumită <b>subsir</b> atunci <b>subsir('123456789', '89')</b> va întoarce 7 iar <b>subsir('123', '4')</b> va întoarce -1. Practic semnătura este de forma <b>subsir(haystack, needle)</b>.
 </pre>
 
-Rezultatul va fi preluat în codul C și se va afișa un mesaj corespunzător.
+Rezultatul funcției scrisă în python va fi preluat în codul C și se va afișa un mesaj corespunzător. Urmăriți comentariile cu **TODO** din fișierele `main.c` și `my_module.py`.
 
 > **NOTE:**
 > Puteți să urmăriți și exemplele de [aici](https://www.codeproject.com/Articles/820116/Embedding-Python-program-in-a-C-Cplusplus-code) și/sau [aici](https://www.xmodulo.com/embed-python-code-in-c.html) pentru a vedea cum să preluați rezultatul funcției scrisă în python. De asemenea puteți consulta documentația de [aici](https://docs.python.org/3/c-api/long.html) pentru a vedea cum să faceți conversia rezultatului la un tip de date din C.
