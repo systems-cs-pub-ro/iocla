@@ -1,4 +1,4 @@
-# Laborator 07: Apeluri de funcții
+# Laborator 09: Apeluri de funcții
 
 În acest laborator vom prezenta modul în care se realizează apeluri de funcții. Vom vedea cum putem folosi instrucțiunile `call` și `ret` pentru a realiza apeluri de funcții și cum folosim stiva pentru a transmite parametrii unei funcții.
 
@@ -28,7 +28,7 @@ Cand vine vorba de a chema o functie cu parametri exista doua mari optiuni de pl
     **Dezavantaje**
 
     - Din cauza faptului ca exista un numar limitat de registre, numarul de parametri ai unei functii ajunge sa fie limitat.
-    - O alta problema o reprezinta faptul ca e foarte probabil ca unele registre sa fie folosite in interiorul functiei apelate. Prin urmare, e necesara salvarea temporara a registrelor inainte de a face apelul de functie. Ei bine, cel de-al doilea avantaj enumerat dispare, deoarece accesul la stiva presupune lucru cu memoria, adica latenta crescuta.
+    - E foarte probabil ca unele registre sa fie folosite in interiorul functiei apelate si devine necesara salvarea temporara a registrelor pe stiva inaintea apeluluide functie. Astfel, cel de-al doilea avantaj enumerat dispare, deoarece accesul la stiva presupune lucru cu memoria, adica latenta crescuta.
 
 2. **Plasarea pe stivă** - aceasta metoda presupune push-uirea pe stiva a tuturor parametrilor.
     **Avantaje**
@@ -55,12 +55,12 @@ Atunci când apelăm o funcție, pașii sunt următorii:
 
 După cum știm, operațiile pe stivă sunt de două tipuri:
 
-- `push va`l în care valoarea `val` este plasată pe stivă
+- `push val` în care valoarea `val` este plasată pe stivă
 - `pop reg/mem` în care ce se găsește în vârful stivei se plasează în registru sau într-o zonă de memorie
 
-În momentul în care se face `push` spunem că stiva **crește** (se adaugă elemente). În mod oarecum paradoxal însă, pointerul de stivă (indicat de registrul `esp` pe 32 de biți) scade. Acest lucru se întâmplă întrucât stiva crește în jos, de la adrese mari către adrese mici.
+În momentul în care se face `push` spunem că stiva **crește** (se adaugă elemente). Din motive ce vor fi explicate mai bine la SO, pointerul de stivă (indicat de registrul `esp` pe 32 de biți) scade in valoare atunci cand **stiva creste** (la `push`). Putem spune totusi ca aceasta contrazicere in numire vine de la faptul ca stiva este deregula reprezentata pe verticala si valorile mici se afla sus, iar valorile mari se afla jos.
 
-La fel, în momentul în care facem `pop` spunem că stiva **scade** (se scot elemente). Acum pointer-ul de stivă (indicat de registrul esp pe 32 de biți) crește.
+La fel, în momentul în care facem `pop` spunem că stiva **scade** (se scot elemente). Acum pointer-ul de stivă (indicat de registrul `esp` pe 32 de biți) crește valoric.
 
 Un sumar al acestui lucru este explicat foarte bine la acest [link](https://en.wikibooks.org/wiki/X86_Disassembly/The_Stack).
 
@@ -82,10 +82,10 @@ add esp, 12      ; restauram stiva
 ```
 
 
-## Apelatul în cadrul apelului unei funcții
-Atunci când apelăm o funcție spunem că funcția care apelează (contextul care apelează) se cheamă **apelant** (sau **caller**) iar funcția apelată se cheamă **apelat** (sau **callee**). Până acum am discutat despre cum arată lucrurile la nivelul apelantului (cum construim stiva). Haideți să urmărim ce se întâmplă la nivelul apelatului.
+## Apelantul si Apelatul
+Atunci când apelăm o funcție spunem că funcția care apelează (contextul care apelează) se cheamă **apelant** (sau **caller**), iar funcția apelată se cheamă **apelat** (sau **callee**). In paragraful anterior am discutat despre cum arată lucrurile la nivelul apelantului (cum construim stiva).
 
-Până în momentul instrucțiunii `call` stiva conține parametrii funcției. Apelul `call` poate fi echivalat grosier următoarei secvențe:
+ Haideți să urmărim ce se întâmplă si la la nivelul apelatului. Până în momentul instrucțiunii `call` stiva conține parametrii funcției. Apelul `call` poate fi echivalat grosier următoarei secvențe:
 ```Assembly
 push eip
 jmp function_name
@@ -100,12 +100,13 @@ push ebp
 mov ebp, esp
 ```
 
-Aceste modificări au loc în apelat. De aceea este responsabilitatea apelatului să restaureze stiva la vechea sa valoare. De aceea este uzuală existența unui epilog care să readucă stiva la starea sa inițială; acest epilog este:
+Aceste modificări au loc în apelat. De aceea este responsabilitatea acestuia să restaureze stiva la vechea sa valoare. De aceea este uzuală existența unui epilog care să readucă stiva la starea sa inițială; acest epilog este:
 ```Assembly
 leave
 ```
+Dupa aceasta instructiune, stiva este ca la începutul funcției (adică imediat după call).
 
-În acest moment stiva este ca la începutul funcției, adică imediat după call, referind adresa de retur. Urmează apelul
+Pentru incheierea functiei, este necesar ca codul sa se intoarca (return) si sa continue sa execute de la instructiunea de dupa `call`-ul care a pornit functia. Acest lucru presupune sa influentam registrul `eip` si sa punem valoarea care a fost salvata pe stiva initial de apelul `call`. Acest lucru este indeplinit folosind instructiunea:
 ```Assembly
 ret
 ```
@@ -113,7 +114,6 @@ care este grosier echivalentul instrucțiunii:
 ```Assembly
 pop eip
 ```
-Adică ia valoarea din vârful stivei și o plasează în eip urmând continuarea execuției programului de la acea adresă.
 
 
 Spre exemplu, definitia si corpul functiei foo, care realizeaza suma a 3 numere, vor arata astfel:
@@ -140,7 +140,7 @@ foo:
 
 2. Dupa preambulul functiei, stiva arata in felul urmator:
 
-![function_stack1.jpg](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/function_stack1.jpg)
+![function_stack1.jpg](./images/function_stack1.jpg)
 
 3. De observat că pe parcursul execuției funcției, ceea ce nu se schimbă este poziția frame pointer-ul. Acesta este și motivul denumirii sale: pointează la frame-ul curent al funcției. De aceea este comun ca accesarea parametrilor unei funcții să se realizeze prin intermediul frame pointer-ului. Presupunând un sistem pe 32 de biți și parametri de dimensiunea cuvântului procesorului (32 de biți, 4 octeți) vom avea:
 
@@ -164,7 +164,7 @@ foo:
 
   *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stiva/heap, sau alte zone de memorie, care refera obiectul dorit in urma apelului functiei.*
 
-5. O functie foloseste aceleasi registre hardware, asadar, la iesirea din functie valorile registrelor nu mai sunt aceleasi. Pentru a evita aceasta situatie, se pot salva unele/toate registrele pe stiva (mai multe in [Laboratorul 6](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-06)
+5. O functie foloseste aceleasi registre hardware, asadar, la iesirea din functie valorile registrelor nu mai sunt aceleasi. Pentru a evita aceasta situatie, se pot salva unele/toate registrele pe stiva (mai multe in [Laboratorul 8](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator)
 
 ## Exerciții
 
@@ -321,7 +321,7 @@ Pentru afișarea unui string putem folosi macro-ul intern `PRINTF32`. Sau putem 
 
 Urmărind fișierul `hello-world.asm` ca exemplu, implementați afișarea șirului folosind și `puts`.
 
-> **_NOTE:_**  Urmăriți și indicațiile din secțiunea [Apelul unei funcții](http://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-07?&#apelul_unei_functii).
+> **_NOTE:_**  Urmăriți și indicațiile din secțiunea *"Apelul unei funcții"*.
 
 ### 4. Afișarea lungimii unui șir
 Programul `print-string-len.asm` afișează lungimea unui șir folosind macro-ul `PRINTF32`. Calculul lungimii șirului `mystring` are loc în cadrul programului (este deja implementat).
