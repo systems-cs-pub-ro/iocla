@@ -8,22 +8,26 @@
 
 > **TIP:** În general, flagul va fi returnat ca și string de o funcție specială, al cărei conținut nu ajută în rezolvarea taskurilor. Se recomandă tratarea acestei funcții ca și Black Box.
 
+> **TIP:** Pentru generarea payloadurilor la taskurile de tip buffer overflow, puteți folosi în terminal o comandă de tipul: `python -c 'import sys; sys.stdout.write("A"\*10 + b"\x00\x00\x00\x00" + ...)' | ./exec`.
+
 ### 1.1. Hidden in plain sight
 Binarul `1-1-hidden-in-plain-sight/link` expune tot ce aveți nevoie. Găsiți un mod de a-l folosi.
+> **TIP:** If you want a main function to be done right, you gotta do it yourself.
 
 ### 1.2. Hidden in plain sight ++
 Investigați binarul `1-2-hidden-in-plain-sight/link2`. Modul în care poate fi executat nu mai este un mister, dar va fi puțin mai dificil să ajungeți la flag.
+> **TIP:** Nu toate funcțiile sunt private.
 
 ### 2. Look at him go
 Binarul `2-look-at-him-go/dynamic` este de data aceasta executabil și are ca unic scop obținerea flagului și plasarea lui undeva in memorie. No tricks here.
-> **TIP:** GDB is your friend
+> **TIP:** GDB is your friend.
 
-### 3.1 Playing God
+### 3.1. Playing God
 Binarul `3-1-playing-god/dynamic2` vă cere să ghiciți un număr între 1 și 100000. Găsiți o cale mai bună de a-l afla.
 
-### 3.2 Playing God ++
+### 3.2. Playing God ++
 Binarul `3-2-playing-god/buff-ovf` este vulnerabil. De data aceasta, găsirea numărului nu va fi de ajuns, dar este posibil să nici nu fie nevoie.
-> **TIP:** Vulnerabilitatea vă oferă posibilitatea de a modifica date. Există mai mult de o cale prin care puteți îndeplini condiția pentru obținerea flagului.
+> **TIP:** Vulnerabilitatea vă oferă posibilitatea de a modifica date. Există mai mult de o cale prin care puteți satisface condiția pentru obținerea flagului.
 
 ### 4. Indirect business
 Binarul `4-indirect-business/buff-ovf2` expune aceeași vulnerabilitate cu un extra step.
