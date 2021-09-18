@@ -14,7 +14,7 @@ Procesoarele x86 moderne dispun de 8 registre cu scop general a căror dimensiun
 
 În imaginea de mai jos sunt reprezentate registrele, subregistrele și dimensiunile lor.
 
-![Registre x86_32](https://www.tenouk.com/Bufferoverflowc/Bufferoverflow1_files/image005.png)
+![Registre x86_32](images/registers.png)
 
 > **WARNING**: Subregistrele fac parte din registre, ceea ce înseamnă că dacă modificăm un registru, în mod implicit modificăm și valoarea subregistrului.
 
@@ -22,7 +22,7 @@ Procesoarele x86 moderne dispun de 8 registre cu scop general a căror dimensiun
 
 > **NOTE**: Pe lângă registrele de bază mai există și șase registre segment corespunzătoare unor anumite zone după cum se observă în imagine:
 >
-> ![Registre Segment](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/six_segments.png)
+> ![Registre Segment](images/segments.png)
 
 ### Declarări statice de regiuni de memorie
 
@@ -52,7 +52,7 @@ Declarările statice de memorie (analoage declarării variabilelor globale), în
 
 > **NOTE**: Sunt mai multe tipuri de regiuni de memorie după cum se poate observa și în imaginea de mai jos:
 >
-> ![Sectiuni de memorie](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/lab4_memory_sections.jpg?w=450&tok=5e1de3)
+> ![Sectiuni de memorie](images/sections.jpg)
 
 Ultima declarare din exemplul de mai sus reprezintă declararea unui vector. Spre deosebire de limbajele de nivel mai înalt, unde vectorii pot avea multiple dimensiuni, iar elementele lor sunt accesate prin indici, în limbajul de asamblare vectorii sunt reprezentați ca un număr de celule ce se află intr-o zonă contiguă de memorie.
 
