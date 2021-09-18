@@ -29,31 +29,55 @@ global main
 get_int:
     ; TODO --- return the int value from struct
     ; int get_int(struct my_struct *obj)
+    ; Store the int value from struct in eax
+    mov ebx, [ebp + 8]; Store in EBX our structure
+    xor eax, eax
+    
+    leave
     ret
 
 get_char:
     ; TODO --- return the char value from struct
     ; char get_char(struct my_struct *obj)
+    ; Store the char value from struct in eax
+    mov ebx, [ebp + 8]; store in EBX our structure
+    xor eax, eax
+    
+    leave
     ret
 
 get_string:
     ; TODO --- return a pointer to the string value from struct
     ; char* get_string(struct my_struct *obj)
+    ; Store the pointer to the string valuea in EAX
+    mov ebx, [ebp + 8]; store in EBX our structure
+    xor eax, eax
+    
+    leave
     ret
 
 set_int:
     ; TODO --- set the int value from struct with the new one
     ; void set_int(struct my_struct *obj, int x)
+    mov ebx, [ebp + 8]; store in EBX our structure
+    
+    leave
     ret
 
 set_char:
     ; TODO --- set the char value from struct with the new one
     ; void set_char(struct my_struct *obj, char y)
+    mov ebx, [ebp + 8]; store in EBX our structure
+    
+    leave
     ret
 
 set_string:
     ; TODO --- set the string value from struct with the new one
     ; void set_string(struct my_struct *obj, char* s)
+    mov ebx, [ebp + 8]; store in EBX our structure
+    
+    leave
     ret
 
 main:

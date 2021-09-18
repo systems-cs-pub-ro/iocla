@@ -1,4 +1,4 @@
-# Laborator 08: Date Structurate. Structuri, vectori. Operatii pe siruri
+# Laborator 07: Date Structurate. Structuri, vectori. Operatii pe siruri
 În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri. 
 
 ## Structuri
