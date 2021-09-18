@@ -381,4 +381,8 @@ Inspectați din nou executabilul recompilat cu noul flag folosind `objdump`. Ce 
 
 ## Soluții
 
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-10-sol.zip). 
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-10-sol.zip).
+
+## Resurse
+
+Daca acest laborator v-a impresionat intr-un mod placut, puteti sa aflati mai multe despre acest tip de atac, dar si despre security in general, de pe acest [canal](https://www.youtube.com/c/LiveOverflow).
