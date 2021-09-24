@@ -1,4 +1,4 @@
-# Laborator 06: Lucrul cu stiva
+# Laborator 08: Lucrul cu stiva
 
 În acest laborator vom învăța cum este reprezentată stiva in limbajul de asamblare, care este utilitatea ei si cum se programeaza cu ajutorul acesteia.
 
