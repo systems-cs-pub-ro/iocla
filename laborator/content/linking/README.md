@@ -240,11 +240,26 @@ Hex dump of section '.rodata':
 > sudo apt install gcc-multilib libc6-dev-i386
 > ```
 
-Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.
-În cea mai mare parte, aceste exerciții sunt exerciții în care observăm ce se întâmplă în procesul de linking, cele marcate cu sufixul `-tut` sau `-obs`.
-Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.
-Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).
-Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.
+**Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.**
+**În cea mai mare parte, aceste exerciții sunt exerciții în care observăm ce se întâmplă în procesul de linking, cele marcate cu sufixul `-tut` sau `-obs`.**
+**Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.**
+**Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).**
+**Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.**
+
+### 00. Folosirea variabilelor
+
+Accesăm directorul `00-vars-obs/`.
+Vrem să urmărim folosirea variabilelor globale, exportate și neexportate.
+
+În fișierul `hidden.c` avem variabila statică (neexportată) `hidden_value`.
+Variabila este modificată și citită cu ajutorul unor funcții neexportate: `init()`, `get()`, `set()`.
+
+În fișierul `plain.c` avem variabila exportată `age`.
+Aceasta poate fi modificată și citită direct.
+
+Aceste variabile sunt folosite direct (`age`) sau indirect (`hidden_value`) în fișierul `main.c`.
+Pentru folosirea lor, se declară funcțiile și variabilele în fișierul `ops.h`.
+Declararea unei funcții se face prin precizarea antetului; declararea unei variabile se face prin prefixarea cu `extern`.
 
 ### 01. Linkarea unui singur fișier
 
@@ -271,7 +286,7 @@ Funcția / simbolul `_start` este, în mod implicit, entry pointul unui program 
 Funcția `_start` este responsabilă pentru apelul funcției `main` și încheierea programului.
 Pentru că nu există bibliotecă standard, aceste două fișiere sunt scrise în limbaj de asamblare și folosesc apeluri de sistem.
 
-Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.
+**Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.**
 
 **Extra**: Accesați directorul `01-one-diy/`.
 Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, asemănător cu ceea ce am făcut anterior. Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
@@ -291,24 +306,9 @@ La fel ca în exercițiile de mai sus, sunt trei subdirectoare pentru trei scena
 **Extra**: Accesați directorul `02-multiple-diy/`.
 Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, asemănător cu ceea ce am făcut anterior. Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
 
-### 03. Folosirea variabilelor
+### 03. Repararea entry pointului
 
-Accesăm directorul `03-vars-obs/`.
-Vrem să urmărim folosirea variabilelor globale, exportate și neexportate.
-
-În fișierul `hidden.c` avem variabila statică (neexportată) `hidden_value`.
-Variabila este modificată și citită cu ajutorul unor funcții neexportate: `init()`, `get()`, `set()`.
-
-În fișierul `plain.c` avem variabila exportată `age`.
-Aceasta poate fi modificată și citită direct.
-
-Aceste variabile sunt folosite direct (`age`) sau indirect (`hidden_value`) în fișierul `main.c`.
-Pentru folosirea lor, se declară funcțiile și variabilele în fișierul `ops.h`.
-Declararea unei funcții se face prin precizarea antetului; declararea unei variabile se face prin prefixarea cu `extern`.
-
-### 04. Repararea entry pointului
-
-Accesați directorul `04-entry-fix/`.
+Accesați directorul `03-entry-fix/`.
 Vrem să urmărim probleme de definire a funcției `main()`.
 
 Accesați subdirectorul `a-c/`.
@@ -320,63 +320,23 @@ Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin
 În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
 Aceste soluții modifică, în schimb, sistemul de build pentru a folosi altă funcție, diferită de `main()`, ca prima funcție a programului.
 
-**Extra**: Accesați directorul `04-entry-2-fix/`.
+**Extra**: Accesați directorul `03-entry-2-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.c`.
 
-### 05. Warning (nu eroare)
+### 04. Folosire simboluri (variabile și funcții)
 
-Accesați directorul `05-include-fix/`.
-Rulați comanda `make`, apare un warning, dar este de la procesul de preprocesare / compilare.
-Rezolvați acest warning prin editarea fișierului `hello.c`.
-
-**Extra**: Rezolvați warningul fără folosirea directivei `#include`.
-
-### 06. Reparare probleme de export
-
-Accesați directorul `06-export-fix/`.
-Fiecare subdirector (`a-func/`, `b-var/`, `c-var-2/`) conține o problemă legată de exportarea unor simboluri (funcții sau variabile).
-În fiecare subdirectorul, rulați comanda `make`, identificați problema și editați fișierele necesare pentru rezolvarea problemei.
-
-### 07. Folosire simboluri (variabile și funcții)
-
-Accesați directorul `07-var-func-fix/`.
+Accesați directorul `04-var-func-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierelor sursă.
 
-### 08. Reparare problemă cu bibliotecă
+### 05. Reparare problemă cu bibliotecă
 
-Accesați directorul `08-lib-fix/`.
+Accesați directorul `05-lib-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `Makefile`.
 Urmăriți fișierul `Makefile` din directorul `02-multiple-tut/c-lib/`.
 
-### 09. Linkare C și C++
+### 06. Linkare fișier obiect (fără fișier cod sursă)
 
-Accesăm directorul `09-cpp-obs/`.
-Vrem să urmărim cum se realizează linkarea din surse mixte: C și C++.
-
-În subdirectorul `bad/` avem două directoare `c-calls-cpp/` și `cpp-calls-c/` în care se combinăm surse mixte C și C++.
-În ambele cazuri, folosirea `make` afișează erori.
-Acest lucru se întâmplă întrucât simbolurile C++ sunt *mangled*.
-Dacă folosim comanda `nm` pe module obiect obținute din cod sursă C, obținem:
-```
-$ nm add.o
-0000000000000000 T _Z3addii
-
-$ nm sub.o
-0000000000000000 T _Z3subii
-```
-Numele simbolurilor nu sunt `add`, respectiv `sub`, ci sunt `_Z3addii` și `_Z3subii`.
-Numele simbolurilor C++ sunt *mangled* și definesc signatura funcției.
-Acest lucru se întâmplă pentru a permite funcții cu același nume, dar cu signaturi diferite.
-Detalii despre *name mangling* găsiți [aici](https://en.wikipedia.org/wiki/Name_mangling).
-
-Pentru a rezolva acest lucru, trebuie ca simbolurile definite C și importate în C++, sau invers, să fie prefixate cu directiva `extern "C"`.
-În felul acesta, compilatorul C++ va folosi numele simple pentru simbolurile importate / exportate, pentru a fi folosite împreună cu module C.
-Acest lucru este realizat în subdirectorul `good/`.
-Detalii despre directiva `extern "C"` găsiți [aici](https://stackoverflow.com/a/1041880/4804196).
-
-### 10. Linkare fișier obiect (fără fișier cod sursă)
-
-Accesați directorul `10-obj-link-dev/`.
+Accesați directorul `06-obj-link-dev/`.
 Fișierul `shop.o` expune o interfață (funcții și variabile) care permite afișarea unor mesaje.
 Editați fișierul `main.c` pentru a apela corespunzător interfața expusă și pentru a afișa mesajele:
 ```
