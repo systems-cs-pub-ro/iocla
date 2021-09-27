@@ -68,7 +68,7 @@ gcc -o app app.o helpers.o -lstdc++
 ```
 
 Utilitarul de linkare este, în Linux, `ld` și este invocat în mod transparent de `gcc` sau `g++`.
-Pentru a vedea cum este invocat linker-ul, folosim opțiunea `-v` a utilitarului `gcc`, cu un output precum:
+Pentru a vedea cum este invocat linker-ul, folosim opțiunea `-v` a utilitarului `gcc`, care va avea un rezultat asemănător cu:
 ```
 /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so
 -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwnf5NM.res
@@ -241,9 +241,8 @@ Hex dump of section '.rodata':
 > ```
 
 **Pentru exersarea informațiilor legate de linking, parcurgem mai multe exerciții.**
-**În cea mai mare parte, aceste exerciții sunt exerciții în care observăm ce se întâmplă în procesul de linking, cele marcate cu sufixul `-tut` sau `-obs`.**
-**Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`.**
-**Alte exerciții sunt exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).**
+**În cea mai mare parte, acestea sunt dedicate observării procesului de linking, cele marcate cu sufixul `-tut` sau `-obs`.**
+**Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`, altele au drept scop exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).**
 **Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.**
 
 ### 00. Folosirea variabilelor
@@ -261,6 +260,8 @@ Aceste variabile sunt folosite direct (`age`) sau indirect (`hidden_value`) în 
 Pentru folosirea lor, se declară funcțiile și variabilele în fișierul `ops.h`.
 Declararea unei funcții se face prin precizarea antetului; declararea unei variabile se face prin prefixarea cu `extern`.
 
+**Compilați și rulați programul obținut pe baza fișierelor de mai sus.**
+
 ### 01. Linkarea unui singur fișier
 
 Accesăm directorul `01-one-tut/`.
@@ -272,12 +273,12 @@ Fișierul sursă este `hello.c`.
 * `b-static/`: crearea unui fișier executabil static
 * `c-standalone/`: creare unui fișier executabil standalone, fără biblioteca standard C
 
-În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `hello`.
-Folosim comanda `file hello` pentru a urmări daca fișierul este compilat dinamic sau static.
+**În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `hello`.**
+**Folosim comanda `file hello` pentru a urmări daca fișierul este compilat dinamic sau static.**
 
 În fișierele `Makefile`, comanda de linkare folosește `gcc`.
 Este comentată o comandă echivalentă care folosește direct `ld`.
-Pentru a urmări folosirea directă a `ld`, putem comenta comanda `gcc` și decomenta comanda `ld`.
+**Pentru a urmări folosirea directă a `ld`, putem comenta comanda `gcc` și decomenta comanda `ld`. Folosim iarăși comanda `file hello`.**
 
 În cazul `c-standalone/`, pentru că nu folosim biblioteca standard C sau bibliotecă runtime C, trebuie să înlocuim funcționalitățile acestora.
 Funcționalitățile sunt înlocuite în fișierul `start.asm` și `puts.asm`.
@@ -317,7 +318,7 @@ Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin
 Accesați subdirectorul `b-asm/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.asm`.
 
-În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` găsiți soluții care nu modifică codul sursă al `hello.c`.
+În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` veți găsi soluții care nu modifică codul sursă al `hello.c`.
 Aceste soluții modifică, în schimb, sistemul de build pentru a folosi altă funcție, diferită de `main()`, ca prima funcție a programului.
 
 **Extra**: Accesați directorul `03-entry-2-fix/`.
@@ -326,7 +327,7 @@ Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin
 ### 04. Folosire simboluri (variabile și funcții)
 
 Accesați directorul `04-var-func-fix/`.
-Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierelor sursă.
+Rulați comanda `make` și rulați executabilul obținut. Interpretați erorile/eroarea întâlnite/întâlnită și rezolvați-le/rezolvați-o prin editarea fișierelor sursă.
 
 ### 05. Reparare problemă cu bibliotecă
 
@@ -349,8 +350,12 @@ Explorați interfața și conținutul funcțiilor din fisierul `shop.o` folosind
 ### Bonus. Utilizare cod python în C
 
 > **INFO:**
-> În cadrul acestui exercițiu veți vedea un exemplu de ceea ce se poate face în urma legării unui anumit tip de fișiere obiect, și anume biblioteci; pentru acest exercițiu este vorba de biblioteca 
-python$(PYTHON_VERSION), unde **PYTHON_VERSION** poate să fie diferit în funcție de soluția propusă de fiecare.
+> În cadrul acestui exercițiu veți vedea un exemplu de ceea ce se poate face în urma legării unui anumit tip de fișiere obiect, și anume biblioteci; pentru acest exercițiu este vorba de biblioteca python$(PYTHON_VERSION), unde **PYTHON_VERSION** poate să fie diferit în funcție de soluția propusă de fiecare.
+> Pentru a putea să compilați surse veți avea nevoie de versiunea de dezvoltare pentru python; pentru instalare folosiți comanda de mai jos:
+> ```
+> sudo apt-get install python$(PYTHON_VERSION)-dev
+> # înlocuiți $(PYTHON_VERSION) cu versiunea pe care o doriți(3.9, 3.8, 3.7, etc.)
+> ```
 
 Accesați directorul `bonus-c-python`.
 Fișierul main.c are un exemplu de cum se execută o funcție simplă de afișare a unui mesaj scrisă într-un modul python separat. Plecând de la exemplul prezentat, creați o funcție în modulul numit `my_module.py` aflat în directorul `python-modules`, care primește doi parametri reprezentând două șiruri de caractere și întoarce **poziția primei apariții a celui de-al doilea șir în cadrul primului**, dacă al doilea șir este un subșir al primului șir și **-1** în caz contrar.
