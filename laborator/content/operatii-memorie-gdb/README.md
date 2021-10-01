@@ -64,12 +64,12 @@ int main() {
 
 Operațiile aritmetice pe pointeri sunt puțin diferite de cele pe tipurile de date întregi. Singurele operații valide sunt **incrementarea** sau **decrementarea** unui pointer, **adunarea** sau **scăderea** unui întreg la un pointer, respectiv scăderea a doi pointeri de **același tip**, iar comportamentul acestor operații este influențat de tipul de date la care pointerii se referă.
 
-Prin incrementarea unui pointer legat la un tip de date `T`, adresa nu este crescută cu 1, ci cu valoarea `sizeof(T)` care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg n la un pointer p (p + n) reprezintă de fapt `p + n * sizeof(*p)`. De exemplu:
+Prin incrementarea unui pointer legat la un tip de date `T`, adresa nu este crescută cu 1, ci cu valoarea `sizeof(T)` care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg `n` la un pointer `p` (deci operația `p + n`) reprezintă de fapt `p + n * sizeof(*p)`. De exemplu:
 
 ```c
-char_ptr = 1000
-short_ptr = 2000
-int_ptr = 3000
+char *char_ptr = 1000;
+short *short_ptr = 2000;
+int *int_ptr = 3000;
 
 ++char_ptr; /* Așa cum ne așteptăm char_ptr va pointa la adresa 1001 */
 ++short_ptr; /* short_ptr pointează la adresa 2002 */
@@ -88,7 +88,7 @@ for (; *p; ++p); /* Se iterează caracter cu caracter, până la '\0' */
 printf("%ld", p - s); /* Se va afișa 22. */
 ```
 #### **Interpretarea datelor din memorie**
-
+Pe cele mai multe calculatoare moderne, cea mai mică unitate de date care poate fi adresată este `byte-ul/octetul` (8 biți), acest lucru însemnând că putem privi datele în memorie drept o înșiruire de bytes, fiecăruia corespunzându-i o adresă. În cazul în care dorim să stocăm o informație reprezentată pe mai mulți octeți (de exemplu, valorile conținute în variabile de tip `short`, `int`, `long`, etc.), va trebui să ținem cont de ordinea impusă de arhitectura sistemului, denumită [endianness](https://en.wikipedia.org/wiki/Endianness). În cazul arhitecturii x86, se folosește ordinea **little-endian** în cadrul căreia cei mai puțin semnificativi octeți sunt stocați primii în memorie. În contrast, ordinea **big-endian** folosită pe alte arhitecturi pune bytesii cei mai semnificativi la început. Mai jos se poate observa modul de stocare a datelor pe o arhitectură **little-endian**:
 ```c
 int n = 0xCAFEBABE;
 unsigned char first_byte = *((unsigned char*) &n); /* Se extrage primul byte al lui n */
