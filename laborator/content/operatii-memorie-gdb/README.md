@@ -315,7 +315,7 @@ int main() {
 
 Pentru a lansa programul urmărit în execuție există două comenzi disponibile:
 
-- `run` - această comandă va lansa în execuție programul
+- `r` sau `run` - această comandă va lansa în execuție programul
 - `start` - spre deosebire de run, această comandă va începe execuția programului, însă se va opri imediat după intrarea în main
 
 **Breakpoints**
@@ -329,9 +329,10 @@ break [location]
 unde *location* poate reprezenta numele unei funciții, numărul liniei de cod sau chiar o adresă din memorie, caz în care adresa trebuie precedată de simbolul *. De exemplu: **break \*0xCAFEBABE**
 
 **Parcurgerea instrucțiunilor**
-
-- `stepi` - trimite o instrucțiune spre execuție
-- `nexti` - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
+- `si` sau `stepi` - trimite instrucțiunea curentă spre execuție
+- `ni` sau `nexti` - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
+- `c` sau `continue` - continuă execuția programului până la întâlnirea următorului breakpoint sau până la terminarea acestuia.
+- `finish` - continuă execuția programului până la ieșirea din funcția curentă
 
 **Inspectarea memoriei**
 
@@ -398,9 +399,8 @@ Dându-se un șir de caractere și un pattern să se implementeze funcția `dele
 
 > **IMPORTANT:** Atenție
 > ```c
-> char* s = "Ana are mere" se alocă în .rodata;
-> char s[] = "Ana are mere" se alocă în .text dacă declarația e într-o funcție;
-> char s[] = "Ana are mere" se alocă în .data dacă declarația e în afara funcției;
+> char *s = "Ana are mere" se alocă șirul într-o zonă de memorie read-only (conținut nemodificabil);
+> char s[] = "Ana are mere" se alocă șirul într-o zonă de memorie read-write (conținut modificabil);
 > ```
 
 ### **3. Pixels**
