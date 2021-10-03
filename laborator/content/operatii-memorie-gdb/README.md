@@ -64,12 +64,12 @@ int main() {
 
 Operațiile aritmetice pe pointeri sunt puțin diferite de cele pe tipurile de date întregi. Singurele operații valide sunt **incrementarea** sau **decrementarea** unui pointer, **adunarea** sau **scăderea** unui întreg la un pointer, respectiv scăderea a doi pointeri de **același tip**, iar comportamentul acestor operații este influențat de tipul de date la care pointerii se referă.
 
-Prin incrementarea unui pointer legat la un tip de date `T`, adresa nu este crescută cu 1, ci cu valoarea `sizeof(T)` care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg n la un pointer p (p + n) reprezintă de fapt `p + n * sizeof(*p)`. De exemplu:
+Prin incrementarea unui pointer legat la un tip de date `T`, adresa nu este crescută cu 1, ci cu valoarea `sizeof(T)` care asigură adresarea urmatorului obiect de același tip. În mod similar, adunarea unui întreg `n` la un pointer `p` (deci operația `p + n`) reprezintă de fapt `p + n * sizeof(*p)`. De exemplu:
 
 ```c
-char_ptr = 1000
-short_ptr = 2000
-int_ptr = 3000
+char *char_ptr = 1000;
+short *short_ptr = 2000;
+int *int_ptr = 3000;
 
 ++char_ptr; /* Așa cum ne așteptăm char_ptr va pointa la adresa 1001 */
 ++short_ptr; /* short_ptr pointează la adresa 2002 */
@@ -88,7 +88,7 @@ for (; *p; ++p); /* Se iterează caracter cu caracter, până la '\0' */
 printf("%ld", p - s); /* Se va afișa 22. */
 ```
 #### **Interpretarea datelor din memorie**
-
+Pe cele mai multe calculatoare moderne, cea mai mică unitate de date care poate fi adresată este `byte-ul/octetul` (8 biți), acest lucru însemnând că putem privi datele în memorie drept o înșiruire de bytes, fiecăruia corespunzându-i o adresă. Așa cum s-a menționat în [laboratorul trecut](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-01), în cazul în care dorim să stocăm o informație reprezentată pe mai mulți octeți va trebui să ținem cont de ordinea impusă de arhitectura sistemului, denumită [endianness](https://en.wikipedia.org/wiki/Endianness). Mai jos se poate observa mecanismul de extragere a datelor din memorie pe o arhitectură **little-endian**:
 ```c
 int n = 0xCAFEBABE;
 unsigned char first_byte = *((unsigned char*) &n); /* Se extrage primul byte al lui n */
@@ -315,7 +315,7 @@ int main() {
 
 Pentru a lansa programul urmărit în execuție există două comenzi disponibile:
 
-- `run` - această comandă va lansa în execuție programul
+- `r` sau `run` - această comandă va lansa în execuție programul
 - `start` - spre deosebire de run, această comandă va începe execuția programului, însă se va opri imediat după intrarea în main
 
 **Breakpoints**
@@ -329,9 +329,10 @@ break [location]
 unde *location* poate reprezenta numele unei funciții, numărul liniei de cod sau chiar o adresă din memorie, caz în care adresa trebuie precedată de simbolul *. De exemplu: **break \*0xCAFEBABE**
 
 **Parcurgerea instrucțiunilor**
-
-- `stepi` - trimite o instrucțiune spre execuție
-- `nexti` - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
+- `si` sau `stepi` - trimite instrucțiunea curentă spre execuție
+- `ni` sau `nexti` - comandă similară cu stepi, însă dacă instrucțiunea curentă este un apel de funcție, debugger-ul nu va intra în funcție
+- `c` sau `continue` - continuă execuția programului până la întâlnirea următorului breakpoint sau până la terminarea acestuia.
+- `finish` - continuă execuția programului până la ieșirea din funcția curentă
 
 **Inspectarea memoriei**
 
@@ -398,9 +399,8 @@ Dându-se un șir de caractere și un pattern să se implementeze funcția `dele
 
 > **IMPORTANT:** Atenție
 > ```c
-> char* s = "Ana are mere" se alocă în .rodata;
-> char s[] = "Ana are mere" se alocă în .text dacă declarația e într-o funcție;
-> char s[] = "Ana are mere" se alocă în .data dacă declarația e în afara funcției;
+> char *s = "Ana are mere" se alocă șirul într-o zonă de memorie read-only (conținut nemodificabil);
+> char s[] = "Ana are mere" se alocă șirul într-o zonă de memorie read-write (conținut modificabil);
 > ```
 
 ### **3. Pixels**
