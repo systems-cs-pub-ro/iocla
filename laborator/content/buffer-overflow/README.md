@@ -1,4 +1,4 @@
-# Laborator 10: Gestiunea bufferelor. Buffer overflow
+# Laborator 11: Gestiunea bufferelor. Buffer overflow
 
 Acest laborator își propune prezentarea conceptului de buffere în C și limbaj de asamblare împreună cu operațiile specifice acestora,
 dar și vulnerabilitățile pe care acestea le au și cum pot ele să fie exploatate de un potențial atacator prin folosirea unui program
@@ -70,7 +70,7 @@ prin randomizarea adreselor (*Address Space Layout Randomization* - [ASLR](https
 sau prin introducerea unor verificări suplimentare în cod pentru a detecta eventuale atacuri.
 Aceste verificări se realizează prin introducerea unor valori speciale, numite **canary** pe stivă,
 între buffer și adresa de retur a funcției. Aceste valori sunt generate și plasate în cadrul executabilului de către compilator
-și diferă la fiecare rularea executabilului. În momentul în care un atacator vrea să suprascrie adresa de retur se va suprascrie
+și diferă la fiecare rulare a executabilului. În momentul în care un atacator vrea să suprascrie adresa de retur se va suprascrie
 și valoarea canary și înainte de a se părăsi apelul funcției curente se va verifica dacă acea valoare a fost modificată sau nu.
 Dacă a fost modificată înseamnă că a avut loc un buffer overflow și execuția programului va fi întreruptă.
 Acest mecanism se numește **Stack Smashing Protection** sau **Stack Guard**. Mai multe detalii despre Stack Guard,
@@ -385,4 +385,4 @@ Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/r
 
 ## Resurse
 
-Daca acest laborator v-a impresionat intr-un mod placut, puteti sa aflati mai multe despre acest tip de atac, dar si despre security in general, de pe acest [canal](https://www.youtube.com/c/LiveOverflow).
+Dacă laboratorul v-a impresionat într-un mod plăcut, puteți afla mai multe despre acest tip de atac, dar și despre securitate cibernetică în general, de pe acest [canal](https://www.youtube.com/c/LiveOverflow).
