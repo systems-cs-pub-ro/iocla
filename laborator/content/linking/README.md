@@ -354,8 +354,8 @@ Explorați interfața și conținutul funcțiilor din fisierul `shop.o` folosind
 > Pentru a putea să compilați surse veți avea nevoie de versiunea de dezvoltare pentru python; pentru instalare folosiți comanda de mai jos:
 > ```
 > sudo apt-get install python$(PYTHON_VERSION)-dev
-> # înlocuiți $(PYTHON_VERSION) cu versiunea pe care o doriți(3.9, 3.8, 3.7, etc.)
 > ```
+> Înlocuiți $(PYTHON_VERSION) cu versiunea pe care o doriți(**3.8 sau mai recentă**)
 
 Accesați directorul `bonus-c-python`.
 Fișierul main.c are un exemplu de cum se execută o funcție simplă de afișare a unui mesaj scrisă într-un modul python separat. Plecând de la exemplul prezentat, creați o funcție în modulul numit `my_module.py` aflat în directorul `python-modules`, care primește doi parametri reprezentând două șiruri de caractere și întoarce **poziția primei apariții a celui de-al doilea șir în cadrul primului**, dacă al doilea șir este un subșir al primului șir și **-1** în caz contrar.
