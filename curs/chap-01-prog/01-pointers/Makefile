@@ -4,7 +4,7 @@ LDFLAGS = -no-pie -m32
 
 .PHONY: all clean
 
-all: inspect_vars inspect_array inspect_ptr inspect_func segfault inspect_struct mem_dump
+all: inspect_vars inspect_array inspect_ptr inspect_func segfault inspect_struct mem_dump mem_areas
 
 inspect_vars: inspect_vars.o
 
@@ -34,7 +34,11 @@ mem_dump: mem_dump.o
 
 mem_dump.o: mem_dump.c
 
+mem_areas: mem_areas.o
+
+mem_areas.o: mem_areas.c
+
 clean:
-	-rm -f inspect_vars.o inspect_array.o inspect_ptr.o inspect_func.o inspect_struct.o mem_dump.o
-	-rm -f inspect_vars inspect_array inspect_ptr inspect_func inspect_struct mem_dump
+	-rm -f inspect_vars.o inspect_array.o inspect_ptr.o inspect_func.o inspect_struct.o mem_dump.o mem_areas
+	-rm -f inspect_vars inspect_array inspect_ptr inspect_func inspect_struct mem_dump mem_areas
 	-rm -f *~
