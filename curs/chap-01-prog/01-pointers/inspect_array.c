@@ -5,7 +5,7 @@ int main(void)
 	int key[256];
 
 	printf("key: %p\n", key);
-	printf("&key: %p\n", key);
+	printf("&key: %p\n", &key);
 	printf("key + 10: %p\n", key + 10);
 	printf("key[10]: %d\n", key[10]);
 	printf("&key[10]: %p\n", &key[10]);
