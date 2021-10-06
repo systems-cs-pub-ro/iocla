@@ -1,10 +1,9 @@
 CFLAGS = -Wall -fno-PIC -m32 -g
 LDFLAGS = -no-pie -m32
 
-
 .PHONY: all clean
 
-all: inspect_vars inspect_array inspect_ptr inspect_func segfault inspect_struct mem_dump mem_areas
+all: inspect_vars inspect_array inspect_ptr inspect_func segfault inspect_struct
 
 inspect_vars: inspect_vars.o
 
@@ -30,15 +29,7 @@ inspect_struct: inspect_struct.o
 
 inspect_struct.o: inspect_struct.c
 
-mem_dump: mem_dump.o
-
-mem_dump.o: mem_dump.c
-
-mem_areas: mem_areas.o
-
-mem_areas.o: mem_areas.c
-
 clean:
-	-rm -f inspect_vars.o inspect_array.o inspect_ptr.o inspect_func.o inspect_struct.o mem_dump.o mem_areas
-	-rm -f inspect_vars inspect_array inspect_ptr inspect_func inspect_struct mem_dump mem_areas
+	-rm -f inspect_vars.o inspect_array.o inspect_ptr.o inspect_func.o segfault.o inspect_struct.o
+	-rm -f inspect_vars inspect_array inspect_ptr inspect_func segfault inspect_struct
 	-rm -f *~

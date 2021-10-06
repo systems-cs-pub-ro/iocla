@@ -14,13 +14,13 @@ preprocess: main.i mtime.i fibonacci.i
 
 main: main.o mtime.o fibonacci.o
 
-%.o: ../real-c/%.c ../real-c/mtime.h ../real-c/fibonacci.h
+%.o: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
 	$(CC) -c -o $@ $<
 
-%.s: ../real-c/%.c ../real-c/mtime.h ../real-c/fibonacci.h
+%.s: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
 	$(CC) -S -o $@ $<
 
-%.i: ../real-c/%.c ../real-c/mtime.h ../real-c/fibonacci.h
+%.i: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
 	$(CC) -E -o $@ $<
 
 clean:
