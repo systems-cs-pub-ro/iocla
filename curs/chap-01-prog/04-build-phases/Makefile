@@ -6,9 +6,9 @@ all: link
 
 link: main
 
-compile: main.o mtime.o fibonacci.o
+assemble: main.o mtime.o fibonacci.o
 
-assemble: main.s mtime.s fibonacci.s
+compile: main.s mtime.s fibonacci.s
 
 preprocess: main.i mtime.i fibonacci.i
 
