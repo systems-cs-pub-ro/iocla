@@ -81,7 +81,6 @@ call foo         ; apelam functia
 add esp, 12      ; restauram stiva
 ```
 
-
 ## Apelantul si Apelatul
 Atunci când apelăm o funcție spunem că funcția care apelează (contextul care apelează) se cheamă **apelant** (sau **caller**), iar funcția apelată se cheamă **apelat** (sau **callee**). In paragraful anterior am discutat despre cum arată lucrurile la nivelul apelantului (cum construim stiva).
 
@@ -106,7 +105,7 @@ leave
 ```
 Dupa aceasta instructiune, stiva este ca la începutul funcției (adică imediat după call).
 
-Pentru incheierea functiei, este necesar ca codul sa se intoarca (return) si sa continue sa execute de la instructiunea de dupa `call`-ul care a pornit functia. Acest lucru presupune sa influentam registrul `eip` si sa punem valoarea care a fost salvata pe stiva initial de apelul `call`. Acest lucru este indeplinit folosind instructiunea:
+Pentru incheierea functiei, este necesar ca executia codului sa se intoarca (return) si sa continue sa execute de la instructiunea de dupa `call`-ul care a pornit functia. Acest lucru presupune sa influentam registrul `eip` si sa punem valoarea care a fost salvata pe stiva initial de apelul `call`. Acest lucru este indeplinit folosind instructiunea:
 ```Assembly
 ret
 ```
@@ -162,9 +161,12 @@ foo:
   - Daca valoarea de retur este pe **32 biti** rezultatul functiei se plaseaza in `eax`.
   - Daca valoarea de retur este pe **64 biti** rezultatul se plaseaza in registrele `edx` si `eax`. Cei mai semnificativi 32 de biti se plaseaza in `edx`, iar restul in registrul `eax`.
 
-  *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stiva/heap, sau alte zone de memorie, care refera obiectul dorit in urma apelului functiei.*
+    *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stiva/heap, sau alte zone de memorie, care refera obiectul dorit in urma apelului functiei.*
 
 5. O functie foloseste aceleasi registre hardware, asadar, la iesirea din functie valorile registrelor nu mai sunt aceleasi. Pentru a evita aceasta situatie, se pot salva unele/toate registrele pe stiva (mai multe in [Laboratorul 8](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator)
+
+
+> **_NOTE:_**  Deoarece limbajele de asamblare ofera mai multe oportunitati, exista necesitatea de a avea conventii de apelare a functiilor in x86. Diferenta dintre acestea poate consta in ordinea parametrilor, modul cum parametrii sunt pasati functiei, ce registre trebuiesc conservate de apelat sau daca apelantul ori apelatul se ocupa de pregatirea stivei. Mai multe detalii puteti gasi [aici](https://en.wikipedia.org/wiki/X86_calling_conventions) sau [aici](https://levelup.gitconnected.com/x86-calling-conventions-a34812afe097) daca wikipedia e prea mainstream pentru voi.
 
 ## Exerciții
 
