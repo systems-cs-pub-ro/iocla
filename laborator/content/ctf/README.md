@@ -6,7 +6,7 @@
 
 > **NOTE:** Fiecare dintre exerciții ascunde un flag cu formatul `iocla_{<string>}`
 
-> **TIP:** În general, flagul va fi returnat ca și string de o funcție specială, al cărei conținut nu ajută în rezolvarea taskurilor. Se recomandă tratarea acestei funcții ca și Black Box.
+> **TIP:** În general, flagul va fi returnat ca și string de o funcție specială, `get_flag()`. Scopul exercițiilor nu implică a face reverse-engineering pe această funcție sau apel direct din cadrul debuggerului; se recomandă tratarea ei ca și Black Box.
 
 > **TIP:** Pentru generarea payloadurilor la taskurile de tip buffer overflow, puteți folosi în terminal o comandă de tipul: `python -c 'import sys; sys.stdout.write("A"\*10 + b"\x00\x00\x00\x00" + ...)' | ./exec`.
 
