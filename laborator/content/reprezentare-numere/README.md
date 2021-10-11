@@ -33,9 +33,9 @@ Pentru reprezentarea informațiilor (instrucțiuni și date), calculatoarele fol
 
 Deplasările logice dreapta/stânga presupun mutarea cu o poziție a fiecărui bit. Cum rezultatul trebuie să fie pe același număr de biți ca valoarea inițială, primul bit este pierdut, iar spațiul gol este completat cu bitul 0.
 
-![Deplasare logică la stânga](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/left-logical-shift.png?cache=)
+![Deplasare logică la stânga](images/left-logical-shift.png)
 
-![Deplasare logică la dreapta](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/right-logical-shift.png?cache=)
+![Deplasare logică la dreapta](images/right-logical-shift.png)
 
 Pentru explicații legate de operațiile pe biți în C urmăriți ghidul de la adresa [Operații pe biți în C](https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/).
 
@@ -72,7 +72,9 @@ Operația inversă, conversia din binar în hexazecimal se poate face convertind
 
 Sistemul hexazecimal este utilizat pentru a reprezenta adresele la care se află datele în memorie și pentru a vizualiza aceste date într-un mod mai ușor de interpretat decât o secvență compusă doar din 0 și 1. Imaginea de mai jos oferă un exemplu în acest sens:
 
-![Hartă memorie](https://www.digital-detective.net/wp-content/uploads/2018/08/Hex-View.png)
+![Hartă memorie](images/Hex-View.png)
+
+(Imagine preluata de pe [Digital Detective](https://www.digital-detective.net/))
 
 ### Reprezentarea tipurilor de date
 
@@ -109,7 +111,9 @@ Dimensiunile tipurilor de date uzuale folosite în C sunt dependente atât de pr
 
 În limbajul C un pointer este o variabilă a cărei valoare este adresa unei alte variabile. Ne putem gândi la un pointer ca un intermediar, și anume o variabilă care indică către o locație finală sau către un alt intermediar după cum se poate vedea în imaginea și codul de mai jos.
 
-![Simple and double pointer](https://www.tenouk.com/Module8_files/cpluspointer020.png)
+![Simple and double pointer](images/cpluspointer020.png)
+
+(Imagine preluata de pe [Tenouk](https://www.tenouk.com/))
 
 ```cpp
 #include <stdio.h>
@@ -282,15 +286,15 @@ Implementați în C rotație stânga și rotație dreapta pentru numere întregi
 
 >**TIP**: Operația de rotire (numită și deplasare circulară) este similară cu cea de deplasare, singura diferență fiind aceea că spațiul gol generat de deplasare este înlocuit cu bitul eliminat.
 >
->![Deplasare logică la stânga](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/left-logical-shift.png?cache=)
+>![Deplasare logică la stânga](images/left-logical-shift.png)
 >
->![Deplasare logică la dreapta](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/right-logical-shift.png?cache=)
+>![Deplasare logică la dreapta](images/right-logical-shift.png)
 
 >**NOTE**: 
 >    rotate_left(0x80000000, 1) = 1
 >    rotate_right(0x00000001, 16) = 65536
 
-5. Par binar și impar hexa
+### 5. Par binar și impar hexa
 
 Veți rezolva exercițiul plecând de la fișierul odd_even.c aflat în directorul 5-odd_even.
 
