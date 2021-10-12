@@ -22,19 +22,25 @@ Investigați binarul `1-2-hidden-in-plain-sight/link2`. Modul în care poate fi 
 Binarul `2-look-at-him-go/dynamic` este de data aceasta executabil și are ca unic scop obținerea flagului și plasarea lui undeva in memorie. No tricks here.
 > **TIP:** GDB is your friend.
 
-### 3.1. Playing God
-Binarul `3-1-playing-god/dynamic2` vă cere să ghiciți un număr între 1 și 100000. Găsiți o cale mai bună de a-l afla.
-
-### 3.2. Playing God ++
-Binarul `3-2-playing-god/buff-ovf` este vulnerabil. De data aceasta, găsirea numărului nu va fi de ajuns, dar este posibil să nici nu fie nevoie.
-> **TIP:** Vulnerabilitatea vă oferă posibilitatea de a modifica date. Există mai mult de o cale prin care puteți satisface condiția pentru obținerea flagului.
+### 3. Playing God
+Binarul `3-playing-god/dynamic2` vă cere să ghiciți un număr între 1 și 100000. Găsiți o cale mai bună de a-l afla.
 
 ### 4. Indirect business
-Binarul `4-indirect-business/buff-ovf2` expune aceeași vulnerabilitate cu un extra step.
+Binarul `4-indirect-business/buff-ovf` conține o vulnerabilitate clasică. Folosiți inputul pentru a modifica datele în favoarea voastră.
 
 ### 5. RIP my buffers off
-Binarul `5-rip-my-buffers-off/buff-ovf3` nu folosește funcția get\_flag(), dar oferă o oportunitate de a o apela.
+Binarul `5-rip-my-buffers-off/buff-ovf2` nu folosește funcția get\_flag(), dar oferă o oportunitate de a o apela.
 > **TIP:** Unde se poate suprascrie o adresă de funcție?
 
 ### 6. Feeling chained
-Urmăriți șirul de operații din funcțiile binarului `6-feeling-chained/buff-ovf4`. Identificați-le pe cele necesare și... deja știți cum se apelează.
+Urmăriți șirul de operații din funcțiile binarului `6-feeling-chained/buff-ovf3`. Identificați-le pe cele necesare și... deja știți cum se apelează.
+
+## Bonus
+### 7. ROP
+`7-rop/rop` este un binar pe 64 de biți cu un simplu buffer overflow.
+
+> **TIP:** Pe x86\_64 argumentele funcțiilor nu se mai găsesc pe stivă, ci în registre.
+
+> **TIP:** Return-Oriented-Programming (ROP) este un tip de exploit în care, având posibilitatea de a suprascrie adresa de return, executăm prin înlănțuire diverse porțiuni din codul existent, care se termină într-o instrucțiune `ret`. Aceste bucăți de cod se numesc `gadgeturi`.
+
+> **TIP:** În `GDB peda` puteți folosi o comandă de tipul `ropsearch "pop rsi"` pentru a găsi adresa unui gadget.
