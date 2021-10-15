@@ -41,6 +41,6 @@ Urmăriți șirul de operații din funcțiile binarului `6-feeling-chained/buff-
 
 > **TIP:** Pe x86\_64 argumentele funcțiilor nu se mai găsesc pe stivă, ci în registre.
 
-> **TIP:** Return-Oriented-Programming (ROP) este un tip de exploit în care, având posibilitatea de a suprascrie adresa de return, executăm prin înlănțuire diverse porțiuni din codul existent, care se termină într-o instrucțiune `ret`. Aceste bucăți de cod se numesc `gadgeturi`.
+> **TIP:** Return-Oriented-Programming (ROP) este o tehnică de exploatare în care, având posibilitatea de a suprascrie adresa de return, executăm prin înlănțuire diverse porțiuni din codul existent, care se termină într-o instrucțiune `ret`. Aceste bucăți de cod se numesc `gadgeturi`.
 
-> **TIP:** În `GDB peda` puteți folosi o comandă de tipul `ropsearch "pop rsi"` pentru a găsi adresa unui gadget.
+> **TIP:** Pentru determinarea adresei unui gadget într-un binar, există tool-ul [ROPgadget](https://github.com/JonathanSalwan/ROPgadget). Alternativ, în `pwndbg`, puteți folosi o comandă de tipul `rop --grep "pop rsi"`.
