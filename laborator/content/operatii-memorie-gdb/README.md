@@ -382,7 +382,7 @@ Afișați adresele elementelor din vectorul `v` împreună cu valorile de la ace
 
 > **TIP:** Puteți parcurge memoria octet cu octet începând de la o anumită adresă folosind un pointer de tipul `unsigned char*` (pentru că tipul `char` este reprezentat pe un octet).
 >```c
->unsigned char *char_ptr = &v;
+>unsigned char *char_ptr = v;
 >```
 > Pentru afișarea adresei, respectiv a valorii puteți folosi:
 >```c
