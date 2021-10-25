@@ -1,7 +1,12 @@
 
-The demo adds two bytes. 
 
-For signed/unsigned operations, watch flags C(arry) and O(verflow).
+### flags.asm
+compile and play in gdb
+
+### print_flags.c 
+flags calculator 
+
+For signed/unsigned operations, watch flags C(arry), O(verflow), Z(ero).
 
 Presence of a flag means result is in the allowed interval. 
 
@@ -24,4 +29,11 @@ Exercises for C and O - find a pair that activates:
 * only C
 * only O
 * both 
+
+### asymmetrical.c
+
+-(-128 ) = -128 
+
+C does not check flags, which may lead to bugs.
+
 
