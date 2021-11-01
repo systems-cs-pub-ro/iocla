@@ -116,7 +116,10 @@ if not os.path.exists(INPUT_FILE):
 ## Start of the horror
 print("\n======================= Tema 1 IOCLA =======================\n")
 
-for name_file in sorted(os.listdir(INPUT_FILE)):
+regular_tests = [x for x in sorted(os.listdir(INPUT_FILE)) if not x.startswith("mv_")]
+
+
+for name_file in regular_tests:
     shutil.copy(INPUT_FILE + name_file, inputFileName)
 
     proc = os.popen('valgrind --leak-check=full \
@@ -144,6 +147,36 @@ for name_file in sorted(os.listdir(INPUT_FILE)):
         elif "Invalid read" in mem_str:
             memory_shame_list.append(test_tuple(name_file, "not enough memory allocated string"))
 
+print("\n========================== BONUS ===========================\n")
+
+bonus_tests = [x for x in sorted(os.listdir(INPUT_FILE)) if x.startswith("mv_")]
+for name_file in bonus_tests:
+    shutil.copy(INPUT_FILE + name_file, inputFileName)
+
+    proc = os.popen('valgrind --leak-check=full \
+                    --show-leak-kinds=all --track-origins=yes \
+                    --log-file=\"memCheck\" '
+                     + runExec + " < " +  inputFileName)
+    result = proc.read().strip()
+    proc.close()
+    with open(OUTPUTS_FILE + "output_" + name_file, "w") as f:
+        f.write(result)
+    
+    with open(DEV_FILE + "dev_" + name_file, "r") as dev:
+        if dev.read().strip() == result:
+            print("TEST " + name_file + "." *(size_header - len(name_file) - 12) + " PASSED")
+            add_passed_test(name_file)
+            numPassed += 1
+        else:
+            print("TEST " + name_file + "." *(size_header - len(name_file) - 12) + " FAILED")
+            
+    ## memory check
+    with open("memCheck", "r") as mem:
+        mem_str = mem.read().strip()
+        if "All heap blocks were freed" not in mem_str:
+            memory_shame_list.append(test_tuple(name_file, "memory not freed"))
+        elif "Invalid read" in mem_str:
+            memory_shame_list.append(test_tuple(name_file, "not enough memory allocated string"))
 
 ## Memory check 
 print("\n======================= Memory Check =======================\n")
