@@ -42,8 +42,6 @@ void tree (Dir* target, int level) {}
 void mv(Dir* parent, char *oldname, char *newname) {}
 
 int main () {
-	return 0;
-
 	do
 	{
 		/*

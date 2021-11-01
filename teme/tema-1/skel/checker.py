@@ -154,7 +154,7 @@ if len(memory_shame_list) == 0 and calculate_score_without_memory() >= 50:
     else:
         print(f"No memory problems, really good job! - {memory_score}p!")
 else:
-    print(f"Too little points to get memory points.{nl}")
+    print(f"At least 50 points are necessary in order to get the points for memory.{nl}")
 
 for shame in memory_shame_list:
     print("Failed Test: " + shame.name + "-- probable problem: " + shame.error)
