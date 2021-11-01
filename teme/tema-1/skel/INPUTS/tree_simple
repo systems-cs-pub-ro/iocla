@@ -1,0 +1,4 @@
+mkdir d1
+touch f1
+tree
+stop

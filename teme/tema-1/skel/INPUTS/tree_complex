@@ -1,0 +1,29 @@
+mkdir d1
+mkdir d2
+cd d1
+mkdir da
+touch fa
+cd da
+mkdir db
+touch fb
+cd db
+mkdir dc
+touch fc
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+stiu........
+nu_mai_stiu_sa_numar_ayaye
+help_will_come
+tree
+cd d2
+tree
+stop

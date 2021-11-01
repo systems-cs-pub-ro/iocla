@@ -1,0 +1,12 @@
+mkdir d1
+cd d1
+touch f1
+mkdir d2
+ls
+rmdir d2
+rmdir d2
+ls
+cd ..
+rmdir d1
+ls
+stop

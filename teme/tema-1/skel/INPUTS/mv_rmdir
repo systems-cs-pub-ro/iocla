@@ -1,0 +1,8 @@
+mkdir d1
+mkdir d2
+ls
+mv d1 d3
+ls
+rmdir d3
+ls
+stop
