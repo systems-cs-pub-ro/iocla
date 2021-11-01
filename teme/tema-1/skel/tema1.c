@@ -49,7 +49,7 @@ int main () {
 			Reads from stdin a string and breaks it down into command and in
 			case it needs into a name.
 		*/
-	} while (/*condition*/1);
+	} while (/*condition*/);
 	
 	return 0;
 }
