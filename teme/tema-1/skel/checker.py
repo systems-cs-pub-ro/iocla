@@ -40,13 +40,12 @@ README_FILE = "README"
 
 ## Date pentru fiecare file
 list_tasks = {}
-list_tasks["ls_mkdir_touch"] = Task(name="ls_mkdir_touch", max_points=20, number_tests = 4)
+list_tasks["ls_mkdir_touch"] = Task(name="ls_mkdir_touch", max_points=30, number_tests = 4)
 list_tasks["cd"] = Task(name="cd", max_points=5, number_tests=4)
 list_tasks["rm"]= Task(name="rm", max_points=5, number_tests=4)
 list_tasks["rmdir"] = Task(name="rmdir", max_points=10, number_tests=4)
 list_tasks["tree"] = Task(name="tree", max_points=10, number_tests=2)
 list_tasks["pwd"] = Task(name="pwd", max_points=10, number_tests=2)
-list_tasks["find"]=Task(name="find", max_points=10, number_tests=3)
 list_tasks["mv"]=Task(name="mv", max_points=20, number_tests=9)
 nl = "\n"
 memory_score = 20
@@ -75,22 +74,26 @@ def add_passed_test(name: str):
         list_tasks["tree"].number_tests_passed += 1
     elif name.startswith("pwd_"):
         list_tasks["pwd"].number_tests_passed += 1
-    elif name.startswith("find_"):
-        list_tasks["find"].number_tests_passed += 1
     elif name.startswith("mv_"):
         list_tasks["mv"].number_tests_passed += 1
 
+
+def calculate_score_without_memory() -> int:
+    """
+    Returns:
+        int: The score of the person without memory points
+    """ 
+    return sum([task.score_task for task in list_tasks.values()]) +\
+            (readme_score if os.path.exists(README_FILE) else 0)
 
 def calculate_score() -> int:
     """
     Returns:
         int: The total score of the person
     """ 
-    return sum([task.score_task for task in list_tasks.values()]) +\
-            (memory_score if len(memory_shame_list) == 0 else 0) +\
-            (readme_score if os.path.exists(README_FILE) else 0)
-
-
+    return calculate_score_without_memory() +\
+            (memory_score if len(memory_shame_list) == 0 and calculate_score_without_memory() >= 50 else 0)
+            
 
 ## Initialisation in the beggining
 if not os.path.exists(OUTPUTS_FILE):
@@ -145,11 +148,13 @@ for name_file in sorted(os.listdir(INPUT_FILE)):
 ## Memory check 
 print("\n======================= Memory Check =======================\n")
 
-if len(memory_shame_list) == 0:
+if len(memory_shame_list) == 0 and calculate_score_without_memory() >= 50:
     if numPassed == len(os.listdir(INPUT_FILE)):
         print(f"Very few people have gone as far as you have.{nl}Good Job! I hope you are proud of yourself the least I can give {nl}you is {memory_score}p!")
     else:
-        print("No memory problems, really good job! - {memory_score}p!")
+        print(f"No memory problems, really good job! - {memory_score}p!")
+else:
+    print(f"Too little points to get memory points.{nl}")
 
 for shame in memory_shame_list:
     print("Failed Test: " + shame.name + "-- probable problem: " + shame.error)

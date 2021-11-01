@@ -37,11 +37,11 @@ void stop (Dir* target) {}
 
 void tree (Dir* target, int level) {}
 
-void find(Dir* parent, char *name, int level) {}
-
 void mv(Dir* parent, char *oldname, char *newname) {}
 
 int main () {
+	return 0;
+
 	do
 	{
 		/*
@@ -49,7 +49,7 @@ int main () {
 			Reads from stdin a string and breaks it down into command and in
 			case it needs into a name.
 		*/
-	} while (/*condition*/);
+	} while (/*condition*/1);
 	
 	return 0;
 }
