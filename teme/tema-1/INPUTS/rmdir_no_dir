@@ -1,0 +1,4 @@
+touch d1
+rmdir d1
+ls
+stop

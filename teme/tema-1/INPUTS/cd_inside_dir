@@ -1,0 +1,5 @@
+mkdir d1
+cd d1
+touch f1
+ls
+stop

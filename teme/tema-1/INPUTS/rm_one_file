@@ -1,0 +1,6 @@
+touch f1
+touch f2
+ls
+rm f1
+ls
+stop

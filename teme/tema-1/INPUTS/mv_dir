@@ -1,0 +1,11 @@
+mkdir d1
+mkdir d2
+cd d1
+touch f1
+cd ..
+ls
+mv d1 d3
+ls
+cd d2
+ls
+stop

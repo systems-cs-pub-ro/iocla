@@ -1,0 +1,6 @@
+mkdir d1
+cd d1
+touch f1
+cd ..
+find f1
+stop
