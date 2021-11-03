@@ -31,7 +31,7 @@ xor dx, dx <-> '\x67\x31\xD2'
 jmp esp    <-> '\xFF\xE4'
 ```
 
->**NOTE**: Deoarece limbajul de asamblare depinde de arhitectură, în general nu este portabil. De aceea, producătorii de procesoare au încercat să păstreze neschimbate instrucțiunile de la o generație la alta, adăugându-le pe cele noi, pentru a păstra măcar compatibilitatea în cadrul aceleiași familii de procesoare (de exemplu, procesoarele Intel 80286, 80386, 80486 etc. fac parte din genericul Intel x86).
+> **NOTE**: Deoarece limbajul de asamblare depinde de arhitectură, în general nu este portabil. De aceea, producătorii de procesoare au încercat să păstreze neschimbate instrucțiunile de la o generație la alta, adăugându-le pe cele noi, pentru a păstra măcar compatibilitatea în cadrul aceleiași familii de procesoare (de exemplu, procesoarele Intel 80286, 80386, 80486 etc. fac parte din genericul Intel x86).
 
 ### De ce să învăț limbaj de asamblare?
 Pe lângă valoarea didactică foarte mare, în care înțelegeți în ce constă “stack overflow”, reprezentarea datelor și ce e specific procesorului cu care lucrați, există câteva aplicații în care cunoașterea limbajului de asamblare și, implicit, a arhitecturii sunt necesare sau chiar critice. 
@@ -74,7 +74,7 @@ Pentru mai multe detalii, discutați cu asistentul vostru de laborator pentru a 
 
 Aproape toate procesoarele importante de la Intel împart un ISA (instruction set architecture) comun. Aceste procesoare sunt puternic backwards compatible, având mare parte din instrucțiuni neschimbate de-a lungul generațiilor, ci doar adăugate sau extinse.
 
->**NOTE**: Un ISA definește instrucțiunile pe care le suportă un procesor, dimensiunea registrelor, moduri de adresare, tipurile de date, formatul instrucțiunilor, întreruperile și organizarea memoriei. 
+> **NOTE**: Un ISA definește instrucțiunile pe care le suportă un procesor, dimensiunea registrelor, moduri de adresare, tipurile de date, formatul instrucțiunilor, întreruperile și organizarea memoriei. 
 Procesoarele din această familie intră în categoria largă de CISC (Complex Instruction Set Computers). Filozofia din spatele lor este de a avea un număr mare de instrucțiuni, cu lungime variabilă, capabile să efectueze operații complexe, în mai mulți cicli de ceas. 
 
 ### Registre
@@ -109,7 +109,7 @@ ZF |	Zero Flag |	Setat dacă rezultatul instrucțiunii precedente este 0
 SF |	Sign Flag |	Are aceeași valoare cu a bitului de semn din cadrul rezultatului (1 negativ, 0 pozitiv)
 OF |	Overflow Flag |	Setat dacă rezultatul depășește valoarea întreagă maximă (sau minimă) reprezentabilă pe numere **signed**
 
->**NOTE**: Dacă urmăriți evoluția registrelor de la 8086, veți vedea că inițial se numeau AX, BX, CX etc. și aveau dimensiunea de 16 biți. De la 80386, Intel a extins aceste registre la 32 biți (i.e. “extended” AX → EAX). 
+> **NOTE**: Dacă urmăriți evoluția registrelor de la 8086, veți vedea că inițial se numeau AX, BX, CX etc. și aveau dimensiunea de 16 biți. De la 80386, Intel a extins aceste registre la 32 biți (i.e. “extended” AX → EAX). 
 
 ### Clase de instrucțiuni
 
@@ -146,31 +146,31 @@ cmp |	dst, src |	Compară sursa cu destinația (detalii mai jos)
 jcondiție |	<adresă> |	Efectuează salt condiționat, în funcție de valoarea flagului/variabilei de condiție
 call |	<adresă> |	Face apel la subrutina care se găsește la adresa indicată 
 
->**NOTE**: [Instrucțiunea ''cmp dest, src''](https://www.felixcloutier.com/x86/cmp) realizează în spate operația dest - src (adică scade din destinație sursa); este vorba de o scădere cu semn. Fără a reține rezultatul. Astfel, în cazul codului:
+> **NOTE**: [Instrucțiunea 'cmp dest, src'](https://www.felixcloutier.com/x86/cmp) realizează în spate operația dest - src (adică scade din destinație sursa); este vorba de o scădere cu semn. Fără a reține rezultatul. Astfel, în cazul codului:
 >
->```assembly
->    cmp eax, 0
->    jl negative
->```
+> ```assembly
+>     cmp eax, 0
+>     jl negative
+> ```
 
 > se va face saltul la eticheta `negative` dacă eax este mai mic decât `0`. Se face operația `eax - 0` și dacă rezultatul este negativ (adică dacă eax este negativ) se face saltul.
 
 > Atunci când avem comparații cu `0` (zero), același lucru se poate face mai eficient folosind instrucțiunea `test`:
 >
->```assembly
->    test eax, eax
->    jl negative
->```
+> ```assembly
+>     test eax, eax
+>     jl negative
+> ```
 >
 >Alte detalii [aici](https://en.wikibooks.org/wiki/X86_Assembly/Control_Flow#Comparison_Instructions).
 
 ## Exerciții
 
->**NOTE**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - (https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+> **IMPORTANT**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - (https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
->**NOTE**: Pentru a afișa valorile din registre vom folosi macro-ul `PRINTF32` dezvoltat de Dragoș Niculescu până veți învăța cum se efectuează apelurile de funcții. Acesta permite afișarea de valori în diverse formate și de șiruri de caractere. Pentru mai multe detalii urmăriți descrierea din fișierul unde este definit macro-ul.
+> **IMPORTANT**: Pentru a afișa valorile din registre vom folosi macro-ul `PRINTF32` dezvoltat de Dragoș Niculescu până veți învăța cum se efectuează apelurile de funcții. Acesta permite afișarea de valori în diverse formate și de șiruri de caractere. Pentru mai multe detalii urmăriți descrierea din fișierul unde este definit macro-ul.
 
->**TIP**: Pentru usurința în timpul dezvoltării, obișnuiți-vă să faceți referire la documentația instrucțiunilor - [de transfer de date](https://en.wikibooks.org/wiki/X86_Assembly/Data_Transfer), [aritmetice](https://en.wikibooks.org/wiki/X86_Assembly/Arithmetic), [de control](https://en.wikibooks.org/wiki/X86_Assembly/Control_Flow).
+> **TIP**: Pentru usurința în timpul dezvoltării, obișnuiți-vă să faceți referire la documentația instrucțiunilor - [de transfer de date](https://en.wikibooks.org/wiki/X86_Assembly/Data_Transfer), [aritmetice](https://en.wikibooks.org/wiki/X86_Assembly/Arithmetic), [de control](https://en.wikibooks.org/wiki/X86_Assembly/Control_Flow).
 
 
 ### 0. Walkthrough
@@ -196,17 +196,17 @@ Accesați directorul `1-2-hello-world` din arhiva laboratorului. Modificați pro
 2. Folosind instrucțiuni de tip jump, modificați programul astfel încât să afișeze de N ori 'Hello, World!', unde N este dat prin intermediul registrului ECX. Evitați ciclarea la infinit.
 
 
->**TIP**: După rezolvarea cu succes, programul ar trebui să se afișeze:
+> **TIP**: După rezolvarea cu succes, programul ar trebui să se afișeze:
 >
->```
->Hello, World!
->Hello, World!
->Hello, World!
->Hello, World!
->Hello, World!
->Hello, World!
->Goodbye, World!
->```
+> ```
+> Hello, World!
+> Hello, World!
+> Hello, World!
+> Hello, World!
+> Hello, World!
+> Hello, World!
+> Goodbye, World!
+> ```
 
 ### 3. Grumpy jumps
 
@@ -216,41 +216,41 @@ Accesați directorul `3-grumpy-jumps`. Treceți prin codul sursă din grumpy-jum
 
 2. De ce, în continuare, se afișează și mesajul greșit? Modificați sursa astfel încât să nu se mai afișeze mesajul greșit.
 
->**TIP**: Pentru a determina valorile necesare pentru registrele EAX si EBX vă recomandăm să folosiți GDB.
+> **TIP**: Pentru a determina valorile necesare pentru registrele EAX si EBX vă recomandăm să folosiți GDB.
 
 ### 4. Sets
 
 Pornind de la scheletul de cod din directorul `4-sets` va trebui să implementați operații pe mulțimi ce pot conține elemente între 0 și 31. Un mod eficient de a face asta (atât din punct de vedere al spațiului cât și al vitezei) ar fi să reprezentăm mulțimile astfel încât un registru să reprezinte o mulțime. Fiecare bit din registru va reprezenta un element din mulțime (dacă bit-ul i este setat atunci mulțimea conține elementul i).
 
->**TIP**: Exemplu: dacă eax ar conține reprezentarea mulțimii `{0,2,4}`, valoarea registrului ar fi `2^0 + 2^2 + 2^4 = 1 + 4 + 16 = 21`. Documentați-vă despre instrucțiunile disponibile pe arhitectura [x86](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html). 
+> **TIP**: Exemplu: dacă eax ar conține reprezentarea mulțimii `{0,2,4}`, valoarea registrului ar fi `2^0 + 2^2 + 2^4 = 1 + 4 + 16 = 21`. Documentați-vă despre instrucțiunile disponibile pe arhitectura [x86](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html). 
 
 - Aveți definite 2 mulțimi. Ce valori conțin? Realizați reuniunea celor 2 mulțimi.
 
 - Folosiți instrucțiunea or pentru a adăuga două elemente noi în mulțime. 
 
->**TIP**: Folosiți-vă de faptul că mulțimile curente, deși au “spațiu” pentru 32 de biți, au doar 8 biți folosiți. Dacă veți face `or` cu un număr mai mare de 255 (`0xff, 2^8-1`) care are doi biți activi, veți adăuga practic două elemente noi la mulțime.
+> **TIP**: Folosiți-vă de faptul că mulțimile curente, deși au “spațiu” pentru 32 de biți, au doar 8 biți folosiți. Dacă veți face `or` cu un număr mai mare de 255 (`0xff, 2^8-1`) care are doi biți activi, veți adăuga practic două elemente noi la mulțime.
 
 - Faceți intersecția celor 2 mulțimi.
 
 - Determinați elementele care lipsesc din mulțimea eax pentru ca aceasta să fie completă. 
 
->**TIP**: Adică trebuie să faceți complementul numărului folosind instrucțiunea `not`.
+> **TIP**: Adică trebuie să faceți complementul numărului folosind instrucțiunea `not`.
 
 - Eliminați un element din prima mulțime.
 
 - Faceți diferența între mulțimi.
 
->**NOTE**: Pentru a vă ajuta în afișare puteți folosi macro-ul `PRINTF32`. De exemplu:
+> **NOTE**: Pentru a vă ajuta în afișare puteți folosi macro-ul `PRINTF32`. De exemplu:
 >
->```assembly
->PRINTF32 `Reuniunea este: \x0`
->PRINTF32 `%u\n\x0`, eax
->```
+> ```assembly
+> PRINTF32 `Reuniunea este: \x0`
+> PRINTF32 `%u\n\x0`, eax
+> ```
 >
 
 ### 5. BONUS: Min
 
- Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`. 
+Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`. 
 
 ### 6. BONUS: Fibonacci
 
