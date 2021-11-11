@@ -29,31 +29,106 @@ global main
 get_int:
     ; TODO --- return the int value from struct
     ; int get_int(struct my_struct *obj)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to get.
+    ; TODO --- move the int's value to `eax` to return it
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 get_char:
     ; TODO --- return the char value from struct
     ; char get_char(struct my_struct *obj)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to get.
+    ; TODO --- move the char's value to `eax` to return it.
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 get_string:
     ; TODO --- return a pointer to the string value from struct
     ; char* get_string(struct my_struct *obj)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to get.
+    ; TODO --- move the string's address to `eax` to return it.
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 set_int:
     ; TODO --- set the int value from struct with the new one
     ; void set_int(struct my_struct *obj, int x)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to set.
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 set_char:
     ; TODO --- set the char value from struct with the new one
     ; void set_char(struct my_struct *obj, char y)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to set.
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 set_string:
     ; TODO --- set the string value from struct with the new one
     ; void set_string(struct my_struct *obj, char* s)
+
+    ; Common entry instructions used to set the function stack frame.
+    ; Do not modify them.
+    push ebp
+    mov ebp, esp
+
+    ; The first argument is a pointer to the beginning of the structure, so you
+    ; must use it to calculate the actual address of the data you want to set.
+
+    ; Instructions used to clear the function stack frame and return to the
+    ; caller functions. Do not modify them.
+    leave
     ret
 
 main:

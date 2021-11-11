@@ -1,5 +1,5 @@
-# Laborator 08: Date Structurate. Structuri, vectori. Operatii pe siruri
-În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri. 
+# Laborator 07: Date Structurate. Structuri, vectori. Operatii pe siruri
+În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri.
 
 ## Structuri
 Structurile sunt folosite pentru a grupa date care au tipuri diferite, dar care pot fi folosite împreună pentru a crea un tip compus.
@@ -32,7 +32,7 @@ Fiecare etichetă ce definește un câmp reprezintă offset-ul câmpului în cad
 >    .a:    resw 1
 >    .b:    resd 1
 >endstruc
-> 
+>
 >struc mystruct2
 >    .a:    resd 16
 >    .b:    resw 1
@@ -78,7 +78,7 @@ mov eax, 12345
 mov dword [struct + b], eax ; adresa câmpului b este adresa de bază a structurii instanțiate static + offset-ul câmpului (dat de eticheta 'b')
 
 mov ebx, dword [struct + b] ; punerea valorii din câmpul b în registrul ebx pentru afișare
-PRINTF32 `%d\n\x0`, ebx 
+PRINTF32 `%d\n\x0`, ebx
 ```
 
 ## Vectori
@@ -119,7 +119,7 @@ Obținem:
 section .data
     pointArray:    times 800    db 0
 ```
-În plus, NASM oferă o alternativă la calculul “de mână” al dimensiunii unei structuri, generând automat macro-ul `<nume structura>_size`. Astfel, exemplul anterior poate deveni: 
+În plus, NASM oferă o alternativă la calculul “de mână” al dimensiunii unei structuri, generând automat macro-ul `<nume structura>_size`. Astfel, exemplul anterior poate deveni:
 ```Assembly
 section .data
     pointArray:    times point_size * 100    db 0
@@ -143,36 +143,36 @@ mov edx, [ebx + point_size * eax + point.y] ; se calculează adresa câmpului do
 
 PRINTF32 `%u\n\x0`, edx
 ```
-Parcurgem vectorul, având la fiecare iterație indicele curent în registrul eax. Putem să afișăm valorile din ambele câmpuri ale fiecărui element din vector cu următorul program: 
+Parcurgem vectorul, având la fiecare iterație indicele curent în registrul eax. Putem să afișăm valorile din ambele câmpuri ale fiecărui element din vector cu următorul program:
 ```Assembly
 struc   point
 	.x: resd 1
 	.y: resd 1
 endstruc
- 
+
 section .data
     pointArray: times point_size * 100 db 0
- 
+
 section .text
     global CMAIN
- 
-CMAIN:                                 
+
+CMAIN:
     push ebp
     mov ebp, esp
- 
+
     xor edx, edx
     xor eax, eax
 label:
     mov edx, [pointArray + point_size * eax + point.x] ; accesăm membrul x
     PRINTF32 `%u\n\x0`, edx
- 
+
     mov edx, [pointArray + point_size * eax + point.y] ; accesăm membrul y
     PRINTF32 `%u\n\x0`, edx
- 
-    inc eax ; incrementarea indicelui de iterare  
+
+    inc eax ; incrementarea indicelui de iterare
     cmp eax, 100
     jl label
- 
+
     leave
     ret
 ```
@@ -182,7 +182,7 @@ label:
 Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
 ### 0. Recapitulare: Fibonacci sum
-Pornind de la fișierul `fibo_sum.asm`, implementați un program care calculează suma primelor N numere din șirul fibonacci utilizând instrucțiunea `loop`. Suma primelor 9 este 54. 
+Pornind de la fișierul `fibo_sum.asm`, implementați un program care calculează suma primelor N numere din șirul fibonacci utilizând instrucțiunea `loop`. Suma primelor 9 este 54.
 
 >**NOTE**: Puteți să investigați secțiunea [Instrucțiuni de transfer de date](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-04#instructiuni_de_transfer_de_date) din laboratorul 4.
 
@@ -209,7 +209,9 @@ Scrieți cod în cadrul funcției `main` astfel încât să modificați câmpuri
 >**TIP**: Pentru modificarea grupei, va trebui să schimbați al treilea octet/caracter al câmpului `group` (adică octetul/caracterul cu indexul 2).
 
 ### 3. Getter
-În fișierul `getter_setter_printf.asm` implementați funcțiile `get_int`, `get_char`, respectiv `get_string`, ce vor returna valorile câmpurilor int_x, char_y, respectiv string_s din structura `my_struc`. Valorile vor fi returnate in registrul `eax`.
+În fișierul `getter_setter_printf.asm` implementați funcțiile `get_int`, `get_char`, respectiv `get_string`, ce vor returna valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din structura `my_struc`. Valorile vor fi returnate prin registrul `eax`.
+
+>**TIP**: Funcțiile primesc ca argument un pointer la începutul structurii. Parametrul se află la adresa `esp + 8` și pentru a fi folosit ca pointer, trebuie citită valoarea sa într-un registru (ex. registrul `ebx`).
 
 Output-ul programului după o rezolvare corectă este:
 ```
@@ -220,7 +222,9 @@ My string is better than yours
 Urmăriți comentariile marcate cu **TODO**.
 
 ### 4. Setter
-Mai departe, implementați funcțiile `set_int`, `set_char`, respectiv `set_string`, ce vor suprascrie valorile câmpurilor int_x, char_y, respectiv string_s din `structura my_struc` cu noile valori date.
+Mai departe, implementați funcțiile `set_int`, `set_char`, respectiv `set_string`, ce vor suprascrie valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din `structura my_struc` cu noile valori date.
+
+>**TIP**: Funcțiile primesc doi parametri - un pointer la începutul structurii, ca la exercițiul anterior, și o valoare care trebuie să fie folosită ca sursă pentru atribuire. Cei doi parametri sunt în ordine la adresele `esp + 8` (primul parametru) și `esp + 12` (al doilea parametru).
 
 Output-ul programului după o rezolvare corectă este:
 ```
@@ -231,17 +235,22 @@ Are you sure?
 Urmăriți comentariile marcate cu `TODO`.
 
 ### 5. Printf
-În funcția main, afișați câmpurile structurii utilizând apeluri ale funcției printf. Verificați că programul afișază aceleași valori ca la exercițiul precedent. Puteți folosi formaturile de la liniile 10-12 pentru a printa câmpurile.
->**NOTE**: Registrul `ebx` conține adresa de început a structurii, așa că trebuie salvat dacă îl veți folosi în implementare.
+În funcția `main`, afișați câmpurile structurii utilizând apeluri ale funcției `printf`. Verificați că programul afișază valorile corespunzătoare cu, respectiv fără, folosirea funcțiilor `set_*`. Puteți folosi formaturile de la liniile 10-12 pentru a printa câmpurile.
 
 ### 6. Bonus: Căutarea unui subșir într-un șir
 Găsiți toate aparițiile subșirului `substring` în șirul `source_text` din fișierul `find_substring.asm`.
 
 Afișați rezultatele sub forma:
 ```
-Substring found at index: <N> 
+Substring found at index: <N>
 ```
->**IMPORTANT**: Nu puteți folosi funcția de bibliotecă strstr (sau similar) pentru acest subpunct.
+>**IMPORTANT**: Nu puteți folosi funcția de bibliotecă `strstr` (sau similar) pentru acest subpunct.
+
+>**TIP**: Pentru afișare puteți folosi atât macro-ul `PRINTF32`, cât și funcția `printf`, ca la exercițiile anterioare. Pașii pentru afișare folosind `printf` sunt următorii:
+> - puneți pe stivă valoarea pe care vreți să o afișați (poziția unde a fost găsit subșirul)
+> - puneți pe stivă adresa șirului `print_format`
+> - apelați funcția `printf`
+> - curățați parametrii adăugați anterior de pe stivă prin adăugarea valorii 8 la registrul `esp` (fiecare dintre parametri are 4 octeți).
 
 ## Soluții
-Soluțiile pentru exerciții sunt disponibile: [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-08-sol.zip)
+Soluțiile pentru exerciții sunt disponibile: [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-07-sol.zip)

@@ -4,7 +4,7 @@ section .data
 source_text: db "ABCABCBABCBABCBBBABABBCBABCBAAACCCB", 0
 substring: db "BABC", 0
 
-print_format: db "Substring found at index: ", 0
+print_format: db "Substring found at index: %d", 10, 0
 
 section .text
 extern printf
