@@ -1,4 +1,4 @@
-# Laborator 05: Rolul registrelor, adresare directă și bazată
+# Laborator 06: Rolul registrelor, adresare directă și bazată
 
 În acest laborator vom aprofunda lucrul cu registre și modul în care se utilizează memoria atunci când programăm assembly pe un sistem x86 de 32 biți.
 
@@ -205,7 +205,7 @@ Urmăriți codul, observați construcțiile și registrele specifice pentru lucr
 
 În zona marcată cu TODO din fișierul `sum_array.asm` completați codul pentru a realiza suma vectorilor cu elemente de tip word (16 biți) și de tip dword (32 de biți); este vorba de vectorii `word_array` și `dword_array`.
 
->Când veți calcula adresa unui element din array, veți folosi construcție de forma:
+> **TIP**: Când veți calcula adresa unui element din array, veți folosi construcție de forma:
 >
 > ```base + size * index```
 >
@@ -289,4 +289,4 @@ Creați un program care afișează numărul de numere pare, respectiv numărul d
 
 ## Soluții
 
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-05-sol.zip).
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-06-sol.zip).
