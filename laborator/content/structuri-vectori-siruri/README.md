@@ -1,5 +1,5 @@
 # Laborator 07: Date Structurate. Structuri, vectori. Operatii pe siruri
-În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri. 
+În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri.
 
 ## Structuri
 Structurile sunt folosite pentru a grupa date care au tipuri diferite, dar care pot fi folosite împreună pentru a crea un tip compus.
@@ -32,7 +32,7 @@ Fiecare etichetă ce definește un câmp reprezintă offset-ul câmpului în cad
 >    .a:    resw 1
 >    .b:    resd 1
 >endstruc
-> 
+>
 >struc mystruct2
 >    .a:    resd 16
 >    .b:    resw 1
@@ -78,7 +78,7 @@ mov eax, 12345
 mov dword [struct + b], eax ; adresa câmpului b este adresa de bază a structurii instanțiate static + offset-ul câmpului (dat de eticheta 'b')
 
 mov ebx, dword [struct + b] ; punerea valorii din câmpul b în registrul ebx pentru afișare
-PRINTF32 `%d\n\x0`, ebx 
+PRINTF32 `%d\n\x0`, ebx
 ```
 
 ## Vectori
@@ -119,7 +119,7 @@ Obținem:
 section .data
     pointArray:    times 800    db 0
 ```
-În plus, NASM oferă o alternativă la calculul “de mână” al dimensiunii unei structuri, generând automat macro-ul `<nume structura>_size`. Astfel, exemplul anterior poate deveni: 
+În plus, NASM oferă o alternativă la calculul “de mână” al dimensiunii unei structuri, generând automat macro-ul `<nume structura>_size`. Astfel, exemplul anterior poate deveni:
 ```Assembly
 section .data
     pointArray:    times point_size * 100    db 0
@@ -143,36 +143,36 @@ mov edx, [ebx + point_size * eax + point.y] ; se calculează adresa câmpului do
 
 PRINTF32 `%u\n\x0`, edx
 ```
-Parcurgem vectorul, având la fiecare iterație indicele curent în registrul eax. Putem să afișăm valorile din ambele câmpuri ale fiecărui element din vector cu următorul program: 
+Parcurgem vectorul, având la fiecare iterație indicele curent în registrul eax. Putem să afișăm valorile din ambele câmpuri ale fiecărui element din vector cu următorul program:
 ```Assembly
 struc   point
 	.x: resd 1
 	.y: resd 1
 endstruc
- 
+
 section .data
     pointArray: times point_size * 100 db 0
- 
+
 section .text
     global CMAIN
- 
-CMAIN:                                 
+
+CMAIN:
     push ebp
     mov ebp, esp
- 
+
     xor edx, edx
     xor eax, eax
 label:
     mov edx, [pointArray + point_size * eax + point.x] ; accesăm membrul x
     PRINTF32 `%u\n\x0`, edx
- 
+
     mov edx, [pointArray + point_size * eax + point.y] ; accesăm membrul y
     PRINTF32 `%u\n\x0`, edx
- 
-    inc eax ; incrementarea indicelui de iterare  
+
+    inc eax ; incrementarea indicelui de iterare
     cmp eax, 100
     jl label
- 
+
     leave
     ret
 ```
@@ -182,7 +182,7 @@ label:
 Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
 ### 0. Recapitulare: Fibonacci sum
-Pornind de la fișierul `fibo_sum.asm`, implementați un program care calculează suma primelor N numere din șirul fibonacci utilizând instrucțiunea `loop`. Suma primelor 9 este 54. 
+Pornind de la fișierul `fibo_sum.asm`, implementați un program care calculează suma primelor N numere din șirul fibonacci utilizând instrucțiunea `loop`. Suma primelor 9 este 54.
 
 >**NOTE**: Puteți să investigați secțiunea [Instrucțiuni de transfer de date](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-04#instructiuni_de_transfer_de_date) din laboratorul 4.
 
@@ -239,7 +239,7 @@ Găsiți toate aparițiile subșirului `substring` în șirul `source_text` din 
 
 Afișați rezultatele sub forma:
 ```
-Substring found at index: <N> 
+Substring found at index: <N>
 ```
 >**IMPORTANT**: Nu puteți folosi funcția de bibliotecă strstr (sau similar) pentru acest subpunct.
 
