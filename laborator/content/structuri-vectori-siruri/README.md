@@ -1,4 +1,4 @@
-# Laborator 08: Date Structurate. Structuri, vectori. Operatii pe siruri
+# Laborator 07: Date Structurate. Structuri, vectori. Operatii pe siruri
 În acest laborator vom introduce noțiunea de structură din limbajul assembly și vom lucra cu operații specializate pe șiruri. 
 
 ## Structuri
@@ -244,4 +244,4 @@ Substring found at index: <N>
 >**IMPORTANT**: Nu puteți folosi funcția de bibliotecă strstr (sau similar) pentru acest subpunct.
 
 ## Soluții
-Soluțiile pentru exerciții sunt disponibile: [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-08-sol.zip)
+Soluțiile pentru exerciții sunt disponibile: [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-07-sol.zip)
