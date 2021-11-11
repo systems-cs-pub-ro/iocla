@@ -1,4 +1,4 @@
-# Laborator 09: Interactiunea C-assembly
+# Laborator 10: Interactiunea C-assembly
 Având în vedere că limbajul de asamblare prezintă dificultăți atât în citirea cât și în dezvoltarea codului, tendința generală este aceea de a se migra către limbaje de nivel înalt (care sunt mult mai ușor de citit și oferă un API mult mai ușor de utilizat). Cu toate acestea, tot există situații în care, din rațiuni de optimizare, se folosesc mici rutine assembly care sunt integrate în modulul limbajului de nivel inalt.
 
 În acest laborator vom vedea cum se pot integra module de assembly în programe C și viceversa.
@@ -213,4 +213,4 @@ Intrați în subdirectorul `8-max-c-calls-x64/` și faceți implementarea calcul
 Intrați în subdirectorul `9-max-assembly-calls` și faceți implementarea calculului maximului în C cu apel din limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 6 și 7 în așa fel încât să îl rulați folosind un sistem pe 64 de biți. Urmați indicațiile de la exercițiul anterior și aveți grijă la ordinea parametrilor. 
 
 ## Soluții
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-09-sol.zip). 
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-10-sol.zip). 
