@@ -1,4 +1,4 @@
-# Laborator 06: Lucrul cu stiva
+# Laborator 08: Lucrul cu stiva
 
 În acest laborator vom învăța cum este reprezentată stiva in limbajul de asamblare, care este utilitatea ei si cum se programeaza cu ajutorul acesteia.
 
@@ -66,7 +66,7 @@ CMAIN:
     PRINTF32 `%d \n\x0`, eax
 ```
 
-> **QUESTION:** Comentati instructiunile `sub esp, 4` si `add esp, 4`. Ce se intampla? De ce?
+> **IMPORTANT:** Comentati instructiunile `sub esp, 4` si `add esp, 4`. Ce se intampla? De ce?
 
 > **NOTE:** Stiva este folosita pentru a memora adresa de retur in momentul in care o functie este apelata
 
@@ -149,12 +149,12 @@ CMAIN:
     ret
 ```
 
-> **QUESTION:** Care este intrebuintarea principala a registrului `ebp`?
+> **IMPORTANT:** Care este intrebuintarea principala a registrului `ebp`?
 
 Dupa cum putem observa, registrul ebp defineste stack frame-ul fiecarei functii. De altfel, la fel cum putem adresa variabilele locale cu ajutorul registrului esp, acelasi lucru este este posibil si cu ebp. Mai mult de atat, vom vedea ca parametrii functiei apelate sunt adresati cu ajutorul lui ebp.
 
 ## Exercitii
-> **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
+> **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - https://github.com/systems-cs-pub-ro/iocla. Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 >
 ### 0. Recapitulare: Media aritmetică a elementelor dintr-un vector
 
@@ -218,8 +218,10 @@ Programul `stack-addressing.asm` din arhiva laboratorului alocă și inițialize
 >```
 >Explicați semnificația fiecărui octet. De ce sunt puși în ordinea respectivă? De ce unii octeți sunt 0?
 
-> **NOTE:** Amintiți-vă ce valoare au caracterele în reprezentarea zecimală(codul ASCII).
+> **TIP:** Amintiți-vă ce valoare au caracterele în reprezentarea zecimală(codul ASCII).
 Amintiți-vă în ce ordine sunt ținuți octeții unui număr: revedeți secțiunea **Ordinea de reprezentare a numerelor mai mari de un octet** din Laboratorul 01.
+
+> **HINT:** Citiți sectiunea Operatii asupra stivei.
 
 ### 4. Variabile locale
 Programul `merge-arrays.asm` din cadrul arhivei de laborator, îmbină două array-uri sortate crescător (`array_1` și `array_2`) punând array-ul rezultat în `array_output` definit în secțiunea `.data`.
