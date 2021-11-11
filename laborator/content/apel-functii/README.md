@@ -163,7 +163,7 @@ foo:
 
     *De asemnea, in unele cazuri, se poate returna o adresa de memorie catre stiva/heap, sau alte zone de memorie, care refera obiectul dorit in urma apelului functiei.*
 
-5. O functie foloseste aceleasi registre hardware, asadar, la iesirea din functie valorile registrelor nu mai sunt aceleasi. Pentru a evita aceasta situatie, se pot salva unele/toate registrele pe stiva (mai multe in [Laboratorul 8](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator)
+5. O functie foloseste aceleasi registre hardware, asadar, la iesirea din functie valorile registrelor nu mai sunt aceleasi. Pentru a evita aceasta situatie, se pot salva unele/toate registrele pe stiva.
 
 
 > **_NOTE:_**  Deoarece limbajele de asamblare ofera mai multe oportunitati, exista necesitatea de a avea conventii de apelare a functiilor in x86. Diferenta dintre acestea poate consta in ordinea parametrilor, modul cum parametrii sunt pasati functiei, ce registre trebuiesc conservate de apelat sau daca apelantul ori apelatul se ocupa de pregatirea stivei. Mai multe detalii puteti gasi [aici](https://en.wikipedia.org/wiki/X86_calling_conventions) sau [aici](https://levelup.gitconnected.com/x86-calling-conventions-a34812afe097) daca wikipedia e prea mainstream pentru voi.
@@ -443,4 +443,4 @@ Aplicați `rot13` pe caracterele alfabetice și înlocuiți terminatorul de șir
 - [nasm](http://www.nasm.us/)
 
 ## Soluții
-- Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-07-sol.zip).
+- Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-09-sol.zip).
