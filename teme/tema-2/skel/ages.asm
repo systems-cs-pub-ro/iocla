@@ -8,7 +8,7 @@ endstruc
 section .text
     global ages
 
-; void ages(int len, struct my_struct* present, struct my_struct* dates, int* all_ages);
+; void ages(int len, struct my_date* present, struct my_date* dates, int* all_ages);
 ages:
     ;; DO NOT MODIFY
     push    ebp
