@@ -30,5 +30,5 @@ checker: checker.o  ages.o rotp.o columnar.o cache.o
 	rm *.o
 
 clean:
-	rm checker
-	rm output/*
+	rm -f checker
+	rm -f output/*
