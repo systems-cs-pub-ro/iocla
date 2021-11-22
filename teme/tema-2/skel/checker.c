@@ -13,15 +13,16 @@ void prepare_files(char *file_prefix, char infile_name[20], char outfile_name[20
 {
     int len = strlen(file_prefix);
 
-    if(!task4)
+    if (!task4)
         memset(infile_name, 0, 20);
 
     memset(outfile_name, 0, 20);
     memset(reffile_name, 0, 20);
-    
+
     file_prefix[len - 1] = '0' + i;
 
-    if(!task4) {
+    if (!task4)
+    {
         strncpy(infile_name, "input/", 6);
         strncat(infile_name, file_prefix, len);
         strncat(infile_name, "_in\0", 4);
@@ -47,13 +48,14 @@ void test_rotp()
 {
     FILE *infile, *outfile, *reffile;
     char file_prefix[6] = "rotpx",
-         infile_name[25], 
+         infile_name[25],
          outfile_name[25],
          reffile_name[25],
          *plaintext, *key, *ciphertext, *reftext;
     int len;
 
-    for (int i = 0; i < ROTP_TESTS; i++) {
+    for (int i = 0; i < ROTP_TESTS; i++)
+    {
         prepare_files(file_prefix, infile_name, outfile_name, reffile_name, i, 0);
 
         infile = fopen(infile_name, "r");
@@ -78,10 +80,13 @@ void test_rotp()
 
         fread(reftext, sizeof(char), len, reffile);
 
-        if (memcmp(ciphertext, reftext, len) == 0) {
+        if (memcmp(ciphertext, reftext, len) == 0)
+        {
             score += ROTP_SCORE;
             printf("ROTP test %d\t\t\t\t\tPASSED    %.1f / %.1f  \n", i, ROTP_SCORE, ROTP_SCORE);
-        } else {
+        }
+        else
+        {
             printf("ROTP test %d\t\t\t\t\tFAILED    0 / %.1f  \n", i, ROTP_SCORE);
         }
 
@@ -92,49 +97,55 @@ void test_rotp()
         free(key);
         free(reftext);
     }
-
 }
 
- void test_ages(){
+void test_ages()
+{
     FILE *infile, *outfile, *reffile;
     char file_prefix[6] = "agesx",
-         infile_name[20], 
+         infile_name[20],
          outfile_name[20],
          reffile_name[20];
     int len;
     struct my_struct present;
-    for( int i = 0 ; i < AGES_TESTS; i++){
+    for (int i = 0; i < AGES_TESTS; i++)
+    {
         prepare_files(file_prefix, infile_name, outfile_name, reffile_name, i, 0);
 
         infile = fopen(infile_name, "r");
         outfile = fopen(outfile_name, "w+");
         reffile = fopen(reffile_name, "r");
 
-        struct my_struct* dates = malloc(30*sizeof(struct my_struct));
-        
-        int* all_ages = malloc(30*sizeof(int));
-        int* ref_ages = malloc(30*sizeof(int));
+        struct my_struct *dates = malloc(30 * sizeof(struct my_struct));
 
-        fscanf(infile,"%d", &len);
-        fscanf(infile,"%hd%hd%d",&present.day,&present.month,&present.year);
-        for(int j = 0 ; j < len; j++){
-            fscanf(infile,"%hd%hd%d",&dates[j].day,&dates[j].month,&dates[j].year);
-            fscanf(reffile,"%d", &ref_ages[j]);
+        int *all_ages = malloc(30 * sizeof(int));
+        int *ref_ages = malloc(30 * sizeof(int));
+
+        fscanf(infile, "%d", &len);
+        fscanf(infile, "%hd%hd%d", &present.day, &present.month, &present.year);
+        for (int j = 0; j < len; j++)
+        {
+            fscanf(infile, "%hd%hd%d", &dates[j].day, &dates[j].month, &dates[j].year);
+            fscanf(reffile, "%d", &ref_ages[j]);
         }
 
-        ages(len,&present,dates,all_ages);
-        
+        ages(len, &present, dates, all_ages);
+
         int verif = 0;
-        for(int j = 0 ; j < len ; j++){
-            fprintf(outfile,"%d\n", all_ages[j]);
-            if(all_ages[j] != ref_ages[j])
+        for (int j = 0; j < len; j++)
+        {
+            fprintf(outfile, "%d\n", all_ages[j]);
+            if (all_ages[j] != ref_ages[j])
                 verif++;
         }
 
-        if (!verif) {
+        if (!verif)
+        {
             score += AGES_SCORE;
             printf("AGES test %d\t\t\t\t\tPASSED    %.1f / %.1f  \n", i, AGES_SCORE, AGES_SCORE);
-        } else {
+        }
+        else
+        {
             printf("AGES test %d\t\t\t\t\tFAILED    0 / %.1f  \n", i, AGES_SCORE);
         }
 
@@ -219,11 +230,11 @@ void test_column()
     }
 }
 
-
-void test_cache() {
+void test_cache()
+{
     FILE *infile, *outfile, *reffile;
     char file_prefix[7] = "cachex",
-         infile_name[20], 
+         infile_name[20],
          outfile_name[20],
          reffile_name[20];
     unsigned long i = 0, j = 0;
@@ -232,8 +243,10 @@ void test_cache() {
     char memory[48 * 48 + 8];
 
     // Make sure the first valid address is always ending in 000 (divisible with 8).
-    for (i = 0; i < 8; i++) {
-        if (((unsigned long) &(memory[i])) % 8 == 0) {
+    for (i = 0; i < 8; i++)
+    {
+        if (((unsigned long)&(memory[i])) % 8 == 0)
+        {
             memory_start = i;
             break;
         }
@@ -241,7 +254,8 @@ void test_cache() {
 
     // Read the memory content.
     infile = fopen("input/cache_in", "r");
-    for (j = memory_start; j < 48 * 48 + memory_start; j++) {
+    for (j = memory_start; j < 48 * 48 + memory_start; j++)
+    {
         fscanf(infile, "%hhu", &(memory[j]));
     }
     fclose(infile);
@@ -250,12 +264,13 @@ void test_cache() {
     char **tags = malloc(CACHE_LINES * sizeof(char *));
     for (i = 0; i < CACHE_LINES; i++)
         tags[i] = 0;
-    
 
     // Initialize empty cache
     char cache[CACHE_LINES][CACHE_LINE_SIZE];
-    for (i = 0; i < CACHE_LINES; i++) {
-        for (j = 0; j < CACHE_LINE_SIZE; j++) {
+    for (i = 0; i < CACHE_LINES; i++)
+    {
+        for (j = 0; j < CACHE_LINE_SIZE; j++)
+        {
             cache[i][j] = 0;
         }
     }
@@ -267,42 +282,45 @@ void test_cache() {
 
     int pass;
     char *address;
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++)
+    {
         prepare_files(file_prefix, infile_name, outfile_name, reffile_name, i, 1);
 
         outfile = fopen(outfile_name, "w+");
         reffile = fopen(reffile_name, "r");
-        
 
-        int verif  = 0;
+        int verif = 0;
         int check;
         pass = 0;
-        address = (char *) (memory + memory_start + 48 * x[i] + y[i]);
+        address = (char *)(memory + memory_start + 48 * x[i] + y[i]);
         load(&reg, tags, cache, address, to_replace[i]);
 
         fprintf(outfile, "%hhu\n", reg);
-        fscanf(reffile,"%u",&check);
-        if(check != reg)
+        fscanf(reffile, "%u", &check);
+        if (check != reg)
             verif = 1;
-        for (j = 0; j < CACHE_LINE_SIZE; j++) {
+        for (j = 0; j < CACHE_LINE_SIZE; j++)
+        {
             fprintf(outfile, "%hhu", cache[to_replace[i]][j]);
-            fscanf(reffile,"%u",&check);
-            if(check != cache[to_replace[i]][j])
+            fscanf(reffile, "%u", &check);
+            if (check != cache[to_replace[i]][j])
                 verif = 1;
             if (j < CACHE_LINE_SIZE - 1)
                 fprintf(outfile, " ");
-         }
+        }
         fprintf(outfile, "\n");
         fclose(outfile);
         fclose(reffile);
 
-        if (!verif) {
+        if (!verif)
+        {
             score += CACHE_SCORE;
             printf("CACHE test %ld\t\t\t\t\tPASSED    %.1f / %.1f  \n", i, CACHE_SCORE, CACHE_SCORE);
-        } else {
+        }
+        else
+        {
             printf("CACHE test %ld\t\t\t\t\tFAILED    0 / %.1f  \n", i, CACHE_SCORE);
         }
-
     }
 
     /*
@@ -311,7 +329,6 @@ void test_cache() {
      from memory to cache in case of a CACHE MISS.
      */
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -324,12 +341,14 @@ int main(int argc, char *argv[])
     printf("-------------------- Structuri. Vectori. Siruri --------------------\n");
     printf("--------------------------------------------------------------------\n");
 
-    if (argc == 1 || !strncmp(argv[1], "1", 1)) {
+    if (argc == 1 || !strncmp(argv[1], "1", 1))
+    {
         test_rotp();
         printf("--------------------------------------------------------------------\n");
     }
 
-    if (argc == 1 || !strncmp(argv[1], "2", 1)) {
+    if (argc == 1 || !strncmp(argv[1], "2", 1))
+    {
         test_ages();
         printf("--------------------------------------------------------------------\n");
     }
@@ -346,15 +365,18 @@ int main(int argc, char *argv[])
         printf("--------------------------------------------------------------------\n");
     }
 
-    if (access("README", F_OK) != -1) {
+    if (access("README", F_OK) != -1)
+    {
         score += 10;
         printf("README\t\t\t\t\tI SEE A README :)) 10 / 10 \n");
-    } else {
+    }
+    else
+    {
         printf("README\t\t\t\t\tNO README? WHY? :(( 0 / 10 \n");
     }
     printf("--------------------------------------------------------------------\n");
 
-    if(score != MAX_SCORE)
+    if (score != MAX_SCORE)
         printf("YOUR SCORE:  %.1f / %.1f  :(( Try harder! Sleep is for the weak!\n", score, MAX_SCORE);
     else
         printf("YOUR SCORE:  %.1f / %.1f  :)) Well done! Sweet dreams! \n", score, MAX_SCORE);
