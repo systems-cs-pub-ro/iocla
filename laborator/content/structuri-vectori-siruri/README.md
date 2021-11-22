@@ -196,13 +196,13 @@ Urmăriți codul, observați construcțiile și modurile de adresare a memoriei.
 >**IMPORTANT**: Treceți la următorul pas doar după ce ați înțeles foarte bine ce face codul. Vă va fi greu să faceți următorul exercițiu dacă aveți dificultăți în înțelegerea exercițiului curent.
 
 ### 2. Modificarea unei structuri
-Scrieți cod în cadrul funcției `main` astfel încât să modificați câmpurile structurii sample_student pentru ca:
+Scrieți cod în cadrul funcției `main` astfel încât să modificați câmpurile structurii `sample_student` pentru ca:
 
 *    anul nașterii să fie `1993`
 *    vârsta să fie `22`
 *    grupa să fie `323CA`
 
->**WARNING**: Nu modificați ce se afișează, modificați codul structurii. Nu vă atingeți de codul de afișare, acel cod trebuie să rămână același. Trebuie să adăugați la începutul funcției main, în locul marcat cu `TODO` codul pentru modificarea structurii.
+>**WARNING**: Nu modificați ce se afișează, modificați codul structurii. Nu vă atingeți de codul de afișare, acel cod trebuie să rămână același. Trebuie să adăugați la începutul funcției `main`, în locul marcat cu `TODO` codul pentru modificarea structurii.
 
 >**WARNING**: Trebuie să modificați conținutul structurii din cod, adică trebuie să scrieți în zona de memorie aferentă câmpului din structură. Nu modificați structura din secțiunea `.data`, este vorba să folosiți cod pentru a modifca structura.
 
@@ -211,7 +211,7 @@ Scrieți cod în cadrul funcției `main` astfel încât să modificați câmpuri
 ### 3. Getter
 În fișierul `getter_setter_printf.asm` implementați funcțiile `get_int`, `get_char`, respectiv `get_string`, ce vor returna valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din structura `my_struc`. Valorile vor fi returnate prin registrul `eax`.
 
->**TIP**: Funcțiile primesc ca argument un pointer la începutul structurii. Parametrul se află la adresa `esp + 8` și pentru a fi folosit ca pointer, trebuie citită valoarea sa într-un registru (ex. registrul `ebx`).
+>**TIP**: Funcțiile primesc ca argument un pointer la începutul structurii. Parametrul se află la adresa `ebp + 8` și pentru a fi folosit ca pointer, trebuie citită valoarea sa într-un registru (ex. registrul `ebx`).
 
 Output-ul programului după o rezolvare corectă este:
 ```
@@ -224,7 +224,7 @@ Urmăriți comentariile marcate cu **TODO**.
 ### 4. Setter
 Mai departe, implementați funcțiile `set_int`, `set_char`, respectiv `set_string`, ce vor suprascrie valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din `structura my_struc` cu noile valori date.
 
->**TIP**: Funcțiile primesc doi parametri - un pointer la începutul structurii, ca la exercițiul anterior, și o valoare care trebuie să fie folosită ca sursă pentru atribuire. Cei doi parametri sunt în ordine la adresele `esp + 8` (primul parametru) și `esp + 12` (al doilea parametru).
+>**TIP**: Funcțiile primesc doi parametri - un pointer la începutul structurii, ca la exercițiul anterior, și o valoare care trebuie să fie folosită ca sursă pentru atribuire. Cei doi parametri sunt în ordine la adresele `ebp + 8` (primul parametru) și `ebp + 12` (al doilea parametru).
 
 Output-ul programului după o rezolvare corectă este:
 ```
