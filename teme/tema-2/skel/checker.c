@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -239,24 +238,34 @@ void test_cache()
          reffile_name[20];
     unsigned long i = 0, j = 0;
     char reg;
-    unsigned long memory_start = 0;
-    char memory[48 * 48 + 8];
+    unsigned long memory0_start = 0, memory1_start = 0;
+    char memory0[16 * 16 + 8];
+    char memory1[48 * 48 + 8];
 
     // Make sure the first valid address is always ending in 000 (divisible with 8).
     for (i = 0; i < 8; i++)
     {
-        if (((unsigned long)&(memory[i])) % 8 == 0)
-        {
-            memory_start = i;
-            break;
+        if (((unsigned long)&(memory0[i])) % 8 == 0) {
+            memory0_start = i;
         }
+        if (((unsigned long)&(memory1[i])) % 8 == 0)
+        {
+            memory1_start = i;
+        }
+
     }
 
     // Read the memory content.
-    infile = fopen("input/cache_in", "r");
-    for (j = memory_start; j < 48 * 48 + memory_start; j++)
+    infile = fopen("input/cacheA_in", "r");
+    for (j = memory0_start; j < 48 * 48 + memory0_start; j++)
     {
-        fscanf(infile, "%hhu", &(memory[j]));
+        fscanf(infile, "%hhu", &(memory0[j]));
+    }
+    fclose(infile);
+    infile = fopen("input/cacheB_in", "r");
+    for (j = memory1_start; j < 48 * 48 + memory1_start; j++)
+    {
+        fscanf(infile, "%hhu", &(memory1[j]));
     }
     fclose(infile);
 
@@ -276,10 +285,15 @@ void test_cache()
     }
 
     // Build the address we want to get data from. CHANGE x and y to move trough memory.
-    int x[10] = {0, 2, 37, 0, 34, 47, 22, 10, 10, 47};
-    int y[10] = {1, 4, 47, 1, 34, 3, 25, 0, 0, 47};
-    int to_replace[10] = {7, 7, 17, 12, 13, 14, 2, 15, 10};
+    int x[10] = {0, 2, 2, 0, 14, 47, 22, 10, 10, 47};
+    int y[10] = {1, 4, 4, 1, 14, 3, 25, 0, 0, 47};
+    int to_replace[10] = {7, 7, 17, 12, 13, 14, 2, 15, 10, 11};
 
+    /*
+     Testing. We are interested in checking the value brought in the register.
+     Also, we need to check that the tag was modified and a line was brought
+     from memory to cache in case of a CACHE MISS.
+     */
     int pass;
     char *address;
     for (i = 0; i < 10; i++)
@@ -292,7 +306,10 @@ void test_cache()
         int verif = 0;
         int check;
         pass = 0;
-        address = (char *)(memory + memory_start + 48 * x[i] + y[i]);
+        if (i < 5)
+            address = (char *)(memory0 + memory0_start + 16 * x[i] + y[i]);
+        else
+            address = (char *)(memory1 + memory1_start + 48 * x[i] + y[i]);
         load(&reg, tags, cache, address, to_replace[i]);
 
         fprintf(outfile, "%hhu\n", reg);
@@ -323,11 +340,6 @@ void test_cache()
         }
     }
 
-    /*
-     Testing. We are interested in checking the value brought in the register.
-     Also, we need to check that the tag was modified and a line was brought
-     from memory to cache in case of a CACHE MISS.
-     */
 }
 
 int main(int argc, char *argv[])
