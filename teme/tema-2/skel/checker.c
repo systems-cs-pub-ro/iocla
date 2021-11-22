@@ -226,7 +226,7 @@ void test_column()
         free(plaintext);
         free(ciphertext);
         free(key);
-        //free(reftext);
+        free(reftext);
     }
 }
 
