@@ -257,7 +257,7 @@ void test_cache()
 
     // Read the memory content.
     infile = fopen("input/cacheA_in", "r");
-    for (j = memory0_start; j < 48 * 48 + memory0_start; j++)
+    for (j = memory0_start; j < 16 * 16 + memory0_start; j++)
     {
         fscanf(infile, "%hhu", &(memory0[j]));
     }
