@@ -1,4 +1,7 @@
 
 Examine code generated for regular recursion versus tail recursion. 
 
-https://gcc.godbolt.org/ ussnig -O1 -O2 -m32 -march=native 
+https://gcc.godbolt.org/ using: 
+-m32 -march=native 
+-O1 or -O2 
+
