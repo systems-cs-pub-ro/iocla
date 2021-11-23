@@ -11,7 +11,9 @@
 
 %define    STRING1   [EBP+8]
 %define    STRING2   [EBP+16]
-
+	;; %define	CISCSTRINGS 1
+	;; enable this define to use scasb for strlen, movsb for str_cpy   	
+ 	
 STR_MAX   EQU   128   ; maximum string length
 
 .CODE
@@ -24,6 +26,7 @@ global  str_chr, str_cnv
 ;otherwise, string length is returned in EAX with CF = 0.
 ;Preserves all registers.
 ;-----------------------------------------------------------
+%ifdef CISCSTRINGS	
 str_len:
 	enter   0,0
 	push    ECX
@@ -31,7 +34,7 @@ str_len:
 	push    ES
 	les     EDI,STRING1  ; copy string pointer to ES:EDI
 	mov     ECX,STR_MAX  ; need to terminate loop if EDI
-			         ;  is not pointing to a string
+			        ;  is not pointing to a string
 	cld                  ; forward search
 	mov     AL,0         ; NULL character
 	repne   scasb
@@ -43,13 +46,27 @@ str_len:
 	jmp     SHORT sl_done
 sl_no_string:
 	stc                  ; carry set => no string
+
 sl_done:
 	pop     ES
 	pop     EDI
 	pop     ECX
 	leave
 	ret     8            ; clear stack and return
+%else			     ; 
+str_len:	
+	mov 	EAX, [ESP+4]
+str_len_cmp:	
+	cmp	byte [EAX], 0
+	jz	endstr
+	inc 	EAX
+	jmp 	str_len_cmp 
+endstr:
+	sub 	EAX, [ESP+4] 
+	ret 	8
+%endif	
 
+	
 ;-----------------------------------------------------------
 ;String copy procedure. Receives two string pointers
 ;(seg:offset) via the stack - string1 and string2. 
@@ -58,6 +75,7 @@ sl_done:
 ;offeset of string1 is returned in EAX with CF = 0.
 ;Preserves all registers.
 ;-----------------------------------------------------------
+%ifdef CISCSTRINGS	
 str_cpy:
       enter   0,0
 	push    ECX
@@ -89,7 +107,21 @@ sc_done:
 	pop     ECX
 	leave
 	ret     16           ; clear stack and return
-	
+%else
+str_cpy:	
+	mov 	ECX, [ESP+4]
+	mov 	EDX, [ESP+12]	
+str_cpy_ld:
+	mov 	AL, [EDX]
+	cmp	AL, 0
+	jz	endstr_cpy
+	mov	[ECX], AL 
+	inc 	EDX
+	inc 	ECX
+	jmp 	str_cpy_ld 
+endstr_cpy:
+	ret 	16
+%endif 
 ;-----------------------------------------------------------
 ;String concatenate procedure. Receives two string pointers
 ;(seg:offset) via the stack - string1 and string2. 

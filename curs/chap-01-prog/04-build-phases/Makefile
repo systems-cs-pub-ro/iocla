@@ -1,4 +1,5 @@
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -m32 
+LDFLAGS = -g -m32 
 
 .PHONY: all clean
 
@@ -15,10 +16,10 @@ preprocess: main.i mtime.i fibonacci.i
 main: main.o mtime.o fibonacci.o
 
 %.o: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
-	$(CC) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 %.s: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
-	$(CC) -S -o $@ $<
+	$(CC) $(CFLAGS) -S -o $@ $<
 
 %.i: ../03-real-c/%.c ../03-real-c/mtime.h ../03-real-c/fibonacci.h
 	$(CC) -E -o $@ $<

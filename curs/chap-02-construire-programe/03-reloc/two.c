@@ -1,6 +1,6 @@
 unsigned int num_items = 10;
 
-void (*operator)(void);
+extern void (*operator)(void);
 
 int main(void)
 {

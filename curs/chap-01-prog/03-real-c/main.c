@@ -10,6 +10,8 @@ static void usage(const char *argv0)
 	fprintf(stderr, "Usage: %s <num>\n", argv0);
 }
 
+int arr_bss[100]; 
+int arr_data[]={100, 200, 300}; 
 
 int main(int argc, char **argv)
 {
