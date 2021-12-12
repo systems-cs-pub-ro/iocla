@@ -1,0 +1,4 @@
+*/checker/checker
+*/checker/*.o
+*/checker/*.asm
+*/checker/*.out
