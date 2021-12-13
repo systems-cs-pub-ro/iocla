@@ -21,8 +21,8 @@ task2_p2.o: task2_p2.asm
 checker.o: checker.c
 	$(CC) -c $(CFLAGS) $^
 
-copy: ../../task2_p1.asm ../../task2_p2.asm 
-	cp $^ .
+copy: 
+	if [ -f ../../task2_p1.asm ] && [ -f ../../task2_p2.asm ]; then cp ../../task2_p1.asm ../../task2_p2.asm .; else cp ../task2_p1.asm ../task2_p2.asm .; fi
 
 clean:
 	rm checker *.o

@@ -14,8 +14,8 @@ bonus_x64.o: bonus_x64.asm
 
 checker.o: checker.c
 
-copy: ../../bonus_x64.asm
-	cp $^ .
+copy:
+	if [ -f ../../bonus_x64.asm ]; then cp ../../bonus_x64.asm .; else cp ../bonus_x64.asm .; fi
 
 clean:
 	rm checker *.o

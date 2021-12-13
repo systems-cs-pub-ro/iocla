@@ -15,4 +15,4 @@ check:
 	./check.sh
 
 clean: 
-	rm task3 *.o
+	rm checker *.o

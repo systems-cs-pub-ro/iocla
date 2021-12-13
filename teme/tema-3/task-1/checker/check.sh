@@ -7,7 +7,11 @@ fail() {
 
 shopt -s extglob
 rm -f !("tests"|"check.sh"|"Makefile"|"checker.c")
-cp -r ../../task1.asm .
+if [ -f ../../task1.asm ]; then
+	cp -r ../../task1.asm .
+else
+	cp -r ../task1.asm .
+fi
 sleep 1     # to avoid "make: warning:  Clock skew detected."
 
 if [ ! -f Makefile ]; then
@@ -41,9 +45,9 @@ for i in 1 2 3 4 6; do
 
     if [ -z "$out" ]; then
         total=$(( total + 4 ))
-        echo "Test ${i} 				  	  4p/4p"
+        echo "Test ${i} 				  4p/4p"
     else
-        echo "Test ${i}					  	  0p/4p"
+        echo "Test ${i}					  0p/4p"
         # echo "$out"
     fi
 done
@@ -51,9 +55,6 @@ done
 echo
 echo "Coding Style				  1p/1p"
 total=$(( total + 1 ))
-
-# for now, give the points for test 5, until we fix it
-total=$(( total + 4 ))
 
 echo
 echo "Total Score:				${total}p/25p"

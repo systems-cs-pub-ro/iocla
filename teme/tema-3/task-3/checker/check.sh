@@ -7,7 +7,11 @@ fail() {
 
 shopt -s extglob
 rm -f !("tests"|"check.sh"|"checker.c"|"Makefile")
-cp -r ../../task3.asm .
+if [ -f ../../task3.asm ]; then
+	cp -r ../../task3.asm .
+else
+	cp -r ../task3.asm .
+fi
 sleep 2     # to avoid "make: warning:  Clock skew detected."
 
 if [ ! -e Makefile ]; then
@@ -52,6 +56,6 @@ echo "Coding Style				  1p/1p"
 total=$((total + 1))
 
 echo
-echo "Total Score: 				 ${total}p/25p"
+echo "Total Score: 				${total}p/25p"
 
 echo "task-3:${total}" >> ../../.results

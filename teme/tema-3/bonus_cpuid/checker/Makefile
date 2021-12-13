@@ -17,8 +17,8 @@ bonus_cpuid.o: bonus_cpuid.asm
 checker.o: checker.c
 	$(CC) -c $(CFLAGS) $^
 
-copy: ../../bonus_cpuid.asm
-	cp $^ .
+copy:
+	if [ -f ../../bonus_cpuid.asm ]; then cp ../../bonus_cpuid.asm .; else cp ../bonus_cpuid.asm .; fi
 
 clean:
 	rm checker *.o

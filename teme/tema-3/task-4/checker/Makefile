@@ -16,8 +16,8 @@ checker.o: checker.c
 task4.o: task4.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
 
-copy: ../../task4.asm
-	cp $^ .
+copy:
+	if [ -f ../../task4.asm ]; then cp ../../task4.asm .; else cp ../task4.asm .; fi
 
 clean:
 	rm *.o task4
