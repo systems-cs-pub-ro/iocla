@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-unsigned short int ana;
+static unsigned short int ana = 1;
 static unsigned int stana;
 static const unsigned long int laptita;
 
@@ -27,7 +27,8 @@ int main(void)
 {
 	unsigned int my;
 	static unsigned int local;
-
+	printf("ana = %d bogdan = %d\n", ana, bogdan);
+	
 	h();
 
 	return 0;

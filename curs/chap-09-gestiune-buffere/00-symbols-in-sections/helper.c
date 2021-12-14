@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 static int stana;
-unsigned short int ana;
-//unsigned short int bogdan = 6;
+unsigned short int ana = 2;
+static unsigned short int bogdan = 6;
 
 extern unsigned short int bogdan;
 
