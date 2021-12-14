@@ -39,16 +39,15 @@ fi
 echo "=================== Task 1 ===================="
 
 total=0
-for i in 1 2 3 4 6; do
+for i in {1..6}; do
     ./checker < "tests/in/${i}.in" | xargs > "tests/out/${i}.out"
     out=$(diff "tests/ref/${i}.ref" "tests/out/${i}.out")
 
     if [ -z "$out" ]; then
         total=$(( total + 4 ))
-        echo "Test ${i} 				  4p/4p"
+        echo "Test ${i}  				  4p/4p"
     else
-        echo "Test ${i}					  0p/4p"
-        # echo "$out"
+        echo "Test ${i}  				  0p/4p"
     fi
 done
 
