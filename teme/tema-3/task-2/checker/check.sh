@@ -49,11 +49,15 @@ for i in 6 7 8 9 10; do
 done
 
 echo
-echo "Coding Style				  2p/2p"
-TOTAL=$((TOTAL + 2))
+if [[ "$TOTAL" == "0" ]]; then
+	echo "Coding Style				  0p/2p"
+else
+	echo "Coding Style				  2p/2p"
+	TOTAL=$((TOTAL + 2))
+fi
 
 echo
-echo "Total score:				${TOTAL}p/${MAX_SCORE}p"
+printf "Total score:				%02dp/%02dp\n" ${TOTAL} ${MAX_SCORE}
 
 make clean > /dev/null 2>&1
 

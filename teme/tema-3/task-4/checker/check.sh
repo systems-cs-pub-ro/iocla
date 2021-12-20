@@ -60,11 +60,15 @@ for i in {0..11}; do
 done
 
 echo
-echo "Coding Style				  2p/2p"
-score=$((score + 2))
+if [[ "$score" == "0" ]]; then
+	echo "Coding Style				  0p/2p"
+else
+	echo "Coding Style				  2p/2p"
+	score=$((score + 2))
+fi
 
 make clean > /dev/null 2>&1
 echo
-echo "Total Score: 				${score}p/25p"
+printf "Total score:				%02dp/25p\n" ${score}
 
 echo "task-4:${score}" >> ../../.results

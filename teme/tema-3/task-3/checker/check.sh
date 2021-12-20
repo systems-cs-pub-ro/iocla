@@ -52,10 +52,14 @@ for i in 1 2 3 4 5 6; do
 done
 
 echo
-echo "Coding Style				  1p/1p"
-total=$((total + 1))
+if [[ "$total" == "0" ]]; then
+	echo "Coding Style				  0p/1p"
+else
+	echo "Coding Style				  1p/1p"
+	total=$((total + 1))
+fi
 
 echo
-echo "Total Score: 				${total}p/25p"
+printf "Total score:				%02dp/25p\n" ${total}
 
 echo "task-3:${total}" >> ../../.results

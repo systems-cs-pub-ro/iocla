@@ -23,7 +23,7 @@ for dir in bonus*; do
 done
 
 echo "==============================================="
-echo "Assignment Total Score:			${TOTAL}/${MAX_SCORE}"
+printf "Assignment Total Score:			%03d/%03d\n" ${TOTAL} ${MAX_SCORE}
 echo "==============================================="
 
 rm $RESULTS
