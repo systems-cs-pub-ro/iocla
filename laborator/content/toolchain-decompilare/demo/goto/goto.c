@@ -11,7 +11,7 @@ int main() {
 
 loop:
 
-    if(i < 10) {
+    if (i < 10) {
         i++;
         nr *= 2;
         goto loop;
