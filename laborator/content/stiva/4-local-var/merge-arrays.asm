@@ -1,4 +1,4 @@
-%include "../utils/printf32.asm"
+%include "printf32.asm"
 
 %define ARRAY_1_LEN 5
 %define ARRAY_2_LEN 7

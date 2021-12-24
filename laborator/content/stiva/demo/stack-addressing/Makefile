@@ -1,2 +1,2 @@
-PROGNAME := sum_n
+PROGNAME := stack-addressing
 include ../../../utils/Makefile.generic
