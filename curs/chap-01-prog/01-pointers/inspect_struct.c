@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 struct my_struct {
-	unsigned int salary;
-	unsigned char sex;
-	unsigned int passport_number;
-	unsigned char age;
+	unsigned int salary;  /* offset: 0 */
+	unsigned char sex; /* 3 bytes padding */ /* offset: 4 */
+	unsigned int passport_number; /* aligned to 4 */ /* offset: 8 */
+	unsigned char age;  /* 3 bytes padding */ /* offset: 12 */
 };
 
 static struct my_struct ben = {
