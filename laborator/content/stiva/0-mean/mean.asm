@@ -1,4 +1,4 @@
-%include "../utils/printf32.asm"
+%include "printf32.asm"
 
 %define ARRAY_SIZE 13
 %define DECIMAL_PLACES 5
