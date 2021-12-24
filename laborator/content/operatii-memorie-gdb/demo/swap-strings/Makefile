@@ -1,2 +1,2 @@
-PROGNAME := array_vs_pointer
+PROGNAME := swap-strings
 include ../../../utils/Makefile.generic
