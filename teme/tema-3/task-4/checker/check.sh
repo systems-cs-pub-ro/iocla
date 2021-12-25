@@ -20,8 +20,8 @@ fi
 
 make 1>/dev/null || exit 1
 
-if [ ! -f task4 ]; then
-    fail "task4 not found"
+if [ ! -f checker ]; then
+    fail "checker not found"
 fi
 
 if [ ! -e tests/in ]; then
@@ -38,7 +38,7 @@ fi
 
 score=0
 for i in {0..11}; do
-    ./task4 < "tests/in/${i}.in" > "tests/out/${i}.out"
+    ./checker < "tests/in/${i}.in" > "tests/out/${i}.out"
     out=$(diff "tests/ref/${i}.ref" "tests/out/${i}.out")
 
     if [ -z "$out" ]; then
