@@ -16,4 +16,4 @@ check:
 	./check.sh
 
 clean:
-	rm *.o task1
+	rm *.o checker
