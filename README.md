@@ -1,17 +1,21 @@
 # IOCLA
 
 This repository hosts the content and the source code for the `IOCLA` course.
-Contains all skeleton code for labs, homeworks and demos.
+It contains support documentation for all activities (labs, lectures, assignments), skeleton code for lab tasks and assignments and demo code used in lectures and labs.
 
-You can download it after you installed `git` on your system using:
+Use ``git`` to clone the repository locally:
+
 ```bash
 git clone https://github.com/systems-cs-pub-ro/iocla.git
 ```
-Before the start of each lab and before you star implementing homeworks,
+
+Make sure you have the latest version of the repository before working on any activity:
+
 it is recommended to download the latest changes on the repository using:
 ```bash
 git pull
 ```
+
 ## License
 
 Content is licensed under [Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
