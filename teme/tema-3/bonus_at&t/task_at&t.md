@@ -30,3 +30,7 @@ Diferentele intre AT&T si Intel sunt importante, mai ales la modul in care se fo
 ## Punctare
 
 Acest task valoreaza 10 puncte, dintre care un punct e pentru descrierea implementarii si coding style.
+
+## Hint
+
+Va recomandam sa folositi functionalitatea `macro` a limbajului de asamblare pentru bucati de cod care se repeta.
