@@ -41,6 +41,8 @@ Acest task valoreaza 15 puncte, dintre care 3 se acorda pentru coding-style si d
 
 ## Resurse utile
 
-[https://docs.oracle.com/cd/E36784_01/html/E36859/gntae.html]
-[https://www.felixcloutier.com/x86/]
-[https://www.intel.com/content/www/us/en/support/articles/000005779/processors.html]
+https://docs.oracle.com/cd/E36784_01/html/E36859/gntae.html
+
+https://www.felixcloutier.com/x86/
+
+https://www.intel.com/content/www/us/en/support/articles/000005779/processors.html
