@@ -1,4 +1,5 @@
 */checker/checker
 */checker/*.o
 */checker/*.asm
+*/checker/*.S
 */checker/*.out
