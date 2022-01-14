@@ -3,7 +3,7 @@
 ;
 
 
-%include "../io.mac"
+%include "printf32.asm"
 
 section .text
     global main
