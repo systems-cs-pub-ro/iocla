@@ -1,0 +1,7 @@
+build: $(BINARIES)
+
+UTILSDIR := $(dir $(lastword $(MAKEFILE_LIST)))
+include $(UTILSDIR)/Makefile.inc
+
+%: %.o
+	$(CC) $^ -o $@ $(LDFLAGS)

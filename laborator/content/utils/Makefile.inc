@@ -21,4 +21,4 @@ $(C_OBJS): %.o: %.c
 
 .PHONY: clean
 clean:
-	@rm -f $(PROGNAME) $(OBJECTS)
+	@rm -f $(BINARIES) $(PROGNAME) $(OBJECTS)
