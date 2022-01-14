@@ -4,12 +4,16 @@
 
 int my_strlen(const char *str)
 {
-	/* TODO */	
+	/* TODO */
+	(void) str;
+
+	return -1;
 }
 
 void equality_check(const char *str)
 {
 	/* TODO */
+	(void) str;
 }
 
 int main(void)
