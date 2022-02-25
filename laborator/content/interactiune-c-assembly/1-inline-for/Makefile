@@ -1,16 +1,3 @@
-# IOCLA 2020
-# USO remembers
+PROGNAME := inline_for
+include ../../utils/Makefile.generic
 
-CC=gcc
-CFLAGS=-m32 -masm=intel
-
-all: inline_for
-
-inline_for:  inline_for.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-asm: inline_for.c
-	$(CC) $(CFLAGS) -S $^
-
-clean:
-	rm -f *.s inline_for
