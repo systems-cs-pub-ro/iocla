@@ -5,7 +5,7 @@ PROGNAME := mainmax
 
 build: $(PROGNAME)
 
-include ../../utils/Makefile.single
+include ../../utils/Makefile.inc
 
 $(PROGNAME): $(OBJECTS)
 	$(CC) $^ -o $@ $(LDFLAGS)
