@@ -5,8 +5,8 @@
 int main(void)
 {
 	size_t n = NUM;
-	size_t rot_left;
-	size_t rot_right;
+	size_t rot_left = 0;
+	size_t rot_right = 0;
 
 	__asm__ (""
 	/* TODO: Use rol instruction to shift n by 8 bits left.

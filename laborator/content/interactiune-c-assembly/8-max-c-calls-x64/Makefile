@@ -1,16 +1,12 @@
-# IOCLA 2020
-# USO remembers
+ASFLAGS=-f elf64
+LDFLAGS= -no-pie
+CFLAGS = -g -Wall -Wextra -Werror -fno-pic -masm=intel
+PROGNAME := mainmax
 
-CC=gcc
-ASM=nasm
-ASMFLAGS=-f elf64
+build: $(PROGNAME)
 
-mainmax: main.o max.o
-	$(CC) -o $@ $^
-main.o: main.c
+include ../../utils/Makefile.single
 
-max.o: max.asm
-	$(ASM) $(ASMFLAGS) $< -o $@
+$(PROGNAME): $(OBJECTS)
+	$(CC) $^ -o $@ $(LDFLAGS)
 
-clean:
-	rm *.o mainmax
