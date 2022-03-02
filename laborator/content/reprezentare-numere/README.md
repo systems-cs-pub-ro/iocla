@@ -286,9 +286,9 @@ Implementați în C rotație stânga și rotație dreapta pentru numere întregi
 
 >**TIP**: Operația de rotire (numită și deplasare circulară) este similară cu cea de deplasare, singura diferență fiind aceea că spațiul gol generat de deplasare este înlocuit cu bitul eliminat.
 >
->![Deplasare logică la stânga](images/left-logical-shift.png)
+> Exemplu rotație **stânga** cu **un** bit:
 >
->![Deplasare logică la dreapta](images/right-logical-shift.png)
+>![Rotație logică la stânga](images/left-logical-rotation.png)
 
 >**NOTE**: 
 >    rotate_left(0x80000000, 1) = 1
