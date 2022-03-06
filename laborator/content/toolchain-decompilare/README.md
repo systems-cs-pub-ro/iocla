@@ -149,7 +149,6 @@ programarea cu goto-uri ne pregătește pentru lucrul în limbajul de asamblare.
 >**WARNING**: În orice alt caz, această formă de programare ar trebui evitată pe cât posibil. 
 ![goto.png]( https://imgs.xkcd.com/comics/goto.png)
 
-TODO: Exercises
 În cadrul laboratoarelor vom folosi:
 - asamblorul [NASM](https://www.nasm.us/)
 - linkerul din cadrul suitei gcc
