@@ -1,6 +1,31 @@
-# Laborator 4: Crearea și analiza unui executabil (2)
+# Laborator 03: Compilare
 
-<!-- Convert to DokuWiki format using Pandoc: pandoc -f markdown_github-hard_line_breaks -t dokuwiki README.md -->
+Etapele prin care trece un program scris în `C` din momentul în care este scris până când este rulat ca un proces sunt, in ordine:
+
+- preprocesare
+- compilare
+- asamblare
+- link editare
+
+În imaginea de mai jos sunt reprezentate si detaliate aceste etape:
+
+![phases-full.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/phases-full.png?cache=)
+
+## Preprocesare
+
+În cadrul primei etape, cea de `preprocesare` au loc următoarele acțiuni plecând de la fișierul cod sursă:
+* eliminarea comentariilor
+* expandarea directivelor care încep cu simbolul `#`
+    * înlocuirea valorilor corespunzătoare pentru `#define ...`
+    * includerea conținutului fișierelor date ca parametru directivei `#include`
+
+## Compilare
+
+În etapa de `compilare` au loc următoarele subetape:
+* analiza lexicală - verificarea limbajului
+* analiza sintactică - verificarea ordinii cuvintelor (`;` vine la finalul asignării unei variabile)
+* analiza semantică - determinarea sensului codului scris (determinarea contextului variabilelor)
+* generarea de cod în limbaj de asamblare care este o formă human-readable a ce ajunge procesorul să execute efectiv
 
 ## Assembly / Asamblare
 
@@ -223,9 +248,96 @@ Hex dump of section '.rodata':
   0x080484e8 6f726c64 2100                       orld!.
 ```
 
+Majoritatea compilatoarelor oferă opțiunea de a genera și un fișier cu programul scris în limbaj de asamblare.
+
+>**NOTE**: În cazul compilatorului `gcc` este de ajuns să adăugați flag-ul `-S` și vă va genera un
+fișier `*.s` cu codul aferent. În arhiva de `TODO` aveți un exemplu de trecere a unui program
+foarte simplu `hello.c` prin cele patru faze. Îl puteți testa pe un sistem Unix/Linux și pe un sistem Windows cu suport de MinGW.
+```shell
+$ make
+cc  -E -o hello.i hello.c
+cc -Wall -S -o hello.s hello.i
+cc  -c -o hello.o hello.s
+cc  -o hello hello.o
+
+$ ls
+Makefile  hello  hello.c  hello.i  hello.o  hello.s
+
+$ ./hello
+Hello, World!
+
+$ tail -10 hello.i
+
+
+# 5 "hello.c"
+int main(void)
+{
+ puts("Hello, World!");
+
+ return 0;
+}
+
+$ cat hello.s
+	.file	"hello.c"
+	.section	.rodata
+.LC0:
+	.string	"Hello, World!"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	movl	$.LC0, %edi
+	call	puts
+	movl	$0, %eax
+	popq	%rbp
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	main, .-main
+	.ident	"GCC: (Debian 5.2.1-17) 5.2.1 20150911"
+	.section	.note.GNU-stack,"",@progbits
+
+$ file hello.o
+hello.o: ELF 64-bit LSB relocatable, x86-64, [...]
+
+$ file hello
+hello: ELF 64-bit LSB executable, x86-64, [...]
+
+$ objdump -d hello.o
+
+hello.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <main>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	bf 00 00 00 00       	mov    $0x0,%edi
+   9:	e8 00 00 00 00       	callq  e <main+0xe>
+   e:	b8 00 00 00 00       	mov    $0x0,%eax
+  13:	5d                   	pop    %rbp
+  14:	c3                   	retq
+```
+
+Pentru a genera sintaxa intel pe 32 de biți, se pot folosi aceste opțiuni:
+```shell
+cc -Wall -m32 -S -masm=intel  -o hello.s hello.i
+```
+
+Dacă programele scrise în limbaje de nivel înalt ajung să fie portate ușor pentru procesoare diferite (arm, powerpc, x86, etc.), cele scrise în limbaj de asamblare sunt implementări specifice unei anumite arhitecturi. Limbaje de nivel înalt reprezintă o formă mai abstractă de rezolvare a unei probleme, din punctul de vedere al unui procesor, motiv pentru care și acestea trebuie traduse în limbaj de asamblare în cele din urmă, pentru a se putea ajunge la un binar care poate fi rulat. Mai multe detalii în laboratoarele următoare.
+
 ## Exerciții
 
-> **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
+> **WARNING:** În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
 > Repository-ul este clonat pe desktopul mașinii virtuale.
 > Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`).
 > Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.
