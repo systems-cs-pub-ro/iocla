@@ -337,7 +337,7 @@ Dacă programele scrise în limbaje de nivel înalt ajung să fie portate ușor 
 
 ## Exerciții
 
-> **NOTE:** În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
+> **WARNING:** În cadrul laboratoarelor vom folosi repository-ul de Git de IOCLA: https://github.com/systems-cs-pub-ro/iocla.
 > Repository-ul este clonat pe desktopul mașinii virtuale.
 > Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`).
 > Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă.
