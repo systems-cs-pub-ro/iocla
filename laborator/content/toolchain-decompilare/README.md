@@ -1,7 +1,4 @@
-# Laborator 03: Toolchain
-
-În acest laborator, vom trece prin fiecare nivel de procesare al unui limbaj de nivel înalt și prin toolchain-ul
-pe care îl vom folosi de acum încolo.
+# Laborator 4: Toolchain
 
 ## C basics: GOTOs
 
@@ -152,114 +149,7 @@ programarea cu goto-uri ne pregătește pentru lucrul în limbajul de asamblare.
 >**WARNING**: În orice alt caz, această formă de programare ar trebui evitată pe cât posibil. 
 ![goto.png]( https://imgs.xkcd.com/comics/goto.png)
 
-## De la C la program în rulare
-
-Etapele prin care trece un program din momentul în care este scris până când este rulat ca un proces sunt, in ordine:
-
-- preprocesare
-- compilare
-- asamblare
-- link editare
-
-În imaginea de mai jos sunt reprezentate si detaliate aceste etape:
-
-![phases-full.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/phases-full.png?cache=)
-
-În etapa de `compilare` codul este tradus din cod de nivel înalt în limbaj de asamblare. Limbajul de asamblare este
-o formă human-readable a ce ajunge procesorul să execute efectiv. Dacă programele scrise în limbaje de nivel înalt ajung
-să fie portate ușor pentru procesoare diferite (arm, powerpc, x86, etc.), cele scrise în limbaj de asamblare sunt
-implementări specifice unei anumite arhitecturi. Limbaje de nivel înalt reprezintă o formă mai abstractă de rezolvare a
-unei probleme, din punctul de vedere al unui procesor, motiv pentru care și acestea trebuie traduse în limbaj de asamblare
-în cele din urmă, pentru a se putea ajunge la un binar care poate fi rulat. Mai multe detalii în laboratorul următor.
-
-Majoritatea compilatoarelor oferă opțiunea de a genera și un fișier cu programul scris în limbaj de asamblare.
-
->**NOTE**: În cazul compilatorului `gcc` este de ajuns să adăugați flag-ul `-S` și vă va genera un
-fișier `*.s` cu codul aferent. În arhiva de `TODO` aveți un exemplu de trecere a unui program
-foarte simplu `hello.c` prin cele patru faze. Îl puteți testa pe un sistem Unix/Linux și pe un sistem Windows cu suport de MinGW.
-```shell
-$ make
-cc  -E -o hello.i hello.c
-cc -Wall -S -o hello.s hello.i
-cc  -c -o hello.o hello.s
-cc  -o hello hello.o
-
-$ ls
-Makefile  hello  hello.c  hello.i  hello.o  hello.s
-
-$ ./hello
-Hello, World!
-
-$ tail -10 hello.i
-
-
-# 5 "hello.c"
-int main(void)
-{
- puts("Hello, World!");
-
- return 0;
-}
-
-$ cat hello.s
-	.file	"hello.c"
-	.section	.rodata
-.LC0:
-	.string	"Hello, World!"
-	.text
-	.globl	main
-	.type	main, @function
-main:
-.LFB0:
-	.cfi_startproc
-	pushq	%rbp
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
-	movl	$.LC0, %edi
-	call	puts
-	movl	$0, %eax
-	popq	%rbp
-	.cfi_def_cfa 7, 8
-	ret
-	.cfi_endproc
-.LFE0:
-	.size	main, .-main
-	.ident	"GCC: (Debian 5.2.1-17) 5.2.1 20150911"
-	.section	.note.GNU-stack,"",@progbits
-
-$ file hello.o
-hello.o: ELF 64-bit LSB relocatable, x86-64, [...]
-
-$ file hello
-hello: ELF 64-bit LSB executable, x86-64, [...]
-
-$ objdump -d hello.o
-
-hello.o:     file format elf64-x86-64
-
-
-Disassembly of section .text:
-
-0000000000000000 <main>:
-   0:	55                   	push   %rbp
-   1:	48 89 e5             	mov    %rsp,%rbp
-   4:	bf 00 00 00 00       	mov    $0x0,%edi
-   9:	e8 00 00 00 00       	callq  e <main+0xe>
-   e:	b8 00 00 00 00       	mov    $0x0,%eax
-  13:	5d                   	pop    %rbp
-  14:	c3                   	retq
-```
-
-Pentru a genera sintaxa intel pe 32 de biți, se pot folosi aceste opțiuni:
-```shell
-cc -Wall -m32 -S -masm=intel  -o hello.s hello.i
-```
-
-
-## Toolchain
-
+TODO: Exercises
 În cadrul laboratoarelor vom folosi:
 - asamblorul [NASM](https://www.nasm.us/)
 - linkerul din cadrul suitei gcc
@@ -286,6 +176,8 @@ Prin comparație, un dezasamblor traduce un program executabil în limbaj de asa
 pentru că există relația de 1:1 între cod mașină și limbaj de asamblare.<br>
 
 Veți utiliza cele două opțiuni în cadrul laboratorului de astăzi, pentru a analiza niște binare simple.
+
+## Exerciții
 
 >**WARNING**:
 În cadrul laboratoarelor vom folosi repository-ul de git al materiei
@@ -419,7 +311,3 @@ Folosind informațiile noi dobândite despre Ghidra, dar și cele învățate an
 Programul generează o valoare aleatoare și vă cere să ghiciți o altă valoare calculată pe baza valorii aleatoare.<br>
 
 Mult succes!
-
-## Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-03-sol.zip). 
