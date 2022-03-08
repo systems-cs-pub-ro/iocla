@@ -1,4 +1,2 @@
-build:
-	gcc crackme.c -o crackme
-clean:
-	rm crackme
+PROGNAME := crackme
+include ../../utils/Makefile.generic

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void main(void)
+int main(void)
 {
 	int v[] =  {1, 2, 15, 51, 53, 66, 202, 7000};
 	int dest = v[2]; /* 15 */
@@ -8,4 +8,7 @@ void main(void)
 	int end = sizeof(v) / sizeof(int) - 1;
 
 	/* TODO: Implement binary search */
+	(void) dest;
+	(void) start;
+	(void) end;
 }
