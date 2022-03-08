@@ -27,11 +27,11 @@ Un pointer la void este un pointer care nu are un tip asociat. Pointerii la void
 
 Cel mai adesea sunt folosiți în implementarea de funcții generice. De exemplu, funcțiile `malloc()` și `calloc()` returnează un pointer la void ceea ce permite ca aceste funcții să fie folosite pentru alocarea de memorie pentru orice tip de date.
 
-Un exemplu de folosire a pointerilor la void este următorul: 
+Un exemplu de folosire a pointerilor la void este următorul:
 
 ```c
 #include <stdio.h>
- 
+
 void increment(void *data, int element_size) {
     /* Se verifică dacă data introdusă este un char */
 	if (element_size == sizeof(char)) {
@@ -41,20 +41,20 @@ void increment(void *data, int element_size) {
 		char *char_ptr = data;
  		++(*char_ptr);
 	}
- 
+
 	if (element_size == sizeof(int)) {
 		int *int_ptr = data;
 		++(*int_ptr);
 	}
 }
- 
+
 int main() {
 	char c = 'a';
 	int x = 10;
- 
+
 	increment(&c, sizeof(c));
 	increment(&x, sizeof(x));
- 
+
 	printf("%c, %d\n", c, x); /* Va avea ca rezultat: b, 11 */
 	return 0;
 }
@@ -84,7 +84,7 @@ Scăderea a doi pointeri este posibilă doar dacă ambii au același tip. Rezult
 char *s = "Learn IOCLA, you must!";
 char *p = s;
 for (; *p; ++p); /* Se iterează caracter cu caracter, până la '\0' */
- 
+
 printf("%ld", p - s); /* Se va afișa 22. */
 ```
 #### **Interpretarea datelor din memorie**
@@ -169,7 +169,7 @@ typedef struct student {
     int an;
     float medie;
 } Student;
- 
+
 int main() {
     Student s;
     s.nume = (char *) malloc(20 * sizeof(*s.nume));
@@ -204,7 +204,7 @@ struct A {
 	short y;
 	/* Se face padding cu 6 bytes */
 };
- 
+
 printf("Size of struct: %zu", sizeof(struct A)) /* Se va afișa 24 */
 ```
 
@@ -228,19 +228,19 @@ O funcție care trebuie să modifice mai multe valori primite prin argumente sau
 
 ```c
 #include <stdio.h>
- 
+
 void swap(int *a, int *b) {
     int c = *a;
     *a = *b;
     *b = c;
 }
- 
+
 int main() {
      int a = 3, b = 5;
      swap(&a, &b);
- 
+
      printf("a = %d, b = %d\n", a, b); /* Se va afișa a = 5, b = 3 */
- 
+
      return 0;
 }
 ```
@@ -255,7 +255,7 @@ char* toUpper(char *s) {
             s[i] -= 32;
         }
     }
- 
+
     return s;
 }
 ```
@@ -272,19 +272,19 @@ De ce este necesară folosirea parantezelor suplimentare? Dacă acestea ar lipsi
 int add(int a, int b) {
     return a + b;
 }
- 
+
 int subtract(int a, int b) {
     return a - b;
 }
- 
+
 int operation(int x, int y, int (*func) (int, int)) {
     return func(x, y);
 }
- 
+
 int main() {
     int (*minus)(int, int) = subtract;
     printf("%d", operation(10, 5, minus)); /* Se va afișa 5 */
- 
+
     return 0;
 }
 ```
@@ -295,16 +295,16 @@ Funcția [qsort()](http://www.cplusplus.com/reference/cstdlib/qsort/) din `stdli
 int compare(const void *a, const void *b) {
     return *(int *) a - *(int *)b;
 }
- 
+
 int main() {
     int v[] = {100, 5, 325, 1, 30};
     int size = sizeof(v) / sizeof(*v);
- 
+
     qsort(v, size, sizeof(*v), compare);
     for (int i = 0 ; i < size ; ++i) {
         printf("%d ", v[i]);
     }
- 
+
     return 0;
 }
 ```
@@ -361,7 +361,7 @@ Vă recomandăm și articolul [Debugging](https://ocw.cs.pub.ro/courses/programa
 
  - comanda `gcc` pe post de linker
  - `gdb` pentru analiza dinamică, investigație și debugging
- 
+
  În general nu va fi nevoie să dați comenzi de compilare. Fiecare director cuprinde un Makefile pe care îl puteți rula pentru a compila în mod automat fișierele cod sursă limbaj de asamblare sau C.
 
  ### **1. Iterarea print-un vector de întregi**
@@ -372,10 +372,10 @@ Vă recomandăm și articolul [Debugging](https://ocw.cs.pub.ro/courses/programa
 
  ```c
  #include <stdio.h>
- 
+
 int main() {
     int v[] = {0xCAFEBABE, 0xDEADBEEF, 0x0B00B135, 0xBAADF00D, 0xDEADC0DE};
- 
+
     return 0;
 }
 ```
@@ -417,10 +417,10 @@ typedef struct Pixel {
     unsigned char G;
     unsigned char B;
 } Pixel;
- 
+
 typedef struct Picture {
-    int height;    
-    int width;        
+    int height;
+    int width;
     Pixel **pix_array;
 } Picture;
 ```
@@ -498,19 +498,19 @@ Se dau următoarele declarații:
 
 ```c
 #include <stdio.h>
- 
+
 int main() {
     unsigned int a = 4127;
     int b = -27714;
     short c = 1475;
     int v[] = {0xCAFEBABE, 0xDEADBEEF, 0x0B00B135, 0xBAADF00D, 0xDEADC0DE};
- 
+
     unsigned int *int_ptr = (unsigned int *) &v;
- 
+
     for (int i = 0 ; i < sizeof(v) / sizeof(*int_ptr) ; ++i) {
         ++int_ptr;
     }
- 
+
     return 0;
 }
 ```
@@ -539,11 +539,11 @@ pwndbg> set context-sections 'regs code stack'
 # afișare zonă de memorie în hex + ASCII
 pwndbg> hexdump $ecx
 # afișare stivă
-pwndbg> stack 
+pwndbg> stack
 # afișare permanentă memory dump 8 octeți
-pwndbg> ctx-watch execute "x/8xb &msg" 
- 
-# setări recomandate în .gdbinit  
+pwndbg> ctx-watch execute "x/8xb &msg"
+
+# setări recomandate în .gdbinit
 set context-sections 'regs code expressions'
 set show-flags on
 set dereference-limit 1
