@@ -465,7 +465,7 @@ Urmăriți și compilați codul sursă din schelet (în cazul în care nu folosi
 Porniți cu GDB executabilul:
 
 ```bash
-gdb ./seg
+gdb ./segfault
 ```
 
 După ce ați pornit programul GDB, toată interacțiunea cu acesta se face prin prompt-ul de GDB. Lansați programul în execuție folosind comanda run. Ce observați? GDB se blochează la citirile de la input.
