@@ -74,6 +74,8 @@ Pixel** generatePixelArray(int height, int width) {
 }
 
 void freePixelArray(Pixel ***pix_array, int height, int width) {
+	(void) width;
+
 	for (int i = 0 ; i < height ; ++i) 
 		free((*pix_array)[i]);
 
