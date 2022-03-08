@@ -366,7 +366,7 @@ Vă recomandăm și articolul [Debugging](https://ocw.cs.pub.ro/courses/programa
 
  ### **1. Iterarea print-un vector de întregi**
 
- Veți rezolva exercițiul plecând de la fișierul **ex1.c** aflat în directorul **ex1**.
+ Veți rezolva exercițiul plecând de la fișierul **iterate.c** aflat în directorul **1-iterate**.
 
  Se dă urmatoarea bucată de cod în C:
 
@@ -393,7 +393,7 @@ Afișați adresele elementelor din vectorul `v` împreună cu valorile de la ace
 
 ### **2. Ștergerea primei apariții a unui pattern dintr-un șir de caractere**
 
-Veți rezolva exercițiul plecând de la fișierul **ex2.c** aflat în directorul **ex2**.
+Veți rezolva exercițiul plecând de la fișierul **delete-first.c** aflat în directorul **2-delete-first**.
 
 Dându-se un șir de caractere și un pattern să se implementeze funcția `delete_first(char *s, char *pattern)` care întoarce șirul obținut prin ștergerea primei apariții a pattern-ului în s.
 
@@ -407,7 +407,7 @@ Dându-se un șir de caractere și un pattern să se implementeze funcția `dele
 
 ### **3. Pixels**
 
-Veți rezolva exercițiul plecând de la fișierul **ex3.c** aflat în directorul **ex3.**
+Veți rezolva exercițiul plecând de la fișierul **pixels.c** aflat în directorul **3-pixels**.
 
 Se consideră structura unui pixel și a unei imagini descrise în fișierul `pixel.h`:
 
@@ -445,7 +445,7 @@ p.b = 0.11 * p.b;
 
 ### **4. Find-Max**
 
-Veți rezolva exercițiul plecând de la fișierul **ex4.c** aflat în directorul **ex4**.
+Veți rezolva exercițiul plecând de la fișierul **find-max.c** aflat în directorul **4-find-max**.
 
 Deschideți scheletul de cod și implementați funcțiile:
 ```c
@@ -458,7 +458,7 @@ compare(const void *a, const void *b)
 
 ### **5. Tutorial GDB: Depanarea unui SEG Fault**
 
-Veți rezolva exercițiul plecând de la fișierul **ex5.c** aflat în directorul **ex5**.
+Veți rezolva exercițiul plecând de la fișierul **segfault.c** aflat în directorul **5-segfault**.
 
 Urmăriți și compilați codul sursă din schelet (în cazul în care nu folosiți Makefile-ul, asigurați-vă să compilați sursa cu flag-ul -g . Pe scurt, programul primește un număr n, alocă un vector de dimensiune n pe care-l inițializează cu primele n numere din șirul lui Fibonacci. Totuși, în urma rulării se afisează: Segmentation fault (core dumped).
 
@@ -492,7 +492,7 @@ Ce s-a întamplat? Am accesat o zonă de memorie cu acces restricționat.
 
 ### **6. Inspectarea datelor**
 
-Veți rezolva exercițiul plecând de la fișierul **ex6.c** aflat în directorul **ex6**.
+Veți rezolva exercițiul plecând de la fișierul **inspect.c** aflat în directorul **6-inspect**.
 
 Se dau următoarele declarații:
 
@@ -523,7 +523,7 @@ Compilați codul sursă și porniți executabilul cu GDB. Setați un breakpoint 
 
 ### **7. Bonus**
 
-Veți rezolva exercițiul plecând de la fișierul **ex7.c** aflat în directorul **ex7**.
+Veți rezolva exercițiul plecând de la fișierul **pointers.c** aflat în directorul **7-pointers**.
 
 Să se implementeze funcțiile [memcpy](http://www.cplusplus.com/reference/cstring/memcpy/), [strcpy](http://www.cplusplus.com/reference/cstring/strcpy/) și [strcmp](http://www.cplusplus.com/reference/cstring/strcmp/) folosind operații pe pointeri.
 
