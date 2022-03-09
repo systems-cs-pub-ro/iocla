@@ -13,6 +13,9 @@ int main() {
 	char src[] = "Learn IOCLA, you must!";
 	char *dest = malloc(sizeof(src));
 
+	(void) s1;
+	(void) s2;
+
 	/*
 	Decomentati pe rand cate un assert pe masura ce implementati o functie.
 	Daca functia voastra este implementata corect atunci asertia se va realiza

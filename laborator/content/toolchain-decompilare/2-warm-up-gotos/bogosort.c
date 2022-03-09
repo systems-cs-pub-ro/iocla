@@ -4,7 +4,7 @@
 /* checks if the array is sorted */
 static int is_sorted(int a[], int n)
 {
-	size_t i;
+	int i;
 
 	for (i = 1; i < n; i++)
 		if (a[i] < a[i-1])
@@ -16,7 +16,7 @@ static int is_sorted(int a[], int n)
 /* shuffle an array */
 static void shuffle(int a[], int n)
 {
-	size_t i;
+	int i;
 	int t, r;
 
 	for (i = 0; i < n; i++) {

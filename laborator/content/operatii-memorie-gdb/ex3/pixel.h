@@ -8,9 +8,9 @@ typedef struct Pixel {
 } Pixel;
 
 typedef struct Picture {
-	int height;    
-	int width;        
-	Pixel **pix_array; 
+	int height;
+	int width;
+	Pixel **pix_array;
 } Picture;
 
 Picture* generatePicture(int height, int width, Pixel **pix_array) {
@@ -28,7 +28,7 @@ Picture* generatePicture(int height, int width, Pixel **pix_array) {
 			pic->pix_array[i][j] = pix_array[i][j];
 		}
 	}
-    
+
 	return pic;
 }
 
@@ -74,7 +74,9 @@ Pixel** generatePixelArray(int height, int width) {
 }
 
 void freePixelArray(Pixel ***pix_array, int height, int width) {
-	for (int i = 0 ; i < height ; ++i) 
+	(void) width;
+
+	for (int i = 0 ; i < height ; ++i)
 		free((*pix_array)[i]);
 
 	free(*pix_array);

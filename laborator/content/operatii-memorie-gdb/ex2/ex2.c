@@ -8,6 +8,9 @@ int main(){
 	char *s = "Ana are mere";
 	char *pattern = "re";
 
+	(void) s;
+	(void) pattern;
+
 	// Decomentati linia dupa ce ati implementat functia delete_first.
 	// printf("%s\n", delete_first(s, pattern));
 
