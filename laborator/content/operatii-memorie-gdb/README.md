@@ -349,6 +349,8 @@ unde:
 - f este formatul de afișare (x pentru hexa, d pentru zecimal, s pentru șir de caractere și i pentru instrucțiuni)
 - u este dimensiunea unui element (b pentru 1 octet, h pentru 2, w pentru 4 și g pentru 8 octeți)
 
+Vă recomandăm și articolul [Debugging](https://ocw.cs.pub.ro/courses/programare/tutoriale/debugging) pentru a aprofunda cum folosim GDB atât din CLI cât și prin intermediul unui IDE.
+
 ## **Pregătire infrastructură**
 
 > **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
