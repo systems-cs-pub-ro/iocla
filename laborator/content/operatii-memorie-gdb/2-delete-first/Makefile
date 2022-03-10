@@ -1,2 +1,2 @@
-PROGNAME := find-max
+PROGNAME := delete-first
 include ../../utils/Makefile.generic

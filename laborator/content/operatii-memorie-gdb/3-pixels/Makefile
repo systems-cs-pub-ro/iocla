@@ -1,2 +1,2 @@
-PROGNAME := iterate
+PROGNAME := pixels
 include ../../utils/Makefile.generic
