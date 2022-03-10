@@ -1,2 +1,2 @@
-PROGNAME := delete-first
+PROGNAME := iterate
 include ../../utils/Makefile.generic
