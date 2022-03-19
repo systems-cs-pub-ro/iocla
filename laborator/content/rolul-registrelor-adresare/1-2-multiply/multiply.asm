@@ -22,7 +22,7 @@ main:
     mov al, byte [num1]
     mov bl, byte [num2]
     mul bl
-    
+
     ; Print result in hexa
     PRINTF32 `%s\x0`, print_mesaj
     xor ebx, ebx
