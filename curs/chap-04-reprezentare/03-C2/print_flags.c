@@ -52,9 +52,10 @@ saveresult:                                     \n\
         mov [result], al                        \n\
 	popa                                    \n\
 ");
-  printf("HEX      0x%02x %c 0x%02x = 0x%02x\n",  (uint8_t)a, op, (uint8_t)b, result);
-  printf("unsigned %4u %c %4u = %u\n",  (uint8_t)a, op, (uint8_t)b,  (uint8_t)result);
-  printf("signed   %4d %c %4d = %d\n",  (int8_t) a, op, (int8_t) b,  (int8_t)result);
+  printf("hex:      0x%02x %c 0x%02x = 0x%02x\n",  (uint8_t)a, op, (uint8_t)b, result);
+  printf("unsign:   %4u %c %4u = %u\n",  (uint8_t)a, op, (uint8_t)b,  (uint8_t)result);
+  printf("signed:   %4d %c %4d = %d\n",  (int8_t) a, op, (int8_t) b,  (int8_t)result);
+  printf("flags:                = "); 
   
   for(i = 0; i < sizeof(flagletters); i++)
     if(eflags & flagmask[i])
