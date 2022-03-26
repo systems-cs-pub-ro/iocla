@@ -1,2 +1,2 @@
-PROGNAME := sum_n
+PROGNAME := sum-n
 include ../../utils/Makefile.generic

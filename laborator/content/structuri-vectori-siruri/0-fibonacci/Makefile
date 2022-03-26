@@ -1,2 +1,2 @@
-PROGNAME := fibo_sum
+PROGNAME := fibo-sum
 include ../../utils/Makefile.generic

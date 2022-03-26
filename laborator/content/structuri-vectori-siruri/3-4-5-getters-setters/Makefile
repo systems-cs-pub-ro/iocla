@@ -1,2 +1,2 @@
-PROGNAME := getter_setter_printf
+PROGNAME := getter-setter-printf
 include ../../utils/Makefile.generic

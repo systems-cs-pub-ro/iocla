@@ -1,2 +1,2 @@
-PROGNAME := print_structure
+PROGNAME := print-structure
 include ../../utils/Makefile.generic
