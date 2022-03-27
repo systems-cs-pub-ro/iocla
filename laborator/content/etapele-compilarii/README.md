@@ -482,3 +482,7 @@ Rezultatul funcției scrisă în python va fi preluat în codul C și se va afi�
 
 > **NOTE:**
 > Atenție la versiunea de python pe care o folosiți; nu este recomandată o anumită versiune însă trebuie să aveți în vedere că în funcție de soluția voastră este posibil să fie nevoie să folosiți versiune specifică. Makefile-ul folosește versiunea **3.9**.
+
+### Soluții
+
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-03-sol.zip).
