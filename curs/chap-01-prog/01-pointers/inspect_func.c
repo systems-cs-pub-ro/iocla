@@ -2,24 +2,27 @@
 
 static void my_func(void)
 {
-  printf("Haha\n"); 
+	printf("Haha\n");
+
 	/* Do nothing, successfully. */
 }
 
 int main(void)
 {
-  void (*f)(void);
+	void (*f)(void);
 
-  f = my_func;
+	f = my_func;
 
-  printf("my_func: %p\n", my_func);
-  printf("&my_func: %p\n", &my_func);
-  printf("main: %p\n", main);
-  printf("&main: %p\n", &main);
-  printf("f: %p\n", f);
-  printf("&f: %p\n", &f);
+	printf("my_func: %p\n", my_func);
+	printf("&my_func: %p\n", &my_func);
+	printf("main: %p\n", main);
+	printf("&main: %p\n", &main);
+	printf("f: %p\n", f);
+	printf("&f: %p\n", &f);
+	printf("*f: %p\n", *f);
 
-  (*f)(); 
-  
-  return 0;
+	(*f)();
+	f();
+
+	return 0;
 }
