@@ -310,3 +310,7 @@ Folosind informațiile noi dobândite despre Ghidra, dar și cele învățate an
 Programul generează o valoare aleatoare și vă cere să ghiciți o altă valoare calculată pe baza valorii aleatoare.<br>
 
 Mult succes!
+
+### Soluții
+
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-04-sol.zip).
