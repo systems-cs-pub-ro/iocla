@@ -1,5 +1,0 @@
-mkdir d1
-ls
-mv d1 d2
-ls
-stop
