@@ -6,9 +6,9 @@ Un concept mai puțin abordat în tutoriale de C este instrucțiunea goto. Prin 
 sări în puncte intermediare în cadrul unei funcții. Aceste puncte intermediare se numesc label-uri (etichete).
 Din punct de vedere al sintaxei, o eticheta consta dintr-un nume, urmat de caracterul `:`.
 
-Un exemplu de cod: 
+Un exemplu de cod:
 
- 
+
  ```C
 #include <stdio.h>
 
@@ -35,7 +35,7 @@ Codul dat exemplu mai sus ar putea fi un candidat care să înlocuiască o instr
 
 ```C
 #include <stdio.h>
- 
+
 int main()
 {
     int i, j, k;
@@ -62,30 +62,30 @@ int process_data_from_mouse_device(...)
 {
     int err;
     int x, y;
- 
+
     /* >>try<< instructions */
     err = init_communication_with_mouse();
     if (err)
         goto error;
- 
+
     err = get_x_coord_from_mouse(&x);
     if (err)
         goto error;
- 
+
     err = get_y_coord_from_mouse(&y);
     if (err)
         goto error;
- 
+
     err = announce_upper_layers_of_mouse_movement(x, y);
     if (err)
         goto error;
- 
+
     err = close_communication_with_mouse();
     if (err)
         goto error;
- 
+
     return 0;
- 
+
     /* >>catch<< instructions' exceptions */
 error:
     print_message("Failed to get data from mouse device. Error = %d", err);
@@ -104,30 +104,30 @@ int process_data_from_mouse_device(...)
 {
     int err;
     int x, y;
- 
+
     /* >>try<< instructions */
     err = init_communication_with_mouse();
     if (err)
         goto error;
- 
+
     err = get_x_coord_from_mouse(&x);
     if (err)
         goto error_close_connection;
- 
+
     err = get_y_coord_from_mouse(&y);
     if (err)
         goto error_close_connection;
- 
+
     err = announce_upper_layers_of_mouse_movement(x, y);
     if (err)
         goto error_close_connection;
- 
+
     err = close_communication_with_mouse();
     if (err)
         goto error;
- 
+
     return 0;
- 
+
     /* >>catch<< instructions' exceptions */
 error_close_connection:
     close_communication_with_mouse();
@@ -142,11 +142,11 @@ conexiunea cu mouse-ul va fi închisă, și apoi codul va continua cu tratarea g
 erori din program (afișarea unui mesaj de eroare).
 
 >**NOTE**: De ce abordează acest curs/laborator un astfel de subiect?<br>
-Când vom studia limbajul de asamblare vom observa că o bună parte din workflow seamănă cu un program format din goto-uri, 
+Când vom studia limbajul de asamblare vom observa că o bună parte din workflow seamănă cu un program format din goto-uri,
 chiar dacă majoritatea instrucțiunilor unui limbaj de nivel înalt, chiar și precum C, sunt inexistente. Gândirea și
 programarea cu goto-uri ne pregătește pentru lucrul în limbajul de asamblare.
 
->**WARNING**: În orice alt caz, această formă de programare ar trebui evitată pe cât posibil. 
+>**WARNING**: În orice alt caz, această formă de programare ar trebui evitată pe cât posibil.
 ![goto.png]( https://imgs.xkcd.com/comics/goto.png)
 
 În cadrul laboratoarelor vom folosi:
