@@ -1,0 +1,9 @@
+insert 1 Ana 1 1 Banana
+insert 1 George 2 2 Bombardierul
+insert 1 Catalin -129 3 Sultanul
+print
+delete_at 1
+delete_at 1
+delete_at 0
+print
+exit

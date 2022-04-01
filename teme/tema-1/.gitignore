@@ -1,0 +1,6 @@
+memCheck
+valgrind-out.txt
+OUTPUTS/*
+!OUTPUTS/.gitkeep
+main
+*.o

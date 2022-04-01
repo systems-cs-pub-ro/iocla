@@ -1,0 +1,32 @@
+insert 1 asdasdadascascasdasklnasksocjaoijoiasskjdoiasdjasdasd 124 124 asdamscmaskcmaskcmasklcmaskldmaskldmakfmakslfmaskldmasm,cxnasmlcnalkfnalkd
+insert 3 asdasdadascascasdasklnasksocjaoijoiasskjdoiasdjasdas 125 125 asdamscmaskcmaskcmasklcmaskldmaskldmakfmakslfmaskldmasm,cxnasmlcnalkfnalkd
+insert 2 asdasdadascascasdasklnasksocjaoijoiasskjdoiasdjasdasd 126 126 asdamscmaskcmaskcmasklcmaskldmaskldmakfmakslfmaskldmasm,cxnasmlcnalkfnalkd
+insert 2 asdasdadascascasdasklnasksocjaoijoiasskjdoiasdasdasdja 127 127 asdamscmaskcmaskcmasklcmaskldmaskldmakfmakslfmaskldmasm,cxnasmlcnalkfnalkd
+insert 1 asdasdadascascasdasklnasksocjaoijoiasskjdoiasdjasdasd 128 128 asdamscmaskcmaskcmasklcmaskldmaskldmakfmakslfmaskldmasm,cxnasmlcnalkfnalkd
+print
+find 0
+find 1
+find 2
+find 3
+find 4
+delete_at 0
+print
+find 0
+find 1
+find 2
+find 3
+delete_at 0
+print
+find 0
+find 1
+find 2
+delete_at 0
+print
+find 0
+find 1
+delete_at 1
+print
+find 0
+delete_at 0
+print
+exit
