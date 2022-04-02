@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-from ctypes.wintypes import BOOL
 import subprocess
 import shutil
 import os
 import sys
 from collections import namedtuple
-from xmlrpc.client import Boolean
 
 # Asta e pentru generatiile urmatoare care vor sa se joace mai tare cu valgrind
 test_tuple = namedtuple("Test", "name, error")
@@ -35,20 +33,20 @@ memory_score = 20
 readme_score = 10
 
 
-def calculate_score_without_memory() -> int:
+def calculate_score_without_memory():
     """
     Returns:
         int: The score of the person without memory points
     """
     return (
-        (70 / number_tests) * number_tests_passed
+        (70.0 / number_tests) * number_tests_passed
         + (readme_score if has_readme() else 0)
         if number_tests_passed > 0
         else 0
     )
 
 
-def calculate_score() -> int:
+def calculate_score():
     """
     Returns:
         int: The total score of the person
@@ -57,7 +55,7 @@ def calculate_score() -> int:
     return score + (memory_score if len(memory_shame_list) == 0 and score >= 50 else 0)
 
 
-def has_readme() -> BOOL:
+def has_readme():
     for file in os.listdir(os.getcwd()):
         if file.startswith("README"):
             return True
@@ -149,7 +147,7 @@ else:
 
 ## The long awaited
 print(
-    f"{nl}======================= Score ==================== {calculate_score()}p/100p{nl}"
+    "\n======================= Score ======================= " + str(calculate_score()) + "p/100\n"
 )
 
 ## Cleanup
