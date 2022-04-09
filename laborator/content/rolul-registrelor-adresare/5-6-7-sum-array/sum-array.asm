@@ -27,8 +27,40 @@ add_byte_array_element:
     PRINTF32 `%s\x0`, print_format
     PRINTF32 `%u\n\x0`, eax
 
-
     ; TODO: Compute sum for elements in word_array and dword_array.
+	xor eax, eax            ; Use eax to store the sum.
+    xor edx, edx            ; Store current value in dl; zero entire edx.
+    mov ecx, ARRAY_SIZE     ; Use ecx as loop counter.
+add_2_byte_array_element:
+    mov dx, word [word_array + 2*(ecx - 1)]
+    add eax, edx
+    loop add_2_byte_array_element ; Decrement ecx, if not zero, add another element.
 
+    PRINTF32 `%s\x0`, print_format
+    PRINTF32 `%u\n\x0`, eax
+
+    xor eax, eax            ; Use eax to store the sum.
+    xor edx, edx            ; Store current value in dl; zero entire edx.
+    mov ecx, ARRAY_SIZE     ; Use ecx as loop counter.
+add_4_byte_array_element:
+    mov edx, dword [dword_array + 4 * (ecx - 1)]
+    add eax, edx
+    loop add_4_byte_array_element ; Decrement ecx, if not zero, add another element.
+
+    PRINTF32 `%s\x0`, print_format
+    PRINTF32 `%u\n\x0`, eax
+
+    xor ebx, ebx            ; Use ebx to store the sum.
+    xor edx, edx            ; Store current value in dl; zero entire edx.
+    mov ecx, ARRAY_SIZE     ; Use ecx as loop counter.
+add_7_byte_array_element:
+    mov edx, dword [dword_array + 4 * (ecx - 1)]
+    mov eax, edx
+    mul edx
+    add ebx, eax
+    loop add_7_byte_array_element ; Decrement ecx, if not zero, add another element.
+
+    PRINTF32 `%s\x0`, print_format
+    PRINTF32 `%u\n\x0`, ebx
     leave
     ret
