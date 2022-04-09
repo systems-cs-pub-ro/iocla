@@ -20,11 +20,9 @@ main:
     mov ebp, esp
 
     xor eax, eax
-
     mov al, byte [dividend1]
     mov bl, byte [divisor1]
     div bl
-    
     PRINTF32 `%s\x0`, string_quotient
     xor ebx, ebx
     mov bl, al
@@ -36,8 +34,34 @@ main:
 
 
     ; TODO: Calculate quotient and remainder for 67254 / 1349.
+    xor eax, eax
+    xor ebx, ebx
+    xor edx, edx
+    mov ecx, dword [dividend2]
+    mov bx, word [divisor2]
+    mov ax, cx
+    shr ecx, 16 ; shift right with 16
+    mov dx, cx
+    div bx
+    PRINTF32 `%s\x0`, string_quotient
+    PRINTF32 `%hu\n\x0`, eax
+    PRINTF32 `%s\x0`, string_remainder
+    PRINTF32 `%hu\n\x0`, edx
 
     ; TODO: Calculate quotient and remainder for 69094148 / 87621.
-    
+    xor eax, eax
+    xor ebx, ebx
+    xor edx, edx
+    mov eax, dword [dividend3]
+    mov edx, dword [dividend3 + 4]
+    mov ebx, dword [divisor3]
+    div ebx
+    PRINTF32 `%s\x0`, string_quotient
+    PRINTF32 `%u\n\x0`, eax
+    PRINTF32 `%s\x0`, string_remainder
+    PRINTF32 `%u\n\x0`, edx
+    xor eax, eax
+    xor ebx, ebx
+    xor edx, edx    
     leave
     ret
