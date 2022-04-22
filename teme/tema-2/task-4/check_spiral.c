@@ -54,17 +54,18 @@ int main(int argc, char **argv) {
     printf("--------------TASK 4--------------\n");
     for (i = 0; i <= 9; i++) {
         sprintf(input_file, "input/spiral-%d.in", i);
+ 
         sprintf(ref_file, "ref/spiral-%d.ref", i);
         readRef(ref_file, ref_string);
 
         memset(enc_string, 0, 10001);
 
         readInput(input_file, &N, plain, key);
+
         spiral(N, plain, key, enc_string);
 
         sprintf(output_file, "output/spiral-%d.out", i);
         printOutput(output_file, enc_string);
-        printf("%s\n", enc_string);
 
         if (strcmp(enc_string, ref_string)) {
             printf("TEST %d..................FAILED: 0.00p\n", i);
@@ -74,6 +75,7 @@ int main(int argc, char **argv) {
         }
     }
    printf("TASK 4 SCORE: %.2f\n\n", score);
+
 
     return 0;
 }
