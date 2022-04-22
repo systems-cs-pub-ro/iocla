@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-void spiral(int N, char *plain, int key[101][101], char *enc_string);
+void spiral(int N, char *plain, int *key, char *enc_string);
 
-void readInput(char *filename, int *N, char *plain, int key[101][101]) {
+void readInput(char *filename, int *N, char *plain, int *key) {
     int i, j;
     FILE *f = fopen(filename, "r");
 
@@ -16,7 +16,7 @@ void readInput(char *filename, int *N, char *plain, int key[101][101]) {
     plain[*N * *N] = '\0';
     for (i = 0; i < *N; i++) {
         for (j = 0; j < *N; j++) {
-            fscanf(f, "%d", &(key[i][j]));
+            fscanf(f, "%d", &(key[i * *N + j]));
         }
     }
 
@@ -44,21 +44,24 @@ void printOutput(char *filename, char *string) {
 int main(int argc, char **argv) {
     int i = 0;
     int N;
-    int score = 0;
-    int key[101][101];
+    float score = 0;
     char plain[10001];
     char enc_string[10001];
     char ref_string[10001];
     char input_file[30], output_file[30], ref_file[30];
+    int key[1000];
 
     printf("--------------TASK 4--------------\n");
     for (i = 0; i <= 9; i++) {
         sprintf(input_file, "input/spiral-%d.in", i);
-        readInput(input_file, &N, plain, key);
+ 
         sprintf(ref_file, "ref/spiral-%d.ref", i);
         readRef(ref_file, ref_string);
 
         memset(enc_string, 0, 10001);
+
+        readInput(input_file, &N, plain, key);
+
         spiral(N, plain, key, enc_string);
 
         sprintf(output_file, "output/spiral-%d.out", i);
@@ -67,11 +70,12 @@ int main(int argc, char **argv) {
         if (strcmp(enc_string, ref_string)) {
             printf("TEST %d..................FAILED: 0.00p\n", i);
         } else {
-            score += 1;
+            score += 3;
             printf("TEST %d..................PASSED: 3.00p\n", i);
         }
     }
-    printf("TASK 4 SCORE: %.2f\n\n", score);
+   printf("TASK 4 SCORE: %.2f\n\n", score);
+
 
     return 0;
 }
