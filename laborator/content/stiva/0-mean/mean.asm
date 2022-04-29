@@ -19,17 +19,32 @@ main:
 
     ; TODO1 - compute the sum of the vector numbers - store it in eax
 
+label1:
+    mov bx, word [num_array + 2 * (ecx - 1)]
+    add eax, ebx
+    loop label1
+
     PRINTF32 `Sum of numbers: %d\n\x0`, eax
 
     ; TODO2 - compute the quotient of the mean
+
+    xor edx, edx
+    mov ebx, ARRAY_SIZE
+    div ebx
 
     PRINTF32 `Mean of numbers: %d\x0`, eax
     PRINTF32 `.\x0`
 
     mov ecx, DECIMAL_PLACES
+    mov esi, 10
 compute_decimal_place:
 
-    ; TODO3 - compute the current decimal place - store it in ax
+    ; TODO3 - compute the current decimal place - store it in eax
+
+    mov eax, edx
+    mul esi
+    xor edx, edx
+    div ebx
 
     PRINTF32 `%d\x0`, eax
     dec ecx
