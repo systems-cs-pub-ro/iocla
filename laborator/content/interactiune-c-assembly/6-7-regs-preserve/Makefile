@@ -1,3 +1,3 @@
-PROGNAME := inline_cpuid
+PROGNAME := regs-preserve
 include ../../utils/Makefile.generic
 
