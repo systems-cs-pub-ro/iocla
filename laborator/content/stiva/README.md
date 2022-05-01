@@ -158,9 +158,9 @@ Dupa cum putem observa, registrul ebp defineste stack frame-ul fiecarei functii.
 >
 ### 0. Recapitulare: Media aritmetică a elementelor dintr-un vector
 
-Pornind de la exercițiul `0-recap-mean.asm` din arhiva de laborator, implementați codul lipsă, marcat de comentarii de tip `TODO`, pentru a realiza un program care calculează media aritmetică a elementelor dintr-un vector. Afișați doar partea întreagă a mediei (câtul împărțirii).
+Pornind de la exercițiul `0-recap-mean.asm` din arhiva de laborator, implementați codul lipsă, marcat de comentarii de tip `TODO`, pentru a realiza un program care calculează media aritmetică a elementelor dintr-un vector. Afișați partea întreagă a mediei (câtul împărțirii) cu primele 5 zecimale exacte din partea fracționară. (pentru a calcula prima cifră din partea fracționară trebuie să înmulțiti restul obținut cu 10, urmat de o împarțire cu același împărțitor). 
 
-> **NOTE:** Dacă ați făcut calculul corect, suma elementelor vectorului va fi `3735` iar media aritmetică a elementelor din vector va fi `287`.
+> **NOTE:** Dacă ați făcut calculul corect, suma elementelor vectorului va fi `3735` iar media aritmetică a elementelor din vector va fi `287.30769`.
 
 
 ### 1. Max
