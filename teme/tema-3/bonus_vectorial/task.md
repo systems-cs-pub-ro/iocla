@@ -27,6 +27,14 @@ Functia are urmatorul antet:
 
 `void vectorial_ops(int s, int A[], int B[], int C[], int n, int D[])`
 
+Semnificatia parametrilor este:
+  s -> un scalar
+  A,B,C -> vectori
+  n -> lungimea vectorilor
+  D -> vectorul rezultat
+
+Atentie, functia nu returneaza nimic, rezultatul calculului se salveaza in vectorul D, transmis ca parametru!
+
 ## Observatii
 
 - Puteti folosi oricare set de instructiuni SIMD pentru realizarea acestui task, in functie de ce aveti disponibil pe masina locala. Pentru a afla ce capabilitati are procesorul vostru, folositi comanda `cat /proc/cpuinfo`.
