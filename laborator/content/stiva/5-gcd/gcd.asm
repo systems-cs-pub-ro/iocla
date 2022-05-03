@@ -40,5 +40,11 @@ print:
     ; TODO 2: print the result in the form of: "gdc(eax, edx)=7" with PRINTF32 macro
     ; output value in eax
 
+    PRINTF32 `gdc(eax, edx)=%d\n\x0`, eax
+
+    pop eax
+    pop edx
+
     xor eax, eax
+    xor edx, edx
     ret
