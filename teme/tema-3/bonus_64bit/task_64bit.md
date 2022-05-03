@@ -15,6 +15,17 @@ Prin intercalare se intelege crearea unui nou vector, care contine, alternativ, 
 
 Daca un vector este mai lung decat celalalt, elementele lui vor fi puse la finalul vectorului rezultat.
 
+Antetul functiei este `void intertwine(int *v1, int n1, int *v2, int n2, int *v);`
+
+Semnificatia parametrilor:
+  v1 -> adresa primului vector
+  n1 -> lungimea primului vector
+  v2 -> adresa celui de-al doilea vector
+  n2 -> lungimea celui de-al doilea vector
+  v -> adresa vectorului rezultat.
+  
+Atentie, functia nu returneaza nimic, rezultatul intercalarii se va salva in vectorul v, transims ca parametru.
+
 ## Punctare
 
 Acest task valoreaza 10 puncte, dintre care un punct e pentru descrierea implementarii si coding style.
