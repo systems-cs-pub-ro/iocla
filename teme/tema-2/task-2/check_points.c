@@ -7,7 +7,7 @@ typedef struct point{
     short y; 
 } __attribute__((packed));
 
-voud points_distance(struct point *p, int *rez);
+void points_distance(struct point *p, int *rez);
 void road(struct point* points, int len, int* distances);
 void is_square(int *dist, int n, int *rez);
 
