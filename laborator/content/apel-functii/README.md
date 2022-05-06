@@ -420,7 +420,7 @@ Implementați funcția `toupper` astfel încât translatarea să aibă loc doar 
 
 ### Bonus: rot13
 
-Realizați și folosiți o funcție care face translatarea [rot13](http://www.decode.org/) a unui șir.
+Realizați și folosiți o funcție care face translatarea [rot13](https://rot13.com/) a unui șir.
 
 ### Bonus: rot13++
 
