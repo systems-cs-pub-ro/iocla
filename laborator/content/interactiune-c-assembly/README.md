@@ -67,83 +67,12 @@ main
 Remarcați faptul că procedura este declarată ca fiind globală și se numește `main` - punctul de pornire al oricărui program C. Din moment ce în C parametrii sunt puși pe stivă în ordine inversă, offsetul stringului este pus prima oară, urmat de offsetul șirului de formatare. Funcția C poate fi apelată după aceea, însa stiva trebuie restaurată la ieșirea din funcție.
 
 Când se face linkarea codului assembly trebuie inclusă și biblioteca standard C (sau biblioteca care conține funcțiile pe care le folosiți).
-## Inline assembly
-În primul rând, ce este “inline”?
-
-Termenul `inline` este un cuvânt cheie în limbajul C și este folosit în declararea funcțiilor. În momentul în care compilatorul găsește o funcție declarată ca fiind inline, acesta va înlocui toate apelurile către funcția respectivă cu corpul funcției. Avantajul principal al funcțiilor inline este acela că se pierde overheadul rezultat din apelul unei funcții. Pe de altă parte, dimensiunea binarului va fi mai mare.
-> **NOTE:** Nu are sens să declarăm ca fiind inline funcțiile recursive. De ce? 
-
-Acum este ușor să ghicim la ce se referă expresia “inline assembly”: un set de instrucțiuni assembly scrise ca funcții inline. Inline assembly este folosit ca o metoda de optimizare și este foarte des întâlnit în system programming.
-
-În programele C/C++ se pot insera instrucțiuni în limbaje de asamblare folosing cuvântul cheie “asm”.
-
-Pentru mai multe detalii, consultați [linkul](https://www.codeproject.com/Articles/15971/Using-Inline-Assembly-in-C-C) pentru gcc sau [linkul](https://docs.microsoft.com/en-us/cpp/assembler/inline/inline-assembler?redirectedfrom=MSDN&view=msvc-160) pentru cl. 
-
 
 ## Exerciții
 > **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`.Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
-### 1. Tutorial: Buclă for în inline assembly
-În subdirectorul `1-inline-for/` din arhiva de sarcini a laboratorului aveți o implementare a unei bucle for folosind inline assembly.
-
-Urmăriți codul și compilați-l și rulați-l într-un terminal. Pentru a-l compila rulați comanda 
-```bash
-make
-```
-În urma rulării comenzii rezultă executabilul `inline_for` pe care îl putem executa folosind comanda
-```bash
-./inline_for
-```
-Urmăriți în cod partea de inline assembly din blockul ce începe cu `asm`. Înțelegeți modul în care funcționează inline assembly înainte de a trece la exercițiul următor. 
-> **TIP:**
-> Structura generală a unei directive de inline assembly este următoarea:
-> ```C
-> __asm__ ( AssemblerTemplate 
->           : OutputOperands 
->           [ : InputOperands
->           [ : Clobbers ]]
->         )
-> ```
-> `AssemblerTemplate` este un string care constituie instrucțiunile in limbaj de asamblare executate de programul vostru. `gcc` nu va ține cont de spațiile albe din acest string, din cauza aceasta trebuie sa marcați fiecare instrucțiune cu `\n` (opțional `\t` pentru indentare).
-> 
-> `OutputOperands` și `InputOperands` reprezintă variabilele de ieșire, respectiv intrare ale rutinei voastre. Convențional, variabilele de ieșire sunt transferate prin referință, iar cele de intrare prin valoare. Pentru variabilele de ieșire, folosiți declarații de forma `"=r" (<variabila_din_codul_C>)`, iar pentru variabile de intrare, `"r" (<variabila_din_codul_C>)`.
-> 
-> Prin `Clobbers` menționați registrele pe care îi folosiți în rutina voastră de asamblare, și în felul acesta instruiți compilatorul să nu se atingă de ei. Altfel, sunt șanse să îi folosească în alte scopuri.
-> 
-> În instrucțiuni, trebuie să înlocuiți aparițiile variabilelor din program (e.g. `sum`), cu registrul aferent (e.g. `%0`). Registrele de tip general (`"r"`) sunt numerotați crescător începând cu 0, în ordinea declarațiilor. Există și posibilitatea de a mapa explicit o variabilă la un anumit registru (e.g. `"=a" (var)` va mapa variabila `var` la registrul `eax`), însă, pentru simplitate, în laborator folosim doar mapări la registrele generale.
-> 
-> Pentru debugging, puteți inspecta fișierul de assembly generat de `gcc` - acesta se generază executând comanda: 
-> ```bash
-> make asm
-> ```
-
-### 2. Rotație în inline assembly
-În limbajul C avem suport pentru operații de shiftare pe biți dar nu avem suport pentru operații de rotație pe biți. Acest lucru în ciuda prezenței operațiilor de rotație pe biți la nivelul procesorului.
-
-În subdirectorul `2-inline-rotate/` găsiți un schelet de cod pe care să îl folosiți pentru a implementa, folosind mnemonicile `rol` și respectiv `ror`, rotații pe biți. O descriere scurtă a acestor instrucțiuni găsiți [aici](https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Rotate_Instructions).
-
-Pentru compilare folosiți comanda `make`.
-> **TIP:**
-> La o implementare corectă a rotației cu 8 biți la stânga și dreapta, în urma rulării executabilului `./inline_rotate`, veți obține un rezultat de forma:
-> ```bash
-> ./inline_rotate
-> init: 0x12345678, rot_left: 0x34567812, rot_right: 0x78123456
-> ```
-
-### 3. CPUID în inline assembly
-La nivelul procesoarelor moderne există o instrucțiune simplă, accesibilă doar din limbaj de asamblare, care oferă informații despre procesor numită `cpuid`.
-
-În subdirectorul `3-inline-cpuid/` găsiți un schelet de cod pe care să îl folosiți pentru obținerea vendor ID string-ului procesorului folosind instrucțiunea `cpuid`. Completați scheletul și faceți programul să afișeze informațiile dorite.
-
-Pentru compilare folosiți comanda `make`. 
-
-> **TIP:**
-> Pentru informații despre instrucțiunea `cpuid` consultați și aceste link-uri:
-> - http://wiki.osdev.org/CPUID
-> - https://en.wikipedia.org/wiki/CPUID#EAX.3D0:_Get_vendor_ID 
-
-### 4. Tutorial: Calcul maxim în assembly cu apel din C
-În subdirectorul `4-5-max-c-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în C de unde se apelează funcția `get_max()` definită în limbaj de asamblare.
+### 1. Tutorial: Calcul maxim în assembly cu apel din C
+În subdirectorul `1-2-max-c-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în C de unde se apelează funcția `get_max()` definită în limbaj de asamblare.
 
 Urmăriți codul din cele două fișiere și modul în care se transmit argumentele funcției și valoarea de retur.
 
@@ -161,7 +90,7 @@ make
 > **IMPORTANT:**
 > Valoarea de retur a unei funcții este plasată în registrul `eax`.
 
-### 5. Extindere calcul maxim în assembly cu apel din C
+### 2. Extindere calcul maxim în assembly cu apel din C
 Extindeți programul de la exercițiul anterior (în limbaj de asamblare și C) astfel încât funcția `get_max()` să aibă acum semnătura `unsigned int get_max(unsigned int *arr, unsigned int len, unsigned int *pos)`. Al treilea argument al funcției este adresa în care se va reține poziția din vector pe care se găsește maximul.
 
 La afișare se va afișa și poziția din vector pe care se găsește maximul. 
@@ -175,8 +104,20 @@ La afișare se va afișa și poziția din vector pe care se găsește maximul.
 > max = get_max(arr, 10, &pos);
 >  ```
 
-### 6. Tutorial: Calcul maxim în C cu apel din assembly
-În subdirectorul `6-7-max-assembly-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în limbaj de asamblare de unde se apelează funcția `get_max()` definită în C.
+### 3. Depanare stack frame corupt
+În subdirectorul `3-stack-frame/` din arhiva de sarcini a laboratorului găsiți un program C care implementează afișarea stringului `Hello world!` printr-un apel al funcției `print_hello()` definită în assembly pentru prima parte a mesajului, urmat de două apeluri ale funcției `printf()` direct din codul C.
+
+Compilați și rulați programul. Ce observați? Mesajul printat nu este cel așteptat deoarece din codul assembly lipsește o instrucțiune.
+
+Folosiți GDB pentru a inspecta adresa din vârful stivei înainte de execuția instrucțiunii `ret` din funcția `print_hello()`. Către ce pointează? Urmăriți valorile registrelor EBP si ESP pe parcursul execuției acestei funcții. Ce ar trebui să se afle în vârful stivei după execuția instrucțiunii `leave`?
+
+Găsiți instrucțiunea lipsă și rerulați executabilul.
+
+> **TIP:**
+> Pentru a putea restaura stiva la starea sa de la începutul funcției curente, instrucțiunea `leave` se bazează pe faptul că frame pointerul funcției a fost setat.
+
+### 4. Tutorial: Calcul maxim în C cu apel din assembly
+În subdirectorul `4-5-max-assembly-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în limbaj de asamblare de unde se apelează funcția `get_max()` definită în C.
 
 Urmăriți codul din cele două fișiere și modul în care se transmit argumentele funcției și valoarea de retur.
 
@@ -184,7 +125,7 @@ Compilați și rulați programul.
 > **IMPORTANT:**
 > Acordați atenție înțelegerii codului înainte de a trece la exercițiul următor. 
 
-### 7. Extindere calcul maxim în C cu apel din assembly
+### 5. Extindere calcul maxim în C cu apel din assembly
 Extindeți programul de la exercițiul anterior (în limbaj de asamblare și C) astfel încât funcția `get_max()` să aibă acum semnătura `unsigned int get_max(unsigned int *arr, unsigned int len, unsigned int *pos)`. Al treilea argument al funcției este adresa în care se va reține poziția din vector pe care se găsește maximul.
 
 La afișare se va afișa și poziția din vector pe care se găsește maximul.
@@ -196,6 +137,20 @@ La afișare se va afișa și poziția din vector pe care se găsește maximul.
 >  Această variabilă o veți transmite (prin adresă) către apelul `get_max` și prin valoare pentru apelul `printf` pentru afișare.
 >  
 >  Pentru afișare modificați șirul `print_format` și apelul `printf` în fișierul assembly (`main.asm`) ca să permită afișare a două valori: maximul și poziția.
+
+### 6. Tutorial: Conservare registre
+În subdirectorul `6-7-regs-preserve/` din arhiva de sarcini a laboratorului găsiți funcția `print_reverse_array()` implementată printr-un simplu loop ce face apeluri repetate ale funcției `printf()`.
+
+Urmăriți codul din fișierul `main.asm`, compilați și rulați programul. Ce s-a întâmplat? Programul rulează la infinit. Acest lucru se întămplă deoarece funcția `printf()` nu conservă valoarea din registrul `ECX`, folosit aici ca și contor.
+
+Decomentați liniile marcate cu `TODO1` și rerulați programul.
+
+### 7. Depanare SEGFAULT
+Decomentați liniile marcate cu `TODO2` în fișierul assembly de la exercițiul anterior. Secvența de cod realizează un apel al funcției `double_array()`, implementată în C, chiar înainte de afișarea vectorului folosind funcția văzută anterior.
+
+Compilați și rulați programul. Pentru depanarea segfault-ului puteți folosi utilitarul `objdump` pentru a urmări codul în limbaj de asamblare corespunzător funcției `double_array()`. Observați care din registrele folosite înainte și după apel sunt modificate de această funcție.
+
+Adăugați în fișierul assembly instrucțiunile pentru conservarea și restaurarea registrelor necesare.
 
 ### 8. Bonus: Calcul maxim în assembly cu apel din C pe 64 de biți
 Intrați în subdirectorul `8-max-c-calls-x64/` și faceți implementarea calculului maximului în limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 4 și 5 în așa fel încât să îl rulați folosind un sistem pe 64 de biți.
