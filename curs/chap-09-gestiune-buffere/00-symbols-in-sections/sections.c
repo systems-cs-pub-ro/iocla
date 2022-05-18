@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-static unsigned short int ana = 1;
+unsigned short int ana = 1;
 static unsigned int stana;
 static const unsigned long int laptita;
 

@@ -1,4 +1,4 @@
-CFLAGS = -Wall -W -Wno-unused-variable -Wno-unused-function -Wno-unused-const-variable -g -m32 -fno-PIC -fno-stack-protector
+CFLAGS = -Wall -W -g -m32 -fno-PIC -fno-stack-protector -Wno-unused-variable -Wno-unused-function -Wno-unused-const-variable 
 LDFLAGS = -no-pie -m32
 
 .PHONY: all clean

@@ -24,16 +24,18 @@ int main(void)
  
 int array_sum(int* value, int size)
 {
-         asm("      xorl  %%eax,%%eax;"   /* sum = 0 */
-	     "      pushl %%ebx;       "
-             "rep1: jecxz done;       "
-             "      decl  %%ecx;      "
-             "      addl  (%%ebx,%%ecx,4),%%eax;"
-             "      jmp   rep1;       "
-             "done:                   "
-	     "      popl  %%ebx;       "
-              : /* no outputs */
-              :"b"(value),"c"(size)       /* inputs */
-	     :"%eax", "cc"
-	     );              /* clobber list */
+     asm("\
+     .intel_syntax noprefix     \n\
+        xor     eax, eax        \n\
+        push   	ebx				\n\
+        mov     ebx, [ebp+8]	\n\
+        mov     ecx, [ebp+12] 	\n\
+    rep1:						\n\
+        jecxz   done			\n\
+        dec     ecx				\n\
+        add     eax, [ebx+ecx*4]\n\
+        jmp     rep1			\n\
+    done:						\n\
+        pop    	ebx				\n\
+"); 
 }

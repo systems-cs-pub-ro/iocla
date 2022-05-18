@@ -22,10 +22,13 @@ hll_arraysum2: hll_arraysum2c.o hll_arraysum2a.o
 	$(LD) -o $@ $^ 
 hll_arraysum_inline: hll_arraysum_inline.o 
 	$(LD) -o $@ $^ 
+hll_arraysum_inline2: hll_arraysum_inline2.o 
+	$(LD) -o $@ $^ 
+
 
 
 %.o : %.c
-	cc -m32 -g -c -o $@ $<
+	cc -m32 -masm=intel -g -c -o $@ $<
 
 %.o : %.asm
 #	$(warning NASM=$(NASM) FLAGS=$(ASM_FLAGS))
