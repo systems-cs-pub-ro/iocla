@@ -48,6 +48,7 @@ fill_byte:
     jl fill_byte
 
     ; Print data in buffer.
+    mov dword[ebx + ecx], 0xDEADBEEF
     push buffer_intro_message
     call printf
     add esp, 4
@@ -67,7 +68,7 @@ print_byte:
 
     pop ecx	; restore ecx
     inc ecx
-    cmp ecx, 64
+    cmp ecx, 80
     jl print_byte
 
     ; Print new line. C equivalent instruction is puts("").
