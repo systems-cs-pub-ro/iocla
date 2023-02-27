@@ -7,13 +7,7 @@ Demo 01:
 1. Run hello world demo  
 # hello 
 
-2. SASM session to see the IDE
-# sasm hello.asm 
-- set a breakpoint @ main 
-- start debugging with F5
-- run step by step  to see registers changing
-
-3. Quick gdb walkthrough (b - breakpoint, n - next instruction, p - print, r - run, s - start = [b main, r], q - quit)
+2. Quick gdb walkthrough (b - breakpoint, n - next instruction, p - print, r - run, s - start = [b main, r], q - quit)
 # gdb hello 
 b main 
 p (char*)(&msg) 

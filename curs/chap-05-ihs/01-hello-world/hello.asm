@@ -11,29 +11,20 @@ section .data
 section .text
 	global main
 	
-main:   
-        push ebp           ; cadru de stivă adăugat de sasm
-        mov ebp, esp       ; for correct debugging
-	mov ax, 0x102      ; o constantă într-un registru de 16 biți
-                            ; AX = 258 în zecimal/decimal, 0x102 în hexa, 100000010 în binar
-	mov ah, 100         ; o constantă într-un registru de 8 biți
-	mov al, 100          ; AX este de fapt AH concatenat cu AL (high and low)
-adunare:                    ; etichetă
-	nop 
-	add al, ah         ; aritmetică pe 8 biți
-                            ; urmăriți registrul FLAGS
-				; *exercițiu*: încercați diverse valori, și observați ZF, CF, OF, PF
-	nop
-	nop 
-scadere:
-	sub al, ah
-	nop
-	nop
-	
-	mov eax, 0x1234ABCD; EAX este pe 32 biți, partea de jos (least significant) se numește AX
-                            ; în AX avem 0xABCD     
-       ; jmp iesire         ; decomenteaza pentru a sări peste print string   
-	and eax, 0xffff0000
+main:
+	push ebp           	; main e o funcție 
+	mov ebp, esp       	; 
+	mov ax, 0x102      	; o constantă într-un registru de 16 biți
+				; AX = 258 în zecimal/decimal, 0x102 în hexa, 100000010 în binar
+	mov ah, -1         	; o constantă într-un registru de 8 biți
+	mov al, 1          	; AX este de fapt AH concatenat cu AL (high and low)
+adunare:                    	; etichetă
+	add al, ah         	; aritmetică pe 8 biți
+				; urmăriți registrul FLAGS
+				; *exercițiu*: încercați diverse valori, și observați ZF, CF, OF, PF 
+	mov eax, 0x1234ABCD	; EAX este pe 32 biți, partea de jos (least significant) se numește AX
+				; în AX avem 0xABCD     
+       ; jmp iesire         	; decomenteaza pentru a sări peste print string   
 	mov eax, 4
 	mov ebx, 1
 	mov ecx, msg

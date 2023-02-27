@@ -1,18 +1,18 @@
 
 CC = gcc
-C_FLAGS = -O2 -m32 -g 
+CFLAGS = -O2 -m32 -g -fno-PIC
 NASM = nasm
 ASM_FLAGS = -f elf32 -g -F dwarf
-LD = ld  -melf_i386
+LD = ld  -melf_i386 -no-pie
 
 all : hello 
 
 hello: hello.o 
-	$(CC) $(C_FLAGS) -o hello hello.o
+	$(CC) -m32 -no-pie -o hello hello.o
 
 %.o : %.c
-	$(warning CC=$(CC) FLAGS=$(C_FLAGS))
-	$(CC) -c $(C_FLAGS) -o $@ $<
+	$(warning CC=$(CC) FLAGS=$(CFLAGS))
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 %.o : %.asm
 	$(warning NASM=$(NASM) FLAGS=$(ASM_FLAGS))
