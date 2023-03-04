@@ -4,14 +4,19 @@
 
 char* delete_first(char *s, char *pattern);
 
-int main(){
+int main(void)
+{
+	/*
+	 * TODO: Este corectă declarația variabilei s în contextul în care o să apelăm
+	 * funcția delete_first asupra sa? De ce? Modificați dacă este cazul.
+	 */
 	char *s = "Ana are mere";
 	char *pattern = "re";
 
 	(void) s;
 	(void) pattern;
 
-	// Decomentati linia dupa ce ati implementat functia delete_first.
+	// Decomentați linia după ce ați implementat funcția delete_first.
 	// printf("%s\n", delete_first(s, pattern));
 
 	return 0;
