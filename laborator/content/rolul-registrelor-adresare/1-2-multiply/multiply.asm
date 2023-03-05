@@ -24,10 +24,7 @@ main:
     mul bl
 
     ; Print result in hexa
-    PRINTF32 `%s\x0`, print_mesaj
-    xor ebx, ebx
-    mov bx, ax
-    PRINTF32 `%hx\n\x0`, eax
+    PRINTF32 `%s%hx\n\x0`, print_mesaj, eax
 
 
    ; TODO: Implement multiplication for dw and dd data types.

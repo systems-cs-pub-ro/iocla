@@ -31,8 +31,7 @@ main:
     PRINTF32 `%hhu\n\x0`, ebx
     xor ebx, ebx
     mov bl, ah
-    PRINTF32 `%s\x0`, string_remainder
-    PRINTF32 `%hhu\n\x0`, ebx
+    PRINTF32 `%s%hhu\n\x0`, string_remainder, ebx
 
 
     ; TODO: Calculate quotient and remainder for 67254 / 1349.

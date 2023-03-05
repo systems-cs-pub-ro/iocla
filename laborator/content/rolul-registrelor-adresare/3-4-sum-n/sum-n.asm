@@ -20,10 +20,7 @@ add_to_sum:
     loop add_to_sum    ; Decrement ecx. If not zero, add it to sum.
 
     mov ecx, [num]
-    PRINTF32 `%s\x0`, print_format1
-    PRINTF32 `%u\x0`, ecx
-    PRINTF32 `%s\x0`, print_format2
-    PRINTF32 `%u\n\x0`, eax
+    PRINTF32 `%s%u%s%u\n\x0`, print_format1, ecx, print_format2, eax
 
     leave
     ret
