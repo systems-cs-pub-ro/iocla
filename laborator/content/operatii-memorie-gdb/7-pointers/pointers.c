@@ -16,7 +16,7 @@ int main() {
 
 	char *dest_str = malloc(sizeof(src));
 	char *dest_mem = malloc(sizeof(src));
-	
+
 	if (!dest_str || !dest_mem) {
 		perror("malloc() failed");
 		return 1;
