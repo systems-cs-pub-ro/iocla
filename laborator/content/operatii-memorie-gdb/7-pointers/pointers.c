@@ -13,7 +13,14 @@ int main() {
 	char s1[] = "Abracadabra";
 	char s2[] = "Abracababra";
 	char src[] = "Learn IOCLA, you must!";
-	char *dest = malloc(sizeof(src));
+
+	char *dest_str = malloc(sizeof(src));
+	char *dest_mem = malloc(sizeof(src));
+
+	if (!dest_str || !dest_mem) {
+		perror("malloc() failed");
+		return 1;
+	}
 
 	(void) s1;
 	(void) s2;
@@ -24,9 +31,10 @@ int main() {
 	cu succes. In caz contrar, programul va crapa.
 	*/
 	// assert(SIGN(my_strcmp(s1, s2)) == SIGN(strcmp(s1, s2)));
-	// assert(my_memcpy(dest, src, sizeof(src)) == memcpy(dest, src, sizeof(src)));
-	// assert(my_strcpy(dest, src) == strcpy(dest, src));
-	free(dest);
+	// assert(strcpy(dest_str, src) && !strcmp(dest_str, src));
+	// assert(my_memcpy(dest_mem, src, sizeof(src)) && !memcmp(dest_mem, src, sizeof(src)));
 
+	free(dest_str);
+	free(dest_mem);
 	return 0;
 }
