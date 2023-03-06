@@ -21,45 +21,6 @@
 
  > **TIP:** Dimensiunea unui pointer depinde de arhitectura și sistemul de operare pe care a fost compilat programul. Dimensiunea unui pointer se determină cu `sizeof(void*)` și nu este în mod necesar egală cu dimensiunea unui `int`.
 
-### **Pointeri la void**
-
-Un pointer la void este un pointer care nu are un tip asociat. Pointerii la void au o flexibilitate mare deoarece pot pointa la orice tip de date, dar au și o limitare la fel de mare, și anume că nu pot fi dereferențiați, iar pentru a putea fi folosiți în operații cu pointeri trebuie convertiți la un tip de date cunoscut.
-
-Cel mai adesea sunt folosiți în implementarea de funcții generice. De exemplu, funcțiile `malloc()` și `calloc()` returnează un pointer la void ceea ce permite ca aceste funcții să fie folosite pentru alocarea de memorie pentru orice tip de date.
-
-Un exemplu de folosire a pointerilor la void este următorul:
-
-```c
-#include <stdio.h>
-
-void increment(void *data, int element_size) {
-    /* Se verifică dacă data introdusă este un char */
-	if (element_size == sizeof(char)) {
-        /* După cum am precizat, pentru a putea fi dereferențiat,
-        *  un pointer la void trebuie castat
-        */
-		char *char_ptr = data;
- 		++(*char_ptr);
-	}
-
-	if (element_size == sizeof(int)) {
-		int *int_ptr = data;
-		++(*int_ptr);
-	}
-}
-
-int main() {
-	char c = 'a';
-	int x = 10;
-
-	increment(&c, sizeof(c));
-	increment(&x, sizeof(x));
-
-	printf("%c, %d\n", c, x); /* Va avea ca rezultat: b, 11 */
-	return 0;
-}
-```
-
 ### **Operații cu pointeri. Aritmetica pointerilor**
 
 Operațiile aritmetice pe pointeri sunt puțin diferite de cele pe tipurile de date întregi. Singurele operații valide sunt **incrementarea** sau **decrementarea** unui pointer, **adunarea** sau **scăderea** unui întreg la un pointer, respectiv scăderea a doi pointeri de **același tip**, iar comportamentul acestor operații este influențat de tipul de date la care pointerii se referă.
@@ -215,6 +176,65 @@ Porțiunea roșie reprezintă padding-ul adăugat de compilator, iar cea verde m
 Totuși, putem sa împiedicăm compilatorul să facă padding folosind `__attribute__((packed))` la declararea structurii. (Mai multe detalii despre acest aspect la cursul de Protocoale de Comunicație). Astfel, pentru exemplul anterior rezultatul va fi 14.
 
 > **NOTE:** Dacă declarați pointeri la structuri, nu uitați să alocați memorie pentru aceștia înainte de a accesa câmpurile structurii. Nu uitați să alocaţi și câmpurile structurii, care sunt pointeri, înainte de utilizare, dacă este cazul. De asemenea, fiți atenți și la modul de accesare al câmpurilor.
+
+### **Pointeri la void**
+
+Memoria poate fi văzută ca un array de octeți, accesibil prin intermediul
+pointerilor. Prin tipul pointerului, zona de memorie adresată capătă o anume
+interpretare, cum s-a discutat mai sus. Există și cazuri în care dorim să
+adresăm o zonă din acest *'array'* în mod generic, astfel fiind necesari
+**pointerii la void**.
+
+Un pointer la `void` este un pointer care nu are un tip asociat. Pointerii la void au o **flexibilitate** mare deoarece pot pointa la orice tip de date, dar au și o **limitare** la fel de mare, și anume că nu pot fi dereferențiați, iar pentru a putea fi folosiți în operații cu pointeri trebuie convertiți la un tip de date cunoscut.
+
+Cel mai adesea sunt folosiți în implementarea de **funcții generice**. De exemplu, funcțiile `malloc()` și `calloc()` returnează un pointer la void ceea ce permite ca aceste funcții să fie folosite pentru alocarea de memorie pentru orice tip de date.
+
+Un exemplu de folosire a pointerilor la void este următorul:
+
+```c
+#include <stdio.h>
+
+void increment(void *data, int element_size) {
+    /* Se verifică dacă data introdusă este un char */
+	if (element_size == sizeof(char)) {
+        /* După cum am precizat, pentru a putea fi dereferențiat,
+        *  un pointer la void trebuie castat
+        */
+		char *char_ptr = data;
+ 		++(*char_ptr);
+	}
+
+	if (element_size == sizeof(int)) {
+		int *int_ptr = data;
+		++(*int_ptr);
+	}
+}
+
+int main() {
+	char c = 'a';
+	int x = 10;
+
+	increment(&c, sizeof(c));
+	increment(&x, sizeof(x));
+
+	printf("%c, %d\n", c, x); /* Va avea ca rezultat: b, 11 */
+	return 0;
+}
+```
+
+> **NOTE:** În `C`, nu trebuie să castăm în mod explicit atribuirea unui
+> pointer de tip T cu un pointer de tip `void*`.
+>
+> Exemplu **(Good practice)**:
+>
+> ```
+> int *array = malloc(sizeof(int) * number_of_elements);
+> ```
+> **NU așa:**
+>
+> ```
+> int *array = (int*) malloc(sizeof(int) * number_of_elements);
+> ```
 
 ### **Pointeri în funcții și pointeri la funcții**
 
