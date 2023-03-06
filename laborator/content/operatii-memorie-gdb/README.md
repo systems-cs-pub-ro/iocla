@@ -224,7 +224,7 @@ int main() {
 
 > **NOTE:** În `C`, nu trebuie să castăm în mod explicit atribuirea unui
 > pointer de tip T cu un pointer de tip `void*`.
-> 
+>
 > Exemplu **(Good practice)**:
 >
 > ```
