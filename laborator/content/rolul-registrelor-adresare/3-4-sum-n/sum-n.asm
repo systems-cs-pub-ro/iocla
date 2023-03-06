@@ -2,8 +2,6 @@
 
 section .data
     num dd 100
-    print_format1 db "Sum(", 0
-    print_format2 db "): ", 0
 
 section .text
 extern printf
@@ -20,7 +18,7 @@ add_to_sum:
     loop add_to_sum    ; Decrement ecx. If not zero, add it to sum.
 
     mov ecx, [num]
-    PRINTF32 `%s%u%s%u\n\x0`, print_format1, ecx, print_format2, eax
+    PRINTF32 `Sum(%u): %u\n\x0`, ecx, eax
 
     leave
     ret

@@ -3,8 +3,6 @@
 ; https://en.wikibooks.org/wiki/X86_Assembly/Arithmetic
 
 section .data
-    string_quotient db "Quotient: ", 0
-    string_remainder db "Remainder: ", 0
     dividend1 db 91
     divisor1 db 27
     dividend2 dd 67254
@@ -25,13 +23,13 @@ main:
     mov bl, byte [divisor1]
     div bl
     
-    PRINTF32 `%s\x0`, string_quotient
     xor ebx, ebx
     mov bl, al
-    PRINTF32 `%hhu\n\x0`, ebx
+    PRINTF32 `Quotient: %hhu\n\x0`, ebx
+
     xor ebx, ebx
     mov bl, ah
-    PRINTF32 `%s%hhu\n\x0`, string_remainder, ebx
+    PRINTF32 `Remainder: %hhu\n\x0`, ebx
 
 
     ; TODO: Calculate quotient and remainder for 67254 / 1349.

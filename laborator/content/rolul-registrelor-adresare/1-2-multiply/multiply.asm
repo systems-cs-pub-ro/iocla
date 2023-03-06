@@ -9,7 +9,6 @@ section .data
     num2_w dw 9949
     num1_d dd 134932
     num2_d dd 994912
-    print_mesaj dd 'Rezultatul este: 0x', 0
 
 section .text
 extern printf
@@ -24,7 +23,7 @@ main:
     mul bl
 
     ; Print result in hexa
-    PRINTF32 `%s%hx\n\x0`, print_mesaj, eax
+    PRINTF32 `Rezultatul este: 0x%hx\n\x0`, eax
 
 
    ; TODO: Implement multiplication for dw and dd data types.
