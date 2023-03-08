@@ -4,11 +4,11 @@
 
 #include "caller.h"
 
-int main()
+int main(void)
 {
 
-    int a;
-    int c = f(10);
+	int a;
+	int c = f(10);
 
-    return c;
+	return c;
 }

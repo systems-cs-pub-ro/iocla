@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int nth_fibo(const int n) {
-	if (n == 1 || n == 2) {
+int nth_fibo(const int n)
+{
+	if (n == 1 || n == 2)
 		return 1;
-	}
 
 	int first = 1, second = 1, nth_fib = 0;
 
@@ -17,8 +17,10 @@ int nth_fibo(const int n) {
 	return nth_fib;
 }
 
-int main() {
+int main(void)
+{
 	int n;
+
 	scanf("%d", &n);
 	int *v = malloc(n * sizeof(*v));
 

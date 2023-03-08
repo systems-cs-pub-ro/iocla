@@ -24,6 +24,6 @@ int main(void)
 		printf("Full of win!\n");
 	else
 		printf("Not quite there. Try again!\n");
-	
+
 	return 0;
 }

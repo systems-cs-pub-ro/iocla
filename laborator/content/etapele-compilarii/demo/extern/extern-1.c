@@ -5,6 +5,6 @@
 int var;
 int main(void)
 {
-   var = 10;
-   return 0;
+	var = 10;
+	return 0;
 }

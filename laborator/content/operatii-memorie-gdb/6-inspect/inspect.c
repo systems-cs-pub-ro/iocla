@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main(void)
+{
 	unsigned int a = 4127;
 	int b = -27714;
 	short c = 1475;
@@ -8,9 +9,8 @@ int main() {
 
 	unsigned int *int_ptr = (unsigned int *) &v;
 
-	for (unsigned int i = 0 ; i < sizeof(v) / sizeof(*int_ptr) ; ++i) {
+	for (unsigned int i = 0 ; i < sizeof(v) / sizeof(*int_ptr) ; ++i)
 		++int_ptr;
-	}
 
 	(void) a;
 	(void) b;
