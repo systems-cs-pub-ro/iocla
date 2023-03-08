@@ -209,35 +209,28 @@ Scrieți cod în cadrul funcției `main` astfel încât să modificați câmpuri
 >**TIP**: Pentru modificarea grupei, va trebui să schimbați al treilea octet/caracter al câmpului `group` (adică octetul/caracterul cu indexul 2).
 
 ### 3. Getter
-În fișierul `getter_setter_printf.asm` implementați funcțiile `get_int`, `get_char`, respectiv `get_string`, ce vor returna valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din structura `my_struc`. Valorile vor fi returnate prin registrul `eax`.
-
->**TIP**: Funcțiile primesc ca argument un pointer la începutul structurii. Parametrul se află la adresa `ebp + 8` și pentru a fi folosit ca pointer, trebuie citită valoarea sa într-un registru (ex. registrul `ebx`).
+Scrieți în fișierul `getter_setter_printf.asm` instrucțiunile necesare pentru afișarea valorilor câmpurilor `int_x`, `char_y`, respectiv `string_s` din obiectul `sample_obj`.
 
 Output-ul programului după o rezolvare corectă este:
 ```
-1000
-a
-My string is better than yours
+int_x: 1000
+char_y: a
+string_s: My string is better than yours
 ```
 Urmăriți comentariile marcate cu **TODO**.
 
 ### 4. Setter
-Mai departe, implementați funcțiile `set_int`, `set_char`, respectiv `set_string`, ce vor suprascrie valorile câmpurilor `int_x`, `char_y`, respectiv `string_s` din `structura my_struc` cu noile valori date.
+Mai departe, suprascrieți valorile câmpurilor `int_x`, `char_y`, `string_s` din obiectul `sample_obj` cu valorile din variabilele `new_int`, `new_char`, respectiv `new_string`.
 
->**TIP**: Funcțiile primesc doi parametri - un pointer la începutul structurii, ca la exercițiul anterior, și o valoare care trebuie să fie folosită ca sursă pentru atribuire. Cei doi parametri sunt în ordine la adresele `ebp + 8` (primul parametru) și `ebp + 12` (al doilea parametru).
-
-Output-ul programului după o rezolvare corectă este:
+Validați rezultatele folosind secvența de afișare scrisă anterior. După o rezolvare corectă output-ul programului este:
 ```
-2000
-b
-Are you sure?
+int_x: 2000
+char_y: b
+string_s: Are you sure?
 ```
 Urmăriți comentariile marcate cu `TODO`.
 
-### 5. Printf
-În funcția `main`, afișați câmpurile structurii utilizând apeluri ale funcției `printf`. Verificați că programul afișază valorile corespunzătoare cu, respectiv fără, folosirea funcțiilor `set_*`. Puteți folosi formaturile de la liniile 10-12 pentru a printa câmpurile.
-
-### 6. Bonus: Căutarea unui subșir într-un șir
+### 5. Bonus: Căutarea unui subșir într-un șir
 Găsiți toate aparițiile subșirului `substring` în șirul `source_text` din fișierul `find_substring.asm`.
 
 Afișați rezultatele sub forma:
