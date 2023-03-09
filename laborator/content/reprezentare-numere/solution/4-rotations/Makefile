@@ -1,2 +1,2 @@
 PROGNAME := rotations
-include ../utils/Makefile.generic
+include ../../../utils/Makefile.generic

@@ -53,11 +53,11 @@ Deplasările logice dreapta/stânga presupun mutarea cu o poziție a fiecărui b
 
 Pentru explicații legate de operațiile pe biți în C urmăriți ghidul de la adresa [Operații pe biți în C](https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/).
 
-### **Sistemul hexazecimal**
+### Sistemul hexazecimal
 
 În **sistemul hexazecimal** (baza 16), valorile sunt reprezentate sub forma unui șir de caractere din intervalul '0'-'9' sau 'a'-'f'. Un octet este format din două astfel de caractere, deci fiecare caracter corespunde unui grup de 4 biți (un nibble).
 
-#### **Conversia din zecimal în binar/hexazecimal**
+#### Conversia din zecimal în binar/hexazecimal
 
 - Se împarte succesiv numărul la numărul bazei (2 sau 16) și se rețin resturile
 - Când câtul împărțirii devine 0, se scriu resturile în ordine inversă.
@@ -67,7 +67,7 @@ Pentru explicații legate de operațiile pe biți în C urmăriți ghidul de la 
 
 - 0xD9B1 = 1 * 16 ^ 0 + 11 * 16 ^ 1 + 9 * 16 ^ 2 + 13 * 16 ^ 3 = 55729
 
-#### **Conversia intre binar și hexazecimal**
+#### Conversia intre binar și hexazecimal
 
 După cum am precizat anterior, o cifră din cadrul unui număr în hexazecimal corespunde unui grup de 4 biți (un nibble). Astfel, pentru a converti un număr din hexazecimal în binar este suficient să transformăm fiecare cifră în grupul de 4 biți echivalent.
 
@@ -82,7 +82,7 @@ Astfel, numărul obținut în binar este **0b1101100110110001**.
 
 Operația inversă, conversia din binar în hexazecimal se poate face convertind fiecare grup de 4 biți în cifra corespunzătoare în hexazecimal.
 
-#### **La ce utilizăm reprezentarea în baza 16?**
+#### La ce utilizăm reprezentarea în baza 16?
 
 Sistemul hexazecimal este utilizat pentru a reprezenta adresele la care se află datele în memorie și pentru a vizualiza aceste date într-un mod mai ușor de interpretat decât o secvență compusă doar din 0 și 1. Imaginea de mai jos oferă un exemplu în acest sens:
 
@@ -90,7 +90,7 @@ Sistemul hexazecimal este utilizat pentru a reprezenta adresele la care se află
 
 (Imagine preluata de pe [Digital Detective](https://www.digital-detective.net/))
 
-### **Reprezentarea tipurilor de date**
+### Reprezentarea tipurilor de date
 
 În memoria unui calculator o valoare este memorată pe un număr fix de biți. În funcție de arhitectură fiecare procesor poate accesa un număr maxim de biți în cadrul unei operații, acest număr de biți reprezintă dimensiunea cuvântului (**word size**).
 
@@ -107,7 +107,7 @@ Dimensiunile tipurilor de date uzuale folosite în C sunt dependente atât de pr
 | long long   |   	64 |	8            |
 | pointer     |  	32 |	4            |
 
-### **Ordinea de reprezentare a numerelor mai mari de un octet (Little-Endian vs Big-Endian)**
+### Ordinea de reprezentare a numerelor mai mari de un octet (Little-Endian vs Big-Endian)
 
  Pentru reprezentarea valorilor mai mari de un octet există două metode posibile, ambele folosite în practică:
 
@@ -150,14 +150,14 @@ int main()
 }
 ```
 
-### **Avantaje pointeri**
+### Avantaje pointeri
 
 - pointerii sunt folosiți la crearea de structuri de date complexe precum liste înlănțuite, arbori, grafuri, tabele de dispersie, etc.
 - pointerii se folosesc pentru a transfera informații între funcții diferite sau apeluri recursive fără a folosi variabile globale
 - folosind pointeri putem să (re)alocăm memorie dinamic
 - putem să avem ca parametri pentru funcții alte funcții, șiruri de caractere, structuri de date complexe
 
-### **Dezavantaje pointeri**
+### Dezavantaje pointeri
 
 - un pointer care nu este inițializat, dar este folosit într-un program duce la **segmentation fault** prin accesarea unei zone de memorie restricționate
 - eliberarea memoriei alocate dinamic se face manual de către programator
@@ -214,7 +214,7 @@ int main()
 
 >**NOTE**: În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - (https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a-l actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (~/Desktop/iocla).Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`. Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com).
 
-### **1. Conversii**
+### 1. Conversii
 
 Efectuați următoarele conversii între sisteme de numerație:
 
@@ -252,7 +252,7 @@ d. Din binar în hexazecimal:
 > make clean
 > ```
 
-### **2. Lungime și egalitate cu operații pe biți**
+### 2. Lungime și egalitate cu operații pe biți
 
 Veți rezolva exercițiul plecând de la fișierul **len_xor.c** aflat în directorul **2-len_xor**.
 
@@ -285,7 +285,7 @@ Folosiți cât de mult posibil operații cu pointeri și operații pe biți!
 >```
 >**Adresele de mai sus sunt orientative!**
 
-### **3. Oglindirea unui șir de caractere**
+### 3. Oglindirea unui șir de caractere
 
 Veți rezolva exercițiul plecând de la fișierul **mirror.c** aflat în directorul **3-mirror**.
 
@@ -302,7 +302,7 @@ Folosind operații cu pointeri implementați un program în C care inversează u
 >    mirror(“qwerty”) = “ytrewq”
 > ```
 
-### **4. Rotații**
+### 4. Rotații
 
 Veți rezolva exercițiul plecând de la fișierul rotations.c aflat în directorul 4-rotations.
 
@@ -336,9 +336,3 @@ Să se parcurgă un tablou de întregi pe 32 de biți folosind operații cu poin
 >    0b10000110
 >    0b01010110
 > ```
-
-## Soluții
-
-Soluțiile pentru exerciții sunt disponibile în directorul `./solution/`
-
-

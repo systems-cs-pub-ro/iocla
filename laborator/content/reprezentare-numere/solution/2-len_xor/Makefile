@@ -1,2 +1,2 @@
 PROGNAME := len_xor
-include ../utils/Makefile.generic
+include ../../../utils/Makefile.generic
