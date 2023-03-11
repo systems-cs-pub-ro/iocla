@@ -13,12 +13,12 @@ static int stat = 40;
 
 int f(void)
 {
-    return 0;
+	return 0;
 }
 
 
 int main(void)
 {
 
-    return 0;
+	return 0;
 }

@@ -9,7 +9,8 @@ int my_strcmp(const char *s1, const char *s2);
 void *my_memcpy(void *dest, const void *src, size_t n);
 char *my_strcpy(char *dest, const char *src);
 
-int main() {
+int main(void)
+{
 	char s1[] = "Abracadabra";
 	char s2[] = "Abracababra";
 	char src[] = "Learn IOCLA, you must!";
@@ -26,10 +27,10 @@ int main() {
 	(void) s2;
 
 	/*
-	Decomentati pe rand cate un assert pe masura ce implementati o functie.
-	Daca functia voastra este implementata corect atunci asertia se va realiza
-	cu succes. In caz contrar, programul va crapa.
-	*/
+	 * Decomentati pe rand cate un assert pe masura ce implementati o functie.
+	 * Daca functia voastra este implementata corect atunci asertia se va realiza
+	 * cu succes. In caz contrar, programul va crapa.
+	 */
 	// assert(SIGN(my_strcmp(s1, s2)) == SIGN(strcmp(s1, s2)));
 	// assert(my_strcpy(dest_str, src) && !strcmp(dest_str, src));
 	// assert(my_memcpy(dest_mem, src, sizeof(src)) && !memcmp(dest_mem, src, sizeof(src)));

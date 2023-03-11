@@ -8,7 +8,7 @@ void mirror(char *s)
 	(void) s;
 }
 
-int main()
+int main(void)
 {
 	/* TODO: Test function */
 

@@ -14,7 +14,7 @@ void rotate_right(int *number, int bits)
 	(void) bits;
 }
 
-int main()
+int main(void)
 {
 	/* TODO: Test functions */
 

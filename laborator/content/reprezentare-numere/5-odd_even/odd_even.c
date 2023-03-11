@@ -15,7 +15,7 @@ void check_parity(int *numbers, int n)
 	(void) n;
 }
 
-int main()
+int main(void)
 {
 	/* TODO: Test functions */
 

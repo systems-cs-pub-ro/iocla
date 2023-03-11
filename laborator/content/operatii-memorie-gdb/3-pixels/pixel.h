@@ -13,8 +13,10 @@ typedef struct Picture {
 	Pixel **pix_array;
 } Picture;
 
-Picture* generatePicture(int height, int width, Pixel **pix_array) {
+Picture *generatePicture(int height, int width, Pixel **pix_array)
+{
 	Picture *pic = malloc(sizeof(*pic));
+
 	pic->height = height;
 	pic->width = width;
 
@@ -23,18 +25,18 @@ Picture* generatePicture(int height, int width, Pixel **pix_array) {
 	for (int i = 0; i < pic->height; ++i)
 		pic->pix_array[i] = malloc(pic->width * sizeof(*(*(pic->pix_array))));
 
-	for (int i = 0; i < pic->height; ++i) {
-		for(int j = 0; j < pic->width; ++j) {
+	for (int i = 0; i < pic->height; ++i)
+		for (int j = 0; j < pic->width; ++j)
 			pic->pix_array[i][j] = pix_array[i][j];
-		}
-	}
 
 	return pic;
 }
 
 Pixel generatePixel (const unsigned char R,
-					const unsigned char G, const unsigned char B) {
+					const unsigned char G, const unsigned char B)
+{
 	Pixel pixel;
+
 	pixel.R = R;
 	pixel.G = G;
 	pixel.B = B;
@@ -42,38 +44,40 @@ Pixel generatePixel (const unsigned char R,
 	return pixel;
  }
 
-void printPicture(Picture *pic) {
- 	for (int i = 0; i < pic->height; ++i) {
+void printPicture(Picture *pic)
+{
+	for (int i = 0; i < pic->height; ++i) {
 		for (int j = 0; j < pic->width; ++j) {
 			printf("%u %u %u ", pic->pix_array[i][j].R,
 						pic->pix_array[i][j].G, pic->pix_array[i][j].B);
-			if (j != pic->width - 1) {
+			if (j != pic->width - 1)
 				printf(" | ");
-		    }
 		}
 		printf("\n");
 	}
 }
 
-Pixel** generatePixelArray(int height, int width) {
+Pixel **generatePixelArray(int height, int width)
+{
 	Pixel **pix_array = malloc(height * sizeof(*pix_array));
+
 	for (int i = 0; i < height; ++i)
 		pix_array[i] = malloc(width * sizeof(*(*pix_array)));
 
 	time_t t;
+
 	srand((unsigned) time(&t));
 
-	for (int i = 0; i < height; ++i) {
-		for(int j = 0; j < width; ++j) {
+	for (int i = 0; i < height; ++i)
+		for (int j = 0; j < width; ++j)
 			pix_array[i][j] = generatePixel(rand() % 256,
 				rand() % 256, rand() % 256);
-			}
-		}
 
 	return pix_array;
 }
 
-void freePixelArray(Pixel ***pix_array, int height, int width) {
+void freePixelArray(Pixel ***pix_array, int height, int width)
+{
 	(void) width;
 
 	for (int i = 0 ; i < height ; ++i)
@@ -82,7 +86,8 @@ void freePixelArray(Pixel ***pix_array, int height, int width) {
 	free(*pix_array);
 }
 
-void freePicture(Picture **pic) {
+void freePicture(Picture **pic)
+{
 	freePixelArray(&(*pic)->pix_array, (*pic)->height, (*pic)->width);
 	free(*pic);
 }
