@@ -377,10 +377,6 @@ Inspectați din nou executabilul recompilat cu noul flag folosind `objdump`. Ce 
  > Apoi construiți payload-ul corespunzător și transmiteți-l în forma adecvată programului.
 
 
-## Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-11-sol.zip).
-
 ## Resurse
 
 Dacă laboratorul v-a impresionat într-un mod plăcut, puteți afla mai multe despre acest tip de atac, dar și despre securitate cibernetică în general, de pe acest [canal](https://www.youtube.com/c/LiveOverflow).
