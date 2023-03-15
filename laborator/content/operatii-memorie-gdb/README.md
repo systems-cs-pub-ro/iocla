@@ -568,7 +568,3 @@ set context-sections 'regs code expressions'
 set show-flags on
 set dereference-limit 1
 ```
-
-### Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-02-sol.zip).
