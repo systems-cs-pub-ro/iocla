@@ -42,8 +42,6 @@ int compare(const void *a, const void *b);
 /*
  * Se citeste de la tastatura un vector si se cere sa se afle
  * elementul maxim folosind functia find_max.
- * Rezultatul functiei find_max trebuie cast la int, spre exemplu:
- * int *res = (*int) find_max(...);
  */
 int main(void)
 {
