@@ -256,6 +256,10 @@ Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instr
 
 Calculați al N-lea număr Fibonacci, unde N este dat prin intermediul registrului `eax`.
 
+### 7. BONUS: CF vs OF
+
+Folosind instrucțiunea `add` pe registrul `al`, setați OF, apoi CF și apoi ambele flaguri simultan.
+
 ## Resurse utile
 
 * [Programming from the Ground Up](http://savannah.nongnu.org/projects/pgubook/)
