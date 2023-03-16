@@ -1,4 +1,4 @@
-# Writeup 
+# Writeup
 
 In `do_overflow.asm`:
    - `line 32` -> `sexy_var` is at `ebp-16`

@@ -1,4 +1,4 @@
-# Writeup 
+# Writeup
 
    - There are 64 characters of `'A'` and 4 more in `F, L, O, W`.
    - The 64 `'A'`s will fill the data buffer.
