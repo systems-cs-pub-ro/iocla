@@ -235,6 +235,16 @@ Pornind de la programul de la exercițiul anterior, calculați suma pătratelor 
 >
 > suma pătratelor va fi 2704560839.
 
+### 7.1. Bonus: Suma pătratelor pe 64 de biți a elementelor dintr-un vector
+
+În mod asemănător exercițiului anterior, calculați suma pătratelor elementelor din vectorul `big_numbers_array` definit în programul `sum_array.asm`.
+
+De această dată, pătratul elementelor din vector va fi reprezentat pe 64 de biți, astfel încât programul scris anterior nu va da rezultate corecte. Realizați modificările necesare.
+
+> **TIP**: Pentru adunarea numerelor pe 64 de biți, se va folosi operația [`adc`](https://www.felixcloutier.com/x86/adc).
+
+> **NOTE**: Suma pătratelor din vectorul big_numbers_array va fi 1610691026282151079.
+
 ### 8. Împărțirea a două numere
 
 În programul `divide.asm` sunt calculate câtul și restul a două numere reprezentate pe un octet. Actualizați zona marcată cu `TODO` pentru a realiza împărțirile `dividend2 / divisor2` (împărțitor de tip word) și `dividend3 / divisor3` (împărțitor de tip dword).
