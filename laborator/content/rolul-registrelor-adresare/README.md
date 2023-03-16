@@ -296,7 +296,3 @@ Creați un program care afișează numărul de numere pare, respectiv numărul d
 
 * [X86 Instruction reference](https://www.felixcloutier.com/x86/index.html)
 * [Alte cursuri de assembler](https://www.cs.virginia.edu/~evans/cs216/guides/x86.html)
-
-## Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-06-sol.zip).
