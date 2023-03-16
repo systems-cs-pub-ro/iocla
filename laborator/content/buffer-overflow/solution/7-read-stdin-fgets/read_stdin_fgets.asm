@@ -50,7 +50,7 @@ main:
     ; as well.
     lea ebx, [ebp-68]
     push dword [stdin]
-    push 69     
+    push 69
     push ebx
     call fgets
     add esp, 12
