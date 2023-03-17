@@ -1,4 +1,3 @@
-
 %include "printf32.asm"
 
 section .text
