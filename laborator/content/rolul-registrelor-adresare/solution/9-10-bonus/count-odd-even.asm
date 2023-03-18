@@ -4,8 +4,6 @@
 
 section .data
     dword_array dd 1392, 12544, 7991, 6992, 7202, 27187, 28789, 17897, 12988, 17992
-    print_format1 db "Num even is ", 0
-    print_format2 db ", num odd is ", 0
 
 section .text
 extern printf
@@ -33,9 +31,6 @@ add_to_odd:
 test_end:
     loop next_element ; Decrement ecx, if not zero, go to next element.
 
-    PRINTF32 `%s\x0`, print_format1
-    PRINTF32 `%u\x0`, esi
-    PRINTF32 `%s\x0`, print_format2
-    PRINTF32 `%u\n\x0`, edi
+    PRINTF32 `Num even is %u, num odd is %u\n\x0`, esi, edi
 
     ret

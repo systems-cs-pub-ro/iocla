@@ -22,7 +22,7 @@ main:
     mov al, byte [dividend1]
     mov bl, byte [divisor1]
     div bl
-    
+
     xor ebx, ebx
     mov bl, al
     PRINTF32 `Quotient: %hhu\n\x0`, ebx
@@ -35,6 +35,6 @@ main:
     ; TODO: Calculate quotient and remainder for 67254 / 1349.
 
     ; TODO: Calculate quotient and remainder for 69094148 / 87621.
-    
+
     leave
     ret

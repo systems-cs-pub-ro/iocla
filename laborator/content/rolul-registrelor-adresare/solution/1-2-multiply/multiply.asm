@@ -9,7 +9,6 @@ section .data
     num2_w dw 9949
     num1_d dd 134932
     num2_d dd 994912
-    print_mesaj dd 'Rezultatul este: 0x', 0
 
 section .text
 extern printf
@@ -24,10 +23,9 @@ main:
     mul bl
 
     ; Print result in hexa
-    PRINTF32 `%s\x0`, print_mesaj
     xor ebx, ebx
     mov bx, ax
-    PRINTF32 `%hx\n\x0`, eax
+    PRINTF32 `Rezultatul este: 0x%hx\n\x0`, eax
 
 
     ; Multiplication for dw
@@ -36,13 +34,11 @@ main:
     mul bx
 
     ; Print result in hexa
-    PRINTF32 `%s\x0`, print_mesaj
     xor ebx, ebx
     mov bx, dx
-    PRINTF32 `%hx\x0`, edx
     xor ebx, ebx
     mov bx, ax
-    PRINTF32 `%hx\n\x0`, eax
+    PRINTF32 `Rezultatul este: 0x%hx%hx\n\x0`, edx, eax
 
 
     ; Multiplication for dd
@@ -51,9 +47,7 @@ main:
     mul ebx
 
     ; Print result in hexa
-    PRINTF32 `%s\x0`, print_mesaj
-    PRINTF32 `%x\x0`, edx
-    PRINTF32 `%x\n\x0`, eax
+    PRINTF32 `Rezultatul este: 0x%x%x\n\x0`, edx, eax
 
     leave
     ret
