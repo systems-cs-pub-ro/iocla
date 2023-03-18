@@ -3,8 +3,6 @@
 ; https://en.wikibooks.org/wiki/X86_Assembly/Arithmetic
 
 section .data
-    string_quotient db "Quotient: ", 0
-    string_remainder db "Remainder: ", 0
     dividend1 db 91
     divisor1 db 27
     dividend2 dd 67254
@@ -25,14 +23,13 @@ main:
     mov bl, byte [divisor1]
     div bl
 
-    PRINTF32 `%s\x0`, string_quotient
     xor ebx, ebx
     mov bl, al
-    PRINTF32 `%hhu\n\x0`, ebx
-    PRINTF32 `%s\x0`, string_remainder
+    PRINTF32 `Quotient: %hhu\n\x0`, ebx
+
     xor ebx, ebx
     mov bl, ah
-    PRINTF32 `%hhu\n\x0`, ebx
+    PRINTF32 `Remainder: %hhu\n\x0`, ebx
 
     mov edx, [dividend2]
     mov ax, dx
@@ -40,24 +37,20 @@ main:
     mov bx, word [divisor2]
     div bx
 
-    PRINTF32 `%s\x0`, string_quotient
     xor ebx, ebx
     mov bx, ax
-    PRINTF32 `%hu\n\x0`, ebx
-    PRINTF32 `%s\x0`, string_remainder
+    PRINTF32 `Quotient: %hhu\n\x0`, ebx
+
     xor ebx, ebx
     mov bx, dx
-    PRINTF32 `%hu\n\x0`, ebx
+    PRINTF32 `Remainder: %hu\n\x0`, ebx
 
     mov eax, dword [dividend3]
     mov edx, dword [dividend3 + 4]
     mov ebx, dword [divisor3]
     div ebx
 
-    PRINTF32 `%s\x0`, string_quotient
-    PRINTF32 `%u\n\x0`, eax
-    PRINTF32 `%s\x0`, string_remainder
-    PRINTF32 `%u\n\x0`, edx
+    PRINTF32 `Quotient: %u\nRemainder: %u\n\x0`, eax, edx
 
     leave
     ret

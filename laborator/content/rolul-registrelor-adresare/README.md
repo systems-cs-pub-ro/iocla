@@ -243,7 +243,7 @@ De această dată, pătratul elementelor din vector va fi reprezentat pe 64 de b
 
 > **TIP**: Pentru adunarea numerelor pe 64 de biți, se va folosi operația [`adc`](https://www.felixcloutier.com/x86/adc).
 
-> **NOTE**: Suma pătratelor din vectorul big_numbers_array va fi 1610691026282151079.
+> **NOTE**: Suma pătratelor din vectorul `big_numbers_array` va fi 1610691026282151079.
 
 ### 8. Împărțirea a două numere
 
