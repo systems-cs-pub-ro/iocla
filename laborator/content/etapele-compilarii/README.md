@@ -380,10 +380,9 @@ Accesăm directorul `01-one-tut/`.
 Vrem să urmărim comenzile de linkare pentru un singur fișier cod sursă C.
 Fișierul sursă este `hello.c`.
 
-În cele trei subdirectoare, se găsesc fișierele de suport pentru următoarele scenarii:
+În cele două subdirectoare, se găsesc fișierele de suport pentru următoarele scenarii:
 * `a-dynamic/`: crearea unui fișier executabil dinamic
 * `b-static/`: crearea unui fișier executabil static
-* `c-standalone/`: creare unui fișier executabil standalone, fără biblioteca standard C
 
 **În fiecare subdirector folosim comanda `make` pentru a compila fișierul executabil `hello`.**
 **Folosim comanda `file hello` pentru a urmări daca fișierul este compilat dinamic sau static.**
@@ -391,15 +390,6 @@ Fișierul sursă este `hello.c`.
 În fișierele `Makefile`, comanda de linkare folosește `gcc`.
 Este comentată o comandă echivalentă care folosește direct `ld`.
 **Pentru a urmări folosirea directă a `ld`, putem comenta comanda `gcc` și decomenta comanda `ld`. Folosim iarăși comanda `file hello`.**
-
-În cazul `c-standalone/`, pentru că nu folosim biblioteca standard C sau bibliotecă runtime C, trebuie să înlocuim funcționalitățile acestora.
-Funcționalitățile sunt înlocuite în fișierul `start.asm` și `puts.asm`.
-Aceste fișiere implementează, respectiv, funcția / simbolul `_start` și funcția `puts`.
-Funcția / simbolul `_start` este, în mod implicit, entry pointul unui program executabil.
-Funcția `_start` este responsabilă pentru apelul funcției `main` și încheierea programului.
-Pentru că nu există bibliotecă standard, aceste două fișiere sunt scrise în limbaj de asamblare și folosesc apeluri de sistem.
-
-**Adăugați, în fișierul `Makefile` din directorul `c-standalone/`, o comandă care folosește explicit `ld` pentru linkare.**
 
 **Extra**: Accesați directorul `01-one-diy/`.
 Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, asemănător cu ceea ce am făcut anterior. Copiați fișierele `Makefile` și actualizați-le în fiecare subdirector pentru a obține fișierul executabil.
@@ -424,14 +414,11 @@ Vrem să compilăm și linkăm fișierele cod sursă din fiecare subdirector, as
 Accesați directorul `03-entry-fix/`.
 Vrem să urmărim probleme de definire a funcției `main()`.
 
-Accesați subdirectorul `a-c/`.
+Accesați subdirectorul `a-no-main1/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.c`.
 
-Accesați subdirectorul `b-asm/`.
-Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.asm`.
-
-În subdirectoarele `c-extra-nolibc/` și `d-extra-libc/` veți găsi soluții care nu modifică codul sursă al `hello.c`.
-Aceste soluții modifică, în schimb, sistemul de build pentru a folosi altă funcție, diferită de `main()`, ca prima funcție a programului.
+În subdirectorul `b-extra-no-main2/` veți găsi o soluție care nu modifică codul sursă al `hello.c`.
+Această soluție modifică, în schimb, sistemul de build pentru a înlocui funcția `_start()`. Aceasta reprezintă entry pointul oricărui program C și, ca parte din runtime-ul de C, are rolul de a realiza anumite inițializări ce preced apelul funcției `main()`.
 
 **Extra**: Accesați directorul `03-entry-2-fix/`.
 Rulați comanda `make`, interpretați eroarea întâlnită și rezolvați-o prin editarea fișierului `hello.c`.
@@ -459,6 +446,14 @@ quantity is 42
 
 Explorați interfața și conținutul funcțiilor din fisierul `shop.o` folosind `nm` și `objdump`.
 
+### 07. Apel funcții nedeclarate
+
+Accesați directorul `07-implicit/`.
+În fișierul `main.c` se încearcă dublarea unei valori numerice prin apelul unei funcții, dar rezultatul nu este cel corect. Găsiți problema și modificați fișierul `main.c` pentru a o rezolva.
+
+> **INFO:**
+> Pentru funcțiile apelate pentru care nu este găsită o declarație, compilatorul presupune semnătura implicită `int f()`.
+
 ### Bonus. Utilizare cod python în C
 
 > **INFO:**
@@ -483,6 +478,3 @@ Rezultatul funcției scrisă în python va fi preluat în codul C și se va afi�
 > **NOTE:**
 > Atenție la versiunea de python pe care o folosiți; nu este recomandată o anumită versiune însă trebuie să aveți în vedere că în funcție de soluția voastră este posibil să fie nevoie să folosiți versiune specifică. Makefile-ul folosește versiunea **3.9**.
 
-### Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-03-sol.zip).
