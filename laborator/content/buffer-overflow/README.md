@@ -329,7 +329,7 @@ cu care să declanșați overflow-ul și faceți în așa fel încât să fie af
 
 ## 9. Overwrite Return Address
 
-La exercițiul anterior am observat cum se pot suprascrie valorile unor variabile salvate pe stivă. Reamintindu-ne de modul în care se realizează apelurile de funcții [Laboratorul 9](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator/content/apel-functii), adresa de return dintr-o functie `calee` inapoi in functia `caller` se salveaza tot pe stiva. 
+La exercițiul anterior am observat cum se pot suprascrie valorile unor variabile salvate pe stivă. Reamintindu-ne de modul în care se realizează apelurile de funcții [Laboratorul 9](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator/content/apel-functii), adresa de return dintr-o functie `calee` inapoi in functia `caller` se salveaza tot pe stiva.
 
 Exploatând acest comportament și pornind de la resursele din directorul `9-return-address`, realizați cu ajutorul unui buffer-overflow apelarea funcției `void magic_function()` prin suprascrierea adresei de return din functia `read_buffer()`.
 
