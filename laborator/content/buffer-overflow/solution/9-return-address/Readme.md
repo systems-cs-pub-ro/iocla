@@ -5,10 +5,12 @@
 > objdump -M intel -d break_this
 > ```
 
-- The binary reads from standar input the length of a buffer and the buffer using th function `read_buffer()`. The variable `n` is supposed to store the length of the buffer, `char buffer[64]` is the actual buffer. Because `fgets()` reads at most `n - 1` characters, we can set `n` to a value bigger than the actual buffer length, so an overflow is still possible.
-- I will set `n` to a big enough value: `128`
+- The `main()` function only calls `read_buffer()`.
+- This function reads the length of a buffer from standard input into a variable `n`.
+- Then it reads the buffer itself (`char buffer[64]`). Because `fgets()` reads at most `n - 1` characters, we can set `n` to a value bigger than the length of the buffer, so an overflow may be possible.
+- We will set `n` to a large enough value: `128`
 
-- `magic_function()` is saved at `0x08048596`
+- `magic_function()` starts at address `0x08048596`
 - From the first 4 lines from `read_buffer()` we get that: `ebp` and `edi` get pushed on the stack, then the stack is extended by `0x54` = `84`
 - So we must print `88 + 4 + 4 = 92` dummy characters `A` and then the address of `magic_function()` in little-endian encoding
 
