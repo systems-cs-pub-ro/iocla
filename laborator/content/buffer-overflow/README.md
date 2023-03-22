@@ -344,7 +344,7 @@ Exploatând acest comportament și pornind de la resursele din directorul `9-ret
 > ```
 
 > **TIP** În funcția `read_buffer()` se citește de la tastatură atât diminesiunea stringului de input, cât și acesta. Deși bufferul este
-> definit `char buffer[64]`, folosirea valorii `n` în apelul `fgets(buffer, n, stdin)` permite realizarea unui buffer overflow. De asemenea `fgets()` va citi maxim `n - 1` caractere, `n` poate fi setat la o valoare mai mare decât lungimea efectivă a stringului de input.
+> definit `char buffer[64]`, folosirea valorii `n` în apelul `fgets(buffer, n, stdin)` permite realizarea unui buffer overflow. De asemenea `fgets()` va citi maximum `n - 1` caractere, `n` poate fi setat la o valoare mai mare decât lungimea efectivă a stringului de input.
 
 
 ## 10. Bonus: Stack canary

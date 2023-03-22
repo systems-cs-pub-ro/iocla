@@ -10,7 +10,7 @@ void magic_function(void)
 char read_buffer(void)
 {
    int n;
-   unsigned disorienting_var = 0xDEADBEEF;
+   unsigned int disorienting_var = 0xDEADBEEF;
    char buffer[64] = "\0";
    size_t i, len;
 
@@ -29,7 +29,7 @@ char read_buffer(void)
       printf(" %02X(%c)", buffer[i], buffer[i]);
    puts("");
 
-   printf("variabila: %X\n", disorienting_var);
+   printf("stack variable: %X\n", disorienting_var);
    buffer[2] = disorienting_var;
 
    return buffer[0];
