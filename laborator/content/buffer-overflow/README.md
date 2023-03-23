@@ -327,9 +327,29 @@ cu care să declanșați overflow-ul și faceți în așa fel încât să fie af
 > ```
 
 
-## 9. Bonus: Stack canary
+## 9. Overwrite Return Address
 
-Pornind de la resursele exercițiului anterior din directorul `8-9-c-buffer-overflow` inspectați fișierul `Makefile`.
+La exercițiul anterior am observat cum se pot suprascrie valorile unor variabile salvate pe stivă. Reamintindu-ne de modul în care se realizează apelurile de funcții [Laboratorul 9](https://github.com/systems-cs-pub-ro/iocla/tree/master/laborator/content/apel-functii), adresa de return dintr-o functie `calee` inapoi in functia `caller` se salveaza tot pe stiva.
+
+Exploatând acest comportament și pornind de la resursele din directorul `9-return-address`, realizați cu ajutorul unui buffer-overflow apelarea funcției `void magic_function()` prin suprascrierea adresei de return din functia `read_buffer()`.
+
+> **IMPORTANT** Funcția `void magic_function()` realizează apelul utilitarului `cowsay`, pe care trebuie sa-l instalați cu următoarea comandă:
+> ```Bash
+> sudo apt install cowsay
+> ```
+
+> **TIP** Pentru a inspecta sursa, folosiți următoarea comandă:
+> ```Bash
+> objdump -M intel -d break_this
+> ```
+
+> **TIP** În funcția `read_buffer()` se citește de la tastatură atât diminesiunea stringului de input, cât și acesta. Deși bufferul este
+> definit `char buffer[64]`, folosirea valorii `n` în apelul `fgets(buffer, n, stdin)` permite realizarea unui buffer overflow. De asemenea `fgets()` va citi maximum `n - 1` caractere, `n` poate fi setat la o valoare mai mare decât lungimea efectivă a stringului de input.
+
+
+## 10. Bonus: Stack canary
+
+Pornind de la resursele [exercițiului 8](#8.-Buffer-overflow-pentru-program-scris-în-cod-C) din directorul `8-10-c-buffer-overflow` inspectați fișierul `Makefile`.
 
 > ```Bash
 > cat Makefile
@@ -337,7 +357,7 @@ Pornind de la resursele exercițiului anterior din directorul `8-9-c-buffer-over
 
 Analizați atent opțiunile de compilare. Ce observați? 
 
-Așa cum ați observat în cadrul exercițiului anterior, deși am depășit dimensiunea buffer-ului
+Așa cum ați observat în cadrul exercițiului [exercițiului 8](#8.-Buffer-overflow-pentru-program-scris-în-cod-C), deși am depășit dimensiunea buffer-ului
 și am suprascris o altă variabilă din program, acesta și-a încheiat execuția în mod normal.
 Acest lucru este nedorit atunci când lucrăm cu buffere, deoarece sunt o sursă de la care poate porni foarte ușor un atac.
 Folosind `objdump` inspectați funcția `main` a executabilului.
@@ -362,10 +382,10 @@ Inspectați din nou executabilul recompilat cu noul flag folosind `objdump`. Ce 
 > ceea ce a determinat o neconcordanță între valoarea inițială a canary-ului și cea de la finalul execuției funcției. 
 
 
-## 10. Bonus: Buffer overflow pentru binar
+## 11. Bonus: Buffer overflow pentru binar
 
  De multe ori nu avem șansa accesului la codul sursă și vrem să descoperim vulnerabilități în fișiere executabile.
- În directorul `10-overflow-in-binary` din arhiva de resurse a laboratorului, găsiți un fișier executabil.
+ În directorul `11-overflow-in-binary` din arhiva de resurse a laboratorului, găsiți un fișier executabil.
  Folosind `ghidra` sau `gdb` pentru investigație descoperiți cum puteți exploata vulnerabilitatea de tip buffer overflow,
  pentru ca programul să afișeze mesajul *Great success!*.
 
