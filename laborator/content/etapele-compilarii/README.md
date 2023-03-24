@@ -443,6 +443,8 @@ Editați fișierul `main.c` pentru a apela corespunzător interfața expusă și
 price is 21
 quantity is 42
 ```
+> **NOTE:**
+> Pentru a putea folosi comanda `make` la acest exercițiu va trebui să completați fișierul `Makefile` pentru a realiza linkarea cu fișierul obiect `shop.o`
 
 Explorați interfața și conținutul funcțiilor din fisierul `shop.o` folosind `nm` și `objdump`.
 
