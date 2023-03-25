@@ -1,0 +1,19 @@
+Exercițiul necesită găsirea unei valori generate random în main folosind gdb
+pentru extragerea datelor, și ghidra pentru înțelegerea codului (este făcut să
+fie rezolvat înainte de laboratoarele de limbaj de asamblare).
+
+În urma rezolvării, codul afișează un link către un video ales aleator dintr-o
+listă. Lista de link-uri criptată și codificată în base64 este ținută în
+variabila 'enc_b64', iar lista de link-uri în variabila 'links'.
+
+Lista plain text este definită doar dacă macro-ul 'REENCRYPT' este definit.
+Pentru rezolvarea exercițiilor, macro-ul nu este definit, iar lista nu este
+vizibilă.
+
+Dacă vreți să modificați lista criptată, modificați variabila 'links' și
+recompilați programul folosind `make CFLAGS='-DREENCRYPT'`, care va genera
+lista criptată și codificată base64 (după introducerea unei valori atunci când
+se cere). Textul poate fi apoi utilizat pentru a modifica variabila 'enc_b64'.
+Înainte să oferiți binarul, recompilați fără parametrul `CFLAGS='-DREENCRYPT'`.
+
+NOTA: Pentru compilare trebuie să aveți instalat 'libssl-dev' pe sistem.

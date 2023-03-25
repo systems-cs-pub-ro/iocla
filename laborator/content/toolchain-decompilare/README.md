@@ -225,9 +225,9 @@ Observați codul în limbaj de asamblare atunci când opțiunile de compilare (`
 
 Intrați în directorul `2-warm-up-gotos`.<br>
 
-**2.1** Modificați codul sursă din fișierul `bogosort.c`, aflat în directorul `a-bogosort`, ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii **break** cu o instrucțiune **goto** astfel încât funcționalitatea să se păstreze.
+**2.1** Modificați codul sursă din fișierul `bogosort.c`, aflat în directorul `a-bogosort`, ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii **break** cu o instrucțiune `goto` astfel încât funcționalitatea să se păstreze.
 
-**2.2** În mod asemănător modificați instrucțiunea **continue** din `ignore_the_comments.c`, aflat în directorul `b-ignore_the_comments`, astfel încât funcționalitatea codului să se păstreze.
+**2.2** În mod asemănător modificați instrucțiunea `continue` din `ignore_the_comments.c`, aflat în directorul `b-ignore_the_comments`, astfel încât funcționalitatea codului să se păstreze.
 
 
 >**WARNING**: Când scrieți cod cu etichete (label-uri) țineți cont de următoarele recomandări de indentare:
@@ -255,7 +255,7 @@ Pentru algoritmii de mai jos scrieți cod în C fără a folosi:
 
 Singura instrucțiune permisă în cadrul unui if este `goto`.
 
-În alte cuvinte, tot codul trebuie să fie scris în interiorul funcției main, iar modificarea fluxului de control (saltul la altă zonă de cod) se face doar prin intermediul secvențelor de tipul if (conditie) **goto** eticheta; sau **goto** eticheta;.
+În alte cuvinte, tot codul trebuie să fie scris în interiorul funcției main, iar modificarea fluxului de control (saltul la altă zonă de cod) se face doar prin intermediul secvențelor de tipul `if (conditie) goto eticheta;` sau `goto eticheta;`.
 
 **3.1** Implementați maximul dintr-un vector (`a-vector_max/vector_max.c`) folosind cod C și constrângerile de mai sus.
 
