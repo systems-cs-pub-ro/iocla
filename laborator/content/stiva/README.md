@@ -226,7 +226,7 @@ Amintiți-vă în ce ordine sunt ținuți octeții unui număr: revedeți secți
 ### 4. Variabile locale
 Programul `merge-arrays.asm` din cadrul arhivei de laborator, îmbină două array-uri sortate crescător (`array_1` și `array_2`) punând array-ul rezultat în `array_output` definit în secțiunea `.data`.
 
-Modificați programul astfel încat `array_output` să fie alocat pe stivă. Alocarea array-ului se face cu instructiunea sub.
+Modificați programul astfel încat `array_1, array_2` și `array_output` să fie alocat pe stivă. Alocarea array-urilor se face cu instrucțiunea `sub`. Pentru copiile array-urilor `array_1` și `array_2`, va fi nevoie să copiați elementele acestora din secțiunea `.data` pe stivă înainte de a le folosi.
 
 ### 5. BONUS: GCD - Greatest Common Divisor
 Deschideți `gcd.asm` și rulați programul. Codul calculează cel mai mare divizor comun dintre două numere date ca parametru prin registrele eax și edx, și pune valoarea calculată tot în registrul eax.

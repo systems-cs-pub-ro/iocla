@@ -6,9 +6,9 @@
 
 section .data
 
-array_1 db 27, 46, 55, 83, 84
-array_2 db 1, 4, 21, 26, 59, 92, 105
-array_output times 12 db 0
+array_1 dd 27, 46, 55, 83, 84
+array_2 dd 1, 4, 21, 26, 59, 92, 105
+array_output times 12 dd 0
 
 
 section .text
@@ -21,17 +21,17 @@ main:
     mov ecx, 0 ; counter used for the output array
 
 merge_arrays:
-    mov dl, byte [array_1 + eax]
-    mov dh, byte [array_2 + ebx]
-    cmp dl, dh
+    mov edx, [array_1 + 4 * eax]
+    cmp edx, [array_2 + 4 * ebx]
     jg array_2_lower
 array_1_lower:
-    mov byte [array_output + ecx], dl
+    mov [array_output + 4 * ecx], edx
     inc eax
     inc ecx
     jmp verify_array_end
 array_2_lower:
-    mov byte [array_output + ecx], dh
+    mov edx, [array_2 + 4 * ebx]
+    mov [array_output + 4 * ecx], edx
     inc ecx
     inc ebx
 
@@ -43,16 +43,16 @@ verify_array_end:
     jmp merge_arrays
 
 copy_array_1:
-    mov dl, byte [array_1 + eax]
-    mov byte [array_output + ecx], dl
+    mov edx, [array_1 + 4 * eax]
+    mov [array_output + 4 * ecx], edx
     inc ecx
     inc eax
     cmp eax, ARRAY_1_LEN
     jb copy_array_1
     jmp print_array
 copy_array_2:
-    mov dh, byte [array_2 + ebx]
-    mov byte [array_output + ecx], dh
+    mov edx, [array_2 + 4 * ebx]
+    mov [array_output + 4 * ecx], edx
     inc ecx
     inc ebx
     cmp ebx, ARRAY_2_LEN
@@ -62,7 +62,7 @@ print_array:
     PRINTF32 `Array merged:\n\x0`
     mov ecx, 0
 print:
-    mov al, byte [array_output + ecx]
+    mov eax, [array_output + 4 * ecx]
     PRINTF32 `%d \x0`, eax
     inc ecx
     cmp ecx, ARRAY_OUTPUT_LEN
@@ -71,4 +71,3 @@ print:
     PRINTF32 `\n\x0`
     xor eax, eax
     ret
-    
