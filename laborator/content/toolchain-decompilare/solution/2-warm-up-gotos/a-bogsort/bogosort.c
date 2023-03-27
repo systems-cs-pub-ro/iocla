@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,5 +47,5 @@ out:
 		printf("%d ", numbers[i]);
 	printf("\n");
 
-    return 0;
+	return 0;
 }

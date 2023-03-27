@@ -1,8 +1,12 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <stdio.h>
 
-/* I dedicate all this code, all my work, to my wife, Darlene, who will
- have to support me and our three children and the dog once it gets
- released into the public. */
+/* 
+ * I dedicate all this code, all my work, to my wife, Darlene, who will
+ * have to support me and our three children and the dog once it gets
+ * released into the public. 
+ */
 
 /*
  * You may think you know what the following code does.
@@ -20,22 +24,23 @@ float Q_rsqrt(float number)
 
 	x2 = number * 0.5F;
 	y  = number;
-	i  = * ( long * ) &y;
-	i  = 0x5f3759df - ( i >> 1 );  /* Magic. Do not touch. */
-	y  = * ( float * ) &i;
-	y  = y * ( threehalfs - ( x2 * y * y ) );
+	i  = *(long *) &y;
+	i  = 0x5f3759df - (i >> 1);  /* Magic. Do not touch. */
+	y  = *(float *) &i;
+	y  = y * (threehalfs - (x2 * y * y));
 
 	return y;
 }
 
-int main()
+int main(void)
 {
-	long long ago = 0; /* in a galaxy far far away */
+	long long ago = 0; /* in a galaxy far away */
 	float x = 42;
 
 	/* drunk, fix later */
 	while (ago < 0x2a) {
-		printf("http://stackoverflow.com/questions/184618/what-is-the-best-comment-in-source-code-you-have-ever-encountered\n");
+		printf("http://stackoverflow.com/questions/184618/what-is-the-best
+			   -comment-in-source-code-you-have-ever-encountered\n");
 		ago++;
 		continue; /* TODO: use goto for Pete's sake! */
 		printf("Fast inverse square root: %f\n", Q_rsqrt(x)); /* i'm sorry */

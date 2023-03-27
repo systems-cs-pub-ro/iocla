@@ -18,7 +18,7 @@ const unsigned char  m_iv[] = "V-To)F`z z'> ;m<";
  * https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
  */
 int proc_encrypt(unsigned char *text, int text_len, const unsigned char *key,
-		 const unsigned char *iv, unsigned char *result, bool encrypt)
+		 		 const unsigned char *iv, unsigned char *result, bool encrypt)
 {
 	EVP_CIPHER_CTX *ctx;
 
@@ -83,20 +83,20 @@ int encrypt_links(char enc_b64[], int enc_b64_len)
 	char enc[BUFSIZE];
 	int enc_len;
 
-	char links[] =
-		"https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-		"https://www.youtube.com/watch?v=3rzgrP7VA_Q"
-		"https://www.youtube.com/watch?v=ZZ5LpwO-An4"
-		"https://www.youtube.com/watch?v=y6120QOlsfU"
-		"https://www.youtube.com/watch?v=0q6yphdZhUA"
-		"https://www.youtube.com/watch?v=989-7xsRLR4"
-		"https://www.youtube.com/watch?v=7yh9i0PAjck"
-		"https://www.youtube.com/watch?v=04F4xlWSFh0"
-		"https://www.youtube.com/watch?v=hAAlDoAtV7Y"
-		"https://www.youtube.com/watch?v=NAEppFUWLfc";
+	char *links = malloc(10 * 43 + 1);
 
+	strcat(links, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+	strcat(links, "https://www.youtube.com/watch?v=3rzgrP7VA_Q");
+	strcat(links, "https://www.youtube.com/watch?v=ZZ5LpwO-An4");
+	strcat(links, "https://www.youtube.com/watch?v=y6120QOlsfU");
+	strcat(links, "https://www.youtube.com/watch?v=0q6yphdZhUA");
+	strcat(links, "https://www.youtube.com/watch?v=989-7xsRLR4");
+	strcat(links, "https://www.youtube.com/watch?v=7yh9i0PAjck");
+	strcat(links, "https://www.youtube.com/watch?v=04F4xlWSFh0");
+	strcat(links, "https://www.youtube.com/watch?v=hAAlDoAtV7Y");
+	strcat(links, "https://www.youtube.com/watch?v=NAEppFUWLfc");
 
-	enc_len = proc_encrypt(links, sizeof(links), m_key, m_iv, enc, true);
+	enc_len = proc_encrypt(links, 10 * 43, m_key, m_iv, enc, true);
 	if (enc_len == -1) {
 		fprintf(stderr, "Encountered an error while encrypting\n");
 		return -1;
@@ -127,17 +127,29 @@ int validate(int guess)
 
 int show_link(int guess)
 {
-	unsigned char enc_b64[BUFSIZE] =
-		"cpU8QtmoUqPOIRUfP26ybdYcTCaN9B+yvHKWsAskKrwFBiR5QU6Yyz/pY+fRnQ"
-		"lFiKdKZ6xFg6Z5HsuFyuInEYmuIQbkfAQcO+yFi0IF9frQ/RWn5DLEnWIuFWsB"
-		"xIkTWm9FdLjBHtKzfXIM9FNRimqDnJXvpoOxjueFVkb48fH7G6Qze529fNFvXs"
-		"nDfZjXoT8cOmHHZ1ttAOb1K8Y4fwcnZ1Zit6MfzF6erZUxLUxetpfa3gR9CyFF"
-		"eFIpG+3GyM6Wk8IrM1JcdGkhCjqzTFOh5gDhH4UWMXiJk00V9DlfI2feSWHdUF"
-		"OqXKxBBi6C8iEy6/ndX/RoNxIkMsgMiqYlRpMtMnKiu43ecyXW7w7JuxTBxAAa"
-		"8tpNa2g/eOI1VPL9yrKu6jGVHF0CUVbWTkC+s6ZwcossIiL+Pbmd9mIXacdvTU"
-		"yTp12VsEVSo8FLvleFWZnm5pmBoMJzwBRHUgsjbKNbkraRj9Yv+Dqw8yMnPxoM"
-		"TCXr8uvRQplBRTAf00SweM+b2t4vxraCLzMuy1B8Qo5B6xaVX6N3zSA2Os0iWI"
-		"vXem4IdIQOAuUJFEqn";
+	char *enc_b64 = malloc(BUFSIZE);
+
+	strcat(enc_b64,
+		   "cpU8QtmoUqPOIRUfP26ybdYcTCaN9B+yvHKWsAskKrwFBiR5QU6Yyz/pY+fRnQ");
+	strcat(enc_b64,
+		   "lFiKdKZ6xFg6Z5HsuFyuInEYmuIQbkfAQcO+yFi0IF9frQ/RWn5DLEnWIuFWsB");
+	strcat(enc_b64,
+		   "xIkTWm9FdLjBHtKzfXIM9FNRimqDnJXvpoOxjueFVkb48fH7G6Qze529fNFvXs");
+	strcat(enc_b64,
+		   "nDfZjXoT8cOmHHZ1ttAOb1K8Y4fwcnZ1Zit6MfzF6erZUxLUxetpfa3gR9CyFF");
+	strcat(enc_b64,
+		   "eFIpG+3GyM6Wk8IrM1JcdGkhCjqzTFOh5gDhH4UWMXiJk00V9DlfI2feSWHdUF");
+	strcat(enc_b64,
+		   "OqXKxBBi6C8iEy6/ndX/RoNxIkMsgMiqYlRpMtMnKiu43ecyXW7w7JuxTBxAAa");
+	strcat(enc_b64,
+		   "8tpNa2g/eOI1VPL9yrKu6jGVHF0CUVbWTkC+s6ZwcossIiL+Pbmd9mIXacdvTU");
+	strcat(enc_b64,
+		   "yTp12VsEVSo8FLvleFWZnm5pmBoMJzwBRHUgsjbKNbkraRj9Yv+Dqw8yMnPxoM");
+	strcat(enc_b64,
+		   "TCXr8uvRQplBRTAf00SweM+b2t4vxraCLzMuy1B8Qo5B6xaVX6N3zSA2Os0iWI");
+	strcat(enc_b64,
+		   "vXem4IdIQOAuUJFEqn");
+
 	int link_len = sizeof("https://www.youtube.com/watch?v=XXXXXXXXXX");
 
 	unsigned char enc[BUFSIZE], dec[BUFSIZE];

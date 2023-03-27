@@ -225,7 +225,7 @@ Observați codul în limbaj de asamblare atunci când opțiunile de compilare (`
 
 Intrați în directorul `2-warm-up-gotos`.<br>
 
-**2.1** Modificați codul sursă din fișierul `bogosort.c`, aflat în directorul `a-bogosort`, ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii **break** cu o instrucțiune `goto` astfel încât funcționalitatea să se păstreze.
+**2.1** Modificați codul sursă din fișierul `bogosort.c`, aflat în directorul `a-bogosort`, ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii `break` cu o instrucțiune `goto` astfel încât funcționalitatea să se păstreze.
 
 **2.2** În mod asemănător modificați instrucțiunea `continue` din `ignore_the_comments.c`, aflat în directorul `b-ignore_the_comments`, astfel încât funcționalitatea codului să se păstreze.
 
@@ -306,7 +306,7 @@ Folosind informațiile din codul decompilat putem să ne dăm seama că programu
 
 Intrați în directorul `5-old-hits`.<br>
 
-Folosind informațiile noi dobândite despre Ghidra, dar și cele învățate anterior despre folosirea gdb, analizați binarul și obțineți informația secretă.
+Folosind informațiile noi dobândite despre `Ghidra`, dar și cele învățate anterior despre folosirea gdb, analizați binarul și obțineți informația secretă.
 Programul generează o valoare aleatoare și vă cere să ghiciți o altă valoare calculată pe baza valorii aleatoare.<br>
 
 Mult succes!
