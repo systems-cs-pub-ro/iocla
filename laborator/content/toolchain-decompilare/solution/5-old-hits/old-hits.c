@@ -8,6 +8,8 @@
 #include <string.h>
 
 #define BUFSIZE 4096
+#define YOUTUBE_LINK_LENGTH 43
+#define NUM_LINKS 10
 
 int secret;
 const unsigned char m_key[] = "<2DaTM`q8w9C@~1}t{:M#<#HV^SayYT9";
@@ -83,7 +85,12 @@ int encrypt_links(char enc_b64[], int enc_b64_len)
 	char enc[BUFSIZE];
 	int enc_len;
 
-	char *links = malloc(10 * 43 + 1);
+	char *links = malloc(NUM_LINKS * YOUTUBE_LINK_LENGTH + 1);
+
+	if (!links) {
+		fprintf(stderr, "malloc failed\n");
+		exit(1);
+	}
 
 	strcat(links, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 	strcat(links, "https://www.youtube.com/watch?v=3rzgrP7VA_Q");
@@ -96,7 +103,8 @@ int encrypt_links(char enc_b64[], int enc_b64_len)
 	strcat(links, "https://www.youtube.com/watch?v=hAAlDoAtV7Y");
 	strcat(links, "https://www.youtube.com/watch?v=NAEppFUWLfc");
 
-	enc_len = proc_encrypt(links, 10 * 43, m_key, m_iv, enc, true);
+	enc_len = proc_encrypt(links, NUM_LINKS * YOUTUBE_LINK_LENGTH,
+						   m_key, m_iv, enc, true);
 	if (enc_len == -1) {
 		fprintf(stderr, "Encountered an error while encrypting\n");
 		return -1;
@@ -116,6 +124,7 @@ int encrypt_links(char enc_b64[], int enc_b64_len)
 	printf("Encrypted links are: \n");
 	printf("%s\n", enc_b64);
 
+	free(links);
 	return 0;
 }
 #endif /* REENCRYPT */
@@ -128,6 +137,10 @@ int validate(int guess)
 int show_link(int guess)
 {
 	char *enc_b64 = malloc(BUFSIZE);
+	if (!enc_b64) {
+		fprintf(stderr, "malloc failed\n");
+		exit(1);
+	}
 
 	strcat(enc_b64,
 		   "cpU8QtmoUqPOIRUfP26ybdYcTCaN9B+yvHKWsAskKrwFBiR5QU6Yyz/pY+fRnQ");
@@ -149,8 +162,6 @@ int show_link(int guess)
 		   "TCXr8uvRQplBRTAf00SweM+b2t4vxraCLzMuy1B8Qo5B6xaVX6N3zSA2Os0iWI");
 	strcat(enc_b64,
 		   "vXem4IdIQOAuUJFEqn");
-
-	int link_len = sizeof("https://www.youtube.com/watch?v=XXXXXXXXXX");
 
 	unsigned char enc[BUFSIZE], dec[BUFSIZE];
 	int dec_len, enc_len;
@@ -184,11 +195,12 @@ int show_link(int guess)
 		return -1;
 	}
 
-	link_cnt = strlen((char *)dec) / link_len;
+	link_cnt = strlen((char *)dec) / YOUTUBE_LINK_LENGTH;
 	link_idx = random() % link_cnt;
 
-	link = dec + link_idx * link_len;
-	link[link_len] = '\0';
+	link = dec + link_idx * YOUTUBE_LINK_LENGTH;
+	link[YOUTUBE_LINK_LENGTH] = '\0';
+	free(enc_b64);
 
 	if (validate(guess)) {
 		printf("Congrats! Here's your link: %s\n", link);
