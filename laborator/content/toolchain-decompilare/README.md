@@ -225,9 +225,9 @@ Observați codul în limbaj de asamblare atunci când opțiunile de compilare (`
 
 Intrați în directorul `2-warm-up-gotos`.<br>
 
-**2.1** Modificați codul sursă din fișierul `bogosort.c` ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii break cu o instrucțiune goto astfel încât funcționalitatea să se păstreze.
+**2.1** Modificați codul sursă din fișierul `bogosort.c`, aflat în directorul `a-bogosort`, ([Bogosort](https://en.wikipedia.org/wiki/Bogosort)) prin înlocuirea instrucțiunii `break` cu o instrucțiune `goto` astfel încât funcționalitatea să se păstreze.
 
-**2.2** În mod asemănător modificați instrucțiunea continue din ignore_the_comments.c astfel încât funcționalitatea codului să se păstreze.
+**2.2** În mod asemănător modificați instrucțiunea `continue` din `ignore_the_comments.c`, aflat în directorul `b-ignore_the_comments`, astfel încât funcționalitatea codului să se păstreze.
 
 
 >**WARNING**: Când scrieți cod cu etichete (label-uri) țineți cont de următoarele recomandări de indentare:
@@ -255,11 +255,11 @@ Pentru algoritmii de mai jos scrieți cod în C fără a folosi:
 
 Singura instrucțiune permisă în cadrul unui if este `goto`.
 
-În alte cuvinte, tot codul trebuie să fie scris în interiorul funcției main, iar modificarea fluxului de control (saltul la altă zonă de cod) se face doar prin intermediul secvențelor de tipul if (conditie) goto eticheta; sau goto eticheta;.
+În alte cuvinte, tot codul trebuie să fie scris în interiorul funcției main, iar modificarea fluxului de control (saltul la altă zonă de cod) se face doar prin intermediul secvențelor de tipul `if (conditie) goto eticheta;` sau `goto eticheta;`.
 
-**3.1** Implementați maximul dintr-un vector folosind cod C și constrângerile de mai sus.
+**3.1** Implementați maximul dintr-un vector (`a-vector_max/vector_max.c`) folosind cod C și constrângerile de mai sus.
 
-**3.2** Implementați căutare binară folosind cod C și constrângerile de mai sus.
+**3.2** Implementați căutare binară (`b-binary_search/binary_search.c`) folosind cod C și constrângerile de mai sus.
 
 >**WARNING**: Reiterăm ideea că scenariile de utilizare ale instrucțiunii goto sunt limitate. Exercițiile acestea au valoare didactică pentru a vă acomoda cu instrucțiuni de salt (jump) pe care le vom folosi în dezvoltarea în limbaj de asamblare.
 
@@ -306,11 +306,7 @@ Folosind informațiile din codul decompilat putem să ne dăm seama că programu
 
 Intrați în directorul `5-old-hits`.<br>
 
-Folosind informațiile noi dobândite despre Ghidra, dar și cele învățate anterior despre folosirea gdb, analizați binarul și obțineți informația secretă.
+Folosind informațiile noi dobândite despre `Ghidra`, dar și cele învățate anterior despre folosirea gdb, analizați binarul și obțineți informația secretă.
 Programul generează o valoare aleatoare și vă cere să ghiciți o altă valoare calculată pe baza valorii aleatoare.<br>
 
 Mult succes!
-
-### Soluții
-
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-04-sol.zip).
