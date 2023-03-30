@@ -8,9 +8,33 @@ int main(void)
 	int dest = v[2]; /* 15 */
 	int start = 0;
 	int end = sizeof(v) / sizeof(int) - 1;
+	int curent;
 
-	/* TODO: Implement binary search */
-	(void) dest;
-	(void) start;
-	(void) end;
+	goto bin_s;
+
+higher:
+	start = curent + 1;
+	goto bin_s;
+
+lower:
+	end = curent - 1;
+	goto bin_s;
+
+not_found:
+	printf("not found\n");
+	goto out;
+
+equal:
+	printf("%d\n", v[curent]);
+	goto out;
+
+bin_s:
+	if (start > end) goto not_found;
+	curent = (start + end) / 2;
+	if (v[curent] < dest) goto higher;
+	if (v[curent] > dest) goto lower;
+	goto equal;
+
+out:
+	return 0;
 }
