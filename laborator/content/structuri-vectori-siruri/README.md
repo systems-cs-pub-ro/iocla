@@ -184,8 +184,6 @@ Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul
 ### 0. Recapitulare: Fibonacci sum
 Pornind de la fișierul `fibo_sum.asm`, implementați un program care calculează suma primelor N numere din șirul fibonacci utilizând instrucțiunea `loop`. Suma primelor 9 este 54.
 
->**NOTE**: Puteți să investigați secțiunea [Instrucțiuni de transfer de date](https://ocw.cs.pub.ro/courses/iocla/laboratoare/laborator-04#instructiuni_de_transfer_de_date) din laboratorul 4.
-
 ### 1. Tutorial: Afișarea conținutului unei structuri
 În programul `print_structure.asm` sunt afișate câmpurile unei structuri.
 
