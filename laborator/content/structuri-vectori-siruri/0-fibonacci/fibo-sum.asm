@@ -1,4 +1,4 @@
-%include "../utils/printf32.asm"
+%include "printf32.asm"
 
 section .data
     N dd 9 ; compute the sum of the first N fibonacci numbers

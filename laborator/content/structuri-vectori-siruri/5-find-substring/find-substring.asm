@@ -1,4 +1,4 @@
-%include "../utils/printf32.asm"
+%include "printf32.asm"
 
 section .data
 source_text: db "ABCABCBABCBABCBBBABABBCBABCBAAACCCB", 0
