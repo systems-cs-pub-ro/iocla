@@ -130,14 +130,14 @@ if os.path.exists(readme) and len(open(readme).readlines()) > 25 or os.path.exis
         points += 10
         print(f"Coding Style OK | README/README.md found. {points} / 10")
     else:
-        points += 5
+        points += 0
         print(f"Coding Style ERROR | README/README.md found. {points} / 10\n")
         for line in csResString.splitlines():
             if "ERROR" in line:
                 print(line)
 else:
     if "ERROR" not in csResString:
-        points += 5
+        points += 10
         print(f"Coding Style OK | README/README.md not found or is empty. {points} / 10")
     else:
         print(f"Coding Style ERROR | README/README.md not found or is empty. {points} / 10\n")
