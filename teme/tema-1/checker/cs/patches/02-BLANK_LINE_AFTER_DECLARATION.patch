@@ -1,0 +1,21 @@
+diff --git a/cs/checkpatch.pl b/cs/checkpatch.pl
+index 504d2e4..67f22a9 100755
+--- a/cs/checkpatch.pl
++++ b/cs/checkpatch.pl
+@@ -3551,11 +3551,11 @@ sub process {
+ 		      $sline =~ /^\+\s+\(?\s*(?:$Compare|$Assignment|$Operators)/) &&
+ 			# indentation of previous and current line are the same
+ 		    (($prevline =~ /\+(\s+)\S/) && $sline =~ /^\+$1\S/)) {
+-			if (WARN("LINE_SPACING",
+-				 "Missing a blank line after declarations\n" . $hereprev) &&
+-			    $fix) {
+-				fix_insert_line($fixlinenr, "\+");
+-			}
++			# if (WARN("LINE_SPACING",
++			# 	 "Missing a blank line after declarations\n" . $hereprev) &&
++			#     $fix) {
++			# 	fix_insert_line($fixlinenr, "\+");
++			# }
+ 		}
+ 
+ # check for spaces at the beginning of a line.

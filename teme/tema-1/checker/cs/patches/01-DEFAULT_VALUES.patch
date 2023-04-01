@@ -1,0 +1,22 @@
+diff --git a/cs/checkpatch.pl b/cs/checkpatch.pl
+index 504d2e4..c351dec 100755
+--- a/cs/checkpatch.pl
++++ b/cs/checkpatch.pl
+@@ -51,7 +51,7 @@ my %ignore_type = ();
+ my @ignore = ();
+ my $help = 0;
+ my $configuration_file = ".checkpatch.conf";
+-my $max_line_length = 100;
++my $max_line_length = 80;
+ my $ignore_perl_version = 0;
+ my $minimum_perl_version = 5.10.0;
+ my $min_conf_desc_length = 4;
+@@ -64,7 +64,7 @@ my $color = "auto";
+ my $allow_c99_comments = 1; # Can be overridden by --ignore C99_COMMENT_TOLERANCE
+ # git output parsing needs US English output, so first set backtick child process LANGUAGE
+ my $git_command ='export LANGUAGE=en_US.UTF-8; git';
+-my $tabsize = 8;
++my $tabsize = 4;
+ 
+ sub help {
+ 	my ($exitcode) = @_;

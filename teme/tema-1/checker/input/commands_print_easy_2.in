@@ -1,0 +1,9 @@
+print 1
+print -1337
+print 2
+print 0
+print 5
+print 3
+print 1337
+print 4
+exit

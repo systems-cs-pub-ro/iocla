@@ -1,0 +1,60 @@
+diff --git a/cs/checkpatch.pl b/cs/checkpatch.pl
+index ffce972..d3a163a 100755
+--- a/cs/checkpatch.pl
++++ b/cs/checkpatch.pl
+@@ -65,6 +65,7 @@ my $allow_c99_comments = 1; # Can be overridden by --ignore C99_COMMENT_TOLERANC
+ # git output parsing needs US English output, so first set backtick child process LANGUAGE
+ my $git_command ='export LANGUAGE=en_US.UTF-8; git';
+ my $tabsize = 4;
++my $max_function_length = 80;
+ 
+ sub help {
+ 	my ($exitcode) = @_;
+@@ -2375,6 +2376,7 @@ sub process {
+ 	my $realcnt = 0;
+ 	my $here = '';
+ 	my $context_function;		#undef'd unless there's a known function
++	my $context_function_linenum;
+ 	my $in_comment = 0;
+ 	my $comment_edge = 0;
+ 	my $first_line = 0;
+@@ -2522,9 +2524,11 @@ sub process {
+ 			$suppress_statement = 0;
+ 			if ($context =~ /\b(\w+)\s*\(/) {
+ 				$context_function = $1;
++				$context_function_linenum = $realline;
+ 			} else {
+ 				undef $context_function;
+ 			}
++			undef $context_function_linenum;
+ 			next;
+ 
+ # track the line number as we move through the hunk, note that
+@@ -3585,11 +3589,19 @@ sub process {
+ 		if ($sline =~ /^\+\{\s*$/ &&
+ 		    $prevline =~ /^\+(?:(?:(?:$Storage|$Inline)\s*)*\s*$Type\s*)?($Ident)\(/) {
+ 			$context_function = $1;
++			$context_function_linenum = $realline;
+ 		}
+ 
+ # check if this appears to be the end of function declaration
+ 		if ($sline =~ /^\+\}\s*$/) {
++			if (defined($context_function_linenum) &&
++				($realline - $context_function_linenum) > $max_function_length) {
++				WARN("LONG_FUNCTION",
++					"'$context_function' function definition is " . ($realline - $context_function_linenum) . " lines, perhaps refactor\n" . $herecurr);
++			}
++
+ 			undef $context_function;
++			undef $context_function_linenum;
+ 		}
+ 
+ # check indentation of any line with a bare else
+@@ -6417,6 +6429,7 @@ sub process {
+ 		    defined $stat &&
+ 		    $stat =~ /^.\s*(?:$Storage\s+)?$Type\s*($Ident)\s*$balanced_parens\s*{/s) {
+ 			$context_function = $1;
++			$context_function_linenum = $realline;
+ 
+ # check for multiline function definition with misplaced open brace
+ 			my $ok = 0;

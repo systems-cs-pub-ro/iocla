@@ -1,0 +1,16 @@
+print 10
+print 11
+print 1337
+print 0
+print 9
+print -1337
+print 3
+print 6
+print 8
+print 7
+print 2
+print 1
+print 4
+print 5
+print 12
+exit
