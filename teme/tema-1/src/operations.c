@@ -136,7 +136,8 @@ static void pmu_is_battery_healthy(void *data)
 	}
 
 	if (pmu->power_consumption < 0 || pmu->power_consumption > 1000) {
-		printf("Power consumption out of range: %.2f kW\n", pmu->power_consumption);
+		printf("Power consumption out of range: %.2f kW\n",
+			   pmu->power_consumption);
 		ok = 1;
 	}
 
