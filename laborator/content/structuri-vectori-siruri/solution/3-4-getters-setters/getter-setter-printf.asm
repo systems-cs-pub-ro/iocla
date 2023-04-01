@@ -39,7 +39,7 @@ main:
 
     mov ecx, 0
 copy:
-    mov bl, [new_string, ecx]
+    mov bl, [new_string + ecx]
     mov [sample_obj + string_s + ecx], bl
     inc ecx
     cmp bl, 0
