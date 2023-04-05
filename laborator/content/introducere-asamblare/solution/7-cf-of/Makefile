@@ -1,2 +1,2 @@
-BINARIES := cf-of cf of
-include ../../../utils/Makefile.multiple
+BINARIES := cf_of cf of
+include ../../../utils/Makefile.single
