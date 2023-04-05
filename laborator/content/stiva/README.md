@@ -238,5 +238,3 @@ Deschideți `gcd.asm` și rulați programul. Codul calculează cel mai mare divi
 gcd(49,28)=7
 ```
 
-## Soluții
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-08-sol.zip).
