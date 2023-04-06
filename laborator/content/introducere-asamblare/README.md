@@ -1,21 +1,21 @@
 # Laborator 04: Introducere în limbajul de asamblare
 
-În acest laborator, vom prezenta o parte din instrucțiunile x86, precum și o suită de exemple introductive. 
+În acest laborator, vom prezenta o parte din instrucțiunile x86, precum și o suită de exemple introductive.
 
 ## Introducere
 
-Înainte de a începe efectiv să învățăm să citim cod scris în limbaj de asamblare, iar apoi să scriem primele noastre programe, trebuie să răspundem la câteva întrebări. 
+Înainte de a începe efectiv să învățăm să citim cod scris în limbaj de asamblare, iar apoi să scriem primele noastre programe, trebuie să răspundem la câteva întrebări.
 
 ### Ce este un limbaj de asamblare?
 
 După cum probabil știți, rolul de bază al unui calculator - în speță, al procesorului - este de a citi, interpreta și executa instrucțiuni. Aceste instrucțiuni sunt codificate în cod mașină.
 
-Un exemplu ar fi: 
+Un exemplu ar fi:
 ```
 1011000000001100011001100011000111011111111111100100
 ```
 
-Această secvență de biți nu ne spune nimic în mod deosebit. Putem să facem o conversie în baza 16 pentru a o comprima și grupa mai bine. 
+Această secvență de biți nu ne spune nimic în mod deosebit. Putem să facem o conversie în baza 16 pentru a o comprima și grupa mai bine.
 
 ```
 \xB0\x0C\x66\x31\xD2\xFF\xE4
@@ -23,7 +23,7 @@ Această secvență de biți nu ne spune nimic în mod deosebit. Putem să facem
 
 În continuare, pentru mulți dintre noi nu spune nimic această secvență. De aici vine necesitatea unui limbaj mai ușor de înțeles și utilizat.
 
-Limbajul de asamblare ne permite să scriem programe text care mai departe vor fi traduse, prin intermediul unui utilitar numit asamblor, specific fiecărei arhitecturi, în cod mașină. Majoritatea limbajelor de asamblare asigură o corespondență directă între instrucțiuni. De exemplu: 
+Limbajul de asamblare ne permite să scriem programe text care mai departe vor fi traduse, prin intermediul unui utilitar numit asamblor, specific fiecărei arhitecturi, în cod mașină. Majoritatea limbajelor de asamblare asigură o corespondență directă între instrucțiuni. De exemplu:
 
 ```assembly
 mov al, 12 <-> '\xB0\x0C'
@@ -34,15 +34,15 @@ jmp esp    <-> '\xFF\xE4'
 > **NOTE**: Deoarece limbajul de asamblare depinde de arhitectură, în general nu este portabil. De aceea, producătorii de procesoare au încercat să păstreze neschimbate instrucțiunile de la o generație la alta, adăugându-le pe cele noi, pentru a păstra măcar compatibilitatea în cadrul aceleiași familii de procesoare (de exemplu, procesoarele Intel 80286, 80386, 80486 etc. fac parte din genericul Intel x86).
 
 ### De ce să învăț limbaj de asamblare?
-Pe lângă valoarea didactică foarte mare, în care înțelegeți în ce constă “stack overflow”, reprezentarea datelor și ce e specific procesorului cu care lucrați, există câteva aplicații în care cunoașterea limbajului de asamblare și, implicit, a arhitecturii sunt necesare sau chiar critice. 
+Pe lângă valoarea didactică foarte mare, în care înțelegeți în ce constă “stack overflow”, reprezentarea datelor și ce e specific procesorului cu care lucrați, există câteva aplicații în care cunoașterea limbajului de asamblare și, implicit, a arhitecturii sunt necesare sau chiar critice.
 
 #### Debugging
-Este destul de probabil ca cel puțin unul din programele pe care le-ați scris în trecut să genereze următorul rezultat: 
+Este destul de probabil ca cel puțin unul din programele pe care le-ați scris în trecut să genereze următorul rezultat:
 ```
 Segmentation fault
 ```
 
-Uneori, veți fi întâmpinați de o serie de date similare cu cele de mai jos: 
+Uneori, veți fi întâmpinați de o serie de date similare cu cele de mai jos:
 
 ```
 Page Fault cr2=10000000 at eip e75; flags=6
@@ -51,12 +51,12 @@ esi=0001a44a edi=00000000 ebp=00000000 esp=00002672
 cs=18 ds=38 es=af fs=0 gs=0 ss=20 error=0002
 ```
 
-Pentru cineva care cunoaște limbaj de asamblare, e relativ ușor să se apuce să depaneze problema folosind un debugger precum [GDB](http://www.gnu.org/software/gdb/) sau [OllyDbg](http://www.ollydbg.de/),  deoarece mesajul îi furnizează aproape toate informațiile de care are nevoie. 
+Pentru cineva care cunoaște limbaj de asamblare, e relativ ușor să se apuce să depaneze problema folosind un debugger precum [GDB](http://www.gnu.org/software/gdb/) sau [OllyDbg](http://www.ollydbg.de/),  deoarece mesajul îi furnizează aproape toate informațiile de care are nevoie.
 
 #### Optimizare de cod
-Gândiți-vă cum ați scrie un program C care să realizeze criptare și decriptare [AES](csrc.nist.gov/publications/fips/fips197/fips-197.pdf). Apoi, indicați compilatorului faptul că doriți să vă optimizeze codul. Evaluați performanța codului respectiv (dimensiune, timp de execuție, număr de instrucțiuni de salt etc.). Deși compilatoarele sunt deseori trecute la categoria “magie neagră”, există situații în care pur și simplu știți [ceva](https://software.intel.com/content/www/us/en/develop/home.html) despre procesorul pe care lucrați mai bine ca acestea.
+Gândiți-vă cum ați scrie un program C care să realizeze criptare și decriptare [AES](csrc.nist.gov/publications/fips/fips197/fips-197.pdf). Apoi, indicați compilatorului faptul că doriți să vă optimizeze codul. Evaluați performanța codului respectiv (dimensiune, timp de execuție, număr de instrucțiuni de salt etc.). Deși compilatoarele sunt deseori trecute la categoria “magie neagră”, există situații în care pur și simplu știți [ceva](https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf) despre procesorul pe care lucrați mai bine ca acestea.
 
-Mai mult, e suficient să înțelegeți cod asamblare pentru a putea evalua un cod și optimiza secțiunile critice ale acestuia. Chiar dacă nu veți programa în limbaj de asamblare, veți fi conștienți de codul ce va fi generat de pe urma instrucțiunilor C pe care le folosiți. 
+Mai mult, e suficient să înțelegeți cod asamblare pentru a putea evalua un cod și optimiza secțiunile critice ale acestuia. Chiar dacă nu veți programa în limbaj de asamblare, veți fi conștienți de codul ce va fi generat de pe urma instrucțiunilor C pe care le folosiți.
 
 #### Reverse engineering
 
@@ -74,14 +74,14 @@ Pentru mai multe detalii, discutați cu asistentul vostru de laborator pentru a 
 
 Aproape toate procesoarele importante de la Intel împart un ISA (instruction set architecture) comun. Aceste procesoare sunt puternic backwards compatible, având mare parte din instrucțiuni neschimbate de-a lungul generațiilor, ci doar adăugate sau extinse.
 
-> **NOTE**: Un ISA definește instrucțiunile pe care le suportă un procesor, dimensiunea registrelor, moduri de adresare, tipurile de date, formatul instrucțiunilor, întreruperile și organizarea memoriei. 
-Procesoarele din această familie intră în categoria largă de CISC (Complex Instruction Set Computers). Filozofia din spatele lor este de a avea un număr mare de instrucțiuni, cu lungime variabilă, capabile să efectueze operații complexe, în mai mulți cicli de ceas. 
+> **NOTE**: Un ISA definește instrucțiunile pe care le suportă un procesor, dimensiunea registrelor, moduri de adresare, tipurile de date, formatul instrucțiunilor, întreruperile și organizarea memoriei.
+Procesoarele din această familie intră în categoria largă de CISC (Complex Instruction Set Computers). Filozofia din spatele lor este de a avea un număr mare de instrucțiuni, cu lungime variabilă, capabile să efectueze operații complexe, în mai mulți cicli de ceas.
 
 ### Registre
 
 Unitățile de lucru de bază pentru procesoarele x86 sunt registrele. Acestea sunt o suită de locații în cadrul procesorului prin intermediul cărora acesta interacționează cu memoria, I/O etc.
 
-Procesoarele x86 au 8 astfel de registre de 32 de biți. Deși oricare dintre acestea poate fi folosit în cadrul operațiilor, din motive istorice, fiecare registru are un rol anume. 
+Procesoarele x86 au 8 astfel de registre de 32 de biți. Deși oricare dintre acestea poate fi folosit în cadrul operațiilor, din motive istorice, fiecare registru are un rol anume.
 
 Nume | Rol
 ---- | ---
@@ -98,7 +98,7 @@ Pe lângă acestea, mai există câteva registre speciale care nu pot fi accesat
 
 EIP este un registru în care se găsește adresa instrucțiunii curente, care urmează să fie executată. El nu poate fi modificat direct, programatic, ci indirect prin instrucțiuni de jump, call și ret.
 
-Registrul EFLAGS conține 32 de biți folosiți pe post de indicatori de stare sau variabile de condiție. Spunem că un indicator/flag este setat dacă valoarea lui este 1. Cei folosiți de către programatori în mod uzual sunt următorii: 
+Registrul EFLAGS conține 32 de biți folosiți pe post de indicatori de stare sau variabile de condiție. Spunem că un indicator/flag este setat dacă valoarea lui este 1. Cei folosiți de către programatori în mod uzual sunt următorii:
 
 Nume | Nume extins | Descriere
 ---- | ----------- | ---------
@@ -109,7 +109,7 @@ ZF |	Zero Flag |	Setat dacă rezultatul instrucțiunii precedente este 0
 SF |	Sign Flag |	Are aceeași valoare cu a bitului de semn din cadrul rezultatului (1 negativ, 0 pozitiv)
 OF |	Overflow Flag |	Setat dacă rezultatul depășește valoarea întreagă maximă (sau minimă) reprezentabilă pe numere **signed**
 
-> **NOTE**: Dacă urmăriți evoluția registrelor de la 8086, veți vedea că inițial se numeau AX, BX, CX etc. și aveau dimensiunea de 16 biți. De la 80386, Intel a extins aceste registre la 32 biți (i.e. “extended” AX → EAX). 
+> **NOTE**: Dacă urmăriți evoluția registrelor de la 8086, veți vedea că inițial se numeau AX, BX, CX etc. și aveau dimensiunea de 16 biți. De la 80386, Intel a extins aceste registre la 32 biți (i.e. “extended” AX → EAX).
 
 ### Clase de instrucțiuni
 
@@ -120,7 +120,7 @@ Toate instrucțiunile procesoarelor x86 se pot încadra în 3 categorii: transfe
 #### Instrucțiuni de transfer de date
 
 Nume | Operanzi | Descriere
----- | -------- | --------- 
+---- | -------- | ---------
 mov |	dst, src |	Mută valoarea din sursă peste destinație
 push |	src |	Mută valoarea din sursă în vârful stivei
 pop |	dst |	Mută valoarea din vârful stivei în destinație
@@ -130,7 +130,7 @@ xchg |	dst, src |	Interschimbă valorile din sursă și destinație
 #### Instrucțiuni aritmetice și logice
 
 Nume | Operanzi | Descriere
----- | -------- | --------- 
+---- | -------- | ---------
 add |	dst, src |	Adună sursa cu destinația; rezultatul se scrie la destinație
 sub |	dst, src |	Se scade din destinație sursa și se reține în destinație rezultatul
 and |	dst, src |	Se efectuează operația de ȘI logic între sursă și destinație și se reține rezultatul în destinație
@@ -140,11 +140,11 @@ shl |	dst, `<const>` | 	Se face shiftare logică la stânga a destinației cu un
 #### Instrucțiuni de control
 
 Nume | Operanzi | Descriere
----- | -------- | --------- 
+---- | -------- | ---------
 jmp |	<adresă> |	Efectuează salt necondiționat la adresa indicată (direct, prin registru, prin etichete)
 cmp |	dst, src |	Compară sursa cu destinația (detalii mai jos)
 jcondiție |	<adresă> |	Efectuează salt condiționat, în funcție de valoarea flagului/variabilei de condiție
-call |	<adresă> |	Face apel la subrutina care se găsește la adresa indicată 
+call |	<adresă> |	Face apel la subrutina care se găsește la adresa indicată
 
 > **NOTE**: [Instrucțiunea 'cmp dest, src'](https://www.felixcloutier.com/x86/cmp) realizează în spate operația dest - src (adică scade din destinație sursa); este vorba de o scădere cu semn. Fără a reține rezultatul. Astfel, în cazul codului:
 >
@@ -187,7 +187,7 @@ Accesați directorul `0-walkthrough` din arhiva laboratorului.
 
 ### 1. Conditional jumps
 
-Accesați directorul `1-2-hello-world` din arhiva laboratorului. Modificați programul astfel încât afișarea mesajului să se facă numai dacă conținutul registrului **eax** este mai mare decât cel din **ebx**. Modificați și valoarea registrelor pentru a face în continuare afișarea mesajului `"Hello, World!"`. 
+Accesați directorul `1-2-hello-world` din arhiva laboratorului. Modificați programul astfel încât afișarea mesajului să se facă numai dacă conținutul registrului **eax** este mai mare decât cel din **ebx**. Modificați și valoarea registrelor pentru a face în continuare afișarea mesajului `"Hello, World!"`.
 
 ### 2. More hellos
 
@@ -210,7 +210,7 @@ Accesați directorul `1-2-hello-world` din arhiva laboratorului. Modificați pro
 
 ### 3. Grumpy jumps
 
-Accesați directorul `3-grumpy-jumps`. Treceți prin codul sursă din grumpy-jumps.asm. 
+Accesați directorul `3-grumpy-jumps`. Treceți prin codul sursă din grumpy-jumps.asm.
 
 1. Modificați valorile registrelor EAX si EBX astfel încât la rularea lui să se afișeze mesajul `Well done!`. Urmăriți comentariile marcate cu `TODO`.
 
@@ -222,17 +222,17 @@ Accesați directorul `3-grumpy-jumps`. Treceți prin codul sursă din grumpy-jum
 
 Pornind de la scheletul de cod din directorul `4-sets` va trebui să implementați operații pe mulțimi ce pot conține elemente între 0 și 31. Un mod eficient de a face asta (atât din punct de vedere al spațiului cât și al vitezei) ar fi să reprezentăm mulțimile astfel încât un registru să reprezinte o mulțime. Fiecare bit din registru va reprezenta un element din mulțime (dacă bit-ul i este setat atunci mulțimea conține elementul i).
 
-> **TIP**: Exemplu: dacă eax ar conține reprezentarea mulțimii `{0,2,4}`, valoarea registrului ar fi `2^0 + 2^2 + 2^4 = 1 + 4 + 16 = 21`. Documentați-vă despre instrucțiunile disponibile pe arhitectura [x86](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html). 
+> **TIP**: Exemplu: dacă eax ar conține reprezentarea mulțimii `{0,2,4}`, valoarea registrului ar fi `2^0 + 2^2 + 2^4 = 1 + 4 + 16 = 21`. Documentați-vă despre instrucțiunile disponibile pe arhitectura [x86](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html).
 
 - Aveți definite 2 mulțimi. Ce valori conțin? Realizați reuniunea celor 2 mulțimi.
 
-- Folosiți instrucțiunea or pentru a adăuga două elemente noi în mulțime. 
+- Folosiți instrucțiunea or pentru a adăuga două elemente noi în mulțime.
 
 > **TIP**: Folosiți-vă de faptul că mulțimile curente, deși au “spațiu” pentru 32 de biți, au doar 8 biți folosiți. Dacă veți face `or` cu un număr mai mare de 255 (`0xff, 2^8-1`) care are doi biți activi, veți adăuga practic două elemente noi la mulțime.
 
 - Faceți intersecția celor 2 mulțimi.
 
-- Determinați elementele care lipsesc din mulțimea eax pentru ca aceasta să fie completă. 
+- Determinați elementele care lipsesc din mulțimea eax pentru ca aceasta să fie completă.
 
 > **TIP**: Adică trebuie să faceți complementul numărului folosind instrucțiunea `not`.
 
@@ -250,7 +250,7 @@ Pornind de la scheletul de cod din directorul `4-sets` va trebui să implementa�
 
 ### 5. BONUS: Min
 
-Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`. 
+Calculați minimul dintre numerele din 2 registre (eax și ebx) folosind o instrucțiune de salt și instrucțiunea `xchg`.
 
 ### 6. BONUS: Fibonacci
 
@@ -271,4 +271,4 @@ Folosind instrucțiunea `add` pe registrul `al`, setați OF, apoi CF și apoi am
 
 ## Soluții
 
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-04-sol.zip). 
+Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-04-sol.zip).
