@@ -6,11 +6,18 @@ section .text
 
 main:
 
-    mov al, 0xDE
+    mov al, 128
     PRINTF32 `CF si OF nu sunt active\n\x0`
     test al, al
-    add al, 0x22
-    jz cf_of_on
+
+    ; Orice valoare intre 128 si 255 va activa CF si OF
+    add al, 128
+
+    jc cf_on
+    jmp end
+
+cf_on:
+    jo cf_of_on
     jmp end
 
 cf_of_on:
