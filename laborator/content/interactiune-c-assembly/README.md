@@ -171,9 +171,9 @@ Fiecare subdirector (`a-func/`, `b-var/`, `c-var-2/`) conține o problemă legat
 Accesăm directorul `10-cpp-obs/`.
 Vrem să urmărim cum se realizează linkarea din surse mixte: C și C++.
 
-În subdirectorul `bad/` avem două directoare `c-calls-cpp/` și `cpp-calls-c/` în care se combinăm surse mixte C și C++.
+În subdirectorul `errors/` avem două directoare `c-calls-cpp/` și `cpp-calls-c/` în care se combinăm surse mixte C și C++.
 În ambele cazuri, folosirea `make` afișează erori.
-Acest lucru se întâmplă întrucât simbolurile C++ sunt *mangled*.
+Acest lucru se întâmplă întrucât simbolurile C++ sunt *mangled*, adică simbolurile lor au nume diferite din cauza claselor și a namespace-urilor prezente in C++.
 Dacă folosim comanda `nm` pe module obiect obținute din cod sursă C, obținem:
 ```
 $ nm add.o
@@ -189,7 +189,7 @@ Detalii despre *name mangling* găsiți [aici](https://en.wikipedia.org/wiki/Nam
 
 Pentru a rezolva acest lucru, trebuie ca simbolurile definite C și importate în C++, sau invers, să fie prefixate cu directiva `extern "C"`.
 În felul acesta, compilatorul C++ va folosi numele simple pentru simbolurile importate / exportate, pentru a fi folosite împreună cu module C.
-Acest lucru este realizat în subdirectorul `good/`.
+Acest lucru este realizat în subdirectorul `correct/`. In acest subdirector sunt reparate erorile din subdirrectorul `errors/`. Comparati fisierele `ops.h` din ambele subdirectoare.
 Detalii despre directiva `extern "C"` găsiți [aici](https://stackoverflow.com/a/1041880/4804196).
 
 ### 11. Bonus: Calcul maxim în assembly cu apel din C pe 64 de biți

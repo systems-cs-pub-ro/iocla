@@ -1,9 +1,0 @@
-PROGNAME ?= a.out
-
-build: $(PROGNAME)
-
-UTILSDIR := $(dir $(lastword $(MAKEFILE_LIST)))
-include $(UTILSDIR)/Makefile.inc
-
-$(PROGNAME): $(OBJECTS)
-	$(CC) $^ -o $@ $(LDFLAGS)
