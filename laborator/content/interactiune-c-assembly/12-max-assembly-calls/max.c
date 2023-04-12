@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <stdio.h>
 
 unsigned int get_max(unsigned int *arr, unsigned int len)

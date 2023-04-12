@@ -1,2 +1,2 @@
 PROGNAME := regs-preserve
-include ../../utils/Makefile.generic
+include ../../../utils/Makefile.generic

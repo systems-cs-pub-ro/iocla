@@ -1,2 +1,2 @@
 PROGNAME := mainmax
-include ../../utils/Makefile.generic
+include ../../../utils/Makefile.generic

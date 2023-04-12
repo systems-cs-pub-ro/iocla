@@ -1,3 +1,5 @@
+; SPDX-License-Identifier: BSD-3-Clause
+
 BITS 64
 section .text
 

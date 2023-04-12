@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 static void hi(void)
 {
 	puts("Hi!");

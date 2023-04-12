@@ -1,4 +1,1 @@
-int add(int a, int b)
-{
-	return a+b;
-}
+../../errors/cpp-calls-c/add.c

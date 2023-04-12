@@ -1,2 +1,2 @@
 PROGNAME := stack-frame
-include ../../utils/Makefile.generic
+include ../../../utils/Makefile.generic
