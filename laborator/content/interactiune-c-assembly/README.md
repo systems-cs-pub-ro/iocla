@@ -155,7 +155,9 @@ Adăugați în fișierul assembly instrucțiunile pentru conservarea și restaur
 ### 8. Warning (nu eroare)
 
 Accesați directorul `08-include-fix/`.
-Rulați comanda `make`, apare un warning, dar este de la procesul de preprocesare / compilare.
+Rulați comanda `make`.
+Veți primi un warning.
+Este de la compilare sau de la linkare?
 Rezolvați acest warning prin editarea fișierului `hello.c`.
 
 Rezolvați warningul fără folosirea directivei `#include`.
@@ -205,5 +207,5 @@ Intrați în subdirectorul `11-max-c-calls-x64/` și faceți implementarea calcu
 >  Convenția de apel necesită ca, pentru funcțiile cu număr variabil de argumente, `RAX` să fie setat la numărul de registre vector folosiți pentru a pasa argumentele. `printf` este o funcție cu număr variabil de argumente, și dacă nu folosiți alte registre decât cele menționate în paragraful anterior pentru trimiterea argumentelor, trebuie să setați `RAX = 0` înainte de apel. Citiți mai multe [aici](https://stackoverflow.com/questions/38335212/calling-printf-in-x86-64-using-gnu-assembler). 
 
 ### 12. Bonus: Calcul maxim în C cu apel din assembly pe 64 de biți
-Intrați în subdirectorul `12-max-assembly-calls` și faceți implementarea calculului maximului în C cu apel din limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 6 și 7 în așa fel încât să îl rulați folosind un sistem pe 64 de biți. Urmați indicațiile de la exercițiul anterior și aveți grijă la ordinea parametrilor. 
+Intrați în subdirectorul `12-max-assembly-calls` și faceți implementarea calculului maximului în C cu apel din limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 6 și 7 în așa fel încât să îl rulați folosind un sistem pe 64 de biți. Urmați indicațiile de la exercițiul anterior și aveți grijă la ordinea parametrilor.
 
