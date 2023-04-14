@@ -166,7 +166,7 @@ Rezolvați warningul fără folosirea directivei `#include`.
 
 Accesați directorul `09-export-fix/`.
 Fiecare subdirector (`a-func/`, `b-var/`, `c-var-2/`) conține o problemă legată de exportarea unor simboluri (funcții sau variabile).
-În fiecare subdirectorul, rulați comanda `make`, identificați problema și editați fișierele necesare pentru rezolvarea problemei.
+În fiecare subdirector, rulați comanda `make`, identificați problema și editați fișierele necesare pentru rezolvarea problemei.
 
 ### 10. Tutorial: Linkare C și C++
 
