@@ -72,7 +72,7 @@ Când se face linkarea codului assembly trebuie inclusă și biblioteca standard
 > **IMPORTANT:** În cadrul laboratoarelor vom folosi repository-ul de git al materiei IOCLA - [https://github.com/systems-cs-pub-ro/iocla](https://github.com/systems-cs-pub-ro/iocla). Repository-ul este clonat pe desktop-ul mașinii virtuale. Pentru a îl actualiza, folosiți comanda `git pull origin master` din interiorul directorului în care se află repository-ul (`~/Desktop/iocla`). Recomandarea este să îl actualizați cât mai frecvent, înainte să începeți lucrul, pentru a vă asigura că aveți versiunea cea mai recentă. Dacă doriți să descărcați repository-ul în altă locație, folosiți comanda `git clone https://github.com/systems-cs-pub-ro/iocla ${target}`.Pentru mai multe informații despre folosirea utilitarului `git`, urmați ghidul de la [Git Immersion](https://gitimmersion.com/).
 
 ### 1. Tutorial: Calcul maxim în assembly cu apel din C
-În subdirectorul `1-2-max-c-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în C de unde se apelează funcția `get_max()` definită în limbaj de asamblare.
+În subdirectorul `01-2-max-c-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în C de unde se apelează funcția `get_max()` definită în limbaj de asamblare.
 
 Urmăriți codul din cele două fișiere și modul în care se transmit argumentele funcției și valoarea de retur.
 
@@ -105,7 +105,7 @@ La afișare se va afișa și poziția din vector pe care se găsește maximul.
 >  ```
 
 ### 3. Depanare stack frame corupt
-În subdirectorul `3-stack-frame/` din arhiva de sarcini a laboratorului găsiți un program C care implementează afișarea stringului `Hello world!` printr-un apel al funcției `print_hello()` definită în assembly pentru prima parte a mesajului, urmat de două apeluri ale funcției `printf()` direct din codul C.
+În subdirectorul `03-stack-frame/` din arhiva de sarcini a laboratorului găsiți un program C care implementează afișarea stringului `Hello world!` printr-un apel al funcției `print_hello()` definită în assembly pentru prima parte a mesajului, urmat de două apeluri ale funcției `printf()` direct din codul C.
 
 Compilați și rulați programul. Ce observați? Mesajul printat nu este cel așteptat deoarece din codul assembly lipsește o instrucțiune.
 
@@ -117,7 +117,7 @@ Găsiți instrucțiunea lipsă și rerulați executabilul.
 > Pentru a putea restaura stiva la starea sa de la începutul funcției curente, instrucțiunea `leave` se bazează pe faptul că frame pointerul funcției a fost setat.
 
 ### 4. Tutorial: Calcul maxim în C cu apel din assembly
-În subdirectorul `4-5-max-assembly-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în limbaj de asamblare de unde se apelează funcția `get_max()` definită în C.
+În subdirectorul `04-5-max-assembly-calls/` din arhiva de sarcini a laboratorului găsiți o implementare de calcul a maximului unui număr în care funcția `main()` este definită în limbaj de asamblare de unde se apelează funcția `get_max()` definită în C.
 
 Urmăriți codul din cele două fișiere și modul în care se transmit argumentele funcției și valoarea de retur.
 
@@ -139,7 +139,7 @@ La afișare se va afișa și poziția din vector pe care se găsește maximul.
 >  Pentru afișare modificați șirul `print_format` și apelul `printf` în fișierul assembly (`main.asm`) ca să permită afișare a două valori: maximul și poziția.
 
 ### 6. Tutorial: Conservare registre
-În subdirectorul `6-7-regs-preserve/` din arhiva de sarcini a laboratorului găsiți funcția `print_reverse_array()` implementată printr-un simplu loop ce face apeluri repetate ale funcției `printf()`.
+În subdirectorul `06-7-regs-preserve/` din arhiva de sarcini a laboratorului găsiți funcția `print_reverse_array()` implementată printr-un simplu loop ce face apeluri repetate ale funcției `printf()`.
 
 Urmăriți codul din fișierul `main.asm`, compilați și rulați programul. Ce s-a întâmplat? Programul rulează la infinit. Acest lucru se întămplă deoarece funcția `printf()` nu conservă valoarea din registrul `ECX`, folosit aici ca și contor.
 
@@ -152,8 +152,50 @@ Compilați și rulați programul. Pentru depanarea segfault-ului puteți folosi 
 
 Adăugați în fișierul assembly instrucțiunile pentru conservarea și restaurarea registrelor necesare.
 
-### 8. Bonus: Calcul maxim în assembly cu apel din C pe 64 de biți
-Intrați în subdirectorul `8-max-c-calls-x64/` și faceți implementarea calculului maximului în limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 4 și 5 în așa fel încât să îl rulați folosind un sistem pe 64 de biți.
+### 8. Warning (nu eroare)
+
+Accesați directorul `08-include-fix/`.
+Rulați comanda `make`.
+Veți primi un warning.
+Este de la compilare sau de la linkare?
+Rezolvați acest warning prin editarea fișierului `hello.c`.
+
+Rezolvați warningul fără folosirea directivei `#include`.
+
+### 9. Reparare probleme de export
+
+Accesați directorul `09-export-fix/`.
+Fiecare subdirector (`a-func/`, `b-var/`, `c-var-2/`) conține o problemă legată de exportarea unor simboluri (funcții sau variabile).
+În fiecare subdirector, rulați comanda `make`, identificați problema și editați fișierele necesare pentru rezolvarea problemei.
+
+### 10. Tutorial: Linkare C și C++
+
+Accesăm directorul `10-cpp-obs/`.
+Vrem să urmărim cum se realizează linkarea din surse mixte: C și C++.
+
+În subdirectorul `errors/` avem două directoare `c-calls-cpp/` și `cpp-calls-c/` în care se combinăm surse mixte C și C++.
+În ambele cazuri, folosirea `make` afișează erori.
+Acest lucru se întâmplă întrucât simbolurile C++ sunt *mangled*, adică simbolurile lor au nume diferite din cauza claselor și a namespace-urilor prezente in C++.
+Dacă folosim comanda `nm` pe module obiect obținute din cod sursă C, obținem:
+```
+$ nm add.o
+0000000000000000 T _Z3addii
+
+$ nm sub.o
+0000000000000000 T _Z3subii
+```
+Numele simbolurilor nu sunt `add`, respectiv `sub`, ci sunt `_Z3addii` și `_Z3subii`.
+Numele simbolurilor C++ sunt *mangled* și definesc signatura funcției.
+Acest lucru se întâmplă pentru a permite funcții cu același nume, dar cu signaturi diferite.
+Detalii despre *name mangling* găsiți [aici](https://en.wikipedia.org/wiki/Name_mangling).
+
+Pentru a rezolva acest lucru, trebuie ca simbolurile definite C și importate în C++, sau invers, să fie prefixate cu directiva `extern "C"`.
+În felul acesta, compilatorul C++ va folosi numele simple pentru simbolurile importate / exportate, pentru a fi folosite împreună cu module C.
+Acest lucru este realizat în subdirectorul `correct/`. In acest subdirector sunt reparate erorile din subdirrectorul `errors/`. Comparati fisierele `ops.h` din ambele subdirectoare.
+Detalii despre directiva `extern "C"` găsiți [aici](https://stackoverflow.com/a/1041880/4804196).
+
+### 11. Bonus: Calcul maxim în assembly cu apel din C pe 64 de biți
+Intrați în subdirectorul `11-max-c-calls-x64/` și faceți implementarea calculului maximului în limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 4 și 5 în așa fel încât să îl rulați folosind un sistem pe 64 de biți.
 
 > **TIP:**
 > https://en.wikipedia.org/wiki/X86_calling_conventions. 
@@ -164,8 +206,6 @@ Intrați în subdirectorul `8-max-c-calls-x64/` și faceți implementarea calcul
 >  
 >  Convenția de apel necesită ca, pentru funcțiile cu număr variabil de argumente, `RAX` să fie setat la numărul de registre vector folosiți pentru a pasa argumentele. `printf` este o funcție cu număr variabil de argumente, și dacă nu folosiți alte registre decât cele menționate în paragraful anterior pentru trimiterea argumentelor, trebuie să setați `RAX = 0` înainte de apel. Citiți mai multe [aici](https://stackoverflow.com/questions/38335212/calling-printf-in-x86-64-using-gnu-assembler). 
 
-### 9. Bonus: Calcul maxim în C cu apel din assembly pe 64 de biți
-Intrați în subdirectorul `9-max-assembly-calls` și faceți implementarea calculului maximului în C cu apel din limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 6 și 7 în așa fel încât să îl rulați folosind un sistem pe 64 de biți. Urmați indicațiile de la exercițiul anterior și aveți grijă la ordinea parametrilor. 
+### 12. Bonus: Calcul maxim în C cu apel din assembly pe 64 de biți
+Intrați în subdirectorul `12-max-assembly-calls` și faceți implementarea calculului maximului în C cu apel din limbaj de asamblare pe un sistem pe 64 de biți. Porniți de la programul de la exercițiile 6 și 7 în așa fel încât să îl rulați folosind un sistem pe 64 de biți. Urmați indicațiile de la exercițiul anterior și aveți grijă la ordinea parametrilor.
 
-## Soluții
-Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-10-sol.zip). 
