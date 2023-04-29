@@ -1,3 +1,5 @@
+%include "../../utils/printf32.asm"
+
 section .data
     mystring db "This is my string", 0
     print_format db "String length is %d", 10, 0
@@ -22,6 +24,8 @@ test_one_byte:
     jmp test_one_byte
 
 out:
+    PRINTF32 `[PRINTF32]: %d\n[printf]: \x0`, ecx
+
     push ecx
     push print_format
     call printf
