@@ -1,2 +1,2 @@
-PROGNAME := min
+PROGNAME := fibo
 include ../../../utils/Makefile.generic
