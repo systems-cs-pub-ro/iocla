@@ -1,2 +1,2 @@
-PROGNAME := min
+PROGNAME := toupper
 include ../../../utils/Makefile.generic

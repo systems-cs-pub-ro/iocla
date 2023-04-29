@@ -347,7 +347,7 @@ La sfârșit veți avea afișată de două ori lungimea șirului: inițial cu ap
 
 ### 5. Afișarea șirului inversat
 
-În soluția de mai sus adăugați funcția `reverse_string` astfel încât să aveți un listing similar celui de mai jos:
+În fișierul `print-rev-string.asm` adăugați funcția `reverse_string` astfel încât să aveți un listing similar celui de mai jos:
 ```Assembly
 [...]
 section .text
@@ -441,6 +441,3 @@ Aplicați `rot13` pe caracterele alfabetice și înlocuiți terminatorul de șir
 
 ## Alte resurse
 - [nasm](http://www.nasm.us/)
-
-## Soluții
-- Soluțiile pentru exerciții sunt disponibile [aici](https://elf.cs.pub.ro/asm/res/laboratoare/lab-09-sol.zip).
