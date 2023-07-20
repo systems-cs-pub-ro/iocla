@@ -273,23 +273,23 @@ Intrați în directorul `4-tutorial-ghidra`.<br>
 
 Pentru început, când rulăm Ghidra ne va apărea o fereastră cu proiectele noastre curente.
 
-![ghidra-initial.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/ghidra-initial.png?cache=)
+![ghidra-initial.png](assets/ghidra-initial.png)
 
 Putem să creăm un nou proiect și să îi dăm un nume corespunzător. Pentru asta vom folosi: `File → New Project` (sau folosind combinația de taste `CTRL + N`).
 
-![ghidra-added-project.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/ghidra-added-project.png?cache=)
+![ghidra-added-project.png](assets/ghidra-added-project.png)
 
 După ce am creat proiectul, ca să adăugăm fisierul executabil putem să folosim `File → Import file`, sau să tragem fișierul în directorul pe care l-am creat. Ghidra ne va sugera formatul pe care l-a detectat, precum și compilatorul folosit, în cazuri mai speciale probabil va trebui să schimbăm aceste configurări, dar pentru scopul acestui tutorial, ce ne sugerează Ghidra este perfect.
 
-![ghidra-added-file.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/ghidra-added-file.png?cache=)
+![ghidra-added-file.png](assets/ghidra-added-file.png)
 
 Următorul pas este să analizăm binarul pe care l-am importat. Putem să apăsăm dublu click pe acesta. Ghidra ne va întreba daca vrem să îl analizăm. Pentru a face acest lucru, vom apăsa `Yes` și apoi `Analyze`.
 
-![ghidra-analyzed.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/ghidra-analyzed.png?cache=)
+![ghidra-analyzed.png](assets/ghidra-analyzed.png)
 
 Dupa ce executabilul a fost analizat, Ghidra afișează o interpretare a informațiilor binare, care include și codul dezasamblat al programului. În continuare, putem de exemplu să încercam să decompilăm o funcție. În partea stângă a ferestrei avem secțiunea `Symbol Tree`; dacă deschidem `Functions`, putem observa că Ghidra ne-a detectat anumite funcții, chiar și funcmain-ul în cazul acestui binar. Astfel dacă dăm dublu click pe main, ne apare în dreapta funcția main decompilată și în fereastra centrală codul în limbajul de asamblare aferent.
 
-![ghidra-main.png](https://ocw.cs.pub.ro/courses/_media/iocla/laboratoare/ghidra-main.png?cache=)
+![ghidra-main.png](assets/ghidra-main.png)
 
 Putem să observăm acum că decompilarea nu este tocmai 1:1 cu codul sursă (din fișierul `crackme.c`), dar ne da o idee destul de bună a acestuia. Urmărind codul decompilat, observăm că funcția main are doi parametri de tip long, care se numesc `param_1` și `param_2`, în loc de prototipul normal `main(int argc, char *argv[])`. Al doilea parametru al main-ului este de tip “vector de pointeri către date de tip caracter” (care este interpretat în mod generic ca “vector de șiruri de caractere”). Mai jos este o perspectivă generică asupra modului de reprezentare al vectorului pentru un sistem de 64 de biți. În reprezentarea de pe a doua linie, interpretați `argp` ca fiind `char *argp = (char *)argv`, pentru a avea sens calculul `argp + N`.
 
