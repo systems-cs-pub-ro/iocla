@@ -22,7 +22,7 @@ int main(void)
 			ben.salary, ben.sex, ben.passport_number, ben.age);
 	printf("&ben.salary: %p, &ben.sex: %p, &ben.passport_number: %p, &ben.age: %p\n",
 			&ben.salary, &ben.sex, &ben.passport_number, &ben.age);
-	printf("offset(salary): %u, offset(sex): %u, offset(passport_number): %u, offset(age): %u\n",
+	printf("offset(salary): %tu, offset(sex): %tu, offset(passport_number): %tu, offset(age): %tu\n",
 			(char *) &ben.salary - (char *) &ben,
 			(char *) &ben.sex - (char *) &ben,
 			(char *) &ben.passport_number - (char *) &ben,
