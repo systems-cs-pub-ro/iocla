@@ -20,7 +20,7 @@ int main(void)
 	p = p + 4;
 	printf("p : %p\n", p);
 
-	*p = &var;
+	*p = (int) &var;
 	printf("p : %p\n", &p);
 	printf("var : 0x%08x\n", var);
 
