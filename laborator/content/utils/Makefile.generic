@@ -1,6 +1,8 @@
 PROGNAME ?= a.out
 
 build: $(PROGNAME)
+run: build
+	./$(PROGNAME)
 
 UTILSDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(UTILSDIR)/Makefile.inc
