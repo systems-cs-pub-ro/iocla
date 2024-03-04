@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-void rotate_left(int *number, int bits)
+void rotate_left(unsigned int *number, int bits)
 {
 	unsigned int bit_mask = -1;
 
@@ -13,7 +13,7 @@ void rotate_left(int *number, int bits)
 	(*number) |= bit_mask;
 }
 
-void rotate_right(int *number, int bits)
+void rotate_right(unsigned int *number, int bits)
 {
 	unsigned int bit_mask = -1;
 
@@ -26,7 +26,7 @@ void rotate_right(int *number, int bits)
 
 int main(void)
 {
-	int number;
+	unsigned int number;
 
 	number = 0x80000000;
 	rotate_left(&number, 1);
