@@ -1,4 +1,4 @@
-%include "../utils/printf32.asm"
+%include "printf32.asm"
 
 section .text
 

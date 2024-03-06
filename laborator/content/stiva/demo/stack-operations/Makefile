@@ -1,2 +1,2 @@
-PROGNAME := sum_n
+PROGNAME := stack-operations
 include ../../../utils/Makefile.generic
