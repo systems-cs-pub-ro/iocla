@@ -460,7 +460,7 @@ p.b = 0.11 * p.b;
 > Accesarea elementelor matricei de pixeli se va face folosind operații cu pointeri.
 > **Hint:** Pentru simplificare, vă puteți folosi de urmatorul macro:
 > ```c
-> #define GET_PIXEL(a, i ,j) (*(*(a + i) + j))
+> #define GET_PIXEL(a, i ,j) (*(*((a) + (i)) + (j)))
 > ```
 
 ### **4. Find-Max**
