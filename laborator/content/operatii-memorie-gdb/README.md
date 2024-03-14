@@ -595,9 +595,9 @@ set dereference-limit 1
       "cwd": "/tmp/01-hello-world",
       "program": "/tmp/01-hello-world/hello",
       "miDebuggerPath": "gdb",
-      "args": ["<", "1.in"], 
+      "args": ["<", "1.in"],
  ```
-> - în exemplul de mai  sus la debug vrem stdin dintr-un fișier `1.in`  
+> - în exemplul de mai  sus la debug vrem stdin dintr-un fișier `1.in` 
 > - la comanda F5, debuggerul trebuie să pornească și să se oprească pe prima instrucțiune; cu Ctrl-Shift-D activăm fereastra de debug
 > - dacă avem module C, în acele module la buton dreapta apare opțiunea 'Disasembly window'
 
@@ -607,7 +607,7 @@ set dereference-limit 1
 > - Variables/Locals - apar variabilele din funcțiile C
 > - Variables/Rergisters/CPU - registrele pe 32 biți
 > - Watch/+ se adaugă `print $eflags` pentru a vedea flagurile actualizate
-> - În modul debug, cu click dreapta în sursă, se poate deschide 'Open disassembly view'
+> - În mod debug, cu click dreapta în sursă, se poate deschide 'Open disassembly view'
 > - În disasembly mode se pot pune breakpointuri în coloana din stânga adreselor; F10, F11 și Shift-F11 merg
 > - În fereastra Terminal apar stdout și stdin ale progamului
 > - În fereastra Debug Console apare promptul gdb; toate comenzile trebuie precedate de backquote `` ` ``
@@ -619,7 +619,8 @@ set dereference-limit 1
 > - F11 step into - intră în funcții
 > - Shift-F11 step out - iese din apelul curent
 
-#### Links 
+#### Links
 - [Using C++ on Linux in VS Code](https://code.visualstudio.com/docs/cpp/config-linux)
 - [Debug C++ in Visual Studio Code](https://code.visualstudio.com/docs/cpp/cpp-debug)
 - [How to use GDB with VS Code](https://www.muchen.ca/documents/CPEN411/vscode-debug.html)
+
