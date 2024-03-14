@@ -15,7 +15,14 @@
  * linia n - 1, etc.
  */
 
-void reversePic(Picture *pic);
+void reversePic(Picture *pic){
+
+	for (int i = 0; i < pic->height / 2; i++) {
+        Pixel *temp = pic->pix_array[i];
+        pic->pix_array[i] = pic->pix_array[pic->height - i - 1];
+        pic->pix_array[pic->height - i - 1] = temp;
+    }
+}
 
 /*
  * TODO b
@@ -27,8 +34,15 @@ void reversePic(Picture *pic);
  * p.b = 0.11 * p.b;
  */
 
-void colorToGray(Picture *pic);
-
+void colorToGray(Picture *pic){
+	for ( int i = 0; i<pic->height; i++){
+		for (int j = 0; j< pic->width; j++){
+			pic->pix_array[i][j].R = 0.3*pic->pix_array[i][j].R;
+			pic->pix_array[i][j].G = 0.3*pic->pix_array[i][j].G;
+			pic->pix_array[i][j].B = 0.3*pic->pix_array[i][j].B;
+		}
+	}
+}
 /*
  * Structura unui pixel, cea a unei imagini, precum si generarea acestora
  * sunt definite in pixel.h. Programul primeste de la tastatura inaltimea
@@ -48,7 +62,12 @@ int main(void)
 	Picture *pic = generatePicture(height, width, pix_array);
 
 	printPicture(pic);
-
+	reversePic(pic);
+	printf("\n");
+	printPicture(pic);
+	colorToGray(pic);
+	printf("\n");
+	printPicture(pic);
 	freePicture(&pic);
 	freePixelArray(&pix_array, height, width);
 
