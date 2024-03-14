@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pixel.h"
 
-#define GET_PIXEL(a, i, j) (*(*(a + i) + j))
+#define GET_PIXEL(a, i, j) (*(*((a) + (i)) + (j)))
 
 void colorToGray(Picture *pic)
 {
