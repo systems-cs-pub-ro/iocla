@@ -13,6 +13,12 @@ int main(void)
 {
 	int v[] = {0xCAFEBABE, 0xDEADBEEF, 0x0B00B135, 0xBAADF00D, 0xDEADC0DE};
 
+	int i;
+	for (i = 0; i < 5; i++)
+	{
+		printf("Adresa: %p\nValoare: %d\n\n",v+i,*(v+i));
+	}
+	
 	(void) v;
 
 	return 0;
