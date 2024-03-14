@@ -49,7 +49,8 @@ Picture *generatePicture(int height, int width, Pixel **pix_array)
 }
 
 Pixel generatePixel (const unsigned char R,
-					const unsigned char G, const unsigned char B)
+					const unsigned char G, 
+					const unsigned char B)
 {
 	Pixel pixel;
 
