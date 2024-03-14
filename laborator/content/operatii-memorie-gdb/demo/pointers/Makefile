@@ -1,2 +1,2 @@
-PROGNAME := array_vs_pointer
+PROGNAME := pointers
 include ../../../utils/Makefile.generic
