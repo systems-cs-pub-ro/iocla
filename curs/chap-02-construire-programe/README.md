@@ -379,7 +379,7 @@ La offseturile `0x04`, `0x0c`, `0x18` se găsesc referințe la simbolul `num_ite
 Necunoscându-se adresa simbolului `num_items` referințele sunt acum marcate cu `0x00000000`.
 
 Similar, la offsetul `0x21` se găsește referința la simbolul `increment`.
-La fel, necunoscându-se adresa simbolului `num_items`, referința este marcată cu un placeholder.
+La fel, necunoscându-se adresa simbolului `increment`, referința este marcată cu un placeholder.
 
 După ce stabilește adresele, linkerul va parcurge secțiunea de relocare `.rel.text` și va face înlocuirea referințelor cu adresele efective ale simbolurilor.
 Acest lucru se observă în fișierul executabil:
