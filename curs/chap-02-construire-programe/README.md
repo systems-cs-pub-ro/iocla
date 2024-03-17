@@ -413,7 +413,7 @@ Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conți
 Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
 După cum le spune și numele, nu sunt, însă, definite, adică nu se aloca memorie pentru ele (și deci, în viitor, adrese).
 
-În limbajul C, declarăm funcții prin precizarea antetului lor, fără definirea unui definirea unui corp de funcție:
+În limbajul C, declarăm funcții prin precizarea antetului lor, fără definirea unui corp de funcție:
 ```
 /* Declare function f. */
 int f(void);
