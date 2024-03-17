@@ -433,7 +433,7 @@ printf("num_items: %u\n", num_items);
 ```
 
 Definirea unui simbol poate avea loc în alt modul.
-Adică un alt modul poate defini o funcție (o funcție care să aibă corp) și o variabilă, rezultând în alocarea de memorie pentru aceste simoboluri: cod pentru funcție și date pentru variabilă.
+Adică un alt modul poate defini o funcție (o funcție care să aibă corp) și o variabilă, rezultând în alocarea de memorie pentru aceste simboluri: cod pentru funcție și date pentru variabilă.
 Este rolul linkerului de a parcurge fișierele obiect și de a extrage simbolurile nedefinite.
 Pentru fiecare referință de simbol nedefinit, linkerul va căuta fișierul obiect unde simbolul este definit.
 Apoi va realiza conexiunea între cele două.
