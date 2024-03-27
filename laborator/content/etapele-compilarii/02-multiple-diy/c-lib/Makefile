@@ -12,13 +12,13 @@ main: main.o libops.a
 
 main.o: main.c ops.h
 
-libops.a: add.o sub.o
+libops.a: div.o mul.o
 	ar rc $@ $^
 
-add.o: add.c
+div.o: div.c
 
-sub.o: sub.c
+mul.o: mul.c
 
 clean:
-	-rm -f main main.o libops.a add.o sub.o
+	-rm -f main main.o libops.a div.o mul.o
 	-rm -f *~

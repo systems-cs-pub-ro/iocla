@@ -357,6 +357,19 @@ Dacă programele scrise în limbaje de nivel înalt ajung să fie portate ușor 
 **Unele exerciții necesită modificări pentru a repara probleme legate de linking, cele marcate cu sufixul `-fix`, altele au drept scop exersarea unor noțiuni (cele marcate cu sufixul `-diy`) sau dezvoltarea / completarea unor fișiere (cele marcate cu sufixul `-dev`).**
 **Fiecare exercițiu se găsește într-un director indexat; cele mai multe fișiere cod sursă și fișiere `Makefile` sunt deja prezente.**
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 00. Folosirea variabilelor
 
 Accesăm directorul `00-vars-obs/`.

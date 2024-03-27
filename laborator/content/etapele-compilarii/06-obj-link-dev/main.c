@@ -1,3 +1,9 @@
+extern int qty;
+
+void set_price(int );
+void print_price();
+void print_quantity();
+
 int main(void)
 {
 	/*
@@ -7,6 +13,10 @@ int main(void)
 	 * without directly calling a printing function from an existing
 	 * library(do NOT use printf, fprintf, fwrite, ...).
 	 */
+	qty = 5;
+	set_price(qty);
+	print_price();
+	print_quantity();
 
 	return 0;
 }

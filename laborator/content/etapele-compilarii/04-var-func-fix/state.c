@@ -1,8 +1,8 @@
-const char *init_shopping[3];
+const char *shopping_list[3];
 
-void shopping_list(void)
+void init_shopping(void)
 {
-	init_shopping[0] = "cheese";
-	init_shopping[1] = "wine";
-	init_shopping[2] = "dessert";
+	shopping_list[0] = "cheese";
+	shopping_list[1] = "wine";
+	shopping_list[2] = "dessert";
 }
