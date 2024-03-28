@@ -11,7 +11,15 @@ int main(void)
 	/* TODO: Implement finding the maximum value in the vector */
 	max = v[0];
 	i = 1;
+for_label:
+	if (v[i] > max)
+		max = v[i];
+	i++;
+	if (i >= 8)
+		goto out_label;
+	goto for_label;
 
-	(void) i;
-	(void) max;
+out_label:
+	printf("Valoarea maxima din vector este %d\n", max);
+	return 0;
 }
