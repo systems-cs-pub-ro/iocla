@@ -39,9 +39,10 @@ int main(void)
 
 		if (is_sorted(numbers, 6))
 			/* TODO use goto instead of break */
-			break;
+			goto bongus_sort;
+			//break;
 	}
-
+bongus_sort:
 	for (i = 0; i < 6; i++)
 		printf("%d ", numbers[i]);
 	printf("\n");
