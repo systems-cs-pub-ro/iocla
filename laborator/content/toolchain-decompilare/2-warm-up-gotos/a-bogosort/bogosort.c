@@ -38,10 +38,12 @@ int main(void)
 		shuffle(numbers, 6);
 
 		if (is_sorted(numbers, 6))
+			goto ham;
 			/* TODO use goto instead of break */
-			break;
+			
 	}
 
+ham:
 	for (i = 0; i < 6; i++)
 		printf("%d ", numbers[i]);
 	printf("\n");

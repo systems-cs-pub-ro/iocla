@@ -12,6 +12,9 @@ int main(void)
 	max = v[0];
 	i = 1;
 
+
 	(void) i;
 	(void) max;
+
+	printf("%d", i);
 }
