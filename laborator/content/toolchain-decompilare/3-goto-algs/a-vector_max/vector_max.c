@@ -12,6 +12,20 @@ int main(void)
 	max = v[0];
 	i = 1;
 
+begin_pseudofor:
+	
+	if (i<=7)
+	{
+		if (max<v[i])
+		{
+			max=v[i];
+		}
+		i++;
+		goto begin_pseudofor;
+	}
+		
+	printf("%d",max);
+
 	(void) i;
 	(void) max;
 }
