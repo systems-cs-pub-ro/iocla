@@ -36,12 +36,12 @@ int main(void)
 
 	while (1) {
 		shuffle(numbers, 6);
-
 		if (is_sorted(numbers, 6))
 			/* TODO use goto instead of break */
-			break;
+			goto outside_while;
 	}
 
+outside_while:
 	for (i = 0; i < 6; i++)
 		printf("%d ", numbers[i]);
 	printf("\n");
