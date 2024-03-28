@@ -13,4 +13,27 @@ int main(void)
 	(void) dest;
 	(void) start;
 	(void) end;
+
+bsearch:
+
+	int mijloc = (start+end)/2;
+	if (dest == v[mijloc])
+	{
+		printf("\nElementul %d gasit la pozitia %d.\n",dest,mijloc);
+		return 0;
+	}
+	if (dest<v[mijloc])
+	{
+		end = mijloc;
+		goto bsearch;
+	}
+	if (dest>v[mijloc])
+	{
+		start = mijloc;
+		goto bsearch;
+	}
+	
+	printf("Elementul nu s-a gasit\n");
+
+return 0;
 }
