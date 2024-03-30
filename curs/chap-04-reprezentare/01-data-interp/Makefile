@@ -10,5 +10,4 @@ data_interp: data_interp.o
 data_interp.o: data_interp.c
 
 clean:
-	-rm -f *~
-	-rm -f data_interp.o data_interp
+	-rm -f *~ data_interp.o data_interp
