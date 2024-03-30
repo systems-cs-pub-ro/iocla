@@ -2,16 +2,8 @@
 
 int main(void)
 {
-	signed int a;
-	signed int b;
-	signed int c;
-	signed int d;
-	signed char c1 = 100;
-	signed char c2 = 100;
-	signed char c3;
-	signed char c4 = 127;
-	signed char c5 = 127;
-	signed char c6;
+  signed int a, b, c, d;
+  signed char c1 = 100, c2 = 100, c3, c4 = 127, c5 = 127, c6;
 
 	c3 = c1 + c2;
 	a = c3;
