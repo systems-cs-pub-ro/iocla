@@ -12,11 +12,11 @@ static void dump(const void *start, size_t len, const char *id)
 	for (i = 0; i < len; i++) {
 		/* Add a newline every 8 bytes. */
 		if (i % 8 == 0)
-			puts("");
+			printf("\n");
 		printf(" %02x", *((const unsigned char *) start + i));
 	}
 	/* And newline at the end. */
-	puts("");
+	printf("\n");
 }
 
 
