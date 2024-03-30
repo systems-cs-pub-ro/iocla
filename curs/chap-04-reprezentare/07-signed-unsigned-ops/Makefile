@@ -11,5 +11,4 @@ $(BINARIES): %: %.o
 : %.o: %.c
 
 clean:
-	-rm -f *~
-	-rm -f $(BINARIES) $(BINARIES:=.o)
+	-rm -f *~ $(BINARIES) $(BINARIES:=.o)
