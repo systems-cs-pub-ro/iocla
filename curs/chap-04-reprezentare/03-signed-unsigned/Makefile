@@ -10,5 +10,4 @@ signed_unsigned: signed_unsigned.o
 signed_unsigned.o: signed_unsigned.c
 
 clean:
-	-rm -f *~
-	-rm -f signed_unsigned.o signed_unsigned
+	-rm -f *~ signed_unsigned.o signed_unsigned

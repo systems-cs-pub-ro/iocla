@@ -10,5 +10,4 @@ same_data: same_data.o
 same_data.o: same_data.c
 
 clean:
-	-rm -f *~
-	-rm -f same_data.o same_data
+	-rm -f *~ same_data.o same_data
