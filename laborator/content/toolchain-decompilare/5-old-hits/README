@@ -1,0 +1,7 @@
+Pentru a rezolva ex 5, am folosit Ghidra pentru a analiza executabilul old-hits. In codul dezasamblat, am observat ca
+este apelata functia srand() cu o valoarea aleatoare. Folosind gdb, am aflat aceasta valoare, apoi cu ajutorul unui
+program ajutator, rand.c, am aflat valoarea generata prin srand(). In plus, am inspectat codul dezasamblat pentru
+functia validate, unde se testeaza daca valoarea citita de la tastatura este egala cu valoarea generata de srand() la
+care se adauga 1337. Astfel, am gasit valoarea secreta, pe care am introdus-o in terminal.
+Mesajul afisat:
+Congrats! Here's your link: https://www.youtube.com/watch?v=7yh9i0PAjck
