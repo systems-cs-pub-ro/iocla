@@ -568,3 +568,59 @@ set context-sections 'regs code expressions'
 set show-flags on
 set dereference-limit 1
 ```
+
+### **9. Configurare vscode cu gdb**
+> **Configurare:**
+> - extensii de instalat: Makefile tools, x86 and x86_64 Assembly, GDB Debug (by DamianKoper)
+> - Terminal/Configure Default Build Task - se editează `.vscode/tasks.json`, la commandă se trece make all
+
+```json
+"command": "make",
+			"args": [
+				"all",
+				""
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+```
+> - la tastele Ctrl-Shift-B se lansează comanda make all, îar în terminal se poate da Ctrl-Click pe numele fișierului cu eroare
+> - Fie se tastează F5 pentru a demara debug, fie se editează direct `.vscode/launch.json`; trebuie să conțină
+```json
+"stopAtEntry": true,
+      "cwd": "/tmp/01-hello-world",
+      "program": "/tmp/01-hello-world/hello",
+      "miDebuggerPath": "gdb",
+      "args": ["<", "1.in"],
+ ```
+> - în exemplul de mai  sus la debug vrem stdin dintr-un fișier `1.in` 
+> - la comanda F5, debuggerul trebuie să pornească și să se oprească pe prima instrucțiune; cu Ctrl-Shift-D activăm fereastra de debug
+> - dacă avem module C, în acele module la buton dreapta apare opțiunea 'Disasembly window'
+
+> **Operare:**
+> - Se pot pune breakpointuri cu click dreapta în coloana din stânga numărului de line
+> - în debug window (Ctrl-Shift-D), se recomandă activarea Variables, Watch, și Call Stack
+> - Variables/Locals - apar variabilele din funcțiile C
+> - Variables/Rergisters/CPU - registrele pe 32 biți
+> - Watch/+ se adaugă `print $eflags` pentru a vedea flagurile actualizate
+> - În mod debug, cu click dreapta în sursă, se poate deschide 'Open disassembly view'
+> - În disasembly mode se pot pune breakpointuri în coloana din stânga adreselor; F10, F11 și Shift-F11 merg
+> - În fereastra Terminal apar stdout și stdin ale progamului
+> - În fereastra Debug Console apare promptul gdb; toate comenzile trebuie precedate de backquote `` ` ``
+
+> **Hotkeys**
+> - Ctrl-Shift-D debug window
+> - F5 start debugging, și continuă
+> - F10 step over - execută toată funcția
+> - F11 step into - intră în funcții
+> - Shift-F11 step out - iese din apelul curent
+
+#### Links
+- [Using C++ on Linux in VS Code](https://code.visualstudio.com/docs/cpp/config-linux)
+- [Debug C++ in Visual Studio Code](https://code.visualstudio.com/docs/cpp/cpp-debug)
+- [How to use GDB with VS Code](https://www.muchen.ca/documents/CPEN411/vscode-debug.html)
+
