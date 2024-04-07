@@ -9,7 +9,7 @@ main:
     PRINTF32 `CF nu e activ\n\x0`
     test al, al
     ;TODO: activati CF
-
+    add al, 1
     jc carry_flag
     jmp end
 

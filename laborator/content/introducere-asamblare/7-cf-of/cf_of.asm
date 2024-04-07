@@ -9,7 +9,7 @@ main:
     PRINTF32 `CF si OF nu sunt active\n\x0`
     test al, al
     ;TODO: activati CF si OF
-
+    add al, 255
     jc cf_on
     jmp end
 
