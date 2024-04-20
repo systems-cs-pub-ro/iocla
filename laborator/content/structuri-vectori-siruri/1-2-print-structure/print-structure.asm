@@ -39,6 +39,11 @@ main:
     ; age is 22
     ; group is '323CA'
 
+    mov byte [sample_student + age], 22
+    mov word [sample_student + birth_year], 1993
+    lea eax, [sample_student + group + 2]
+    mov byte [eax], '3'
+
     lea eax, [sample_student + name]
     push eax
     push format_name
