@@ -14,8 +14,21 @@ main:
     ; TODO: calculate the sum of first N fibonacci numbers
     ;       (f(0) = 0, f(1) = 1)
     xor eax, eax     ;store the sum in eax
+    xor ebx, ebx ; f(0) = 0 ebx=>termenul n-2
+    mov edx, 1 ; f(1) = 1 edx=>termenul n-1
+    mov ecx, dword [N] ; contorul in ecx
 
-    ; use loop instruction
+    test ecx, ecx
+    jz end_for
+
+for_loop:
+    add eax, ebx ; actualizam suma
+    add ebx, edx ; edx = termenul curent
+    xchg ebx, edx
+
+    loop for_loop
+
+end_for:
 
     push eax
     push dword [N]
