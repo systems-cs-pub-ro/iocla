@@ -18,6 +18,10 @@ section .data
     new_char db 'b'
     new_string db 'Are you sure?', 0
 
+int_format db "int_x: %d", 10, 0
+char_format db "char_y: %c", 10, 0
+string_format db "string_s: %s", 10, 0
+
 section .text
 extern printf
 global main
@@ -26,23 +30,42 @@ main:
     push ebp
     mov ebp, esp
 
-    ; TODO
-    ; print all three values (int_x, char_y, string_s) from simple_obj
-    ; Hint: use "lea reg, [base + offset]" to save the result of
-    ; "base + offset" into register "reg"
+    mov eax, [new_int]
+    mov dword [sample_obj + int_x], eax
 
-    ; TODO
-    ; write the equivalent of "simple_obj->int_x = new_int"
+    lea eax, [sample_obj + int_x]
+    push dword [eax]
+    push int_format
+    call printf
+    add esp, 8
 
-    ; TODO
-    ; write the equivalent of "simple_obj->char_y = new_char"
+    mov  al, [new_char]
+    mov byte [sample_obj + char_y], al
 
-    ; TODO
-    ; write the equivalent of "strcpy(simple_obj->string_s, new_string)"
+    lea eax, [sample_obj + char_y]
+    movzx eax, byte [eax]
+    push eax
+    push char_format
+    call printf
+    add esp, 8
 
-    ; TODO
-    ; print all three values again to validate the results of the
-    ; three set operations above
+    mov eax, [new_string]
+    mov [sample_obj + string_s], eax
+    mov eax, [new_string + 4]
+    mov [sample_obj + string_s + 4], eax
+    mov eax, [new_string + 8]
+    mov [sample_obj + string_s + 8], eax
+    mov [sample_obj + string_s + 8], eax
+    mov eax, [new_string + 12]
+    mov [sample_obj + string_s + 12], eax
+
+
+
+    lea eax, [sample_obj + string_s]
+    push eax
+    push string_format
+    call printf
+    add esp, 8
 
     xor eax, eax
     leave
