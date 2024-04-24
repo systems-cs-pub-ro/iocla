@@ -16,6 +16,16 @@ main:
     ; TODO push the elements of the array on the stack
     ; TODO retrieve the elements (pop) from the stack into the output array
 
+    mov ecx, ARRAY_LEN
+.loop1:
+    push dword [input + 4 * (ecx-1)]
+    loop .loop1
+
+    mov ecx, ARRAY_LEN
+.loop2:
+    pop dword [output + 4 * (ecx-1)]
+    loop .loop2
+
     PRINTF32 `Reversed array: \n\x0`
     xor ecx, ecx
 print_array:
