@@ -18,10 +18,17 @@ main:
     mov ecx, ARRAY_SIZE
 
     ; TODO1 - compute the sum of the vector numbers - store it in eax
+.loop:
+    add ax, [num_array + 2 * (ecx - 1)]
+    loop .loop
 
     PRINTF32 `Sum of numbers: %d\n\x0`, eax
 
     ; TODO2 - compute the quotient of the mean
+    
+    xor edx, edx
+    mov ecx, ARRAY_SIZE
+    div ecx
 
     PRINTF32 `Mean of numbers: %d\x0`, eax
     PRINTF32 `.\x0`
@@ -30,6 +37,12 @@ main:
 compute_decimal_place:
 
     ; TODO3 - compute the current decimal place - store it in ax
+    mov eax, edx
+    mov ebx, 10
+    mul ebx
+
+    mov ebx, ARRAY_SIZE
+    div ebx
 
     PRINTF32 `%d\x0`, eax
     dec ecx
