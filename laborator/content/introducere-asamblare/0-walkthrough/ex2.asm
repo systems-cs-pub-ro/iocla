@@ -9,8 +9,6 @@ main:
     PRINTF32 `%d\n\x0`, eax
 
 jump_incoming:
-    break
-    run
     jmp exit                    ; salt neconditionat catre label-ul exit
 
     mov eax, 7                  ; codul acesta nu se executa
