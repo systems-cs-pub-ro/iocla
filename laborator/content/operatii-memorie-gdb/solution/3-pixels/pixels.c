@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pixel.h"
 
-#define GET_PIXEL(a, i, j) (*(*(a + i) + j))
+#define GET_PIXEL(a, i, j) (*(*((a) + (i)) + (j)))
 
 void colorToGray(Picture *pic)
 {
@@ -34,7 +34,7 @@ void reversePic(Picture *pic)
 {
 	for (int i = 0; i < pic->height / 2; ++i)
 		swapRows(pic->pix_array[i], pic->pix_array[pic->height - 1 - i],
-				pic->height);
+				pic->width);
 }
 
 int main(void)

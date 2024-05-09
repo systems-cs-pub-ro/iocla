@@ -310,3 +310,17 @@ Folosind informațiile noi dobândite despre `Ghidra`, dar și cele învățate 
 Programul generează o valoare aleatoare și vă cere să ghiciți o altă valoare calculată pe baza valorii aleatoare.<br>
 
 Mult succes!
+
+Notă: Dacă primiți următoarea eroarea la rularea executabilului:
+
+```bash
+./old-hits: error while loading shared libraries: libcrypto.so.1.1: cannot open shared object file: No such file or directory
+```
+
+Instalați biblioteca `libcrypto.so.1.1` folosind următoarele comenzi:
+
+```bash
+wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+rm libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+```

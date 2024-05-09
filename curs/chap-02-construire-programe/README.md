@@ -379,7 +379,7 @@ La offseturile `0x04`, `0x0c`, `0x18` se găsesc referințe la simbolul `num_ite
 Necunoscându-se adresa simbolului `num_items` referințele sunt acum marcate cu `0x00000000`.
 
 Similar, la offsetul `0x21` se găsește referința la simbolul `increment`.
-La fel, necunoscându-se adresa simbolului `num_items`, referința este marcată cu un placeholder.
+La fel, necunoscându-se adresa simbolului `increment`, referința este marcată cu un placeholder.
 
 După ce stabilește adresele, linkerul va parcurge secțiunea de relocare `.rel.text` și va face înlocuirea referințelor cu adresele efective ale simbolurilor.
 Acest lucru se observă în fișierul executabil:
@@ -413,7 +413,7 @@ Un fișier obiect, obținut în urma compilării unui fișier cod sursă, conți
 Simbolurile nedefinite sunt simboluri **declarate** și **folosite** în fișierul cod sursă inițial.
 După cum le spune și numele, nu sunt, însă, definite, adică nu se aloca memorie pentru ele (și deci, în viitor, adrese).
 
-În limbajul C, declarăm funcții prin precizarea antetului lor, fără definirea unui definirea unui corp de funcție:
+În limbajul C, declarăm funcții prin precizarea antetului lor, fără definirea unui corp de funcție:
 ```
 /* Declare function f. */
 int f(void);
@@ -433,7 +433,7 @@ printf("num_items: %u\n", num_items);
 ```
 
 Definirea unui simbol poate avea loc în alt modul.
-Adică un alt modul poate defini o funcție (o funcție care să aibă corp) și o variabilă, rezultând în alocarea de memorie pentru aceste simoboluri: cod pentru funcție și date pentru variabilă.
+Adică un alt modul poate defini o funcție (o funcție care să aibă corp) și o variabilă, rezultând în alocarea de memorie pentru aceste simboluri: cod pentru funcție și date pentru variabilă.
 Este rolul linkerului de a parcurge fișierele obiect și de a extrage simbolurile nedefinite.
 Pentru fiecare referință de simbol nedefinit, linkerul va căuta fișierul obiect unde simbolul este definit.
 Apoi va realiza conexiunea între cele două.
