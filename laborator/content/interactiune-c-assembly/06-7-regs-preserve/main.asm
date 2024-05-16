@@ -30,17 +30,21 @@ print_reverse_array:
 next:
 
 ;   TODO1: Decomentați următoarele două linii comentate
-;   push ecx
+
+    pusha
 	push dword [ebx+ecx*4-4]
 	push format_string
 	call printf
 	add esp, 8
-;   pop ecx
+    popa
+
 	loop next
 
+	pusha
 	push newline
 	call printf
 	add esp, 4
+	popa
 
 	pop ebx
 
@@ -57,11 +61,14 @@ main:
 	mov edx, [myarray_len]
 	lea eax, [myarray]
 
-;   TODO2: Decomentați această secvență de cod
-;   push edx
-;   push eax
-;   call double_array
-;   add esp, 8
+   ;TODO2: Decomentați această secvență de cod
+
+	pusha
+   	push edx
+   	push eax
+   	call double_array
+   	add esp, 8
+	popa
 
 	push edx
 	push eax

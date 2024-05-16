@@ -6,6 +6,7 @@
 void init(void);
 void set(int value);
 int get(void);
+extern int age;
 void print_age(void);
 
 #endif
