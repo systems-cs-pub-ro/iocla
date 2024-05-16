@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-extern int hidden_value;
+static int hidden_value;
 
 void init(void)
 {

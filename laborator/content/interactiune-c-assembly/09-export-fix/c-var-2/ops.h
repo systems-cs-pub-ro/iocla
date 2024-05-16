@@ -8,4 +8,6 @@ void set(int value);
 int get(void);
 void print_age(void);
 
+extern int age;
+
 #endif
