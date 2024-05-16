@@ -17,6 +17,7 @@ get_max:
 	mov ebx, [ebp+8]
 	mov ecx, [ebp+12]
 	xor eax, eax
+	xor edx, edx
 
 compare:
 	cmp eax, [ebx+ecx*4-4]
@@ -25,6 +26,17 @@ compare:
 check_end:
 	loopnz compare
 
+	mov ecx, [ebp+12]
+for:
+	inc edx
+	cmp eax, [ebx + ecx * 4 - 4]
+	je end
+	loop for
+
+end:
+	mov ebx, [ebp+16]
+	mov [ebx], edx
+	
 	pop ebx
 
 	leave
