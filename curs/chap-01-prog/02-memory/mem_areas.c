@@ -41,7 +41,7 @@ int main(void)
 
 	/* These won't work due to permission issues. */
 	//do_exec("executing .data section", &data[0]);
-	//do_write("writing to .rodata section", &rodata[0], 99);
+	do_write("writing to .rodata section", &rodata[0], 99);
 	//do_write("writing to .text section", exec_do_nothing, 77);
 	//do_read("reading from NULL", NULL);
 

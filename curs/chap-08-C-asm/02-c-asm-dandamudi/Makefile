@@ -26,6 +26,8 @@ hll_arraysum_inline2: hll_arraysum_inline2.o
 	$(LD) -o $@ $^ 
 
 
+hll_ex1_inline.o: hll_ex1_inline.c
+	cc -m32 -g -c -o $@ $<
 
 %.o : %.c
 	cc -m32 -masm=intel -g -c -o $@ $<

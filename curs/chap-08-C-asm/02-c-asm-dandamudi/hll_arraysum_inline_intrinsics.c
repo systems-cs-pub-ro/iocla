@@ -21,21 +21,14 @@ int main(void)
 	
     return 0;
 }
- 
+
 int array_sum(int* value, int size)
 {
-     asm("\
-     .intel_syntax noprefix     \n\
-        xor     eax, eax        \n\
-        push   	ebx				\n\
-        mov     ebx, [ebp+8]	\n\
-        mov     ecx, [ebp+12] 	\n\
-    rep1:						\n\
-        jecxz   done			\n\
-        dec     ecx				\n\
-        add     eax, [ebx+ecx*4]\n\
-        jmp     rep1			\n\
-    done:						\n\
-        pop    	ebx				\n\
-"); 
+    int  i, sum=0;
+    for (i = 0; i < size; i++)
+         asm("addl (%1,%2,4),%0"
+              :"=r"(sum)                   /* output */
+              :"r"(value),"r"(i),"0"(sum)  /* inputs */
+              :"cc");                      /* clobber list */
+    return(sum);
 }
