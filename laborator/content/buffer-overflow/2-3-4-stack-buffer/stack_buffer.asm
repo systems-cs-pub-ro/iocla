@@ -44,7 +44,7 @@ fill_byte:
     inc dl
     mov byte [ebx+ecx], dl
     inc ecx
-    cmp ecx, 64
+    cmp ecx, 76
     jl fill_byte
 
     ; Print data in buffer.
@@ -67,7 +67,7 @@ print_byte:
 
     pop ecx	; restore ecx
     inc ecx
-    cmp ecx, 64
+    cmp ecx, 76
     jl print_byte
 
     ; Print new line. C equivalent instruction is puts("").
