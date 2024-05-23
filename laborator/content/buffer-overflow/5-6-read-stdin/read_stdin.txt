@@ -8,7 +8,7 @@
 extern printf
 extern puts
 extern strlen
-extern gets
+extern fgets
 
 section .data
     read_message: db "insert buffer string: ", 0
@@ -43,7 +43,7 @@ main:
 
     lea ebx, [ebp-68]
     push ebx
-    call gets
+    call fgets
     add esp, 4
 
     ; Push string length on the stack.
