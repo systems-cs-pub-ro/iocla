@@ -47,6 +47,12 @@ fill_byte:
     cmp ecx, 64
     jl fill_byte
 
+    mov byte [ebx+64], 0xEF ; the least significant byte
+    mov byte [ebx+65], 0xBE ; the next byte
+    mov byte [ebx+66], 0xAD ; the next byte
+    mov byte [ebx+67], 0xDE ; the most significant byte
+
+
     ; Print data in buffer.
     push buffer_intro_message
     call printf
@@ -67,7 +73,7 @@ print_byte:
 
     pop ecx	; restore ecx
     inc ecx
-    cmp ecx, 64
+    cmp ecx, 80 ; change the limit from 64 to 80 to read beyond the buffer
     jl print_byte
 
     ; Print new line. C equivalent instruction is puts("").
