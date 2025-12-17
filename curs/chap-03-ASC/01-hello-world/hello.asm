@@ -1,6 +1,6 @@
-; nasm -f elf32 -g -F dwarf hello.asm 
-; gcc -g -m32 -o hello hello.o
-; se poate compila cu gcc sau rula în sasn 
+; nasm -f elf64 -g -F dwarf hello.asm 
+; gcc -g  -o hello hello.o
+; ./hello
 ; 
 	
 section .data
@@ -12,8 +12,7 @@ section .text
 	global main
 	
 main:
-	push ebp           	; main e o funcție 
-	mov ebp, esp       	; 
+
 	mov ax, 0x102      	; o constantă într-un registru de 16 biți
 				; AX = 258 în zecimal/decimal, 0x102 în hexa, 100000010 în binar
 	mov ah, -1         	; o constantă într-un registru de 8 biți
@@ -25,13 +24,13 @@ adunare:                    	; etichetă
 	mov eax, 0x1234ABCD	; EAX este pe 32 biți, partea de jos (least significant) se numește AX
 				; în AX avem 0xABCD     
        ; jmp iesire         	; decomenteaza pentru a sări peste print string   
-	mov eax, 4
-	mov ebx, 1
-	mov ecx, msg
-	mov edx, [len]
-	int 0x80           ; apel la un serviciu linux (syscall), funcția=4 (write), ECX, EDX parametri 
+  	mov rdi, 0x1
+    	mov rsi, msg
+    	mov rdx, [len]
+    	mov rax, 0x1
+    	syscall
+      ; apel la un serviciu linux (syscall), funcția=1 (write), RSI, RDI parametri 
 
 iesire:
-	xor eax, eax       ; vom returna 0 către shell
-        pop ebp            ; refacem stiva
+	xor rax, rax       ; vom returna 0 către shell
 	ret                ; părăsim main 

@@ -3,10 +3,10 @@ FILES =  mult16c.c mult16m.c mult16inline.c
 OBJS = $(FILES:.c=.o)
 
 CC = gcc
-C_FLAGS = -O2 -m32 -g 
+C_FLAGS = -O2 -g 
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf
-LD = ld  -melf_i386
+ASM_FLAGS = -f elf64 -g -F dwarf
+LD = ld -z noexecstack  -melf_i386
 
 all : c.out asm.out 
 

@@ -7,13 +7,14 @@
      long  product=0;
      asm("repeat1: bsf   %2,%%ecx;  "
          "         jz     done;      "
-         "         shll   %%cl,%1;   "
-         "         addl   %1,%0;     "
+         "         movslq %1,%%rdx;  "
+         "         shlq   %%cl,%%rdx;  "
+         "         addq   %%rdx,%0;     "
          "         btcl   %%ecx,%2;  "
          "         jmp    repeat1;   "
          "done:                      "
-         :"=r"(product)  
-         :"r"(value1), "r"(value2), "0"(product)
-         :"%ecx","%edx","cc");
+        :"=r"(product)  
+        :"r"(value1), "r"(value2), "0"(product)
+        :"%ecx","%rdx","cc");
      return(product);
  }
