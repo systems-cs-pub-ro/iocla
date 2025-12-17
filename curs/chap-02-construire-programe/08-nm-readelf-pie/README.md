@@ -1,9 +1,9 @@
 Run commands below to investigate:
 
 ```
-gcc -m32 -c -o sum.o sum.c
+gcc -c -o sum.o sum.c
 gcc -fno-PIC -c -o sum-no-pic.o sum.c
-gcc -m32 -c -o main.o main.c
+gcc -c -o main.o main.c
 gcc -fno-PIC -c -o main-no-pic.o main.c
 
 nm sum.o

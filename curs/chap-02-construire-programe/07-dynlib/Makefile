@@ -1,7 +1,7 @@
-CFLAGS = -fno-PIC -m32
-LDFLAGS = -no-pie -m32
+CFLAGS =  # -m32
+LDFLAGS = -z noexecstack -no-pie # -m32
 AS = nasm
-ASFLAGS = -f elf32
+ASFLAGS = -f elf64 -F dwarf 
 
 .DEFAULT_GOAL: all
 
@@ -17,7 +17,7 @@ main: main.o inc.o
 main.o: main.c
 
 libinc.so: inc.o
-	$(CC) -m32 -shared -o $@ $^
+	$(CC) -shared -o $@ $^
 
 inc.o: inc.c
 

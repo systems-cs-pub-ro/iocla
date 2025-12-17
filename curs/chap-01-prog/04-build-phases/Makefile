@@ -1,5 +1,5 @@
-CFLAGS = -Wall -g -m32 
-LDFLAGS = -g -m32 
+CFLAGS = -Wall -g # -m32 
+LDFLAGS = -g # -m32 
 
 .PHONY: all clean
 

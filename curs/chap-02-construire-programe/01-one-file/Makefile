@@ -1,7 +1,7 @@
-CFLAGS = -fno-PIC -m32 -g -O
-LDFLAGS = -nostdinc -nostdlib -no-pie -m32 -g 
+CFLAGS = -fno-PIC -g -O # -m32
+LDFLAGS = -z noexecstack -nostdinc -nostdlib -no-pie -g # -m32
 AS = nasm
-ASFLAGS = -f elf32 -g -F dwarf
+ASFLAGS = -f elf64 -g -F dwarf # -f elf32 
 
 .DEFAULT_GOAL: all
 
