@@ -1,14 +1,15 @@
 
 CC = gcc
-CFLAGS = -O2 -m32 -g -fno-PIC
+CFLAGS = -O2 -g -fno-PIC
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf
-LD = ld  -melf_i386 -no-pie
+ASM_FLAGS = -f elf64 -g -F dwarf
+LD = ld -no-pie -z noexecstack 
 
 all : dt 
 
 dt: dt.o 
-	$(CC) -m32 -no-pie -o dt dt.o
+#	$(LD) -no-pie -o dt dt.o
+	$(CC) -z noexecstack  -no-pie -o dt dt.o
 
 %.o : %.c
 	$(warning CC=$(CC) FLAGS=$(CFLAGS))

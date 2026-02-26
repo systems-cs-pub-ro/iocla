@@ -36,8 +36,9 @@ op = args[2][0];
 //printf("exec %d %c %d\n", a, op, b); 
 
   asm (  "\
-        pusha					\n\
-	mov al, [a]				\n\
+        push rax				\n\
+        push rbx				\n\
+	mov al, [i]				\n\
 	mov ah, [b]				\n\
         mov bl, [op]                            \n\
         cmp bl ,'-'                             \n\
@@ -50,7 +51,8 @@ saveresult:                                     \n\
         pushf                                   \n\
         pop [eflags]                            \n\
         mov [result], al                        \n\
-	popa                                    \n\
+	pop rbx                                 \n\
+	pop rax                                 \n\
 ");
   printf("hex:      0x%02x %c 0x%02x = 0x%02x\n",  (uint8_t)a, op, (uint8_t)b, result);
   printf("unsign:   %4u %c %4u = %u\n",  (uint8_t)a, op, (uint8_t)b,  (uint8_t)result);
