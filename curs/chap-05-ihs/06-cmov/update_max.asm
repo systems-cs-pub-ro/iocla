@@ -6,14 +6,15 @@ segment .text
 	extern max
 	
 update_max_jmp:
-	enter 0,0
-	mov edx, [ebp + 8]
-	cmp edx, [max]
+	push rbp
+	mov rbp, rsp
+	mov edx, edi
+	cmp edx, [rel max]
 	jg update_max
 	mov eax, 0
 	jmp return
 update_max:
-        mov [max], edx
+        mov [rel max], edx
 	mov eax, 1
 return:
         leave
@@ -22,12 +23,13 @@ return:
 
 
 update_max_cmov: 
- 	enter 0,0
-	mov ecx, [max]
+ 	push rbp
+	mov rbp, rsp
+	mov ecx, [rel max]
 	mov eax, 0
-	cmp [ebp+8], ecx
-	cmovg ecx, [ebp+8]
-	mov [max], ecx
+	cmp edi, ecx
+	cmovg ecx, edi
+	mov [rel max], ecx
 	setg al
 	leave
     ret

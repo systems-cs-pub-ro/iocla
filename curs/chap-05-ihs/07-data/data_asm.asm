@@ -18,8 +18,8 @@ section .text
 global main
 
 main:
-    push ebp
-    mov ebp, esp
+    push rbp
+    mov rbp, rsp
 
     leave
     ret

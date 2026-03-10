@@ -1,14 +1,17 @@
 
 CC = gcc
-CFLAGS = -O2 -m32 -g -fno-PIC
+# 32-bit flags
+# CFLAGS = -O2 -m32 -g -fno-PIC
+# ASM_FLAGS = -f elf32 -g -F dwarf
+# LD = ld  -melf_i386 -no-pie
+CFLAGS = -O2 -g -fno-PIC
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf
-LD = ld  -melf_i386 -no-pie
+ASM_FLAGS = -f elf64 -g -F dwarf
 
 all : hello 
 
 hello: hello.o 
-	$(CC) -m32 -no-pie -o hello hello.o
+	$(CC) -no-pie -o hello hello.o
 
 %.o : %.c
 	$(warning CC=$(CC) FLAGS=$(CFLAGS))

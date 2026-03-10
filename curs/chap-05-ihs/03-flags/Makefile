@@ -1,9 +1,12 @@
 NASM = nasm
 AFILES = flags.asm
 OBJS = $(AFILES:.asm=.o)
-ASM_FLAGS = -f elf32 -g -F dwarf
+# 32-bit flags
+# ASM_FLAGS = -f elf32 -g -F dwarf
+# LDFLAGS = -m32 -g -fno-PIC -no-pie
+ASM_FLAGS = -f elf64 -g -F dwarf
 LD = gcc
-LDFLAGS = -m32 -g -fno-PIC -no-pie
+LDFLAGS = -g -fno-PIC -no-pie
 BINARIES = flags
 
 .PHONY: all clean

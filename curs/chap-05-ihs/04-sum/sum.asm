@@ -1,15 +1,15 @@
-%include "../io.mac"
+%include "../utils/printf64.asm"
 
 section .bss
-    sum: resd 1
+    sum: resq 1
 
 section .text
     global main
     extern printf
 
 main:
-        push    ebp
-        mov     ebp, esp
+        push    rbp
+        mov     rbp, rsp
         mov     eax, 0      ; eax is the loop counter
         mov     edx, 0      ; edx is sum
 begin:
@@ -19,9 +19,9 @@ begin:
         add     eax, 1
         jmp     begin
 out:
-        mov [sum], edx
+        mov [sum], rdx
 
-        PRINTF32 `%d\n\x0`, [sum]
+        PRINTF64 `%d\n\x0`, qword [sum]
         nop
-        pop     ebp
+        pop     rbp
         ret

@@ -1,6 +1,10 @@
-CFLAGS = -m32 -fno-PIC -Wall
-LDFLAGS = -m32 -no-pie
-ASFLAGS = -f elf32
+# 32-bit flags
+# CFLAGS = -m32 -fno-PIC -Wall
+# LDFLAGS = -m32 -no-pie
+# ASFLAGS = -f elf32
+CFLAGS = -fno-PIC -Wall
+LDFLAGS = -no-pie
+ASFLAGS = -f elf64
 AS = nasm
 
 .PHONY: all clean

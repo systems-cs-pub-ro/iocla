@@ -2,28 +2,28 @@ section .text
     global main
 
 main:
-    push    ebp
-    mov     ebp, esp
+    push    rbp
+    mov     rbp, rsp
 
     ; ZF = 1
-    ; cmp eax, eax
-    ; xor eax, eax
-    sub eax, eax
+    ; cmp rax, rax
+    ; xor rax, rax
+    sub rax, rax
 
     ; ZF = 0
-    inc eax
+    inc rax
 
     ; CF = 1
-    shr eax, 1
+    shr rax, 1
 
     ; CF = 0
-    shr eax, 1
+    shr rax, 1
 
     ; SF = 1
-    dec eax ; eax <- 0xffffffff
+    dec rax ; rax <- 0xffffffffffffffff
 
     ; SF = 0
-    inc eax
+    inc rax
 
     ; OF = 1
 
@@ -42,8 +42,8 @@ main:
     ; SF = 0, OF = 0
 
     ; SF = 0, OF = 1
-    mov eax, 0x80000000   ; signed int = -2 ^ 31
-    sub eax, 1
+    mov rax, 0x8000000000000000   ; signed long = -2 ^ 63
+    sub rax, 1
 
     ; SF = 1, OF = 0
 
@@ -52,27 +52,27 @@ main:
 
     ; SF = 0, ZF = 0
 
-    mov eax, 1
+    mov rax, 1
     ; SF = 0, ZF = 1
-    xor eax, eax
-    ;shr eax, N
-    ;dec eax
-    ;sub eax, 1
+    xor rax, rax
+    ;shr rax, N
+    ;dec rax
+    ;sub rax, 1
 
     ; SF = 1, ZF = 0
 
     ; SF = 1, CF = 1
 
-    mov eax, 1
+    mov rax, 1
     ; SF = 0, CF = 0
-    shl eax, 1
-    add eax, 1
-    sub eax, 1
-    xor eax, eax
+    shl rax, 1
+    add rax, 1
+    sub rax, 1
+    xor rax, rax
 
     ; SF = 0, CF = 1
 
     ; SF = 1, CF = 0
 
-    pop     ebp
+    pop     rbp
     ret
