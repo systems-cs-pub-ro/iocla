@@ -3,10 +3,11 @@ OBJS = $(FILES:.c=.o)
 
 CC = gcc
 C++ = g++
-CFLAGS = -Wextra -O2 -m32 -g
+CFLAGS = -fno-pie -Wextra -O2 -g
+# -fno-pie for inline asm to access global vars 
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf
-LDFLAGS = -m32
+ASM_FLAGS = -f elf64 -g -F dwarf
+LDFLAGS = -no-pie
 
 all : print_flags asymmetrical do_not_mix flags abs
 

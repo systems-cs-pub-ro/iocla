@@ -1,5 +1,5 @@
-; nasm -f elf32 -g -F dwarf dt.asm 
-; gcc -g -m32 -no-pie -o dt dt.o
+; nasm -f elf64 -g -F dwarf dt.asm 
+; gcc -g -no-pie -o dt dt.o
 
 	
 section .data
@@ -28,18 +28,18 @@ len:	dd $ - msg
 	
 section .text
 	global main
-	
+
 main:
-	push ebp       
-	mov ebp, esp
+	push rbp       
+	mov rbp, rsp
 
 ; inspect code generated for the next instructions 
 ; 
-	mov ebx, 0x56559026
-	mov ebx, v1 
-	mov ebx, [v1]
-	mov eax, v2 
-	mov bx, [eax]
+	mov rbx, 0x56559026
+	mov rbx, v1 
+	mov rbx, [v1]
+	mov rax, v2 
+	mov bx, [rax]
 	
 
 	mov eax, 4
@@ -50,5 +50,5 @@ main:
 
 iesire:
 	xor eax, eax       ; vom returna 0 către shell
-        pop ebp            ; refacem stiva
+        pop rbp            ; refacem stiva
 	ret                ; părăsim main 

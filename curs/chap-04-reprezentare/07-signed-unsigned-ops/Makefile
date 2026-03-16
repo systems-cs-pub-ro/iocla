@@ -1,5 +1,5 @@
-CFLAGS = -m32 -fno-PIC -Wall
-LDFLAGS = -m32 -no-pie
+CFLAGS = -fno-PIC -Wall
+LDFLAGS = -no-pie
 BINARIES = cast_op_precedence signed_unsigned_char_int signed_unsigned_print negative_overflow
 
 .PHONY: all clean

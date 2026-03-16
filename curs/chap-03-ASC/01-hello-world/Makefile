@@ -3,15 +3,14 @@ CC       = gcc
 CFLAGS   = -O2 -g -fno-PIC
 NASM     = nasm
 ASM_FLAGS = -f elf64 -g -F dwarf
-LD       = ld
+LD       = ld -z noexecstack 
 
 # -----------------------------------------------------------------------
 # Targets
 # -----------------------------------------------------------------------
 all: hello hello64
 
-# hello – assembled with NASM, linked through gcc (provides libc / _start)
-hello: hello.o
+hello: hello.o 
 	$(CC) -z noexecstack -no-pie -o hello hello.o
 
 # hello64 – assembled with NASM, linked directly (no libc, entry = _start)
