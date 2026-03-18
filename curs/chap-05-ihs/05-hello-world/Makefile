@@ -1,14 +1,16 @@
-
+# build does not use C standard library
+# linker needs to have label _start 
+#
 CC = gcc
-CFLAGS = -O2 -m32 -g -fno-PIC
+CFLAGS = -O2 -g -fno-PIC
 NASM = nasm
-ASM_FLAGS = -f elf32 -g -F dwarf
-LD = ld  -melf_i386 -no-pie
+ASM_FLAGS = -f elf64 -g -F dwarf
+LD = ld -z noexecstack  -no-pie
 
 all : hello 
 
 hello: hello.o 
-	$(CC) -m32 -no-pie -o hello hello.o
+	$(LD) -o hello hello.o
 
 %.o : %.c
 	$(warning CC=$(CC) FLAGS=$(CFLAGS))

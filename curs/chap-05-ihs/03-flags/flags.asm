@@ -2,8 +2,8 @@ section .text
     global main
 
 main:
-    push    ebp
-    mov     ebp, esp
+    push    rbp
+    mov     rbp, rsp
 
     ; ZF = 1
     ; cmp eax, eax
@@ -74,5 +74,5 @@ main:
 
     ; SF = 1, CF = 0
 
-    pop     ebp
+    pop     rbp
     ret

@@ -38,7 +38,7 @@ op = args[2][0];
   asm (  "\
         push rax				\n\
         push rbx				\n\
-	mov al, [i]				\n\
+	mov al, [a]				\n\
 	mov ah, [b]				\n\
         mov bl, [op]                            \n\
         cmp bl ,'-'                             \n\
