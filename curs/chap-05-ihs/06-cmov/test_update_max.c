@@ -1,4 +1,4 @@
-#include        <stdio.h>
+#include <stdio.h>
 
 extern int update_max_jmp (int);
 extern int update_max_cmov (int);
