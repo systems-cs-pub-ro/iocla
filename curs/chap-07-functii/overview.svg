@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#1565C0"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="450" y="34" font-family="monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#212121">Chapter 07: Functions in x86-64 Assembly</text>
+  <text x="450" y="54" font-family="monospace" font-size="12" text-anchor="middle" fill="#666">Storyline Overview</text>
+
+  <!-- ===== TOPIC BOXES ===== -->
+
+  <!-- 1. call / ret -->
+  <rect x="20" y="80" width="190" height="64" fill="#E3F2FD" stroke="#1565C0" stroke-width="2" rx="6"/>
+  <text x="115" y="101" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#1565C0">1. call / ret</text>
+  <text x="115" y="117" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">push return addr, jump</text>
+  <text x="115" y="133" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">pop ret addr, resume</text>
+  <text x="20" y="152" font-family="monospace" font-size="9" fill="#888">demos: 01-empty, 02-counter</text>
+
+  <!-- 2. Return values -->
+  <rect x="230" y="80" width="190" height="64" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="6"/>
+  <text x="325" y="101" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#2E7D32">2. Return Values</text>
+  <text x="325" y="117" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">integer result in rax</text>
+  <text x="325" y="133" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">exit code from main</text>
+  <text x="230" y="152" font-family="monospace" font-size="9" fill="#888">demos: 03-sum-100, 04-ret-main, 05-sum-100-ret</text>
+
+  <!-- 3. Calling Convention -->
+  <rect x="440" y="80" width="200" height="64" fill="#FFF9C4" stroke="#F9A825" stroke-width="2" rx="6"/>
+  <text x="540" y="101" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#795548">3. Calling Convention</text>
+  <text x="540" y="117" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">args: rdi rsi rdx rcx r8 r9</text>
+  <text x="540" y="133" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">caller/callee-saved regs</text>
+  <text x="440" y="152" font-family="monospace" font-size="9" fill="#888">demos: 06-sum-n</text>
+
+  <!-- 4. C Library Calls -->
+  <rect x="660" y="80" width="220" height="64" fill="#FCE4EC" stroke="#C62828" stroke-width="2" rx="6"/>
+  <text x="770" y="101" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#b71c1c">4. C Library Calls</text>
+  <text x="770" y="117" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">extern printf / scanf</text>
+  <text x="770" y="133" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">set up args, call extern</text>
+  <text x="660" y="152" font-family="monospace" font-size="9" fill="#888">demos: 07-printf, 08-scanf</text>
+
+  <!-- Arrow 1->2 -->
+  <line x1="212" y1="112" x2="228" y2="112" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- Arrow 2->3 -->
+  <line x1="422" y1="112" x2="438" y2="112" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- Arrow 3->4 -->
+  <line x1="642" y1="112" x2="658" y2="112" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== SECOND ROW ===== -->
+
+  <!-- 5. Stack Frames -->
+  <rect x="20" y="260" width="200" height="74" fill="#E8EAF6" stroke="#3949AB" stroke-width="2" rx="6"/>
+  <text x="120" y="281" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#3949AB">5. Stack Frames</text>
+  <text x="120" y="297" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">push rbp / mov rbp,rsp</text>
+  <text x="120" y="311" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">sub rsp,N  → local vars</text>
+  <text x="120" y="325" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">leave / ret</text>
+  <text x="20" y="343" font-family="monospace" font-size="9" fill="#888">demos: 09-local, 10-C-ref, 11-product, 12-compose</text>
+
+  <!-- 6. Pointer/Array Args -->
+  <rect x="240" y="260" width="200" height="74" fill="#E0F2F1" stroke="#00695C" stroke-width="2" rx="6"/>
+  <text x="340" y="281" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#00695C">6. Pointer Arguments</text>
+  <text x="340" y="297" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">pass base addr + count</text>
+  <text x="340" y="311" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">[rbx + rcx*8 - 8]</text>
+  <text x="340" y="325" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">$-label byte-length trick</text>
+  <text x="240" y="343" font-family="monospace" font-size="9" fill="#888">demo: 13-sum-array</text>
+
+  <!-- 7. argc/argv -->
+  <rect x="460" y="260" width="200" height="74" fill="#FFF3E0" stroke="#E65100" stroke-width="2" rx="6"/>
+  <text x="560" y="281" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#E65100">7. argc / argv</text>
+  <text x="560" y="297" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">rdi=argc, rsi=argv</text>
+  <text x="560" y="311" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">argv[i] = [rsi + i*8]</text>
+  <text x="560" y="325" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">byte compare: cmp [r],byte</text>
+  <text x="460" y="343" font-family="monospace" font-size="9" fill="#888">demos: 14-argv0, 15-argv1, 16-argv1-dot</text>
+
+  <!-- 8. Recursive Functions -->
+  <rect x="680" y="260" width="200" height="74" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2" rx="6"/>
+  <text x="780" y="281" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#6A1B9A">8. Recursion</text>
+  <text x="780" y="297" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">each call → new frame</text>
+  <text x="780" y="311" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">push/pop to save regs</text>
+  <text x="780" y="325" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">bugs → correct approach</text>
+  <text x="680" y="343" font-family="monospace" font-size="9" fill="#888">demo: 17-fibonacci (bad1, bad2, good3)</text>
+
+  <!-- Row 1 → Row 2 arrows (from bottom of row 1 boxes to top of row 2 boxes) -->
+  <!-- 4 -> 5 (C lib calls feeds into stack frames) -->
+  <line x1="115" y1="145" x2="115" y2="258" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <!-- continuation arrows in row 2 -->
+  <line x1="222" y1="297" x2="238" y2="297" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="442" y1="297" x2="458" y2="297" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="662" y1="297" x2="678" y2="297" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== THIRD ROW ===== -->
+
+  <!-- 9. Iterative vs Recursive -->
+  <rect x="120" y="440" width="240" height="64" fill="#EFEBE9" stroke="#4E342E" stroke-width="2" rx="6"/>
+  <text x="240" y="461" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#4E342E">9. Iterative Fibonacci</text>
+  <text x="240" y="477" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">O(N) vs O(2^N) calls</text>
+  <text x="240" y="493" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">xchg rax, rdx  loop</text>
+  <text x="120" y="512" font-family="monospace" font-size="9" fill="#888">demo: 18-fibonacci-iterative</text>
+
+  <!-- 10. Performance / rdtsc -->
+  <rect x="400" y="440" width="240" height="64" fill="#E8F5E9" stroke="#1B5E20" stroke-width="2" rx="6"/>
+  <text x="520" y="461" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#1B5E20">10. Performance</text>
+  <text x="520" y="477" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">rdtsc + cpuid → cycles</text>
+  <text x="520" y="493" font-family="monospace" font-size="10" text-anchor="middle" fill="#333">function pointer (call rbx)</text>
+  <text x="400" y="512" font-family="monospace" font-size="9" fill="#888">demos: 19-measure, 20-measure-function</text>
+
+  <!-- Row 2 -> Row 3 arrows -->
+  <line x1="780" y1="336" x2="780" y2="420" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <line x1="780" y1="420" x2="370" y2="438" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <line x1="240" y1="506" x2="398" y2="472" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+
+  <!-- ===== KEY CONCEPTS BOX at bottom ===== -->
+  <rect x="20" y="545" width="860" height="62" fill="#ECEFF1" stroke="#90A4AE" stroke-width="1.5" rx="6"/>
+  <text x="450" y="563" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#37474F">Key Principles</text>
+  <text x="40" y="579" font-family="monospace" font-size="10" fill="#333">call pushes ret addr  |  rax = return value  |  rdi/rsi/rdx/rcx/r8/r9 = args  |  rbp frames local vars</text>
+  <text x="40" y="595" font-family="monospace" font-size="10" fill="#333">callee-saved: rbx rbp r12-r15  |  push/pop preserve regs across calls  |  iterative &gt;&gt; recursive (performance)</text>
+
+  <!-- Legend connector: section .note.GNU-stack note -->
+  <text x="450" y="530" font-family="monospace" font-size="10" text-anchor="middle" fill="#888">All files: section .note.GNU-stack noalloc noexec nowrite progbits</text>
+</svg>

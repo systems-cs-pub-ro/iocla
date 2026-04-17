@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1565C0"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#b71c1c"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="380" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="360" y="30" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#212121">call and ret Mechanics</text>
+
+  <!-- === CODE SECTION (left) === -->
+  <text x="30" y="60" font-family="monospace" font-size="13" font-weight="bold" fill="#555">Code</text>
+
+  <!-- main -->
+  <rect x="20" y="70" width="200" height="30" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5" rx="3"/>
+  <text x="30" y="90" font-family="monospace" font-size="12" fill="#1565C0" font-weight="bold">main:</text>
+
+  <rect x="20" y="102" width="200" height="26" fill="#fff" stroke="#90CAF9" stroke-width="1" rx="2"/>
+  <text x="30" y="119" font-family="monospace" font-size="12" fill="#333">  ...instructions...</text>
+
+  <rect x="20" y="130" width="200" height="26" fill="#FFF9C4" stroke="#F9A825" stroke-width="1.5" rx="2"/>
+  <text x="30" y="147" font-family="monospace" font-size="12" fill="#333" font-weight="bold">  call empty          ①</text>
+
+  <rect x="20" y="158" width="200" height="26" fill="#fff" stroke="#90CAF9" stroke-width="1" rx="2"/>
+  <text x="30" y="175" font-family="monospace" font-size="12" fill="#333">  ...next instr...    ②</text>
+
+  <rect x="20" y="186" width="200" height="26" fill="#fff" stroke="#90CAF9" stroke-width="1" rx="2"/>
+  <text x="30" y="203" font-family="monospace" font-size="12" fill="#333">  ...</text>
+
+  <!-- empty -->
+  <rect x="20" y="240" width="200" height="30" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" rx="3"/>
+  <text x="30" y="260" font-family="monospace" font-size="12" fill="#2E7D32" font-weight="bold">empty:</text>
+
+  <rect x="20" y="272" width="200" height="26" fill="#fff" stroke="#A5D6A7" stroke-width="1" rx="2"/>
+  <text x="30" y="289" font-family="monospace" font-size="12" fill="#333">  ...body...</text>
+
+  <rect x="20" y="300" width="200" height="26" fill="#FCE4EC" stroke="#C62828" stroke-width="1.5" rx="2"/>
+  <text x="30" y="317" font-family="monospace" font-size="12" fill="#b71c1c" font-weight="bold">  ret                 ③</text>
+
+  <!-- === STACK SECTION (middle) === -->
+  <text x="310" y="60" font-family="monospace" font-size="13" font-weight="bold" fill="#555">Stack</text>
+  <text x="310" y="75" font-family="monospace" font-size="10" fill="#888">(grows downward)</text>
+
+  <!-- Stack cells -->
+  <rect x="290" y="90" width="160" height="40" fill="#fff" stroke="#aaa" stroke-width="1"/>
+  <text x="370" y="115" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">... existing data ...</text>
+
+  <rect x="290" y="130" width="160" height="40" fill="#FFF9C4" stroke="#F9A825" stroke-width="1.5"/>
+  <text x="370" y="152" font-family="monospace" font-size="11" text-anchor="middle" fill="#333" font-weight="bold">return address ②</text>
+  <text x="450" y="148" font-family="monospace" font-size="9" fill="#888">← rsp after call</text>
+
+  <rect x="290" y="170" width="160" height="40" fill="#fff" stroke="#aaa" stroke-width="1"/>
+  <text x="370" y="195" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">... empty's frame ...</text>
+
+  <!-- Arrow: rsp down -->
+  <line x1="460" y1="145" x2="490" y2="145" stroke="#F9A825" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === RIP / PC section (right) === -->
+  <text x="530" y="60" font-family="monospace" font-size="13" font-weight="bold" fill="#555">rip (Program Counter)</text>
+
+  <rect x="520" y="70" width="170" height="36" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5" rx="3"/>
+  <text x="535" y="88" font-family="monospace" font-size="11" fill="#1565C0">① Before call:</text>
+  <text x="535" y="103" font-family="monospace" font-size="11" fill="#333">  rip → call empty</text>
+
+  <rect x="520" y="115" width="170" height="36" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" rx="3"/>
+  <text x="535" y="133" font-family="monospace" font-size="11" fill="#2E7D32">② Executing empty:</text>
+  <text x="535" y="148" font-family="monospace" font-size="11" fill="#333">  rip → empty body</text>
+
+  <rect x="520" y="160" width="170" height="36" fill="#FCE4EC" stroke="#C62828" stroke-width="1.5" rx="3"/>
+  <text x="535" y="178" font-family="monospace" font-size="11" fill="#b71c1c">③ After ret:</text>
+  <text x="535" y="193" font-family="monospace" font-size="11" fill="#333">  rip → next instr</text>
+
+  <!-- Arrows from code to rip states -->
+  <line x1="222" y1="143" x2="516" y2="88" stroke="#F9A825" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="222" y1="143" x2="516" y2="133" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="222" y1="313" x2="516" y2="178" stroke="#b71c1c" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+  <!-- call annotation: pushes return address + jumps -->
+  <text x="360" y="350" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">call: pushes next instruction address onto stack, then jumps to callee</text>
+  <text x="360" y="368" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">ret:  pops return address from stack into rip</text>
+</svg>
