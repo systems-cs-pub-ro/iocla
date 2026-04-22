@@ -3,11 +3,11 @@ section .text
 global sum
 
 sum:
-    push ebp
-    mov ebp, esp
+    push rbp
+    mov rbp, rsp
 
-    ; ecx <- last number, passed as argument
-    mov ecx, [ebp+8]
+    ; rdi <- last number, passed as argument
+    mov ecx, edi
     ; eax is sum
     xor eax, eax
 again:

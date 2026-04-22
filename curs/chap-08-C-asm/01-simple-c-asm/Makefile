@@ -1,7 +1,7 @@
 AS = nasm
-ASFLAGS = -f elf32
-CFLAGS = -m32 -fno-PIC
-LDFLAGS = -m32 -no-pie
+ASFLAGS = -f elf64
+CFLAGS = -fno-PIC -mcmodel=large
+LDFLAGS = -no-pie
 
 .PHONY: all clean
 
