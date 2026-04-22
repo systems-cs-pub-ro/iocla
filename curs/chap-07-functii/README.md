@@ -41,6 +41,8 @@ This chapter walks through the key concepts of functions in x86-64 assembly — 
 1. [Performance and Measurement](#10-performance-and-measurement)
 1. [Demo 19: Measuring with rdtsc](#demo-19-measuring-with-rdtsc)
 1. [Demo 20: Higher-Order measure_function](#demo-20-higher-order-measure_function)
+1. [Tail Recursion](#11-tail-recursion)
+1. [Demo 21: Tail-Recursive Fibonacci](#demo-21-tail-recursive-fibonacci)
 1. [Summary](#summary)
 
 ---
@@ -917,9 +919,62 @@ Key points:
 
 ---
 
+## 11. Tail Recursion
+
+A function call is *tail* when it is the very last operation before returning.
+Because there is nothing left to do after the call, the callee can reuse the caller's stack frame — or in assembly, the `call`/`ret` pair can be replaced by a plain `jmp`.
+
+The standard Fibonacci recurrence `fib(N) = fib(N-1) + fib(N-2)` is not tail-recursive: after both calls return, an addition is still required.
+The tail-recursive form introduces two accumulators `a` and `b` that carry the two most recent Fibonacci values:
+
+```text
+fibonacci_tail(n, a, b):
+    if n == 0  ->  return a
+    else       ->  fibonacci_tail(n-1, b, a+b)   <- tail call
+```
+
+Starting from `fibonacci_tail(N, 1, 1)`, `a` tracks `fib(k)` and `b` tracks `fib(k+1)` as `k` counts from `N` down to `0`.
+The tail call is the only recursive call, and it is in tail position, so it becomes a `jmp` in assembly — no stack frame is pushed.
+
+---
+
+## Demo 21: Tail-Recursive Fibonacci
+
+**Directory:** [`21-fibonacci-tail/`](21-fibonacci-tail/)
+
+```nasm
+fibonacci_tail:
+    test rdi, rdi
+    jz .done
+
+    ; Tail call: fibonacci_tail(n-1, b, a+b)
+    dec rdi
+    lea rax, [rsi + rdx]    ; rax = a + b  (new b, before rsi changes)
+    mov rsi, rdx            ; new a = old b
+    mov rdx, rax            ; new b = old a + old b
+    jmp fibonacci_tail      ; no call — reuse the current frame
+
+.done:
+    mov rax, rsi            ; return a
+    ret
+
+fibonacci:
+    mov rsi, 1              ; a = fib(0) = 1
+    mov rdx, 1              ; b = fib(1) = 1
+    jmp fibonacci_tail      ; tail call — return address is the caller's
+```
+
+Key points:
+
+* Neither `fibonacci` nor `fibonacci_tail` allocates a stack frame — there are no `push rbp` / `sub rsp` instructions.
+* `lea rax, [rsi + rdx]` computes `a + b` into a scratch register before either `rsi` or `rdx` is modified, avoiding the need to save one of them first.
+* The result matches demos 17 and 18 exactly: `fib(10) = 89`.
+
+---
+
 ## Summary
 
-The 20 demos cover the complete lifecycle of functions in x86-64 assembly:
+The 21 demos cover the complete lifecycle of functions in x86-64 assembly:
 
 | Demo | Concept |
 |------|---------|
@@ -943,6 +998,7 @@ The 20 demos cover the complete lifecycle of functions in x86-64 assembly:
 | `18-fibonacci-iterative` | Iterative alternative, `xchg`, no stack growth |
 | `19-fibonacci-measure` | `rdtsc` / `cpuid` cycle counting |
 | `20-fibonacci-measure-function` | Function pointer argument, indirect `call reg` |
+| `21-fibonacci-tail` | Tail recursion, accumulator pattern, `jmp` replaces `call`/`ret` |
 
 ### Key Takeaways
 
@@ -951,6 +1007,8 @@ The 20 demos cover the complete lifecycle of functions in x86-64 assembly:
 * **The stack frame** (`push rbp` / `mov rbp, rsp` / `sub rsp, N`) gives each function call its own private space for local variables, accessed as `[rbp-offset]`.
 * **Recursive functions** work naturally in assembly — each call gets a fresh frame — but register values must be explicitly saved to the stack before a sub-call that would overwrite them.
 * **Iterative implementations** avoid the overhead of deep recursion by replacing the call stack with a simple loop.
+* **Tail-recursive implementations** express the algorithm recursively but replace the final `call`/`ret` with a `jmp`, achieving O(1) stack usage just like the iterative version.
+* **The C compiler** can perform the same tail-call elimination automatically with `-O2` (`-foptimize-sibling-calls`), turning the recursive call into a backwards branch in the generated machine code.
 * **Function pointers** are ordinary 64-bit values; `call reg` performs an indirect call through the value stored in a register.
 
 ![Chapter 07 Overview](overview.png)
