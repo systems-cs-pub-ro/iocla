@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 540" width="800" height="540">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="540" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">API vs. ABI</text>
+
+  <!-- Column headers -->
+  <rect x="20"  y="64" width="362" height="40" rx="6" fill="#2980b9"/>
+  <text x="201" y="89" font-family="Arial, sans-serif" font-size="15" font-weight="bold"
+        fill="white" text-anchor="middle">API — Application Programming Interface</text>
+
+  <rect x="418" y="64" width="362" height="40" rx="6" fill="#8e44ad"/>
+  <text x="599" y="89" font-family="Arial, sans-serif" font-size="15" font-weight="bold"
+        fill="white" text-anchor="middle">ABI — Application Binary Interface</text>
+
+  <!-- VS badge -->
+  <circle cx="400" cy="84" r="18" fill="#1a252f" stroke="#fafafa" stroke-width="2"/>
+  <text x="400" y="90" font-family="Arial, sans-serif" font-size="13" font-weight="bold"
+        fill="white" text-anchor="middle">VS</text>
+
+  <!-- ── Row 1: What it is ── -->
+  <rect x="20"  y="116" width="362" height="58" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="136" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">What it is</text>
+  <text x="201" y="154" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Source-level contract between a caller</text>
+  <text x="201" y="168" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">and a component (library / module)</text>
+
+  <rect x="418" y="116" width="362" height="58" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="136" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">What it is</text>
+  <text x="599" y="154" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Binary-level contract between compiled</text>
+  <text x="599" y="168" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">components (object files, libraries)</text>
+
+  <!-- ── Row 2: When used ── -->
+  <rect x="20"  y="184" width="362" height="44" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="204" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">When</text>
+  <text x="201" y="220" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Compile time  (writing &amp; building source code)</text>
+
+  <rect x="418" y="184" width="362" height="44" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="204" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">When</text>
+  <text x="599" y="220" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Link time &amp; runtime  (binary execution)</text>
+
+  <!-- ── Row 3: Expressed as ── -->
+  <rect x="20"  y="238" width="362" height="58" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="258" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">Expressed as</text>
+  <text x="201" y="276" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Header files (.h):  function signatures,</text>
+  <text x="201" y="290" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">data types, constants, macros</text>
+
+  <rect x="418" y="238" width="362" height="58" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="258" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">Expressed as</text>
+  <text x="599" y="276" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Calling convention, data sizes, struct layout,</text>
+  <text x="599" y="290" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">executable format, name mangling</text>
+
+  <!-- ── Row 4: Enforced by ── -->
+  <rect x="20"  y="306" width="362" height="44" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="326" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">Enforced by</text>
+  <text x="201" y="342" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">The compiler  (type checking, includes)</text>
+
+  <rect x="418" y="306" width="362" height="44" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="326" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">Enforced by</text>
+  <text x="599" y="342" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">The compiler + linker + OS loader</text>
+
+  <!-- ── Row 5: Break consequence ── -->
+  <rect x="20"  y="360" width="362" height="58" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="380" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">Breaking it causes</text>
+  <text x="201" y="398" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Compile error — caller must be updated</text>
+  <text x="201" y="412" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">and recompiled against new API</text>
+
+  <rect x="418" y="360" width="362" height="58" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="380" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">Breaking it causes</text>
+  <text x="599" y="398" font-family="Arial, sans-serif" font-size="11" fill="#333" text-anchor="middle">Runtime crash / wrong behaviour — even if</text>
+  <text x="599" y="412" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">the source compiles without errors</text>
+
+  <!-- ── Row 6: Example ── -->
+  <rect x="20"  y="428" width="362" height="58" rx="6" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="201" y="448" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a5276" text-anchor="middle">Example</text>
+  <text x="201" y="466" font-family="monospace" font-size="10" fill="#333" text-anchor="middle">int add(int a, int b);   // in mylib.h</text>
+  <text x="201" y="480" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">caller #includes this declaration</text>
+
+  <rect x="418" y="428" width="362" height="58" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="599" y="448" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">Example</text>
+  <text x="599" y="466" font-family="monospace" font-size="10" fill="#333" text-anchor="middle">arg in RDI, return in RAX, stack 16-byte aligned</text>
+  <text x="599" y="480" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">compiler generates machine code accordingly</text>
+
+  <!-- Divider line between columns -->
+  <line x1="391" y1="64" x2="391" y2="496" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ── Bottom: shared note ── -->
+  <rect x="20" y="500" width="760" height="32" rx="6" fill="#fef9e7" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="521" font-family="Arial, sans-serif" font-size="11" fill="#784212" text-anchor="middle">A stable ABI lets you replace a library's implementation without recompiling callers — only the binary needs to be compatible</text>
+</svg>

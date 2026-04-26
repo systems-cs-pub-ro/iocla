@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="460" viewBox="0 0 860 460">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#1565C0"/>
+    </marker>
+    <marker id="arr-green" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#2E7D32"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="460" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="430" y="32" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#212121">System V AMD64 ABI: Argument Passing</text>
+  <text x="430" y="52" font-family="monospace" font-size="11" text-anchor="middle" fill="#666">How the caller passes arguments and the callee returns results</text>
+
+  <!-- ===== CALLER BOX ===== -->
+  <rect x="30" y="70" width="360" height="350" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="2"/>
+  <text x="210" y="94" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565C0">Caller</text>
+
+  <!-- Caller code -->
+  <rect x="50" y="104" width="320" height="148" rx="4" fill="#fff" stroke="#90CAF9" stroke-width="1"/>
+  <text x="65" y="124" font-family="monospace" font-size="11" fill="#444">; Prepare arguments</text>
+  <text x="65" y="140" font-family="monospace" font-size="11" fill="#1A237E">mov  rdi, arg1      </text>
+  <text x="65" y="156" font-family="monospace" font-size="11" fill="#1A237E">mov  rsi, arg2</text>
+  <text x="65" y="172" font-family="monospace" font-size="11" fill="#1A237E">mov  rdx, arg3</text>
+  <text x="65" y="188" font-family="monospace" font-size="11" fill="#1A237E">mov  rcx, arg4</text>
+  <text x="65" y="204" font-family="monospace" font-size="11" fill="#1A237E">mov  r8,  arg5</text>
+  <text x="65" y="220" font-family="monospace" font-size="11" fill="#1A237E">mov  r9,  arg6</text>
+  <text x="65" y="236" font-family="monospace" font-size="11" fill="#880E4F">push arg8           ; 8th (reverse)</text>
+  <text x="65" y="252" font-family="monospace" font-size="11" fill="#880E4F">push arg7           ; 7th</text>
+
+  <rect x="50" y="260" width="320" height="32" rx="4" fill="#1565C0"/>
+  <text x="210" y="282" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="white">call  function</text>
+
+  <rect x="50" y="300" width="320" height="32" rx="4" fill="#fff" stroke="#90CAF9" stroke-width="1"/>
+  <text x="65" y="322" font-family="monospace" font-size="11" fill="#444">; Return value is in rax</text>
+  <text x="210" y="342" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#2E7D32">rax ← return value</text>
+  <text x="50" y="390" font-family="monospace" font-size="11" text-anchor="start" fill="#555">Caller-saved (may be clobbered):</text>
+  <text x="50" y="406" font-family="monospace" font-size="10" fill="#B71C1C">rax rdi rsi rdx rcx r8 r9 r10 r11</text>
+
+  <!-- ===== REGISTER TABLE (center) ===== -->
+  <rect x="420" y="70" width="180" height="258" rx="8" fill="#F3E5F5" stroke="#4A148C" stroke-width="2"/>
+  <text x="510" y="94" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#4A148C">Arg → Register</text>
+
+  <!-- Table rows -->
+  <rect x="430" y="102" width="160" height="22" rx="2" fill="#CE93D8"/>
+  <text x="460" y="118" font-family="monospace" font-size="11" font-weight="bold" fill="#fff">Arg</text>
+  <text x="560" y="118" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#fff">Register</text>
+
+  <rect x="430" y="126" width="160" height="20" rx="0" fill="#fff"/>
+  <text x="460" y="140" font-family="monospace" font-size="11" fill="#333">1st</text>
+  <text x="560" y="140" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">rdi</text>
+
+  <rect x="430" y="148" width="160" height="20" rx="0" fill="#F8F8F8"/>
+  <text x="460" y="162" font-family="monospace" font-size="11" fill="#333">2nd</text>
+  <text x="560" y="162" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">rsi</text>
+
+  <rect x="430" y="170" width="160" height="20" rx="0" fill="#fff"/>
+  <text x="460" y="184" font-family="monospace" font-size="11" fill="#333">3rd</text>
+  <text x="560" y="184" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">rdx</text>
+
+  <rect x="430" y="192" width="160" height="20" rx="0" fill="#F8F8F8"/>
+  <text x="460" y="206" font-family="monospace" font-size="11" fill="#333">4th</text>
+  <text x="560" y="206" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">rcx</text>
+
+  <rect x="430" y="214" width="160" height="20" rx="0" fill="#fff"/>
+  <text x="460" y="228" font-family="monospace" font-size="11" fill="#333">5th</text>
+  <text x="560" y="228" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">r8</text>
+
+  <rect x="430" y="236" width="160" height="20" rx="0" fill="#F8F8F8"/>
+  <text x="460" y="250" font-family="monospace" font-size="11" fill="#333">6th</text>
+  <text x="560" y="250" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">r9</text>
+
+  <rect x="430" y="258" width="160" height="20" rx="0" fill="#fff"/>
+  <text x="460" y="272" font-family="monospace" font-size="11" fill="#333">7th+</text>
+  <text x="560" y="272" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#880E4F">stack</text>
+
+  <rect x="430" y="290" width="160" height="20" rx="0" fill="#E8F5E9"/>
+  <text x="460" y="304" font-family="monospace" font-size="11" fill="#333">return</text>
+  <text x="560" y="304" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#2E7D32">rax</text>
+
+  <!-- ===== CALLEE BOX ===== -->
+  <rect x="630" y="70" width="210" height="350" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+  <text x="735" y="94" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#2E7D32">Callee</text>
+
+  <rect x="645" y="104" width="180" height="130" rx="4" fill="#fff" stroke="#A5D6A7" stroke-width="1"/>
+  <text x="660" y="124" font-family="monospace" font-size="11" fill="#444">; Receive arguments</text>
+  <text x="660" y="140" font-family="monospace" font-size="11" fill="#1A237E">; rdi = arg1</text>
+  <text x="660" y="156" font-family="monospace" font-size="11" fill="#1A237E">; rsi = arg2</text>
+  <text x="660" y="172" font-family="monospace" font-size="11" fill="#1A237E">; rdx = arg3</text>
+  <text x="660" y="188" font-family="monospace" font-size="11" fill="#880E4F">; [rsp+8]  = arg7</text>
+  <text x="660" y="204" font-family="monospace" font-size="11" fill="#880E4F">; [rsp+16] = arg8</text>
+  <text x="660" y="220" font-family="monospace" font-size="11" fill="#444">; (after call, rsp</text>
+  <text x="660" y="234" font-family="monospace" font-size="11" fill="#444">;  points at ret addr)</text>
+
+  <rect x="645" y="244" width="180" height="52" rx="4" fill="#fff" stroke="#A5D6A7" stroke-width="1"/>
+  <text x="660" y="264" font-family="monospace" font-size="11" fill="#444">; Return value</text>
+  <text x="660" y="280" font-family="monospace" font-size="11" fill="#2E7D32">mov  rax, result</text>
+  <text x="660" y="296" font-family="monospace" font-size="11" fill="#444">ret</text>
+
+  <text x="645" y="328" font-family="monospace" font-size="11" text-anchor="start" fill="#555">Callee-saved (must preserve):</text>
+  <text x="645" y="344" font-family="monospace" font-size="10" fill="#1B5E20">rbx  rbp  r12  r13  r14  r15</text>
+
+  <!-- Arrows from table to caller/callee -->
+  <line x1="410" y1="200" x2="422" y2="200" stroke="#1565C0" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="600" y1="200" x2="628" y2="200" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- Stack memory diagram (bottom) -->
+  <rect x="420" y="345" width="180" height="72" rx="6" fill="#FFF8E1" stroke="#F9A825" stroke-width="1.5"/>
+  <text x="510" y="362" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#F57F17">Stack (7th+ args)</text>
+  <text x="430" y="380" font-family="monospace" font-size="10" fill="#444">higher addr →</text>
+  <rect x="430" y="384" width="80" height="14" fill="#FFECB3" stroke="#F9A825"/>
+  <text x="470" y="395" font-family="monospace" font-size="9" text-anchor="middle" fill="#333">arg8</text>
+  <rect x="510" y="384" width="80" height="14" fill="#FFE082" stroke="#F9A825"/>
+  <text x="550" y="395" font-family="monospace" font-size="9" text-anchor="middle" fill="#333">arg7</text>
+  <text x="430" y="414" font-family="monospace" font-size="10" fill="#880E4F">← lower addr (rsp after call)</text>
+</svg>

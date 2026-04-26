@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">Modules and Modularity</text>
+
+  <!-- Column labels -->
+  <text x="95"  y="88" font-family="Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle">Source Files</text>
+  <text x="445" y="88" font-family="Arial, sans-serif" font-size="11" fill="#666" text-anchor="middle">Object Files</text>
+
+  <!-- === Source files (left) === -->
+  <rect x="20"  y="96"  width="150" height="56" rx="6" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="95"  y="120" font-family="monospace" font-size="13" fill="#1a5276" text-anchor="middle">module_a.c</text>
+  <text x="95"  y="139" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">compilation unit</text>
+
+  <rect x="20"  y="196" width="150" height="56" rx="6" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="95"  y="220" font-family="monospace" font-size="13" fill="#1a5276" text-anchor="middle">module_b.c</text>
+  <text x="95"  y="239" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">compilation unit</text>
+
+  <rect x="20"  y="296" width="150" height="56" rx="6" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="95"  y="320" font-family="monospace" font-size="13" fill="#1a5276" text-anchor="middle">module_c.asm</text>
+  <text x="95"  y="339" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">compilation unit</text>
+
+  <!-- Arrows: source → compiler -->
+  <line x1="170" y1="124" x2="218" y2="208" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="170" y1="224" x2="218" y2="222" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="170" y1="324" x2="218" y2="234" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Compiler box -->
+  <rect x="220" y="192" width="120" height="60" rx="8" fill="#fdebd0" stroke="#e67e22" stroke-width="2"/>
+  <text x="280" y="220" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#784212" text-anchor="middle">Compiler</text>
+  <text x="280" y="239" font-family="Arial, sans-serif" font-size="11" fill="#784212" text-anchor="middle">/ Assembler</text>
+
+  <!-- Arrows: compiler → object files -->
+  <line x1="340" y1="212" x2="378" y2="132" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="340" y1="222" x2="378" y2="226" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="340" y1="232" x2="378" y2="320" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- === Object files (middle-right) === -->
+  <rect x="380" y="106" width="130" height="56" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="445" y="130" font-family="monospace" font-size="13" fill="#145a32" text-anchor="middle">module_a.o</text>
+  <text x="445" y="149" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+
+  <rect x="380" y="196" width="130" height="56" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="445" y="220" font-family="monospace" font-size="13" fill="#145a32" text-anchor="middle">module_b.o</text>
+  <text x="445" y="239" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+
+  <rect x="380" y="296" width="130" height="56" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="445" y="320" font-family="monospace" font-size="13" fill="#145a32" text-anchor="middle">module_c.o</text>
+  <text x="445" y="339" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+
+  <!-- Arrows: object files → linker -->
+  <line x1="510" y1="134" x2="556" y2="210" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="510" y1="224" x2="556" y2="222" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="510" y1="324" x2="556" y2="234" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Linker box -->
+  <rect x="558" y="192" width="110" height="56" rx="8" fill="#e8daef" stroke="#8e44ad" stroke-width="2"/>
+  <text x="613" y="225" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#4a235a" text-anchor="middle">Linker</text>
+
+  <!-- Arrow: linker → executable -->
+  <line x1="668" y1="220" x2="694" y2="220" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Executable -->
+  <rect x="696" y="192" width="84" height="56" rx="6" fill="#fadbd8" stroke="#e74c3c" stroke-width="2"/>
+  <text x="738" y="218" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#922b21" text-anchor="middle">program</text>
+  <text x="738" y="237" font-family="Arial, sans-serif" font-size="10" fill="#922b21" text-anchor="middle">executable</text>
+
+  <!-- Advantages footer -->
+  <rect x="20" y="400" width="760" height="82" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#7d6608" text-anchor="middle">Advantages of Modularity</text>
+  <line x1="295" y1="426" x2="295" y2="468" stroke="#f0c050" stroke-width="1"/>
+  <line x1="515" y1="426" x2="515" y2="468" stroke="#f0c050" stroke-width="1"/>
+  <text x="157" y="447" font-family="Arial, sans-serif" font-size="12" fill="#555" text-anchor="middle">Update / fix one module only</text>
+  <text x="405" y="447" font-family="Arial, sans-serif" font-size="12" fill="#555" text-anchor="middle">Modules can be reused across projects</text>
+  <text x="647" y="447" font-family="Arial, sans-serif" font-size="12" fill="#555" text-anchor="middle">Each source file = one compilation unit</text>
+  <text x="157" y="465" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">(no need to rebuild everything)</text>
+  <text x="405" y="465" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">(libraries, packages)</text>
+  <text x="647" y="465" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">(C, C++, Go, D, ...)</text>
+</svg>

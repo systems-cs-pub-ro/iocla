@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="440" viewBox="0 0 860 440">
+  <!-- Background -->
+  <rect width="860" height="440" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="430" y="32" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#212121">GCC Inline Assembly Syntax</text>
+  <text x="430" y="52" font-family="monospace" font-size="11" text-anchor="middle" fill="#666">__asm__ volatile ("instruction" : outputs : inputs : clobbers)</text>
+
+  <!-- Syntax diagram box -->
+  <rect x="30" y="68" width="800" height="60" rx="8" fill="#263238" stroke="#455A64" stroke-width="2"/>
+  <text x="44" y="90" font-family="monospace" font-size="13" fill="#80CBC4">__asm__ volatile</text>
+  <text x="210" y="90" font-family="monospace" font-size="13" fill="#fff"> (</text>
+  <text x="225" y="90" font-family="monospace" font-size="13" fill="#CE9178">"rdtsc"</text>
+  <text x="310" y="90" font-family="monospace" font-size="13" fill="#fff">  :  </text>
+  <text x="340" y="90" font-family="monospace" font-size="13" fill="#A5D6A7">"=a"(lo), "=d"(hi)</text>
+  <text x="565" y="90" font-family="monospace" font-size="13" fill="#fff">  :  </text>
+  <text x="595" y="90" font-family="monospace" font-size="13" fill="#FFCC80">/* no inputs */</text>
+  <text x="44" y="116" font-family="monospace" font-size="13" fill="#fff">);</text>
+
+  <!-- Labels below syntax -->
+  <line x1="264" y1="130" x2="264" y2="150" stroke="#CE9178" stroke-width="1.5"/>
+  <rect x="190" y="150" width="148" height="40" rx="4" fill="#CE9178" opacity="0.2"/>
+  <text x="264" y="165" font-family="monospace" font-size="10" text-anchor="middle" fill="#CE9178">instruction</text>
+  <text x="264" y="180" font-family="monospace" font-size="10" text-anchor="middle" fill="#CE9178">(NASM or GAS syntax)</text>
+
+  <line x1="452" y1="130" x2="452" y2="150" stroke="#A5D6A7" stroke-width="1.5"/>
+  <rect x="360" y="150" width="184" height="40" rx="4" fill="#A5D6A7" opacity="0.2"/>
+  <text x="452" y="165" font-family="monospace" font-size="10" text-anchor="middle" fill="#2E7D32">output constraints</text>
+  <text x="452" y="180" font-family="monospace" font-size="10" text-anchor="middle" fill="#2E7D32">"=a" → write eax to var</text>
+
+  <line x1="655" y1="130" x2="655" y2="150" stroke="#FFCC80" stroke-width="1.5"/>
+  <rect x="566" y="150" width="178" height="40" rx="4" fill="#FFCC80" opacity="0.2"/>
+  <text x="655" y="165" font-family="monospace" font-size="10" text-anchor="middle" fill="#E65100">input constraints</text>
+  <text x="655" y="180" font-family="monospace" font-size="10" text-anchor="middle" fill="#E65100">"a"(val) → load val to eax</text>
+
+  <!-- Constraint register table -->
+  <rect x="30" y="210" width="380" height="200" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="220" y="232" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#3949AB">Common Register Constraints</text>
+
+  <rect x="44" y="242" width="340" height="22" rx="2" fill="#3949AB"/>
+  <text x="114" y="258" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#fff">Letter</text>
+  <text x="264" y="258" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#fff">Register</text>
+
+  <rect x="44" y="266" width="340" height="18" fill="#fff"/>
+  <text x="114" y="279" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"a"</text>
+  <text x="264" y="279" font-family="monospace" font-size="11" text-anchor="middle" fill="#1565C0">eax / rax</text>
+
+  <rect x="44" y="286" width="340" height="18" fill="#F5F5F5"/>
+  <text x="114" y="299" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"b"</text>
+  <text x="264" y="299" font-family="monospace" font-size="11" text-anchor="middle" fill="#1565C0">ebx / rbx</text>
+
+  <rect x="44" y="306" width="340" height="18" fill="#fff"/>
+  <text x="114" y="319" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"c"</text>
+  <text x="264" y="319" font-family="monospace" font-size="11" text-anchor="middle" fill="#1565C0">ecx / rcx</text>
+
+  <rect x="44" y="326" width="340" height="18" fill="#F5F5F5"/>
+  <text x="114" y="339" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"d"</text>
+  <text x="264" y="339" font-family="monospace" font-size="11" text-anchor="middle" fill="#1565C0">edx / rdx</text>
+
+  <rect x="44" y="346" width="340" height="18" fill="#fff"/>
+  <text x="114" y="359" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"r"</text>
+  <text x="264" y="359" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">any general-purpose register</text>
+
+  <rect x="44" y="366" width="340" height="18" fill="#F5F5F5"/>
+  <text x="114" y="379" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"m"</text>
+  <text x="264" y="379" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">memory operand</text>
+
+  <rect x="44" y="386" width="340" height="18" fill="#fff"/>
+  <text x="114" y="399" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">"i"</text>
+  <text x="264" y="399" font-family="monospace" font-size="11" text-anchor="middle" fill="#555">immediate (constant) value</text>
+
+  <!-- Example box -->
+  <rect x="440" y="210" width="390" height="200" rx="8" fill="#263238" stroke="#455A64" stroke-width="1.5"/>
+  <text x="635" y="232" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#80CBC4">cpuid Example</text>
+
+  <text x="456" y="256" font-family="monospace" font-size="11" fill="#444">/* Input: leaf in eax */</text>
+  <text x="456" y="274" font-family="monospace" font-size="11" fill="#80CBC4">__asm__ volatile (</text>
+  <text x="472" y="292" font-family="monospace" font-size="11" fill="#CE9178">    "cpuid"</text>
+  <text x="472" y="310" font-family="monospace" font-size="11" fill="#A5D6A7">    : "=a"(eax),</text>
+  <text x="472" y="326" font-family="monospace" font-size="11" fill="#A5D6A7">      "=b"(ebx),</text>
+  <text x="472" y="342" font-family="monospace" font-size="11" fill="#A5D6A7">      "=c"(ecx),</text>
+  <text x="472" y="358" font-family="monospace" font-size="11" fill="#A5D6A7">      "=d"(edx)</text>
+  <text x="472" y="374" font-family="monospace" font-size="11" fill="#FFCC80">    : "a"(0)</text>
+  <text x="456" y="392" font-family="monospace" font-size="11" fill="#80CBC4">);</text>
+  <text x="456" y="408" font-family="monospace" font-size="10" fill="#666">/* leaf=0 → vendor string */</text>
+</svg>
