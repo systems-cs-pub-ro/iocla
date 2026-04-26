@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
+    <marker id="arrr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">Calling Convention</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="76" font-family="Arial, sans-serif" font-size="12" fill="#555"
+        text-anchor="middle">A calling convention defines how functions interact across module boundaries — they must agree on the same contract</text>
+
+  <!-- === CALLER box (left) === -->
+  <rect x="20" y="96" width="220" height="300" rx="8" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="130" y="120" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#1a5276" text-anchor="middle">Caller</text>
+  <text x="130" y="138" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(function making the call)</text>
+
+  <rect x="32" y="150" width="196" height="234" rx="5" fill="white" stroke="#2980b9" stroke-width="1"/>
+  <text x="130" y="172" font-family="monospace" font-size="10" fill="#1a5276" text-anchor="middle">// before call</text>
+  <text x="130" y="190" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">1. place arguments</text>
+  <text x="130" y="208" font-family="monospace" font-size="10" fill="#888" text-anchor="middle">   (registers or stack)</text>
+  <text x="130" y="230" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">2. save caller-saved regs</text>
+  <text x="130" y="248" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">3. CALL instruction</text>
+  <text x="130" y="274" font-family="monospace" font-size="10" fill="#1a5276" text-anchor="middle">// after return</text>
+  <text x="130" y="292" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">4. read return value</text>
+  <text x="130" y="310" font-family="monospace" font-size="10" fill="#888" text-anchor="middle">   (register or stack)</text>
+  <text x="130" y="328" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">5. clean up stack args</text>
+  <text x="130" y="346" font-family="monospace" font-size="10" fill="#888" text-anchor="middle">   (caller-cleanup conv.)</text>
+  <text x="130" y="368" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">6. restore saved regs</text>
+
+  <!-- === CALLEE box (right) === -->
+  <rect x="560" y="96" width="220" height="300" rx="8" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="670" y="120" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#145a32" text-anchor="middle">Callee</text>
+  <text x="670" y="138" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(function being called)</text>
+
+  <rect x="572" y="150" width="196" height="234" rx="5" fill="white" stroke="#27ae60" stroke-width="1"/>
+  <text x="670" y="172" font-family="monospace" font-size="10" fill="#145a32" text-anchor="middle">// function prologue</text>
+  <text x="670" y="190" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">1. set up stack frame</text>
+  <text x="670" y="208" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">2. save callee-saved regs</text>
+  <text x="670" y="226" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">3. read arguments</text>
+  <text x="670" y="248" font-family="monospace" font-size="10" fill="#145a32" text-anchor="middle">// function body</text>
+  <text x="670" y="266" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">4. execute logic</text>
+  <text x="670" y="288" font-family="monospace" font-size="10" fill="#145a32" text-anchor="middle">// function epilogue</text>
+  <text x="670" y="306" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">5. place return value</text>
+  <text x="670" y="324" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">6. restore callee-saved regs</text>
+  <text x="670" y="342" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">7. tear down stack frame</text>
+  <text x="670" y="360" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">8. RET instruction</text>
+
+  <!-- === Centre: 4 contract arrows === -->
+
+  <!-- 1. Arguments →  -->
+  <rect x="264" y="108" width="272" height="48" rx="6" fill="#ebf5fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="400" y="128" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a5276" text-anchor="middle">Argument Passing</text>
+  <text x="400" y="146" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">how parameters are transferred to callee</text>
+  <line x1="240" y1="132" x2="264" y2="132" stroke="#2980b9" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="536" y1="132" x2="560" y2="132" stroke="#2980b9" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 2. Return value ← -->
+  <rect x="264" y="176" width="272" height="48" rx="6" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="400" y="196" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#145a32" text-anchor="middle">Return Value Placement</text>
+  <text x="400" y="214" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">where the result is placed for caller to read</text>
+  <line x1="560" y1="200" x2="536" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrd)"/>
+  <line x1="264" y1="200" x2="240" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrd)"/>
+
+  <!-- 3. Stack management ↕ -->
+  <rect x="264" y="244" width="272" height="48" rx="6" fill="#fef9e7" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="264" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Stack Management</text>
+  <text x="400" y="282" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">who sets up / tears down the stack frame</text>
+  <line x1="240" y1="268" x2="264" y2="268" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="536" y1="268" x2="560" y2="268" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- 4. Register saving -->
+  <rect x="264" y="312" width="272" height="64" rx="6" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="400" y="332" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4a235a" text-anchor="middle">Register Saving</text>
+  <text x="400" y="350" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">Caller-saved: caller preserves before CALL</text>
+  <text x="400" y="366" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">Callee-saved: callee preserves and restores</text>
+  <line x1="240" y1="344" x2="264" y2="344" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="536" y1="344" x2="560" y2="344" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- Footer -->
+  <rect x="20" y="420" width="760" height="82" rx="8" fill="#f4f6f7" stroke="#7f8c8d" stroke-width="1.5"/>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">Calling convention is part of the ABI — functions from different modules must use the same one</text>
+  <line x1="400" y1="447" x2="400" y2="488" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="200" y="460" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">Registers (fast)</text>
+  <text x="200" y="476" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">arguments passed in CPU registers</text>
+  <text x="200" y="491" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(first N args; rest go on stack)</text>
+  <text x="600" y="460" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">Stack (overflow)</text>
+  <text x="600" y="476" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">extra arguments pushed onto the stack</text>
+  <text x="600" y="491" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">before the CALL instruction</text>
+</svg>

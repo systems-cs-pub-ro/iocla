@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">Libraries</text>
+
+  <!-- === Application box (left) === -->
+  <rect x="20" y="160" width="160" height="90" rx="8" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="100" y="198" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#1a5276" text-anchor="middle">Application</text>
+  <text x="100" y="218" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">calls library</text>
+  <text x="100" y="235" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">functions</text>
+
+  <!-- Arrow: application → API -->
+  <line x1="180" y1="205" x2="244" y2="205" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="212" y="198" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">uses</text>
+
+  <!-- === Library outer box === -->
+  <rect x="246" y="90" width="510" height="320" rx="10" fill="#f4f6f7" stroke="#7f8c8d" stroke-width="2"/>
+  <text x="501" y="116" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555" text-anchor="middle">Library</text>
+
+  <!-- API / Interface layer (top half of library) -->
+  <rect x="262" y="126" width="478" height="110" rx="7" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="501" y="148" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#145a32" text-anchor="middle">Interface (API)</text>
+  <text x="501" y="168" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">exposed to callers — defined in header files (.h)</text>
+
+  <!-- API contents: 3 items -->
+  <rect x="278" y="178" width="132" height="46" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="344" y="198" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#145a32" text-anchor="middle">Function signatures</text>
+  <text x="344" y="214" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">int add(int a, int b);</text>
+
+  <rect x="428" y="178" width="132" height="46" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="494" y="198" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#145a32" text-anchor="middle">Data types</text>
+  <text x="494" y="214" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">typedef struct { ... };</text>
+
+  <rect x="578" y="178" width="146" height="46" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="651" y="198" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#145a32" text-anchor="middle">Constants / macros</text>
+  <text x="651" y="214" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">#define MAX_SIZE 1024</text>
+
+  <!-- Implementation layer (bottom half of library) -->
+  <rect x="262" y="252" width="478" height="142" rx="7" fill="#fdebd0" stroke="#e67e22" stroke-width="2"/>
+  <text x="501" y="274" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#784212" text-anchor="middle">Implementation (hidden from callers)</text>
+
+  <!-- Module boxes inside implementation -->
+  <rect x="278" y="284" width="130" height="96" rx="6" fill="white" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="343" y="308" font-family="monospace" font-size="12" fill="#784212" text-anchor="middle">module_a.o</text>
+  <text x="343" y="326" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+  <text x="343" y="342" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(from module_a.c)</text>
+  <text x="343" y="358" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">can be updated</text>
+  <text x="343" y="372" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">independently</text>
+
+  <rect x="426" y="284" width="130" height="96" rx="6" fill="white" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="491" y="308" font-family="monospace" font-size="12" fill="#784212" text-anchor="middle">module_b.o</text>
+  <text x="491" y="326" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+  <text x="491" y="342" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(from module_b.c)</text>
+  <text x="491" y="358" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">can be updated</text>
+  <text x="491" y="372" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">independently</text>
+
+  <rect x="574" y="284" width="150" height="96" rx="6" fill="white" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="649" y="308" font-family="monospace" font-size="12" fill="#784212" text-anchor="middle">module_c.o</text>
+  <text x="649" y="326" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">object module</text>
+  <text x="649" y="342" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(from module_c.asm)</text>
+  <text x="649" y="358" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">can be updated</text>
+  <text x="649" y="372" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">independently</text>
+
+  <!-- Footer note -->
+  <rect x="20" y="432" width="760" height="52" rx="8" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="400" y="454" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a5276" text-anchor="middle">Purpose: Code reuse — same library used by many applications</text>
+  <text x="400" y="472" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">Static library (.a / .lib)  —  Dynamic / shared library (.so / .dll / .dylib)</text>
+</svg>

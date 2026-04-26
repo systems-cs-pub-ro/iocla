@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="680" viewBox="0 0 960 680">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#1565C0"/>
+    </marker>
+    <marker id="arr-green" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#2E7D32"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#E65100"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="680" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="480" y="34" font-family="monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#212121">Chapter 08: Application Binary Interface and C-Assembly Interaction</text>
+  <text x="480" y="56" font-family="monospace" font-size="12" text-anchor="middle" fill="#666">Storyline Overview</text>
+
+  <!-- ===== COLUMN HEADERS ===== -->
+  <!-- Assembly → C -->
+  <rect x="20" y="72" width="280" height="28" rx="4" fill="#1565C0"/>
+  <text x="160" y="91" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="white">Assembly calls C</text>
+
+  <!-- C ↔ ASM (center) -->
+  <rect x="340" y="72" width="280" height="28" rx="4" fill="#4A148C"/>
+  <text x="480" y="91" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="white">C calls Assembly</text>
+
+  <!-- Inline ASM -->
+  <rect x="660" y="72" width="280" height="28" rx="4" fill="#BF360C"/>
+  <text x="800" y="91" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="white">Inline Assembly</text>
+
+  <!-- ===== SECTION: Calling C Library Functions ===== -->
+  <rect x="20" y="114" width="600" height="28" rx="4" fill="#E3F2FD"/>
+  <text x="330" y="132" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#1565C0">Calling C Library Functions from Assembly</text>
+
+  <!-- Demo 01 -->
+  <rect x="30" y="148" width="180" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="120" y="168" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">01-rand</text>
+  <text x="120" y="184" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">rand() — no args,</text>
+  <text x="120" y="196" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">return value in rax</text>
+
+  <!-- Demo 02 -->
+  <rect x="220" y="148" width="180" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="310" y="168" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">02-rand-srand</text>
+  <text x="310" y="184" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">time() / srand() / rand()</text>
+  <text x="310" y="196" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">void return, NULL arg</text>
+
+  <!-- Demo 03 -->
+  <rect x="410" y="148" width="180" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="500" y="168" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">03-rand-srand-printf</text>
+  <text x="500" y="184" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">printf() variadic:</text>
+  <text x="500" y="196" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">xor rax, rax required</text>
+
+  <!-- Demo 04 -->
+  <rect x="600" y="148" width="180" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="690" y="168" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">04-rand-srand-printf-c</text>
+  <text x="690" y="184" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C reference — compare</text>
+  <text x="690" y="196" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">with objdump -d</text>
+
+  <!-- arrows 01→02→03 -->
+  <line x1="210" y1="174" x2="218" y2="174" stroke="#1565C0" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="400" y1="174" x2="408" y2="174" stroke="#1565C0" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- ===== SECTION: Cross-language simple calls ===== -->
+  <rect x="20" y="218" width="600" height="28" rx="4" fill="#E8F5E9"/>
+  <text x="330" y="236" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#2E7D32">Calling Between C and Assembly — Simple Functions</text>
+
+  <!-- Demo 05 -->
+  <rect x="30" y="252" width="180" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="120" y="272" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">05-sum2-from-as-to-c</text>
+  <text x="120" y="288" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">ASM calls C add()</text>
+  <text x="120" y="300" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">2 register args</text>
+
+  <!-- Demo 06 -->
+  <rect x="220" y="252" width="180" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="310" y="272" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">06-sum2-from-c-to-as</text>
+  <text x="310" y="288" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C calls ASM add()</text>
+  <text x="310" y="300" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">inline declaration</text>
+
+  <!-- Demo 07 -->
+  <rect x="410" y="252" width="180" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="500" y="272" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">07-sum2-from-c-to-as</text>
+  <text x="500" y="282" font-family="monospace" font-size="10" text-anchor="middle" fill="#4A148C">-header</text>
+  <text x="500" y="296" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C calls ASM add()</text>
+  <text x="500" y="308" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">via header file (.h)</text>
+
+  <!-- arrows 05→06→07 -->
+  <line x1="210" y1="278" x2="218" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="400" y1="278" x2="408" y2="278" stroke="#4A148C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== SECTION: Arrays ===== -->
+  <rect x="20" y="322" width="600" height="28" rx="4" fill="#E8F5E9"/>
+  <text x="330" y="340" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#2E7D32">Passing Arrays (Pointer + Count)</text>
+
+  <!-- Demo 08 -->
+  <rect x="30" y="356" width="270" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="165" y="376" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">08-sum-array-from-as-to-c</text>
+  <text x="165" y="392" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">ASM calls C sum_array(ptr, n)</text>
+  <text x="165" y="404" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">rdi=ptr, rsi=count</text>
+
+  <!-- Demo 09 -->
+  <rect x="320" y="356" width="270" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="455" y="376" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">09-sum-array-from-c-to-as</text>
+  <text x="455" y="392" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C calls ASM sum_array(ptr, n)</text>
+  <text x="455" y="404" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">with header file</text>
+
+  <!-- ===== SECTION: N args ===== -->
+  <rect x="20" y="426" width="600" height="28" rx="4" fill="#FFF3E0"/>
+  <text x="330" y="444" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#E65100">Stack Arguments (7th+ Beyond Registers)</text>
+
+  <!-- Demo 10 -->
+  <rect x="30" y="460" width="270" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="165" y="480" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">10-call-n-args-from-as-to-c</text>
+  <text x="165" y="496" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">ASM calls C sum2()…sum8()</text>
+  <text x="165" y="508" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">7th+ args pushed on stack</text>
+
+  <!-- Demo 11 -->
+  <rect x="320" y="460" width="270" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="455" y="480" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">11-call-n-args-from-c-to-as</text>
+  <text x="455" y="496" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C calls ASM sum2()…sum8()</text>
+  <text x="455" y="508" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">7th+ args at [rsp+8], [rsp+16]</text>
+
+  <!-- ===== SECTION: Fibonacci ===== -->
+  <rect x="20" y="530" width="600" height="28" rx="4" fill="#E8F5E9"/>
+  <text x="330" y="548" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#2E7D32">Recursive Functions Across Languages</text>
+
+  <!-- Demo 12 -->
+  <rect x="30" y="564" width="270" height="52" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1.5"/>
+  <text x="165" y="584" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1565C0">12-fibonacci-from-as-to-c</text>
+  <text x="165" y="600" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">ASM calls C fibonacci(N)</text>
+  <text x="165" y="612" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">local var on stack for N</text>
+
+  <!-- Demo 13 -->
+  <rect x="320" y="564" width="270" height="52" rx="6" fill="#fff" stroke="#4A148C" stroke-width="1.5"/>
+  <text x="455" y="584" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#4A148C">13-fibonacci-from-c-to-as</text>
+  <text x="455" y="600" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">C calls ASM fibonacci(N)</text>
+  <text x="455" y="612" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">push/pop for register save</text>
+
+  <!-- ===== INLINE ASM SECTION ===== -->
+  <rect x="660" y="218" width="280" height="28" rx="4" fill="#FBE9E7"/>
+  <text x="800" y="236" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#BF360C">GCC Inline Assembly (__asm__)</text>
+
+  <!-- Demo 14 -->
+  <rect x="670" y="252" width="260" height="52" rx="6" fill="#fff" stroke="#BF360C" stroke-width="1.5"/>
+  <text x="800" y="272" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#BF360C">14-inline-as-cpuid</text>
+  <text x="800" y="288" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">cpuid instruction in C</text>
+  <text x="800" y="300" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">input/output constraints</text>
+
+  <!-- Demo 15 -->
+  <rect x="670" y="322" width="260" height="52" rx="6" fill="#fff" stroke="#BF360C" stroke-width="1.5"/>
+  <text x="800" y="342" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#BF360C">15-inline-as-rdtsc</text>
+  <text x="800" y="358" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">rdtsc: read cycle counter</text>
+  <text x="800" y="370" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">edx:eax → 64-bit value</text>
+
+  <!-- Demo 16 -->
+  <rect x="670" y="392" width="260" height="52" rx="6" fill="#fff" stroke="#BF360C" stroke-width="1.5"/>
+  <text x="800" y="412" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#BF360C">16-inline-measure</text>
+  <text x="800" y="428" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">rdtsc before &amp; after call</text>
+  <text x="800" y="440" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">measure fibonacci() cycles</text>
+
+  <!-- Demo 17 -->
+  <rect x="670" y="462" width="260" height="52" rx="6" fill="#fff" stroke="#BF360C" stroke-width="1.5"/>
+  <text x="800" y="482" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#BF360C">17-measure-as-func</text>
+  <text x="800" y="498" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">read_cycles() in .asm</text>
+  <text x="800" y="510" font-family="monospace" font-size="10" text-anchor="middle" fill="#444">reusable measurement fn</text>
+
+  <!-- arrows 14→15→16→17 -->
+  <line x1="800" y1="304" x2="800" y2="320" stroke="#BF360C" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+  <line x1="800" y1="374" x2="800" y2="390" stroke="#BF360C" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+  <line x1="800" y1="444" x2="800" y2="460" stroke="#BF360C" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+
+  <!-- ===== LEGEND ===== -->
+  <rect x="20" y="636" width="920" height="36" rx="4" fill="#ECEFF1"/>
+  <rect x="30" y="648" width="16" height="12" rx="2" fill="#1565C0"/>
+  <text x="52" y="659" font-family="monospace" font-size="11" fill="#444">Assembly → C</text>
+  <rect x="170" y="648" width="16" height="12" rx="2" fill="#4A148C"/>
+  <text x="192" y="659" font-family="monospace" font-size="11" fill="#444">C → Assembly</text>
+  <rect x="310" y="648" width="16" height="12" rx="2" fill="#BF360C"/>
+  <text x="332" y="659" font-family="monospace" font-size="11" fill="#444">Inline Assembly in C</text>
+</svg>

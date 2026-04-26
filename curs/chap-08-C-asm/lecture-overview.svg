@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="560" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="900" height="56" fill="#1a252f"/>
+  <text x="450" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">Lecture Overview: ABI and C+Assembly Interaction</text>
+
+  <!-- ─── Row 1: Concept chain ─── -->
+
+  <!-- 1. Modules -->
+  <rect x="20" y="84" width="140" height="80" rx="8" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="90" y="108" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1a5276" text-anchor="middle">Modules</text>
+  <text x="90" y="126" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">source file =</text>
+  <text x="90" y="142" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">compilation unit</text>
+  <text x="90" y="158" font-family="Arial, sans-serif" font-size="9"  fill="#888" text-anchor="middle">→ object file (.o)</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="160" y1="124" x2="186" y2="124" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 2. Libraries -->
+  <rect x="188" y="84" width="140" height="80" rx="8" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="258" y="108" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#145a32" text-anchor="middle">Libraries</text>
+  <text x="258" y="126" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">collection of modules</text>
+  <text x="258" y="142" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">expose an interface</text>
+  <text x="258" y="158" font-family="Arial, sans-serif" font-size="9"  fill="#888" text-anchor="middle">for reuse</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="328" y1="124" x2="354" y2="124" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 3. API -->
+  <rect x="356" y="84" width="140" height="80" rx="8" fill="#fdebd0" stroke="#e67e22" stroke-width="2"/>
+  <text x="426" y="108" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#784212" text-anchor="middle">API</text>
+  <text x="426" y="126" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">source-level contract</text>
+  <text x="426" y="142" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">header files (.h)</text>
+  <text x="426" y="158" font-family="Arial, sans-serif" font-size="9"  fill="#888" text-anchor="middle">compile-time</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="496" y1="124" x2="522" y2="124" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 4. ABI -->
+  <rect x="524" y="84" width="140" height="80" rx="8" fill="#e8daef" stroke="#8e44ad" stroke-width="2"/>
+  <text x="594" y="108" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#4a235a" text-anchor="middle">ABI</text>
+  <text x="594" y="126" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">binary-level contract</text>
+  <text x="594" y="142" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">calling conv + sizes</text>
+  <text x="594" y="158" font-family="Arial, sans-serif" font-size="9"  fill="#888" text-anchor="middle">+ format + mangling</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="664" y1="124" x2="690" y2="124" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 5. Calling Convention -->
+  <rect x="692" y="84" width="188" height="80" rx="8" fill="#fadbd8" stroke="#e74c3c" stroke-width="2"/>
+  <text x="786" y="104" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#922b21" text-anchor="middle">Calling Convention</text>
+  <text x="786" y="122" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">argument passing</text>
+  <text x="786" y="138" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">return value · stack</text>
+  <text x="786" y="154" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">register saving</text>
+
+  <!-- ─── Row 2: Demos grid ─── -->
+
+  <!-- Row 2 header -->
+  <rect x="20" y="196" width="860" height="32" rx="6" fill="#2c3e50"/>
+  <text x="450" y="217" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">Demos: C ↔ Assembly Interaction</text>
+
+  <!-- Demo category A: ASM calling C -->
+  <rect x="20" y="240" width="276" height="130" rx="8" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="158" y="262" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a5276" text-anchor="middle">ASM calls C functions</text>
+  <text x="158" y="280" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(assembly → C)</text>
+  <text x="40"  y="300" font-family="monospace" font-size="10" fill="#555">01-rand</text>
+  <text x="40"  y="316" font-family="monospace" font-size="10" fill="#555">02-rand-srand</text>
+  <text x="40"  y="332" font-family="monospace" font-size="10" fill="#555">03-rand-srand-printf</text>
+  <text x="170" y="300" font-family="monospace" font-size="10" fill="#555">05-sum2-from-as-to-c</text>
+  <text x="170" y="316" font-family="monospace" font-size="10" fill="#555">08-sum-array-from-as-to-c</text>
+  <text x="170" y="332" font-family="monospace" font-size="10" fill="#555">10-call-n-args-from-as-to-c</text>
+  <text x="40"  y="358" font-family="monospace" font-size="10" fill="#555">12-fibonacci-from-as-to-c</text>
+
+  <!-- Demo category B: C calling ASM -->
+  <rect x="312" y="240" width="276" height="130" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="450" y="262" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#145a32" text-anchor="middle">C calls ASM functions</text>
+  <text x="450" y="280" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(C → assembly)</text>
+  <text x="322" y="300" font-family="monospace" font-size="10" fill="#555">04-rand-srand-printf-c</text>
+  <text x="322" y="316" font-family="monospace" font-size="10" fill="#555">06-sum2-from-c-to-as</text>
+  <text x="322" y="332" font-family="monospace" font-size="10" fill="#555">07-sum2-from-c-to-as-header</text>
+  <text x="322" y="348" font-family="monospace" font-size="10" fill="#555">09-sum-array-from-c-to-as</text>
+  <text x="322" y="364" font-family="monospace" font-size="10" fill="#555">11-call-n-args-from-c-to-as</text>
+  <text x="322" y="380" font-family="monospace" font-size="10" fill="#555">13-fibonacci-from-c-to-as</text>
+
+  <!-- Demo category C: Inline ASM -->
+  <rect x="604" y="240" width="276" height="130" rx="8" fill="#fef9e7" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="742" y="262" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Inline Assembly</text>
+  <text x="742" y="280" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(ASM inside C source)</text>
+  <text x="614" y="300" font-family="monospace" font-size="10" fill="#555">14-inline-as-cpuid</text>
+  <text x="614" y="316" font-family="monospace" font-size="10" fill="#555">15-inline-as-rdtsc</text>
+  <text x="614" y="332" font-family="monospace" font-size="10" fill="#555">16-inline-measure</text>
+  <text x="614" y="348" font-family="monospace" font-size="10" fill="#555">17-measure-as-func</text>
+
+  <!-- ─── Row 3: Build pipeline summary ─── -->
+  <rect x="20" y="396" width="860" height="140" rx="8" fill="#f4f6f7" stroke="#7f8c8d" stroke-width="1.5"/>
+  <text x="450" y="418" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">Build Pipeline (Mixed C + Assembly)</text>
+
+  <!-- Pipeline boxes -->
+  <rect x="40"  y="430" width="110" height="50" rx="5" fill="#d6eaf8" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="95"  y="452" font-family="monospace" font-size="10" fill="#1a5276" text-anchor="middle">source.c</text>
+  <text x="95"  y="468" font-family="Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">C source</text>
+
+  <rect x="40"  y="492" width="110" height="32" rx="5" fill="#d6eaf8" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="95"  y="513" font-family="monospace" font-size="10" fill="#1a5276" text-anchor="middle">source.asm</text>
+
+  <line x1="150" y1="455" x2="186" y2="468" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="150" y1="508" x2="186" y2="478" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="188" y="448" width="110" height="50" rx="5" fill="#fdebd0" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="243" y="470" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#784212" text-anchor="middle">gcc / nasm</text>
+  <text x="243" y="486" font-family="Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">compile/assemble</text>
+
+  <line x1="298" y1="473" x2="330" y2="473" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="332" y="448" width="100" height="50" rx="5" fill="#d5f5e3" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="382" y="466" font-family="monospace" font-size="10" fill="#145a32" text-anchor="middle">source.o</text>
+  <text x="382" y="482" font-family="monospace" font-size="10" fill="#145a32" text-anchor="middle">source.o</text>
+  <text x="382" y="496" font-family="Arial, sans-serif" font-size="9" fill="#888" text-anchor="middle">object files</text>
+
+  <line x1="432" y1="473" x2="462" y2="473" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="464" y="448" width="80" height="50" rx="5" fill="#e8daef" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="504" y="476" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#4a235a" text-anchor="middle">Linker</text>
+
+  <line x1="544" y1="473" x2="574" y2="473" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="576" y="448" width="90" height="50" rx="5" fill="#fadbd8" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="621" y="470" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#922b21" text-anchor="middle">program</text>
+  <text x="621" y="486" font-family="Arial, sans-serif" font-size="9" fill="#922b21" text-anchor="middle">executable</text>
+
+  <!-- ABI note on right -->
+  <rect x="688" y="428" width="178" height="96" rx="6" fill="#fef9e7" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="777" y="448" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#784212" text-anchor="middle">ABI ensures</text>
+  <text x="777" y="464" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">C and ASM modules</text>
+  <text x="777" y="480" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">can call each other</text>
+  <text x="777" y="496" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">using same calling</text>
+  <text x="777" y="511" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">convention</text>
+</svg>
