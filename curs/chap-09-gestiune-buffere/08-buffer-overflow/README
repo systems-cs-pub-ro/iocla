@@ -1,0 +1,85 @@
+# 08-buffer-overflow — 64-bit stack buffer overflow
+
+## Build
+
+```bash
+make
+```
+
+## Concepts
+
+`visible_func()` reads up to 128 bytes with `fgets()` into a 64-byte stack buffer — a
+classic stack buffer overflow.  In 64-bit mode the key differences from 32-bit are:
+
+| | 32-bit | 64-bit |
+|---|---|---|
+| Saved frame pointer | EBP (4 B) | RBP (8 B) |
+| Return address | 4 bytes | 8 bytes |
+| Function arguments | pushed on stack before call | RDI, RSI, RDX, … (registers) |
+| Payload helper | `p32()` | `p64()` |
+
+## Step-by-step
+
+### 1. Find addresses
+
+```bash
+make
+
+# Symbol addresses
+nm ./vuln | grep -E "secret|puts|message"
+
+# Disassemble visible_func to find buffer and s offsets
+objdump -d -Mintel vuln | grep -A 50 "<visible_func>:"
+# Look for:
+#   mov DWORD PTR [rbp-0x?], 0x42424242   <- s is at rbp minus this offset
+#   lea rax, [rbp-0x?]                    <- &buffer[0] is at rbp minus this offset
+# offset_to_ret  =  buffer_rbp_offset + 8   (8 = saved RBP width)
+# offset_to_s    =  buffer_rbp_offset - s_rbp_offset
+```
+
+### 2. Find ROP gadgets
+
+```bash
+# With ROPgadget (pip install ropgadget):
+ROPgadget --binary vuln | grep "pop rdi"
+ROPgadget --binary vuln | grep "pop rsi"
+
+# With objdump:
+objdump -d -Mintel vuln | grep -B3 "ret$" | grep "pop"
+```
+
+### 3. Run the exploits
+
+```bash
+# Overwrite local variable `s` -> print "Comm-link online."
+python3 payload_local_var.py | ./vuln
+
+# Redirect return address -> secret_func() (no arguments needed)
+python3 payload_secret_func.py | ./vuln
+
+# ROP chain -> puts(secret_message_addr)  [first arg must go in RDI]
+python3 payload_secret_message.py | ./vuln
+
+# ROP chain -> secret_param_func(p, q)   [two args: RDI + RSI]
+python3 payload_secret_param_func.py | ./vuln
+
+# ROP chain -> system("/bin/sh")  [ASLR must be disabled]
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+python3 payload_system_sh_no_aslr.py | ./vuln
+```
+
+## Why you can't use the 32-bit trick for arguments
+
+In 32-bit you could call a function with fake arguments by placing them on the
+stack immediately after the forged return address, because the callee fetches
+them via `[ebp+8]`, `[ebp+12]`, etc.
+
+In 64-bit the callee reads arguments from **registers** (RDI, RSI, …), not
+from the stack.  You must use a **ROP chain** to load the registers first:
+
+```
+padding | pop rdi; ret | arg1 | pop rsi; ret | arg2 | target_function
+```
+
+Each `pop Rx; ret` gadget pops one value from the stack into a register, then
+`ret` continues to the next chain link, until you finally reach the target.

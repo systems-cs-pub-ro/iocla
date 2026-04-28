@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
 
 int main(void)
 {
-  /* 
-     compiler allocates these variables on the stack 
-     in the declared order: 4 bytes for length, 4 bytes 
-     for type, 9 bytes for buf...
-  */
+  /*
+   *  compiler allocates these variables on the stack
+   *  in the declared order: 4 bytes for length, 4 bytes
+   *  for type, 9 bytes for buf...
+   */
 	unsigned int length = 22;
 	unsigned int type = 11;
 	unsigned char buf[9];
@@ -22,6 +23,6 @@ int main(void)
 	printf("type: %u, length: %u\n", type, length);
 
 	printf("length: %p, type: %p , buf: %p, i: %p\n", &length, &type, &buf, &i);
-		
+
 	return 0;
 }

@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
+#include <stdint.h>
 
-static int read_int(int *out)
+static int read_long(long *out)
 {
 	char buffer[32];
 	char *endptr;
@@ -22,27 +23,27 @@ static int read_int(int *out)
 	return 0;
 }
 
-static void disclosure_target(unsigned int a, unsigned int b)
+static void disclosure_target(uint64_t a, uint64_t b)
 {
 	size_t i;
-	unsigned int buf[4];
+	uint64_t buf[4];
 
 	for (i = 0; i < 4; i++)
-		buf[i] = i * i * i;
+		buf[i] = (uint64_t)i * i * i;
 
 	while (1) {
-		int index;
+		long index;
 		printf("Index to disclose: "); fflush(stdout);
-		if (read_int(&index) < 0) {
+		if (read_long(&index) < 0) {
 			fprintf(stderr, "Invalid index read. Exiting.\n");
 			break;
 		}
-		printf("buf[%d] (address: %p) = 0x%08x\n", index, &buf[index], buf[index]);
+		printf("buf[%ld] (address: %p) = 0x%016lx\n", index, &buf[index], buf[index]);
 	}
 }
 
 int main(void)
 {
-	disclosure_target(0xaabbccdd, 0x55667788);
+	disclosure_target(0xaabbccddaabbccddUL, 0x5566778855667788UL);
 	return 0;
 }

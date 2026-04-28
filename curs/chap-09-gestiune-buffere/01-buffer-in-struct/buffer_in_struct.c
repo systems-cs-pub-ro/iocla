@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
 
 struct container {
@@ -11,7 +12,7 @@ int main(void)
 {
 	struct container c;
 	/*
-	  c.id and c.type are on the stack which grows downwards, 
+	  c.id and c.type are on the stack which grows downwards,
 	  but id, items and type are at consecutive addresses.
 	 */
 	c.id = 1;

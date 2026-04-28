@@ -1,19 +1,14 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
+#include <stdlib.h>
 
 static const char secret_message[] = "Acknowledged H.Q.";
-static const char can_do_things[] = "Let's crash";
-
-static void secret_param_func(unsigned int p, unsigned int q)
-{
-	if (p == 0x12345678 && q == 0xabcdef01)
-		puts("Systems functional.");
-}
 
 static void secret_func(void)
 {
 	puts("Channel open.");
+	exit(EXIT_SUCCESS);
 }
-
 static void visible_func(void)
 {
 	unsigned int s = 0x42424242;
