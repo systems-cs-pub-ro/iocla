@@ -3,10 +3,12 @@ LDFLAGS = -no-pie
 
 .PHONY: all clean
 
-all: main_stack
+all: writer
 
-main_stack: main_stack.o
+writer: writer.o
+
+writer.o: writer.c
 
 clean:
-	-rm -f main_stack main_stack.o
+	-rm -f  writer.o writer
 	-rm -f *~

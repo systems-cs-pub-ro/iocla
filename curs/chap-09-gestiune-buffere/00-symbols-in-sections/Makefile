@@ -1,5 +1,5 @@
-CFLAGS = -Wall -W -g -m32 -fno-PIC -fno-stack-protector -Wno-unused-variable -Wno-unused-function -Wno-unused-const-variable 
-LDFLAGS = -no-pie -m32
+CFLAGS = -Wall -W -g -fno-PIC -fno-stack-protector -Wno-unused-variable -Wno-unused-function -Wno-unused-const-variable
+LDFLAGS = -no-pie
 
 .PHONY: all clean
 

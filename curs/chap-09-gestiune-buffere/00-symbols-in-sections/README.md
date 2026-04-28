@@ -1,17 +1,24 @@
 
-1. linker error: anas are implicitly global, no problem with stanas. How to fix?
+1. Linker error: `ana` is implicitly global in both translation units. Fix by adding `static`.
 
-2. `nm sections | grep an `
-Notice several variables with the same name. How is the linker resolving? 
+2. `nm sections | grep an`
+   Notice several variables with the same name. How is the linker resolving?
+   Addresses are now 64-bit (16 hex digits). Example output:
 
-0804c020 d ana
-0804c02c D ana
-0804c02e d bogdan
-0804c022 D bogdan
-0804c024 d dan
-0804c01c D __dso_handle
-0804a00c r stan
-0804c034 b stana
-0804c03c b stana
+   0000000000404030 d ana
+   0000000000404040 D ana
+   0000000000404042 d bogdan
+   0000000000404038 D bogdan
+   000000000040403c d dan
+   0000000000404020 D __dso_handle
+   0000000000402010 r stan
+   0000000000404048 b stana
+   0000000000404050 b stana
 
-3. explain both values for bogdan
+   (exact addresses will vary; use `nm sections | sort` to see layout)
+
+3. Explain both values for `bogdan`. Why does the linker pick one over the other?
+
+4. Compare section placement using `readelf -S sections` and `objdump -t sections`.
+   Note that 64-bit ELF sections are at higher addresses than 32-bit ELF.
+

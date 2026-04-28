@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,12 +17,12 @@ static void see_beyond(const char *s)
 	printf("buffer is #%s#\n", buffer);
 }
 
-/* 
-   - What are the consequences of accepting any strings? 
-   - What are the consequences of returning/printing unchecked buffers? 
- 
-   ./no_null_byte $(python3 -c 'print(32*"A")')| hexdump -vC
-
+/*
+ *   - What are the consequences of accepting any strings?
+ *   - What are the consequences of returning/printing unchecked buffers?
+ *
+ *   ./no_null_byte $(python3 -c 'print(32*"A")')| hexdump -vC
+ *
  */
 int main(int argc, char **argv)
 {

@@ -1,7 +1,7 @@
-ASM = nasm
-ASM_FLAGS = -f elf32 -g -Fdwarf
-CFLAGS = -Wall -m32 -fno-stack-protector -mpreferred-stack-boundary=2 -fno-PIC
-LDFLAGS = -m32 -no-pie
+ASM       = nasm
+ASM_FLAGS = -f elf64 -g -Fdwarf
+CFLAGS    = -Wall -fno-stack-protector -fno-PIC
+LDFLAGS   = -no-pie
 
 .PHONY: all clean
 
@@ -11,6 +11,9 @@ test: test.o diggers.o
 
 test.o: test.c
 
+diggers.o: diggers.asm
+	$(ASM) $(ASM_FLAGS) -o $@ $<
+
 clean:
 	-rm -f *~
-	-rm -f test.o test
+	-rm -f test.o test diggers.o
