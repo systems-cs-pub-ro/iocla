@@ -1,5 +1,5 @@
-CFLAGS = -Wall -g -m32 -fno-PIC -fno-stack-protector -Wno-unused-function -mpreferred-stack-boundary=2
-LDFLAGS = -m32 
+CFLAGS = -Wall -g -fno-PIC -fno-stack-protector -Wno-unused-function
+LDFLAGS =
 
 .PHONY: all clean
 

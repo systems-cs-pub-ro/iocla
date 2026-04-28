@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include <stdio.h>
 
 unsigned short int ana = 1;
@@ -28,7 +29,7 @@ int main(void)
 	unsigned int my;
 	static unsigned int local;
 	printf("ana = %d bogdan = %d\n", ana, bogdan);
-	
+
 	h();
 
 	return 0;
