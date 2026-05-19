@@ -1,0 +1,10 @@
+.vscode/
+*.o
+*.s
+fpadd
+fpprint
+fp-m64
+fp-m64-O2
+quadc
+arrayfsumc
+arrayfsum_inline.o
