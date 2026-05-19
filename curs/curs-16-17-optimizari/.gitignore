@@ -1,0 +1,25 @@
+.vscode/
+
+# Build artifacts
+*.o
+*~
+
+# Example binaries
+gprof_demo/gprof_demo
+gprof_demo/profile_data.txt
+gprof_demo/gmon.out
+inline/no-inline
+inline/inline
+loop_unroll/normal_loop
+loop_unroll/unrolled_loop
+opt_demo/test
+opt_demo/test_o1
+opt_demo/test_o2
+opt_demo/test_o3
+opt_demo/test_unroll
+prefetch/prefetch
+prefetch/no-prefetch
+sse/test_sse
+time_demo/clk
+time_demo/rdtscp
+time_demo/papi

@@ -1,4 +1,4 @@
-CFLAGS=-m32
+CFLAGS=-m64
 
 run: normal_loop unrolled_loop
 	./normal_loop

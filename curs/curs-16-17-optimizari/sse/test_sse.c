@@ -3,9 +3,10 @@
 #include <stdlib.h>
 
 uint64_t rdtsc(void) {
-    uint64_t result;
-    __asm__ __volatile__ ("rdtsc" : "=A" (result));
-    return result;
+	uint32_t lo, hi;
+
+	__asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
+	return ((uint64_t)hi << 32) | lo;
 }
 
 void sum_array_sse(uint32_t *a, uint32_t *b, uint32_t *c, int n);
