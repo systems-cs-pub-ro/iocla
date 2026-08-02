@@ -1,5 +1,10 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 /*
- Se compilează în 3 variante: -m32, -O2 -m32, -m64
+ * Demonstrates floating-point representation effects:
+ * - Decimal-to-binary approximation errors
+ * - Non-associativity in floating-point arithmetic
+ * - Precision loss at large magnitudes
  */
 
 #include <stdio.h>
