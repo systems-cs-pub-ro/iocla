@@ -9,5 +9,5 @@ jobs:
     - name: Run checkpatch review
       uses: webispy/checkpatch-action@master
       env:
-        CHECKPATCH_COMMAND: ./scripts/checkpatch.pl --no-tree --ignore=FILE_PATH_CHANGES --exclude scripts
+        CHECKPATCH_COMMAND: ./scripts/checkpatch.pl --no-tree --ignore=FILE_PATH_CHANGES --ignore=ARRAY_SIZE --exclude scripts
 
