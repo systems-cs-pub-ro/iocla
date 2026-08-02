@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arr2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">API: Application Programming Interface</text>
+
+  <!-- === CALLER (left) === -->
+  <rect x="20" y="90" width="178" height="310" rx="8" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="109" y="116" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a5276" text-anchor="middle">Caller</text>
+  <text x="109" y="134" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(application source code)</text>
+
+  <rect x="34" y="148" width="150" height="230" rx="5" fill="white" stroke="#2980b9" stroke-width="1"/>
+  <text x="109" y="170" font-family="monospace" font-size="10" fill="#1a5276" text-anchor="middle">#include "mylib.h"</text>
+  <text x="109" y="192" font-family="monospace" font-size="10" fill="#555" text-anchor="middle"> </text>
+  <text x="109" y="210" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">int main() {</text>
+  <text x="109" y="228" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  int r = add(3,4);</text>
+  <text x="109" y="246" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  Point p;</text>
+  <text x="109" y="264" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  p.x = MAX_SIZE;</text>
+  <text x="109" y="282" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  ...</text>
+  <text x="109" y="300" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">}</text>
+
+  <!-- Arrow: caller → API -->
+  <line x1="198" y1="245" x2="232" y2="245" stroke="#2980b9" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="215" y="238" font-family="Arial, sans-serif" font-size="9" fill="#888" text-anchor="middle">uses</text>
+
+  <!-- === API / Header (middle) === -->
+  <rect x="234" y="90" width="300" height="310" rx="8" fill="#d5f5e3" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="384" y="116" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#145a32" text-anchor="middle">API  (mylib.h)</text>
+  <text x="384" y="134" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">interface exposed to the programmer</text>
+
+  <!-- Function signatures section -->
+  <rect x="248" y="148" width="272" height="82" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="384" y="166" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#145a32" text-anchor="middle">Function Signatures</text>
+  <text x="384" y="184" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">int  add(int a, int b);</text>
+  <text x="384" y="200" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">void sort(int *arr, int n);</text>
+  <text x="384" y="216" font-family="monospace" font-size="10" fill="#888" text-anchor="middle">declarations of callable functions</text>
+
+  <!-- Data types section -->
+  <rect x="248" y="242" width="272" height="78" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="384" y="260" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#145a32" text-anchor="middle">Data Type Declarations</text>
+  <text x="384" y="278" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">typedef struct {</text>
+  <text x="384" y="294" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  int x, y;</text>
+  <text x="384" y="310" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">} Point;</text>
+
+  <!-- Constants / macros section -->
+  <rect x="248" y="332" width="272" height="58" rx="5" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="384" y="350" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#145a32" text-anchor="middle">Constants / Macros</text>
+  <text x="384" y="368" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">#define MAX_SIZE   1024</text>
+  <text x="384" y="384" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">#define PI         3.14159</text>
+
+  <!-- Arrow: API → implementation -->
+  <line x1="534" y1="245" x2="566" y2="245" stroke="#e67e22" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="550" y="238" font-family="Arial, sans-serif" font-size="9" fill="#888" text-anchor="middle">backs</text>
+
+  <!-- === IMPLEMENTATION (right) === -->
+  <rect x="568" y="90" width="212" height="310" rx="8" fill="#fdebd0" stroke="#e67e22" stroke-width="2"/>
+  <text x="674" y="116" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#784212" text-anchor="middle">Implementation</text>
+  <text x="674" y="134" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(library source files)</text>
+
+  <rect x="582" y="148" width="184" height="230" rx="5" fill="white" stroke="#e67e22" stroke-width="1"/>
+  <text x="674" y="170" font-family="monospace" font-size="10" fill="#784212" text-anchor="middle">// mylib.c</text>
+  <text x="674" y="192" font-family="monospace" font-size="10" fill="#555" text-anchor="middle"> </text>
+  <text x="674" y="210" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">int add(int a, int b)</text>
+  <text x="674" y="228" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">{</text>
+  <text x="674" y="246" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">  return a + b;</text>
+  <text x="674" y="264" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">}</text>
+  <text x="674" y="288" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">void sort(int *a, int n)</text>
+  <text x="674" y="306" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">{  ...  }</text>
+
+  <!-- Footer note -->
+  <rect x="20" y="420" width="760" height="62" rx="8" fill="#eaf4fb" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="400" y="441" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a5276" text-anchor="middle">The API is a source-level contract — used at compile time</text>
+  <text x="400" y="460" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">The caller only needs the header (.h); the implementation can change without affecting the caller's source code</text>
+  <text x="400" y="476" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">The binary-level contract (at runtime) is the ABI</text>
+</svg>

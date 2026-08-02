@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrl" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fafafa"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="56" fill="#1a252f"/>
+  <text x="400" y="36" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="white" text-anchor="middle">ABI: Application Binary Interface</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="13" fill="#555"
+        text-anchor="middle">Defines the runtime interaction between binary components — a contract enforced by the compiler</text>
+
+  <!-- Component A (left) -->
+  <rect x="20" y="100" width="190" height="260" rx="8" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+  <text x="115" y="126" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a5276" text-anchor="middle">Component A</text>
+  <text x="115" y="144" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(object file / library)</text>
+  <rect x="34"  y="158" width="162" height="190" rx="5" fill="white" stroke="#aac" stroke-width="1"/>
+  <text x="115" y="178" font-family="monospace" font-size="11" fill="#1a5276" text-anchor="middle">// compiled binary</text>
+  <text x="115" y="198" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">48 89 e5 48 83</text>
+  <text x="115" y="216" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">ec 20 89 7d fc</text>
+  <text x="115" y="234" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">89 75 f8 8b 45</text>
+  <text x="115" y="252" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">fc 03 45 f8 5d</text>
+  <text x="115" y="280" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">compiled by Compiler A</text>
+  <text x="115" y="296" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(e.g. GCC, Clang)</text>
+  <text x="115" y="316" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">or written in ASM</text>
+  <text x="115" y="334" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">or a different language</text>
+
+  <!-- Component B (right) -->
+  <rect x="590" y="100" width="190" height="260" rx="8" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="685" y="126" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#145a32" text-anchor="middle">Component B</text>
+  <text x="685" y="144" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">(object file / library)</text>
+  <rect x="604" y="158" width="162" height="190" rx="5" fill="white" stroke="#aac" stroke-width="1"/>
+  <text x="685" y="178" font-family="monospace" font-size="11" fill="#145a32" text-anchor="middle">// compiled binary</text>
+  <text x="685" y="198" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">55 48 89 e5 89</text>
+  <text x="685" y="216" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">7d fc 89 75 f8</text>
+  <text x="685" y="234" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">8b 55 fc 8b 45</text>
+  <text x="685" y="252" font-family="monospace" font-size="11" fill="#555" text-anchor="middle">f8 01 d0 5d c3</text>
+  <text x="685" y="280" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">compiled by Compiler B</text>
+  <text x="685" y="296" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">(e.g. MSVC, ICC)</text>
+  <text x="685" y="316" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">or written in ASM</text>
+  <text x="685" y="334" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">or a different language</text>
+
+  <!-- ABI contract (centre) -->
+  <rect x="240" y="90" width="320" height="282" rx="10" fill="#fef9e7" stroke="#e67e22" stroke-width="2.5"/>
+  <text x="400" y="116" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#784212" text-anchor="middle">ABI Contract</text>
+  <text x="400" y="134" font-family="Arial, sans-serif" font-size="10" fill="#784212" text-anchor="middle">both components must agree on:</text>
+
+  <!-- ABI items -->
+  <rect x="256" y="144" width="288" height="48" rx="5" fill="#fdebd0" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="163" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Calling Convention</text>
+  <text x="400" y="181" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">how functions pass arguments and return values</text>
+
+  <rect x="256" y="202" width="288" height="48" rx="5" fill="#fdebd0" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="221" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Data Type Sizes</text>
+  <text x="400" y="239" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">size of int, long, pointer; struct layout / padding</text>
+
+  <rect x="256" y="260" width="288" height="48" rx="5" fill="#fdebd0" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="279" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Executable / Object Format</text>
+  <text x="400" y="297" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">ELF (Linux) · PE (Windows) · Mach-O (macOS)</text>
+
+  <rect x="256" y="318" width="288" height="40" rx="5" fill="#fdebd0" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="400" y="337" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#784212" text-anchor="middle">Name Mangling</text>
+  <text x="400" y="353" font-family="Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">how symbol names are encoded (used in C++)</text>
+
+  <!-- Double-headed arrows between components and ABI -->
+  <line x1="210" y1="230" x2="240" y2="230" stroke="#555" stroke-width="2"
+        marker-start="url(#arrl)" marker-end="url(#arr)"/>
+  <line x1="560" y1="230" x2="590" y2="230" stroke="#555" stroke-width="2"
+        marker-start="url(#arrl)" marker-end="url(#arr)"/>
+
+  <!-- Footer -->
+  <rect x="20" y="400" width="760" height="82" rx="8" fill="#f4f6f7" stroke="#7f8c8d" stroke-width="1.5"/>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">The ABI is a binary-level contract — relevant at link time and runtime</text>
+  <line x1="400" y1="426" x2="400" y2="468" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="200" y="446" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">API  →  source-level contract</text>
+  <text x="200" y="462" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">(compile time)</text>
+  <text x="600" y="446" font-family="Arial, sans-serif" font-size="11" fill="#555" text-anchor="middle">ABI  →  binary-level contract</text>
+  <text x="600" y="462" font-family="Arial, sans-serif" font-size="11" fill="#888" text-anchor="middle">(link time / runtime)</text>
+  <text x="400" y="474" font-family="Arial, sans-serif" font-size="10" fill="#888" text-anchor="middle">The compiler's job is to generate ABI-compatible code</text>
+</svg>
