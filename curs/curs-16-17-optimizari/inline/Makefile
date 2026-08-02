@@ -1,4 +1,4 @@
-CFLAGS=-m32
+CFLAGS=-m64
 
 run: no-inline inline
 	./no-inline

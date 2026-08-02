@@ -1,5 +1,5 @@
-ASM_FLAGS = -f elf32 -g -F dwarf
-C_FLAGS = -g -m32 -O3
+ASM_FLAGS = -f elf64 -g -F dwarf
+C_FLAGS = -g -m64 -O3
 NASM=nasm
 CC=gcc
 CPP=g++
@@ -7,7 +7,7 @@ CPP=g++
 all: test_sse
 
 test_sse: test_sse.o sse.o
-	gcc -g -O3 -m32 -o $@ $^
+	gcc -g -O3 -m64 -o $@ $^
 
 # test_sa.o: test_sa.asm
 # 	nasm -f elf32 -g -F dwarf test_sa.asm

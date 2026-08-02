@@ -1,74 +1,39 @@
-	BITS 32
+	BITS 64
+	DEFAULT REL
+
 	GLOBAL sum_array_sse
 sum_array_sse:
-	push ebp
-	mov ebp, esp
-	push esi
-	push edi
-	
-	push ebx
-	mov ecx, [ebp + 20] ; ecx = n
-	mov esi, [ebp + 8] ; esi = a
-	mov edi, [ebp + 12] ; edi = b
-	mov ebx, [ebp + 16] ; ebx = c
-	; n = n / 16	shr ecx, 4		
+	; SysV x64 ABI: rdi=a, rsi=b, rdx=c, ecx=n
 	xor eax, eax
 
 	cmp eax, ecx
-	jge end
-begin:
-	movdqu xmm0, [esi]
-	movdqu xmm1, [edi]
+	jge .end
+.begin:
+	movdqu xmm0, [rdi + rax*4]
+	movdqu xmm1, [rsi + rax*4]
 	paddd xmm0, xmm1
-	movdqu [ebx], xmm0
-	
-	add esi, 16
-	add edi, 16
-	add ebx, 16
-	add eax, 4	
+	movdqu [rdx + rax*4], xmm0
+
+	add eax, 4
 	cmp eax, ecx
-	jl begin
-end:
-	pop ebx
-	pop edi
-	pop esi
-	leave
+	jl .begin
+.end:
 	ret
 
-
-GLOBAL sum_array_plain 
+	GLOBAL sum_array_plain
 sum_array_plain:
-	push ebp
-	mov ebp, esp
-	push esi
-	push edi
-	push ebx
-	push edx
-	
-	mov ecx, [ebp + 20] ; ecx = n
-	mov esi, [ebp + 8] ; esi = a
-	mov edi, [ebp + 12] ; edi = b
-	mov ebx, [ebp + 16] ; ebx = c
-
+	; SysV x64 ABI: rdi=a, rsi=b, rdx=c, ecx=n
 	xor eax, eax
 
 	cmp eax, ecx
-	jge pend
-pbegin:
-	mov edx, [esi+eax*4]
-	add edx, [edi+eax*4]
-	mov [ebx+eax*4], edx
-	
-	;; add esi, 4		
-	;; add edi, 4
-	;; add ebx, 4
-	add eax, 1	
+	jge .pend
+.pbegin:
+	mov r8d, [rdi + rax*4]
+	add r8d, [rsi + rax*4]
+	mov [rdx + rax*4], r8d
+
+	add eax, 1
 	cmp eax, ecx
-	jl pbegin
-pend:
-	pop edx
-	pop ebx
-	pop edi
-	pop esi
-	leave
+	jl .pbegin
+.pend:
 	ret

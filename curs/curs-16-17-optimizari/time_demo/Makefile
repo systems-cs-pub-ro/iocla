@@ -1,10 +1,10 @@
-all: clk rdtscp papi
+all: clk rdtscp
 
 clk: clk.c
-	gcc -O3 -m32 -Wall clk.c -o clk
+	gcc -O3 -m64 -Wall clk.c -o clk
 
 rdtscp: rdtscp.c
-	gcc -O3 -m32 -Wall rdtscp.c -o rdtscp
+	gcc -O3 -m64 -Wall rdtscp.c -o rdtscp
 
 papi: papi.c
 	gcc -O3 -Wall papi.c -I$(PAPI_DIR) -L$(PAPI_DIR) -o papi -lpapi
